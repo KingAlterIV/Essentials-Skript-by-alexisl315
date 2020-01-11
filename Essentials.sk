@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.3
+# Version: 1.3.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -51,7 +51,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.3.
+	Essentialsversionmsg: &7Essentials is 1.3.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -711,11 +711,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.workbench" or "essentials.*":
 		if line 2 of block is "&1[Workbench]":
 			make player execute command "/workbench"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.workbench" or "essentials.*":
 		stop
 
 command /weather [<text>]:
@@ -904,11 +904,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.night" or "essentials.*":
 		if line 2 of block is "&1[Night]":
 			make player execute command "/night"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.night" or "essentials.*":
 		stop
 
 on sign change:
@@ -923,11 +923,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.day" or "essentials.*":
 		if line 2 of block is "&1[Day]":
 			make player execute command "/day"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.day" or "essentials.*":
 		stop
 
 on sign change:
@@ -942,11 +942,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
 		if line 2 of block is "&1[Balance]":
 			make player execute command "/money"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
 		stop
 
 on sign change:
@@ -961,11 +961,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		if line 2 of block is "&1[Heal]":
 			make player execute command "/heal"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		stop
 
 on sign change:
@@ -980,11 +980,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		if line 2 of block is "&1[Feed]":
 			make player execute command "/feed"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		stop
 
 on drop:
@@ -1007,11 +1007,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.trash" or "essentials.*":
 		if line 2 of block is "&1[Trash]":
 			make player execute command "/trash"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.trash" or "essentials.*":
 		stop
 
 command /trash:
@@ -1042,14 +1042,14 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.kit" or "essentials.*":
 		if line 2 of block is "&1[Kit]":
 			if {kit.%player%::%line 3%} is set:
 				make player execute command "/kit %line 3%"
 			if {kit.%player%::%line 3%} is not set:
 				send "{@Signkitnokit}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.kit" or "essentials.*":
 		stop
 
 command /createkit [<text>]:
@@ -1206,11 +1206,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.mail" or "essentials.*":
 		if line 2 of block is "&1[Mail]":
 			make player execute command "/mail read"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.mail" or "essentials.*":
 		stop
 
 command /mail [<text>] [<offline player>] [<text>]:
@@ -1736,14 +1736,14 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.warp" or "essentials.*":
 		if line 2 of block is "&1[Warp]":
 			if {warp.%line 3%.location} is set:
 				make player execute command "/warp %line 3%"
 			if {warp.%line 3%.location} is not set:
 				send "{@Signwarpnowarp}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.warp" or "essentials.*":
 		stop
 
 on sign change:
@@ -1799,39 +1799,39 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Creatif":
 				make player execute command "/gm 1"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Survival":
 				make player execute command "/gm 0"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Adventure":
 				make player execute command "/gm 2"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Spectator":
 				make player execute command "/gm 3"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode" or "essentials.*":
 		stop
 
 on sign change:
@@ -1846,11 +1846,11 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.spawn" or "essentials.*":
 		if line 2 of block is "&1[Spawn]":
 			make player execute command "/spawn"
 			stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.spawn" or "essentials.*":
 		stop
 
 on sign change:
