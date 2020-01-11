@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.8
+# Version: 1.0.9
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.8.
+	Essentialsversionmsg: &7Essentials is 1.0.9.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -433,11 +433,16 @@ command /seen [<player>]:
 				set {_freeze} to "{@Seenyes}"
 			else:
 				set {_freeze} to "{@Seenno}"
+			if {vanish.%player%} is set:
+				set {_vanish} to "{@Seenyes}"
+			else:
+				set {_vanish} to "{@Seenno}"
 			send "&7-_-_-_-_-_-_-_ &c%player% &7-_-_-_-_-_-_-_" to player
 			send "&7IP&6: &c%{ip.%player%}%" to player
 			send "&7UUID&6: &c%player's uuid%" to player
 			send "&7god mode&6: &c%{_god}%" to player
 			send "&7Afk&6: &c%{_afk}%" to player
+			send "&7Vanish&6: &c%{_vanish}%" to player
 			send "&7Money&6: &c%{money.%UUID of player%}% &c€" to player
 			send "&7Gamemode&6: &c%player's gamemode%" to player
 			send "&7Freeze: &c%{_freeze}%" to player
@@ -471,11 +476,16 @@ command /seen [<player>]:
 					set {_freeze} to "{@Seenyes}"
 				else:
 					set {_freeze} to "{@Seenno}"
+				if {vanish.%arg 1%} is set:
+					set {_vanish} to "{@Seenyes}"
+				else:
+					set {_vanish} to "{@Seenno}"
 				send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_" to player
 				send "&7IP&6: &c%{ip.%arg 1%}%" to player
 				send "&7UUID&6: &c%arg 1's uuid%" to player
 				send "&7god mode&6: &c%{_god}%" to player
 				send "&7Afk&6: &c%{_afk}%" to player
+				send "&7Vanish&6: &c%{_vanish}%" to player
 				send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€" to player
 				send "&7Gamemode&6: &c%arg 1's gamemode%" to player
 				send "&7Freeze: &c%{_freeze}%" to player
@@ -3749,23 +3759,22 @@ command /spawn [<offline player>]:
 					stop
 			if arg 1 is online:
 				if sender has permission "essentials.spawn.others" or "essentials.*":
-					if argument is online:
-						set {back::%uuid of arg 1%} to location of player
-						teleport argument 1 to {spawn}
-						stop
 					if argument is offline:
 						send "{@Noplayerconnect}" to player
 						stop
-					if sender is a player:
-						send "{@Teleportspawnisplayer}" to arg 1
-						set {back::%uuid of arg 1%} to location of player
-						teleport argument 1 to {spawn}
-						stop
-					if sender is console:
-						send "{@Teleportspawnisconsole}" to arg 1
-						set {back::%uuid of arg 1%} to location of player
-						teleport argument 1 to {spawn}
-						stop
+					if argument is online:
+						if sender is a player:
+							send "{@Teleportspawnisplayer}" to arg 1
+							set {back::%uuid of arg 1%} to location of arg 1
+							send "{@Spawnteleporting}" to arg 1
+							teleport argument 1 to {spawn}
+							stop
+						if sender is console:
+							send "{@Teleportspawnisconsole}" to arg 1
+							set {back::%uuid of arg 1%} to location of arg 1
+							send "{@Spawnteleporting}" to arg 1
+							teleport argument 1 to {spawn}
+							stop
 				if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
 					send "{@Noperms}" to player
 					stop
