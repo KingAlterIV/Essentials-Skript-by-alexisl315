@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.1.1
+# Version: 1.1.2
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.1.1.
+	Essentialsversionmsg: &7Essentials is 1.1.2.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -697,7 +697,7 @@ command /hat [<text>] [<offline player>]:
 	aliases: essentials:hat
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/hat off [player]"
+			send "&cError &6>> &f/hat off [player]" to player
 			stop
 		if tool is air:
 			send "{@Hattoair}" to player
@@ -744,6 +744,7 @@ command /hat [<text>] [<offline player>]:
 on join:	
 	if {hat.%player%} is true:
 		set player's helmet to air
+		set {hat.%player%} to false
 		stop
 	if {hat.%player%} is false:
 		stop
