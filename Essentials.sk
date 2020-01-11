@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre19
+# |-> Version: 1.15Pre20
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -952,6 +952,7 @@ options: # >> Continuation of message configuration !
 
 	Fakebroadcastmessagetoop: &6The player &c%arg 2% &6as been put in op mode of the server !
 	Fakebroadcastmessagetodeop: &6The player &c%arg 2% &6as been put in deop mode of the server !
+	Fakebroadcastmessagetoplayerjoiningame: &6The player &c%arg 2% &6just connected to the server !
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -979,7 +980,7 @@ command /fakebroadcastmessage [<text>] [<offline player>]:
 			if arg 1 is "list":
 				if arg 2 is not set:
 					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
-						send "&7List of fake message&6: &7OP/DEOP" to player
+						send "&7List of fake message&6: &7OP/DEOP/PLAYERISCONNECTED" to player
 						stop
 					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
 						send "{@Nopermission}" to player
@@ -993,46 +994,68 @@ command /fakebroadcastmessage [<text>] [<offline player>]:
 						stop
 			if arg 1 is "op":
 				if arg 2 is not set:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 				if arg 2 is online:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						broadcast "{@Fakebroadcastmessagetoop}"
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 				if arg 2 is offline:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Noplayerconnect}" to player
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 			if arg 1 is "deop":
 				if arg 2 is not set:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 				if arg 2 is online:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						broadcast "{@Fakebroadcastmessagetodeop}"
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 				if arg 2 is offline:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Noplayerconnect}" to player
 						stop
-					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.deop" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+			if arg 1 is "playerisconnected":
+				if arg 2 is not set:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is online:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
+						broadcast "{@Fakebroadcastmessagetoplayerjoiningame}"
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is offline:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
+						send "{@Noplayerconnect}" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
 		if sender is console:
@@ -1068,6 +1091,16 @@ command /fakebroadcastmessage [<text>] [<offline player>]:
 					stop
 				if arg 2 is online:
 					broadcast "{@Fakebroadcastmessagetodeop}"
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to console
+					stop
+			if arg 1 is "playerisconnected":
+				if arg 2 is not set:
+					send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+					stop
+				if arg 2 is online:
+					broadcast "{@Fakebroadcastmessagetoplayerjoiningame}"
 					stop
 				if arg 2 is offline:
 					send "{@Noplayerconnect}" to console
@@ -5274,7 +5307,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre19" to player
+				send "&fVersion &6|-> &c1.15Pre20" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5290,7 +5323,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre19" to console
+				send "&fVersion &6|-> &c1.15Pre20" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
