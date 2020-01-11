@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0
+# Version: 1.0.1
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -598,7 +598,7 @@ options: # >> Continuation of message configuration!
 
 		# >> COMMAND MESSAGE = OPEN BIN COMMANDS -|
 
-	Trashname: &0&lBin
+	Trashname: &0&lTrash
 	Trash: &7You opened the trash !
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
@@ -609,6 +609,23 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.trash" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Trash":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Trash]"
+				send "{@Signcommands}"
+	if sender doesn't have permission "essentials.sign.trash" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Trash]":
+			make player execute command "/trash"
+	if sender doesn't have permission "essentials.sign.use" or "essentials.*":
+		stop
 
 command /trash:
 	permission: essentials.trash
