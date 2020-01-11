@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre4
+# Version: 1.14pre5
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -1653,6 +1653,7 @@ command /deletekit [<text>]:
 command /kit [<text>]:
 	permission: essentials.kit
 	permission message: {@Noperms}
+	executable by: players
 	usage: &cError &6>> &f/kit [kit]
 	aliases: essentials:kit
 	trigger:
@@ -1671,7 +1672,7 @@ command /kit [<text>]:
 							send "{@kit}" to player
 							stop
 					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}"
+						send "{@Nokit}" to player
 						stop
 					if {kit.%player%::%arg 1%} is set:
 						loop 36 times:
@@ -1685,7 +1686,7 @@ command /kit [<text>]:
 							send "{@kit}" to player
 							stop
 					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}"
+						send "{@Nokit}" to player
 						stop
 				if sender doesn't have permission "essentials.kit.bypass" or "essentials.*":
 					if {@Kitcooldownuse} is true:
@@ -1703,7 +1704,7 @@ command /kit [<text>]:
 								send "{@kit}" to player
 								stop
 						if {kit.%player%::%arg 1%} is not set:
-							send "{@Nokit}"
+							send "{@Nokit}" to player
 							stop
 					if {@Kitcooldownuse} is false:
 						if {kit.%player%::%arg 1%} is set:
@@ -1718,7 +1719,7 @@ command /kit [<text>]:
 								sen#81FF00d "{@kit}" to player
 								stop
 						if {kit.%player%::%arg 1%} is not set:
-							send "{@Nokit}"
+							send "{@Nokit}" to player
 							stop
 			if sender doesn't have permission "essentials.kit.%argument 1%" or "essentials.*":
 				send "{@Noperms}" to player
@@ -4361,7 +4362,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre4" to player
+			send "Version >> 1.14pre5" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
