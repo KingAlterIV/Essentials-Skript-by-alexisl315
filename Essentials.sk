@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre17
+# |-> Version: 1.15Pre18
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -73,7 +73,7 @@ options:
 	Moneytodeathmessage1: &cYou lost
 	Moneytodeathmessage2: &c€.
 
-	Noperms: &cYou don't have permission.
+	Nopermission: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
 
@@ -176,7 +176,7 @@ options:
 
 command /motd:
 	permission: essentials.motd
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:motd
 	usage: &cError &6>> &f/motd
 	trigger:
@@ -322,7 +322,7 @@ options: # >> Continuation of message configuration !
 
 command /sethome [<text>]:
 	permission: essentials.sethome
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:sethome
 	executable by: players
 	usage: &cError &6>> &f/sethome [home]
@@ -434,7 +434,7 @@ options: # >> Continuation of message configuration!
 
 command /seen [<player>]:
 	permission: essentials.seen
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:seen
 	executable by: players
 	usage: &cError &6>> &f/seen [player]
@@ -525,7 +525,7 @@ command /seen [<player>]:
 				send "&7Hunger&6: &c%arg 1's hunger%&c/10" to player
 				stop
 			if sender doesn't have permission "essentials.seen.others" or "essentials.*":
-				send "{@Noperms}" to player
+				send "{@Nopermission}" to player
 				stop
 
 options: # >> Continuation of message configuration !
@@ -731,7 +731,7 @@ options: # >> Continuation of message configuration !
 
 on command "/pl":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -739,7 +739,7 @@ on command "/pl":
 
 on command "/plugins":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -747,7 +747,7 @@ on command "/plugins":
 
 on command "/?":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -755,7 +755,7 @@ on command "/?":
 
 on command "/ver":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -763,7 +763,7 @@ on command "/ver":
 
 on command "/version":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -771,7 +771,7 @@ on command "/version":
 
 on command "/a":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -779,7 +779,7 @@ on command "/a":
 
 on command "/about":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -787,7 +787,7 @@ on command "/about":
 
 on command "/bukkit:about":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -795,7 +795,7 @@ on command "/bukkit:about":
 
 on command "/bukkit:?":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -803,7 +803,7 @@ on command "/bukkit:?":
 
 on command "/bukkit:ver":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -811,7 +811,7 @@ on command "/bukkit:ver":
 
 on command "/bukkit":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -819,7 +819,7 @@ on command "/bukkit":
 
 on command "/icanhasbukkit":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -827,7 +827,7 @@ on command "/icanhasbukkit":
 
 on command "/bukkit:plugins":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -835,7 +835,7 @@ on command "/bukkit:plugins":
 
 on command "/bukkit:version":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -843,7 +843,7 @@ on command "/bukkit:version":
 
 on command "/bukkit:pl":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -851,7 +851,7 @@ on command "/bukkit:pl":
 
 on command "/bukkit:a":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -859,7 +859,7 @@ on command "/bukkit:a":
 
 on command "/bukkit:help":
 	if sender doesn't have permission "essentials.blockcommand.bypass":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass":
@@ -867,7 +867,7 @@ on command "/bukkit:help":
 
 on command "/op":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
@@ -875,7 +875,7 @@ on command "/op":
 
 on command "/deop":
 	if sender doesn't have permission "essentials.blockcommand.bypass":
-		send "{@Noperms}" to player
+		send "{@Nopermission}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass":
@@ -943,6 +943,11 @@ options: # >> Continuation of message configuration !
 	Nuke: &7You have invoked a tnt !
 	Nukefallingtonumbersmeters: 10
 
+	# >> COMMAND MESSAGE = /fakebroadcastmessage (/fbm) -|
+
+	Fakebroadcastmessagetoop: &6The player &c%arg 2% &6as been put in op mode of the server !
+	Fakebroadcastmessagetodeop: &6The player &c%arg 2% &6as been put in deop mode of the server !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -951,6 +956,117 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /fakebroadcastmessage [<text>] [<offline player>]:
+	permission: essentials.fakebroadcastmessage
+	executable by: players, console
+	permission message: {@Nopermission}
+	usage: &cError &6>> &f/fbm [fake message/list] [player]
+	aliases: essentials:fakebroadcastmessage, essentials:fbm, fbm
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+				stop
+			if arg 1 is not "list" or "op" or "deop":
+				send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+				stop
+			if arg 1 is "list":
+				if arg 2 is not set:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
+						send "&7List of fake message&6: &7OP/DEOP" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is set:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
+						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.list" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+			if arg 1 is "op":
+				if arg 2 is not set:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is online:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						broadcast "{@Fakebroadcastmessagetoop}"
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is offline:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "{@Noplayerconnect}" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+			if arg 1 is "deop":
+				if arg 2 is not set:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is online:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						broadcast "{@Fakebroadcastmessagetodeop}"
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+				if arg 2 is offline:
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						send "{@Noplayerconnect}" to player
+						stop
+					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.deop" or "essentials.*":
+						send "{@Nopermission}" to player
+						stop
+		if sender is console:
+			if arg 1 is "list":
+				send "&7List of fake message&6: &7OP/DEOP" to console
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+				stop
+			if arg 1 is not "list" or "op" or "deop":
+				send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+				stop
+			if arg 1 is "list":
+				if arg 2 is not set:
+					send "&7List of fake message&6: &7OP/DEOP" to console
+					stop
+				if arg 2 is set:
+					send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+					stop
+			if arg 1 is "op":
+				if arg 2 is not set:
+					send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+					stop
+				if arg 2 is online:
+					broadcast "{@Fakebroadcastmessagetoop}"
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to console
+					stop
+			if arg 1 is "deop":
+				if arg 2 is not set:
+					send "&cError &6>> &f/fbm [fake message/list] [player]" to console
+					stop
+				if arg 2 is online:
+					broadcast "{@Fakebroadcastmessagetodeop}"
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to console
+					stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.seed" or "essentials.*":
@@ -993,7 +1109,7 @@ on right click on sign:
 command /nuke:
 	permission: essentials.nuke
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/nuke
 	aliases: essentials:nuke
 	trigger:
@@ -1008,7 +1124,7 @@ command /nuke:
 command /thor:
 	permission: essentials.thor
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/thor
 	aliases: essentials:thor
 	trigger:
@@ -1023,7 +1139,7 @@ command /thor:
 command /pvp [<text>]:
 	permission: essentials.pvp
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/pvp [enable/disable | on/off]
 	aliases: essentials:pvp
 	trigger:
@@ -1045,7 +1161,7 @@ command /pvp [<text>]:
 						send "{@Pvptoalreadyenable}" to player
 						stop
 				if sender doesn't have permission "essentials.pvp.*" or "essentials.pvp.enable" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "disable" or "off":
 				if sender has permission "essentials.pvp.*" or "essentials.pvp.disable" or "essentials.*":
@@ -1058,7 +1174,7 @@ command /pvp [<text>]:
 						send "{@Pvptoalreadydisable}" to player
 						stop
 				if sender doesn't have permission "essentials.pvp.*" or "essentials.pvp.disable" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1067,7 +1183,7 @@ command /pvp [<text>]:
 command /seed:
 	permission: essentials.seed
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/seed
 	aliases: essentials:seed
 	trigger:
@@ -1085,7 +1201,7 @@ on server list ping:
 command /lag [<text>]:
 	permission: essentials.lag
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/lag [clear]
 	aliases: essentials:lag
 	trigger:
@@ -1118,7 +1234,7 @@ command /lag [<text>]:
 				if {@Clearlagtoentityplayers} is false:
 					stop
 				if sender doesn't have permission "essentials.lag.*" or "essentials.lag.clear" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1127,7 +1243,7 @@ command /lag [<text>]:
 command /chat [<text>]:
 	permission: essentials.chat
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/chat [clear]
 	aliases: essentials:chat
 	trigger:
@@ -1146,7 +1262,7 @@ command /chat [<text>]:
 						broadcast "{@Chatclear}"
 						stop
 				if sender doesn't have permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1291,7 +1407,7 @@ on right click on sign:
 
 command /maintenance [<text>]:
 	permission: essentials.maintenance
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	usage: &cError &6>> &f/maintenance [enable/diable | on/off]
 	trigger:
@@ -1350,7 +1466,7 @@ on load:
 command /invsee [<player>]:
 	permission: essentials.invsee
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/invsee [player]
 	aliases: essentials:invsee
 	trigger:
@@ -1506,7 +1622,7 @@ on right click on sign:
 command /weather [<text>]:
 	permission: essentials.weather
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/weather [sun/rain/thunder/clear]
 	aliases: essentials:weather, essentials:toggledownfall, toggledownfall
 	trigger:
@@ -1523,7 +1639,7 @@ command /weather [<text>]:
 					send "{@Weathertoclear}" to player
 					stop
 				if sender doesn't have permission "essentials.weather.*" or "essentials.weather.clear" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "sun":
 				if sender has permission "essentials.weather.*" or "essentials.weather.sun" or "essentials.*":
@@ -1531,7 +1647,7 @@ command /weather [<text>]:
 					send "{@Weathertosun}" to player
 					stop
 				if sender doesn't have permission "essentials.weather.*" or "essentials.weather.sun" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "rain":
 				if sender has permission "essentials.weather.*" or "essentials.weather.rain" or "essentials.*":
@@ -1539,7 +1655,7 @@ command /weather [<text>]:
 					send "{@Weathertorain}" to player
 					stop
 				if sender doesn't have permission "essentials.weather.*" or "essentials.weather.rain" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "thunder":
 				if sender has permission "essentials.weather.*" or "essentials.weather.thunder" or "essentials.*":
@@ -1547,7 +1663,7 @@ command /weather [<text>]:
 					send "{@Weathertothunder}" to player
 					stop
 				if sender doesn't have permission "essentials.weather.*" or "essentials.weather.thunder" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1570,7 +1686,7 @@ on weather change to thunder:
 command /hat [<text>] [<offline player>]:
 	permission: essentials.hat
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/hat [player]
 	aliases: essentials:hat
 	trigger:
@@ -1598,7 +1714,7 @@ command /hat [<text>] [<offline player>]:
 						send "{@Noplayerconnect}" to player
 						stop
 					if sender doesn't have permission "essentials.hat.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 			if arg 1 is not "off" or "disable":
 				if arg 2 is not set:
@@ -1617,10 +1733,10 @@ command /hat [<text>] [<offline player>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.hat.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if sender doesn't have permission "essentials.vanish.others" or "essentials.*":
-				send "{@Noperms}" to player
+				send "{@Nopermission}" to player
 				stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1638,7 +1754,7 @@ on join:
 command /vanish [<offline player>]:
 	permission: essentials.vanish
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/vanish [player]
 	aliases: essentials:vanish
 	trigger:
@@ -1674,7 +1790,7 @@ command /vanish [<offline player>]:
 					send "{@Noplayerconnect}" to player
 					stop
 			if sender doesn't have permission "essentials.vanish.others" or "essentials.*":
-				send "{@Noperms}" to player
+				send "{@Nopermission}" to player
 				stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -1820,7 +1936,7 @@ on right click on sign:
 command /trash:
 	permission: essentials.trash
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/trash
 	aliases: essentials:trash, essentials:bin, bin
 	trigger:
@@ -1862,7 +1978,7 @@ on right click on sign:
 command /createkit [<text>]:
 	permission: essentials.createkit
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/createkit [kit]
 	aliases: essentials:createkit
 	trigger:
@@ -1895,7 +2011,7 @@ command /createkit [<text>]:
 command /deletekit [<text>]:
 	permission: essentials.deletekit
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/deletekit [kit]
 	aliases: essentials:deletekit
 	trigger:
@@ -1923,7 +2039,7 @@ command /deletekit [<text>]:
 
 command /kit [<text>]:
 	permission: essentials.kit
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	usage: &cError &6>> &f/kit [kit]
 	aliases: essentials:kit
@@ -1994,7 +2110,7 @@ command /kit [<text>]:
 								send "{@Nokit}" to player
 								stop
 				if sender doesn't have permission "essentials.kit.%arg 1%" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is not set:
 				send "&cError &6>> &f/kit [kit]" to player
@@ -2005,7 +2121,7 @@ command /kit [<text>]:
 
 command /kits:
 	permission: essentials.kits
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/kits
 	aliases: essentials:kits
 	executable by: players, console
@@ -2039,7 +2155,7 @@ on right click on sign:
 command /mail [<text>] [<offline player>] [<text>]:
 	permission: essentials.mail
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/mail [read/clear/send] [player] [text]
 	aliases: essentials:mail
 	trigger:
@@ -2052,7 +2168,7 @@ command /mail [<text>] [<offline player>] [<text>]:
 				stop
 			if arg 1 is "read":
 				if sender doesn't have permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if sender has permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
 					set {_count} to 0
@@ -2063,7 +2179,7 @@ command /mail [<text>] [<offline player>] [<text>]:
 					stop
 			if arg 1 is "clear":
 				if sender doesn't have permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if sender has permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
 					if {e-mail.%player%} > 0:
@@ -2082,7 +2198,7 @@ command /mail [<text>] [<offline player>] [<text>]:
 				if arg 2 is set:
 					if arg 3 is set:
 						if sender doesn't have permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
-							send "{@Noperms}" to player
+							send "{@Nopermission}" to player
 						if sender has permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
 							send "{@Mailsendtoplayer}" to arg 2
 							send "{@Mailsendtome}" to player
@@ -2102,7 +2218,7 @@ command /mail [<text>] [<offline player>] [<text>]:
 command /powertool [<text>]:
 	permission: essentials.powertool
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/powertool [command]
 	aliases: essentials:powertool
 	trigger:		
@@ -2131,7 +2247,7 @@ on click:
 command /repair [<text>] [<offline player>]:
 	permission: essentials.repair
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/repair [all] [player]
 	aliases: essentials:repair
 	trigger:
@@ -2230,7 +2346,7 @@ command /repair [<text>] [<offline player>]:
 						repair boots slot of arg 2
 						stop
 					if sender doesn't have permission "essentials.repair.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 				if arg 2 is offline:
 					send "{@Noplayerconnect}" to player
@@ -2242,7 +2358,7 @@ command /repair [<text>] [<offline player>]:
 command /sudo [<offline player>] [<text>]:
 	permission: essentials.sudo
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/sudo [player] [command]
 	aliases: essentials:sudo
 	trigger:
@@ -2268,7 +2384,7 @@ command /sudo [<offline player>] [<text>]:
 command /spawnmob [<entity types>] [<number>]:
 	permission: essentials.spawnmob
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/spawnmob [entity] [number]
 	aliases: essentials:spawnmob
 	trigger:
@@ -2295,7 +2411,7 @@ on load:
 command /tpohere [<offline player>]:
 	permission: essentials.tpohere
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tpohere [player]
 	aliases: essentials:tpohere
 	trigger:
@@ -2310,7 +2426,7 @@ command /tpohere [<offline player>]:
 command /tpo [<offline player>] [<offline player>]:
 	permission: essentials.tpo
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tpo [player] [player]
 	aliases: essentials:tpo
 	trigger: 
@@ -2337,7 +2453,7 @@ command /tpo [<offline player>] [<offline player>]:
 command /jump:
 	permission: essentials.jump
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/jump
 	aliases: essentials:jump
 	trigger:
@@ -2351,7 +2467,7 @@ command /jump:
 command /compass [<offline player>]:
 	permission: essentials.compass
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/compass [player]
 	aliases: essentials:compass , essentials:direction, direction
 	trigger:
@@ -2369,7 +2485,7 @@ command /compass [<offline player>]:
 command /togglejail [<offline player>] [<text>]:
 	permission: essentials.jail
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/jail [player] [jail]
 	aliases: essentials:tjail, essentials:unjail, essentials:jail, tjail, unjail, jail
 	trigger:
@@ -2441,7 +2557,7 @@ on damage:
 command /setjail [<text>]:
 	permission: essentials.setjail
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/setjail [jail]
 	aliases: essentials:setjail, essentials:createjail, createjail
 	trigger:
@@ -2464,7 +2580,7 @@ command /setjail [<text>]:
 command /jails:
 	permission: essentials.jails
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/jails
 	aliases: essentials:jails
 	trigger:
@@ -2480,7 +2596,7 @@ command /jails:
 command /deljail [<text>]:
 	permission: essentials.deljail
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/deljail [Jail]
 	aliases: essentials:deljail, essentials:remjail, essentials:rmjail , remjail, rmjail
 	trigger:
@@ -2504,7 +2620,7 @@ command /deljail [<text>]:
 command /tree [<text>]:
 	permission: essentials.tree
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tree [Jungle/Oak/Spruce/Acacia/Birch/Darkwood]
 	aliases: essentials:tree
 	trigger:
@@ -2546,7 +2662,7 @@ command /tree [<text>]:
 command /tpa [<offline player>]:
 	permission: essentials.tpa
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tpa [player]
 	aliases: essentials:tpa
 	trigger:
@@ -2570,7 +2686,7 @@ command /tpa [<offline player>]:
 command /tpaccept:
 	permission: essentials.tpdeny
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tpaccept
 	aliases: tpyes, essentials:tpaccept, essentials:tpyes
 	trigger:
@@ -2593,7 +2709,7 @@ command /tpaccept:
 command /tpdeny:
 	permission: essentials.tpdeny
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/tpaccept
 	aliases: tpno, essentials:tpdeny, essentials:tpno
 	trigger:
@@ -2757,7 +2873,7 @@ on sign change:
 command /fireball:
 	permission: essentials.fireball
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/fireball
 	aliases: essentials:fireball
 	trigger:
@@ -2772,7 +2888,7 @@ command /fireball:
 command /enchant [<enchantment type>]:
 	permission: essentials.enchant
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/enchant [enchantment type]
 	aliases: enchantment, essentials:enchantment, essentials:enchant
 	trigger:
@@ -2794,7 +2910,7 @@ command /enchant [<enchantment type>]:
 command /ext [<offline player>]:
 	permission: essentials.ext
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/ext [player]
 	aliases: extinguish, essentials:extinguish, essentials:ext
 	trigger:
@@ -2810,7 +2926,7 @@ command /ext [<offline player>]:
 					send "{@Exttoplayeradmin}" to player
 					stop
 				if sender doesn't have permission "essentials.ext.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -2822,7 +2938,7 @@ command /ext [<offline player>]:
 command /depth [<offline player>]:
 	permission: essentials.depth
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/depth [player]
 	aliases: height, essentials:height, essentials:depth
 	trigger:
@@ -2835,7 +2951,7 @@ command /depth [<offline player>]:
 					send "{@Depthtoplayeradmin}" to player
 					stop
 				if sender doesn't have permission "essentials.depth.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -2847,7 +2963,7 @@ command /depth [<offline player>]:
 command /burn [<offline player>] [<timespan>]:
 	permission: essentials.burn
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/burn [player] [times]
 	aliases: essentials:burn
 	trigger:
@@ -2873,7 +2989,7 @@ command /burn [<offline player>] [<timespan>]:
 
 command /unlimited [<offline player>]:
 	permission: essentials.unlimited
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/unlimited
 	executable by: players, console
 	aliases: ul, unl, essentials:unlimited, essentials:ul, essentials:unl
@@ -2901,7 +3017,7 @@ command /unlimited [<offline player>]:
 						send "{@Unlimiteddisabletoplayeradmin}" to player
 						stop
 				if sender doesn't have permission "essentials.unlimited.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -2917,7 +3033,7 @@ on place:
 
 command /workbench:
 	permission: essentials.workbench
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/workbench
 	executable by: players, console
 	aliases: craft, wb, essentials:workbench, essentials:craft, essentials:wb
@@ -2932,7 +3048,7 @@ command /workbench:
 
 command /banip [<offline player>] [<text>]:
 	permission: essentials.banip
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	usage: &cError &6>> &f/banip [player] [reason]
 	aliases: ban-ip, essentials:banip, essentials:ban-ip
@@ -3031,7 +3147,7 @@ command /banip [<offline player>] [<text>]:
 
 command /ban [<offline player>] [<text>]:
 	permission: essentials.ban
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	usage: &cError &6>> &f/ban [player] [reason]
 	aliases: essentials:ban
@@ -3130,7 +3246,7 @@ command /ban [<offline player>] [<text>]:
 
 command /unban [<offline player>]:
 	permission: essentials.unban
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	aliases: essentials:unban
 	usage: &cError &6>> &f/unban [player]
@@ -3167,7 +3283,7 @@ command /unban [<offline player>]:
 
 command /unbanip [<offline player>] [<Text>]:
 	permission: essentials.unbanip
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	aliases: essentials:unbanip, unban-ip, essentials:unban-ip
 	usage: &cError &6>> &f/unbanip [player] [IP]
@@ -3217,7 +3333,7 @@ command /unbanip [<offline player>] [<Text>]:
 
 command /antioch:
 	permission: essentials.antioch
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/antioch
 	executable by: players, console
 	aliases: grenade, tnt, essentials:grenade, essentials:tnt, essentials:antioch
@@ -3232,7 +3348,7 @@ command /antioch:
 
 command /break:
 	permission: essentials.break
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/break
 	executable by: players, console
 	aliases: /break
@@ -3247,7 +3363,7 @@ command /break:
 
 command /xp [<text>] [<offline player>] [<integer>]:	
 	permission: essentials.xp
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/xp [show/set/give/remove] [player] [number]
 	executable by: players, console
 	aliases: exp, essentials:xp, essentials:exp
@@ -3275,7 +3391,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.xp.*" or "essentials.xp.show" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "set":
 				if sender has permission "essentials.xp.*" or "essentials.xp.set" or "essentials.*":
@@ -3292,7 +3408,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.xp.*" or "essentials.xp.set" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "give":
 				if sender has permission "essentials.xp.*" or "essentials.xp.give" or "essentials.*":
@@ -3309,7 +3425,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.xp.*" or "essentials.xp.give" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "remove":
 				if sender has permission "essentials.xp.*" or "essentials.xp.remove" or "essentials.*":
@@ -3326,7 +3442,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.xp.*" or "essentials.xp.remove" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -3334,7 +3450,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 
 command /back [<offline player>]:
 	permission: essentials.back
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	usage: &cError &6>> &f/back
 	executable by: players, console
 	aliases: return, essentials:back, essentials:return
@@ -3382,7 +3498,7 @@ command /back [<offline player>]:
 							send "{@Backteleporting}" to arg 1
 							stop
 				if sender has permission "essentials.back.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -3390,7 +3506,7 @@ command /back [<offline player>]:
 
 command /list:
 	permission: essentials.list
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: who, playerlist, online, plist, essentials:who, essentials:playerlist, essentials:online, essentials:plist
 	usage: &cError &6>> &f/list
 	executable by: players, console
@@ -3407,7 +3523,7 @@ command /list:
 
 command /getpos [<offline player>]:
 	permission: essentials.getpos
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:getpos, coords, position, whereami, getlocation, getloc, essentials:getloc, essentials:getlocation, essentials:whereami, essentials:position, essentials:coords
 	usage: &cError &6>> &f/getpos [player]
 	executable by: players, console
@@ -3421,7 +3537,7 @@ command /getpos [<offline player>]:
 					send "{@Getpostoplayer}" to player
 					stop
 				if sender doesn't have permission "essentials.getpos.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -3432,7 +3548,7 @@ command /getpos [<offline player>]:
 
 command /near:
 	permission: essentials.near
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:near
 	executable by: players, console
 	usage: &cError &6>> &f/near
@@ -3461,7 +3577,7 @@ on join:
 
 command /god [<offline player>]:
 	permission: essentials.god
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:god
 	executable by: players, console
 	usage: &cError &6>> &f/god [player]
@@ -3498,7 +3614,7 @@ command /god [<offline player>]:
 						send "{@Godtoplayer}" to arg 1
 						stop
 				if sender doesn't have permission "essentials.god.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -3520,7 +3636,7 @@ on damage:
 
 command /pay [<offline player>] [<number>]:
 	permission: essentials.pay
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:pay
 	executable by: players, console
 	usage: &cError &6>> &f/pay [player] [number]
@@ -3559,7 +3675,7 @@ on first join:
 
 command /money [<offline player>]:
 	permission: essentials.money
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:money, balance, bal, essentials:balance, essentials:bal
 	executable by: players, console
 	usage: &cError &6>> &f/money [player]
@@ -3573,14 +3689,14 @@ command /money [<offline player>]:
 					send "{@Moneytoplayer}" to player
 					stop
 				if sender doesn't have permission "essentials.money.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				if sender has permission "essentials.money.others" or "essentials.*":
 					send "{@Moneytoplayer}" to player
 					stop
 				if sender doesn't have permission "essentials.money.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -3588,7 +3704,7 @@ command /money [<offline player>]:
 
 command /eco [<text>] [<offline player>] [<number>]:
 	permission: essentials.eco
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:eco
 	executable by: players, console
 	usage: &cError &6>> &f/eco [give/remove/set] [player] [number]
@@ -3618,7 +3734,7 @@ command /eco [<text>] [<offline player>] [<number>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.set" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "give":
 				if sender has permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
@@ -3637,11 +3753,11 @@ command /eco [<text>] [<offline player>] [<number>]:
 						send "{@Noplayerconnect}" to player
 						stop
 				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "remove":
 				if sender has permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 					if arg 2 is not set:
 						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
@@ -3659,7 +3775,7 @@ command /eco [<text>] [<offline player>] [<number>]:
 								send "{@Ecoremovenomoneytome}" to player
 								stop
 				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if arg 2 is offline:
 					send "{@Noplayerconnect}" to player
@@ -3674,7 +3790,7 @@ on first join:
 
 command /nick [<offline player>] [<text>]:
 	permission: essentials.nick
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:nick, nickname, essentials:nickname
 	executable by: players, console
 	usage: &cError &6>> &f/nick [player] [text]
@@ -3703,7 +3819,7 @@ command /nick [<offline player>] [<text>]:
 
 command /adminhome [<text>] [<offline player>] [<text>]:
 	permission: essentials.adminhome
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:adminhome
 	executable by: players, console
 	usage: &cError &6>> &f/adminhome [delhome/reset/homes/home/sethome] [player] [home]
@@ -3819,7 +3935,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 
 command /delhome [<text>]:
 	permission: essentials.delhome
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:delhome
 	executable by: players, console
 	usage: &cError &6>> &f/delhome [home]
@@ -3844,7 +3960,7 @@ command /delhome [<text>]:
 
 command /home [<text>]:
 	permission: essentials.home
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:home
 	executable by: players, console
 	usage: &cError &6>> &f/home [home]
@@ -3883,7 +3999,7 @@ command /home [<text>]:
 
 command /homes:
 	permission: essentials.homes
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:homes
 	executable by: players, console
 	usage: &cError &6>> &f/homes
@@ -3905,7 +4021,7 @@ on first join:
 
 command /kickall [<text>]:
 	permission: essentials.kickall
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:kickall
 	executable by: players, console
 	usage: &cError &6>> &f/kickall [text]
@@ -3929,7 +4045,7 @@ command /kickall [<text>]:
 
 command /unmute [<offline player>]:
 	permission: essentials.unmute
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:unmute
 	usage: &cError &6>> &f/unmute [player]
 	executable by: players, console
@@ -3966,7 +4082,7 @@ command /unmute [<offline player>]:
 
 command /mute [<offline player>] [<number>]:
 	permission: essentials.mute
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:mute
 	usage: &cError &6>> &f/mute [player] [seconds]
 	executable by: players, console
@@ -4030,7 +4146,7 @@ on chat:
 command /speed [<text>] [<number>]:
 	permission: essentials.speed
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:speed
 	usage: &cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]
 	trigger:
@@ -4051,7 +4167,7 @@ command /speed [<text>] [<number>]:
 						send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
 						stop
 				if sender doesn't have permission "essentials.speed.fly" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "walk":
 				if sender has permission "essentials.speed.walk" or "essentials.*":
@@ -4063,7 +4179,7 @@ command /speed [<text>] [<number>]:
 						send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
 						stop
 				if sender doesn't have permission "essentials.speed.walk" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is "reset":
 				if sender has permission "essentials.speed.reset" or "essentials.*":
@@ -4072,7 +4188,7 @@ command /speed [<text>] [<number>]:
 					send "{@Speedreset}" to player
 					stop
 				if sender doesn't have permission "essentials.speed.reset" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -4085,7 +4201,7 @@ on quit:
 
 command /slap [<offline player>]:
 	permission: essentials.slap
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:slap
 	executable by: players, console
 	usage: &cError &6>> &f/slap [player]
@@ -4108,7 +4224,7 @@ command /slap [<offline player>]:
 
 command /day:
 	permission: essentials.night
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:night
 	executable by: players, console
 	usage: &cError &6>> &f/night
@@ -4123,7 +4239,7 @@ command /day:
 
 command /night:
 	permission: essentials.night
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:night
 	executable by: players, console
 	usage: &cError &6>> &f/night
@@ -4138,7 +4254,7 @@ command /night:
 
 command /time [<text>] [<text>]:
 	permission: essentials.time
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:time
 	executable by: players, console
 	usage: &cError &6>> &f/time
@@ -4163,7 +4279,7 @@ command /time [<text>] [<text>]:
 						send "{@Day}"
 						stop
 					if sender doesn't have permission "essentials.time.day" or "essentials.*" or "essentials.time.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 				if arg 2 is "night":
 					if sender has permission "essentials.time.night" or "essentials.*" or "essentials.time.*":
@@ -4171,7 +4287,7 @@ command /time [<text>] [<text>]:
 						send "{@Night}" to player
 						stop
 					if sender doesn't have permission "essentials.time.night" or "essentials.*" or "essentials.time.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -4199,7 +4315,7 @@ every {@Antiafkcooldown} seconds:
 
 command /afk [<offline player>]:
 	permission: essentials.afk
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:afk
 	executable by: players, console
 	usage: &cError &6>> &f/afk [player]
@@ -4225,7 +4341,7 @@ command /afk [<offline player>]:
 						delete {afk.%arg 1%}
 						stop
 				if sender doesn't have permission "essentials.afk.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -4290,7 +4406,7 @@ on chat:
 
 command /enderchest [<offline player>]:
 	permission: essentials.enderchest
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:enderchest, ec, essentials:ec
 	executable by: players, console
 	usage: &cError &6>> &f/enderchest [player]
@@ -4306,7 +4422,7 @@ command /enderchest [<offline player>]:
 					send "{@Enderchesttoplayer}" to player
 					stop
 				if sender doesn't have permission "essentials.enderchest.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -4317,7 +4433,7 @@ command /enderchest [<offline player>]:
 
 command /skull [<offline player>]:
 	permission: essentials.skull
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:skull, head, playerhead, essentials:head, essentials:playerhead
 	executable by: players, console
 	usage: &cError &6>> &f/skull [name]
@@ -4336,7 +4452,7 @@ command /skull [<offline player>]:
 
 command /setwarp [<text>]:
 	permission: essentials.setwarp
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:setwarp
 	executable by: players, console
 	usage: &cError &6>> &f/setwarp [warp]
@@ -4356,7 +4472,7 @@ command /setwarp [<text>]:
 
 command /delwarp [<text>]:
 	permission: essentials.delwarp
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:delwarp
 	executable by: players, console
 	usage: &cError &6>> &f/delwarp [warp]
@@ -4376,7 +4492,7 @@ command /delwarp [<text>]:
 
 command /warp [<text>] [<offline player>]:
 	permission: essentials.warp
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:warp
 	executable by: players, console
 	usage: &cError &6>> &f/warp [warp]
@@ -4438,7 +4554,7 @@ command /warp [<text>] [<offline player>]:
 								send "{@Nowarpset}" to player
 								stop
 				if sender doesn't have permission "essentials.warp.%arg 1%" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -4446,7 +4562,7 @@ command /warp [<text>] [<offline player>]:
 
 command /warps:
 	permission: essentials.warps
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:warps
 	executable by: players, console
 	usage: &cError &6>> &f/warps
@@ -4460,7 +4576,7 @@ command /warps:
 
 command /msg [<offline player>] [<text>]:
 	permission: essentials.reply
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:msg, m, t, whisper, essentials:whisper, essentials:m, essentials:t
 	executable by: players, console
 	usage: &cError &6>> &f/msg [player] [text]
@@ -4501,7 +4617,7 @@ command /msg [<offline player>] [<text>]:
 
 command /r [<text>]:
 	permission: essentials.reply
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:reply, reply, essentials:r
 	executable by: players, console
 	usage: &cError &6>> &f/reply [text]
@@ -4539,7 +4655,7 @@ command /r [<text>]:
 
 command /ignore [<offline player>]:
 	permission: essentials.ignore
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:ignore
 	executable by: players, console
 	usage: &cError &6>> &f/ignore [player]
@@ -4566,7 +4682,7 @@ command /ignore [<offline player>]:
 
 command /tphere [<offline player>]:
 	permission: essentials.tphere
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:tphere
 	executable by: players, console
 	usage: &cError &6>> &f/tphere [player]
@@ -4589,7 +4705,7 @@ command /tphere [<offline player>]:
 
 command /freeze [<offline player>]:
 	permission: essentials.freeze
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:freeze
 	executable by: players, console
 	usage: &cError &6>> &f/freeze [player]
@@ -4654,7 +4770,7 @@ on damage:
 
 command /kick [<offline player>] [<text>]:
 	permission: essentials.kick
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:kick
 	executable by: players, console
 	usage: &cError &6>> &f/kick [player] [text]
@@ -4692,7 +4808,7 @@ command /kick [<offline player>] [<text>]:
 
 command /helpop [<text>]:
 	permission: essentials.helpop
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:helpop
 	executable by: players, console
 	usage: &cError &6>> &f/helpop [text]
@@ -4720,7 +4836,7 @@ on join:
 command /gm [<text>] [<offline player>]:
 	permission: essentials.gamemode
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:gamemode, gamemode, essentials:gm
 	usage: &cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]
 	trigger:
@@ -4753,30 +4869,30 @@ command /gm [<text>] [<offline player>]:
 						send "{@Gamemodetometospectator}" to player
 						stop
 				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is set:
 				if arg 2 is online:
 					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 					if sender has permission "essentials.gamemode.*" or "essentials.gamemode.creative.others" or "essentials.*":
 						if arg 1 is "1" or "c" or "creative":
@@ -4843,7 +4959,7 @@ command /gm [<text>] [<offline player>]:
 
 command /me [<text>]:
 	permission: essentials.me
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:me
 	executable by: players, console
 	usage: &cError &6>> &f/me [text]
@@ -4865,7 +4981,7 @@ command /me [<text>]:
 
 command /fly [<offline player>]:
 	permission: essentials.fly
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	aliases: essentials:fly
 	usage: &cError &6>> &f/fly [player]
@@ -4897,14 +5013,14 @@ command /fly [<offline player>]:
 						delete {fly.%arg 1%}
 						stop
 				if sender doesn't have permission "essentials.fly.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 			if arg 1 is offline:
 				if sender has permission "essentials.fly.others" or "essentials.*":
 					send "{@Noplayerconnect}" to player
 					stop
 				if sender doesn't have permission "essentials.fly.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 					stop
 		if sender is console:
 			if arg 1 is online:
@@ -4944,7 +5060,7 @@ on respawn:
 
 command /tpall:
 	permission: essentials.tpall
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:tpall
 	executable by: players, console
 	usage: &cError &6>> &f/tpall
@@ -4961,7 +5077,7 @@ command /tpall:
 
 command /clearinventory [<offline player>]:
 	permission: essentials.clearinventory
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	aliases: essentials:clearinventory, ci, clear, essentials:clear, essentials:ci
 	usage: &cError &6>> &f/clear [player]
@@ -4978,7 +5094,7 @@ command /clearinventory [<offline player>]:
 					send "{@Cleartoplayer}" to player
 					stop
 				if sender doesn't have permission "essentials.clearinventory.others" or "essentials.*":
-					send "{@Noperms}" to player
+					send "{@Nopermission}" to player
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
 				stop
@@ -4998,7 +5114,7 @@ command /clearinventory [<offline player>]:
 
 command /suicide:
 	permission: essentials.suicide
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:suicide
 	usage: &cError &6>> &f/suicide
 	executable by: players, console
@@ -5014,7 +5130,7 @@ command /suicide:
 
 command /broadcast [<text>]:
 	permission: essentials.broadcast
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:broadcast
 	usage: &cError &6>> &f/broadcast [text]
 	executable by: players, console
@@ -5040,7 +5156,7 @@ command /broadcast [<text>]:
 
 command /tp [<offline player>] [<offline player>]:
 	permission: essentials.tp
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	aliases: essentials:tp
 	executable by: players, console
 	usage: &cError &6>> &f/tp [player] [player]
@@ -5062,7 +5178,7 @@ command /tp [<offline player>] [<offline player>]:
 						send "{@Tpteleporting}" to arg 1
 						stop
 					if sender doesn't have permission "essentials.tp.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -5134,7 +5250,7 @@ command /essentials [<text>]:
 	permission: essentials.admin
 	executable by: players, console
 	usage: &cError &6>> &f/essentials reload/info
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	trigger:
 		if sender is a player:
 			if arg 1 is "reload":
@@ -5142,8 +5258,8 @@ command /essentials [<text>]:
 				send "{@Reloadmsg}" to player
 				stop
 			if arg 1 is "info":
-				send "&fSpigot link &6|-> &c https://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre17" to player
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
+				send "&fVersion &6|-> &c1.15Pre18" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5158,8 +5274,8 @@ command /essentials [<text>]:
 				send "{@Reloadmsg}" to console
 				stop
 			if arg 1 is "info":
-				send "&fSpigot link &6|-> &c https://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre17" to console
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
+				send "&fVersion &6|-> &c1.15Pre18" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
@@ -5173,7 +5289,7 @@ command /feed [<offline player>]:
 	permission: essentials.feed
 	aliases: essentials:feed
 	usage: &cError &6>> &f/feed [player]
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	executable by: players, console
 	trigger:
 		if sender is a player:
@@ -5189,7 +5305,7 @@ command /feed [<offline player>]:
 						set arg's food bar to 10
 						stop
 					if sender doesn't have permission "essentials.feed.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 				if arg 1 is offline:
 					send "{@Noplayerconnect}" to player
@@ -5211,7 +5327,7 @@ command /heal [<offline player>]:
 	usage: &cError &6>> &f/heal [player]
 	aliases: essentials:heal
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
@@ -5226,7 +5342,7 @@ command /heal [<offline player>]:
 						heal arg 1
 						stop
 					if sender doesn't have permission "essentials.heal.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
@@ -5248,7 +5364,7 @@ command /setspawn:
 	permission: essentials.setspawn
 	usage: &cError &6>> &f/setspawn
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	trigger:
 		if sender is a player:
 			send "{@Setspawn}" to player
@@ -5263,7 +5379,7 @@ command /spawn [<offline player>]:
 	executable by: players, console
 	usage: &cError &6>> &f/spawn [player]
 	permission: essentials.spawn
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	trigger:
 		if sender is a player:
 			if {spawn} is not set:
@@ -5301,7 +5417,7 @@ command /spawn [<offline player>]:
 							teleport arg 1 to {spawn}
 							stop
 					if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
-						send "{@Noperms}" to player
+						send "{@Nopermission}" to player
 						stop
 				if arg 1 is offline:
 					send "{@Noplayerconnect}" to player
@@ -5334,7 +5450,7 @@ command /delspawn:
 	aliases: essentials:delspawn
 	usage: &cError &6>> &f/delspawn
 	executable by: players, console
-	permission message: {@Noperms}
+	permission message: {@Nopermission}
 	trigger:
 		if sender is a player:
 			if {spawn} is set:
