@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre6
+# |-> Version: 1.15Pre7
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -2916,12 +2916,16 @@ command /list:
 	permission message: {@Noperms}
 	aliases: who, playerlist, online, plist, essentials:who, essentials:playerlist, essentials:online, essentials:plist
 	usage: &cError &6>> &f/list
-	executable by: players
+	executable by: players, console
 	trigger:
-		loop all players:
-			add loop-player to {_list::*}
-			set {_list} to "%{_list::*}%"
-			send "{@list}" to player
+		if sender is a player:
+			loop all players:
+				add loop-player to {_list::*}
+				set {_list} to "%{_list::*}%"
+				send "{@list}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /getpos [<offline player>]:
@@ -2929,41 +2933,52 @@ command /getpos [<offline player>]:
 	permission message: {@Noperms}
 	aliases: essentials:getpos, coords, position, whereami, getlocation, getloc, essentials:getloc, essentials:getlocation, essentials:whereami, essentials:position, essentials:coords
 	usage: &cError &6>> &f/getpos [player]
-	executable by: players
+	executable by: players, console
 	trigger:
-		if arg 1 is not set:
-			send "{@Getpostome}" to player
-			stop
-		if arg 1 is online:
-			if sender has permission "essentials.getpos.others" or "essentials.*":
-				send "{@Getpostoplayer}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Getpostome}" to player
 				stop
-			if sender doesn't have permission "essentials.getpos.others" or "essentials.*":
-				send "{@Noperms}" to player
+			if arg 1 is online:
+				if sender has permission "essentials.getpos.others" or "essentials.*":
+					send "{@Getpostoplayer}" to player
+					stop
+				if sender doesn't have permission "essentials.getpos.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /near:
 	permission: essentials.near
 	permission message: {@Noperms}
 	aliases: essentials:near
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/near
 	trigger:
-		loop players in radius 200 of player:
-			add 1 to {_n}
-			set {_players::%{_n}%} to loop-player
-			set {_locs::%{_n}%} to distance between loop-player and player
-		if {_n} is greater than 0:
-			loop {_players::*}:
-				add 1 to {_m}
-				remove player from {_players::*}
-				send "{@Near}" to player
+		if sender is a player:
+			loop players in radius 200 of player:
+				add 1 to {_n}
+				set {_players::%{_n}%} to loop-player
+				set {_locs::%{_n}%} to distance between loop-player and player
+			if {_n} is greater than 0:
+				loop {_players::*}:
+					add 1 to {_m}
+					remove player from {_players::*}
+					send "{@Near}" to player
+					stop
+			else:
+				send "{@Nearnoplayer}" to player
 				stop
-		else:
-			send "{@Nearnoplayer}" to player
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on join:
@@ -2974,44 +2989,48 @@ command /god [<offline player>]:
 	permission: essentials.god
 	permission message: {@Noperms}
 	aliases: essentials:god
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/god [player]
 	trigger:
-		if arg 1 is not set:
-			if {essentialsgodu.%player%} is false:
-				set {essentials.god.%player%} to true
-				send "{@Godtome}" to player
-				stop
-			else if {essentials.god.%player%} is true:
-				set {essentials.god.%player%} to false
-				send "{@Nogodtome}" to player
-				stop
-			else if {essentials.god.%player%} is not set:
-				set {essentials.god.%player%} to true
-				send "{@Godtome}" to player
-				stop
-		if arg 1 is online:
-			if sender has permission "essentials.god.others" or "essentials.*":
-				if {essentials.god.%arg 1%} is false:
-					set {essentials.god.%arg 1%} to true
-					send "{@Godtoplayeradmin}" to player
-					send "{@Godtoplayer}" to arg 1
+		if sender is a player:
+			if arg 1 is not set:
+				if {essentialsgodu.%player%} is false:
+					set {essentials.god.%player%} to true
+					send "{@Godtome}" to player
 					stop
-				if {essentials.god.%arg 1%} is true:
-					set {essentials.god.%arg 1%} to false
-					send "{@Nogodtoplayeradmin}" to player
-					send "{@Nogodtoplayer}" to arg 1
+				if {essentials.god.%player%} is true:
+					set {essentials.god.%player%} to false
+					send "{@Nogodtome}" to player
 					stop
-				if {essentials.god.%arg 1%} is not set:
-					set {essentials.god.%arg 1%} to true
-					send "{@Godtoplayeradmin}" to player
-					send "{@Godtoplayer}" to arg 1
+				if {essentials.god.%player%} is not set:
+					set {essentials.god.%player%} to true
+					send "{@Godtome}" to player
 					stop
-			if sender doesn't have permission "essentials.god.others" or "essentials.*":
-				send "{@Noperms}" to player
+			if arg 1 is online:
+				if sender has permission "essentials.god.others" or "essentials.*":
+					if {essentials.god.%arg 1%} is false:
+						set {essentials.god.%arg 1%} to true
+						send "{@Godtoplayeradmin}" to player
+						send "{@Godtoplayer}" to arg 1
+						stop
+					if {essentials.god.%arg 1%} is true:
+						set {essentials.god.%arg 1%} to false
+						send "{@Nogodtoplayeradmin}" to player
+						send "{@Nogodtoplayer}" to arg 1
+						stop
+					if {essentials.god.%arg 1%} is not set:
+						set {essentials.god.%arg 1%} to true
+						send "{@Godtoplayeradmin}" to player
+						send "{@Godtoplayer}" to arg 1
+						stop
+				if sender doesn't have permission "essentials.god.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on join:
@@ -3022,141 +3041,158 @@ on damage:
 	if {essentials.god.%victim%} is true:
 		cancel event
 		stop
-	else:
+	if {essentials.god.%victim%} is false:
 		stop
 
 command /pay [<offline player>] [<number>]:
 	permission: essentials.pay
 	permission message: {@Noperms}
 	aliases: essentials:pay
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/pay [player] [number]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> /pay [player] [number]" to player
-			stop
-		if arg 1 is online:
-			if arg 2 is set:
-				if 0 is less than arg 2:
-					send "{@Paynonumberpositive}" to player
-					stop
-				if {money.%UUID of player%} is less than arg 2:
-					send "{@Paynomoney}" to player
-					stop
-				else:
-					remove arg 2 from {money.%UUID of player%}
-					add arg 2 to {money.%UUID of arg 1%}
-					send "{@Paytome}" to player
-					send "{@Paytoplayer}" to arg 1
-					stop
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> /pay [player] [number]" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+			if arg 1 is online:
+				if arg 2 is set:
+					if 0 is less than arg 2:
+						send "{@Paynonumberpositive}" to player
+						stop
+					if {money.%UUID of player%} is less than arg 2:
+						send "{@Paynomoney}" to player
+						stop
+					else:
+						remove arg 2 from {money.%UUID of player%}
+						add arg 2 to {money.%UUID of arg 1%}
+						send "{@Paytome}" to player
+						send "{@Paytoplayer}" to arg 1
+						stop
+				if arg 2 is not set:
+					send "&cError &6>> /pay [player] [number]" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on first join:
 	set {money.%UUID of player%} to 50
+	stop
 
 command /money [<offline player>]:
 	permission: essentials.money
 	permission message: {@Noperms}
 	aliases: essentials:money, balance, bal, essentials:balance, essentials:bal
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/money [player]
 	trigger:
-		if arg 1 is not set:
-			send "{@Moneytome}" to player
-			stop
-		if arg 1 is online:
-			if sender has permission "essentials.money.others" or "essentials.*":
-				send "{@Moneytoplayer}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Moneytome}" to player
 				stop
-			if sender doesn't have permission "essentials.money.others" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+			if arg 1 is online:
+				if sender has permission "essentials.money.others" or "essentials.*":
+					send "{@Moneytoplayer}" to player
+					stop
+				if sender doesn't have permission "essentials.money.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is offline:
+				if sender has permission "essentials.money.others" or "essentials.*":
+					send "{@Moneytoplayer}" to player
+					stop
+				if sender doesn't have permission "essentials.money.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /eco [<text>] [<offline player>] [<number>]:
 	permission: essentials.eco
 	permission message: {@Noperms}
 	aliases: essentials:eco
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/eco [give/remove/set] [player] [number]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-			stop
-		if arg 1 is not "give" or "remove" or "set":
-			send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-			stop
-		if arg 1 is "set":
-			if sender has permission "essentials.eco.*" or "essentials.eco.set" or "essentials.*":
-				if arg 2 is not set:
-					send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-					stop
-				if arg 2 is online:
-					if arg 3 is not set:
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+				stop
+			if arg 1 is not "give" or "remove" or "set":
+				send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+				stop
+			if arg 1 is "set":
+				if sender has permission "essentials.eco.*" or "essentials.eco.set" or "essentials.*":
+					if arg 2 is not set:
 						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 						stop
-					if arg 3 is set:
-						set {money.%UUID of arg 2%} to arg 3
-						send "{@Ecosettoplayeradmin}" to player
-						send "{@Ecosettome}" to arg 2
-						stop
-				if arg 2 is offline:
-					send "{@Noplayerconnect}" to player
-					stop
-			if sender doesn't have permission "essentials.eco.*" or "essentials.eco.set" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-		if arg 1 is "give":
-			if sender has permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
-				if arg 2 is not set:
-					send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-					stop
-				if arg 2 is online:
-					if arg 3 is not set:
-						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-						stop
-					if arg 3 is set:
-						add arg 3 to {money.%UUID of arg 2%}
-						send "{@Ecogivetoplayeradmin}" to player
-						send "{@Ecogivetome}" to arg 2
-				if arg 2 is offline:
-					send "{@Noplayerconnect}" to player
-					stop
-			if sender doesn't have permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-		if arg 1 is "remove":
-			if sender has permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-				if arg 2 is not set:
-					send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-					stop
-				if arg 2 is online:
-					if arg 3 is not set:
-						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
-						stop
-					if arg 3 is set:
-						if {money.%UUID of arg 2%} > arg 3:
-							remove arg 3 from {money.%UUID of arg 2%}
-							send "{@Ecoremovetoplayeradmin}" to player
-							send "{@Ecoremovetome}" to arg 2
-						else:
-							send "{@Ecoremovenomoneytome}" to player
+					if arg 2 is online:
+						if arg 3 is not set:
+							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 							stop
-			if sender doesn't have permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
+						if arg 3 is set:
+							set {money.%UUID of arg 2%} to arg 3
+							send "{@Ecosettoplayeradmin}" to player
+							send "{@Ecosettome}" to arg 2
+							stop
+					if arg 2 is offline:
+						send "{@Noplayerconnect}" to player
+						stop
+				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.set" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is "give":
+				if sender has permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
+					if arg 2 is not set:
+						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+						stop
+					if arg 2 is online:
+						if arg 3 is not set:
+							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+							stop
+						if arg 3 is set:
+							add arg 3 to {money.%UUID of arg 2%}
+							send "{@Ecogivetoplayeradmin}" to player
+							send "{@Ecogivetome}" to arg 2
+					if arg 2 is offline:
+						send "{@Noplayerconnect}" to player
+						stop
+				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.give" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is "remove":
+				if sender has permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+					if arg 2 is not set:
+						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+						stop
+					if arg 2 is online:
+						if arg 3 is not set:
+							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
+							stop
+						if arg 3 is set:
+							if {money.%UUID of arg 2%} > arg 3:
+								remove arg 3 from {money.%UUID of arg 2%}
+								send "{@Ecoremovetoplayeradmin}" to player
+								send "{@Ecoremovetome}" to arg 2
+							else:
+								send "{@Ecoremovenomoneytome}" to player
+								stop
+				if sender doesn't have permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 on first join:
 	delete {essentials.god}
@@ -3166,28 +3202,29 @@ command /nick [<offline player>] [<text>]:
 	permission: essentials.nick
 	permission message: {@Noperms}
 	aliases: essentials:nick, nickname, essentials:nickname
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/nick [player] [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/nick [player] [text]" to player
-			stop
-		if arg 1 is online:
-			if arg 2 is set:
-				if arg 2 is "off":
-					set {nick.%player%} to arg 1
-					send "{@Nickredefine}" to player
-					stop
-				else:
-					send "{@Nicktoplayeradmin}" to player
-					set {nick.%player%} to coloured arg 2
-					send "{@Nicktoplayer}" to arg 1
-					stop
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> &f/nick [player] [text]" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+			if arg 1 is online:
+				if arg 2 is set:
+					if arg 2 is "off":
+						set {nick.%player%} to arg 1
+						send "{@Nickredefine}" to player
+						stop
+					if arg 2 is not "off":
+						send "{@Nicktoplayeradmin}" to player
+						set {nick.%player%} to coloured arg 2
+						send "{@Nicktoplayer}" to arg 1
+						stop
+				if arg 2 is not set:
+					send "&cError &6>> &f/nick [player] [text]" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /adminhome [<text>] [<offline player>] [<text>]:
@@ -4631,8 +4668,8 @@ command /essentials [<text>]:
 				send "{@Reloadmsg}" to player
 				stop
 			if arg 1 is "info":
-				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre6" to player
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to player
+				send "&fVersion &6|-> &c1.15Pre7" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4647,8 +4684,8 @@ command /essentials [<text>]:
 				send "{@Reloadmsg}" to console
 				stop
 			if arg 1 is "info":
-				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre6" to console
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to console
+				send "&fVersion &6|-> &c1.15Pre7" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
