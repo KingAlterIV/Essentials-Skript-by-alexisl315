@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.8
+# Version: 1.8.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.8.
+	Essentialsversionmsg: &7Essentials is 1.8.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -2385,51 +2385,52 @@ command /ban [<offline player>] [<text>]:
 			stop
 		if arg 1 is set:
 			if arg 2 is not set:
-				if {banplayer.%arg-1%} is false:
+				if {banplayer.%arg 1%} is false:
 					ban arg 1 because "{@Banreasondefault}"
 					broadcast "{@Ban} {@Banreasondefault}"
 					kick arg 1 because "{@Banreasondefault}"
-					set {banplayer.%arg-1%} to true
+					set {banplayer.%arg 1%} to true
 					stop
-				if {banplayer.%arg-1%} is not set:
+				if {banplayer.%arg 1%} is not set:
 					ban arg 1 because "{@Banreasondefault}"
 					broadcast "{@Ban} {@Banreasondefault}"
 					kick arg 1 because "{@Banreasondefault}"
-					set {banplayer.%arg-1%} to true
+					set {banplayer.%arg 1%} to true
 					stop
-				if {banplayer.%arg-1%} is true:
+				if {banplayer.%arg 1%} is true:
 					send "{@Banalready}" to player
 			if arg 2 is set:
 				if sender doesn't have permission "essentials.chat.color" or "essentials.*":
-					if {banplayer.%arg-1%} is false:
+					if {banplayer.%arg 1%} is false:
 						ban arg 1 because "%arg 2%"
 						broadcast "{@Ban} %arg 2%"
 						kick arg 1 because "%arg 2%"
-						set {banplayer.%arg-1%} to true
+						set {banplayer.%arg 1%} to true
 						stop
-					if {banplayer.%arg-1%} is not set:
+					if {banplayer.%arg 1%} is not set:
 						ban arg 1 because "%arg 2%"
 						broadcast "{@Ban} %arg 2%"
 						kick arg 1 because "%arg 2%"
-						set {banplayer.%arg-1%} to true
+						set {banplayer.%arg 1%} to true
 						stop
-					if {banplayer.%arg-1%} is true:
+					if {banplayer.%arg 1%} is true:
 						send "{@Banalready}" to player
 				if sender has permission "essentials.chat.color" or "essentials.*":
-					if {banplayer.%arg-1%} is false:
+					if {banplayer.%arg 1%} is false:
 						ban arg 1 because "%colored arg 2%"
 						broadcast "{@Ban} %colored arg 2%"
 						kick arg 1 because "%colored arg 2%"
-						set {banplayer.%arg-1%} to true
+						set {banplayer.%arg 1%} to true
 						stop
-					if {banplayer.%arg-1%} is not set:
+					if {banplayer.%arg 1%} is not set:
 						ban arg 1 because "%colored arg 2%"
 						broadcast "{@Ban} %colored arg 2%"
 						kick arg 1 because "%colored arg 2%"
-						set {banplayer.%arg-1%} to true
+						set {banplayer.%arg 1%} to true
 						stop
-					if {banplayer.%arg-1%} is true:
+					if {banplayer.%arg 1%} is true:
 						send "{@Banalready}" to player
+						stop
 
 command /unban [<offline player>]:
 	permission: essentials.unban
@@ -2864,13 +2865,11 @@ command /nick [<offline player>] [<text>]:
 			if arg 2 is set:
 				if arg 2 is "off":
 					set {nick.%player%} to arg 1
-					set {nick.%player%} to false
 					send "{@Nickredefine}" to player
 					stop
 				else:
 					send "{@Nicktoplayeradmin}" to player
 					set {nick.%player%} to coloured arg 2
-					set {nick.%player%} to true
 					send "{@Nicktoplayer}" to arg 1
 					stop
 			if arg 2 is not set:
