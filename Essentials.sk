@@ -2,13 +2,14 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.6
+# Version: 0.7
 
 options:
 	# >> |- MESSAGE/CONFIG -|
 
 	Spawncooldown: 5
 	Spawncooldownuse: true
+	Teleportspawn: true
 
 	Warpcooldown: 5
 	Warpcooldownuse: true
@@ -308,10 +309,48 @@ options: # >> Continuation of message configuration!
 	Nicktoplayeradmin: &8You have changed the nickname of &c%arg-1% &8in &c%coloured arg-2%
 	Nicktoplayer: &cYour nickname was changed !
 
+	# >> COMMAND MESSAGE = /money, /eco, /pay -|
+
+	Moneytome: &7You have &c%{money.%UUID of player%}% &c€&7.
+	Moneytoplayer: &7The player has &c%{money.%UUID of arg 1%}% &c€&7.
+
+	Ecogivetoplayeradmin: &6You have to add &c%arg 3% &c€ &6to player &c%arg 2%&6.
+	Ecogivetome: &c%player% &6you to add &c%arg 3% &c€&6.
+	Ecoremovetoplayeradmin: &6You have removed &c%arg 3% &c€ &6to player &c%arg 2%&7.
+	Ecoremovetome: &c%player% &6has you removed %arg 3% &c€&6.
+	Ecoremovenomoneytome: &c%arg-2% does not have enough money !
+
+	Paynomoney: &cYou do not have enough money !
+	Paynonumberpositive: &cYou can not put negative number !
+	Paytome: &7You have sent &c%arg 2% &c€ &7to player &c%arg 1%&7.
+	Paytoplayer: &c%player% &7you to send &c%arg 2% &c€&7.
+
+	# >> COMMAND MESSAGE = /list -|
+
+	List: &6Player(s) online: &c%amount of players%&9.
+
 	# >> COMMAND MESSAGE = /god -|
 
 	Godtome: &7You have activated your god mode.
 	Nogodtome: &7You have disabled your god mode.
+	Godtoplayer: &c%player% &6has activated your god mode.
+	Nogodtoplayer: &c%player% &6has disabled your god mode.
+	Godtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been activated.
+	Nogodtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been activated.
+
+	# >> COMMAND MESSAGE = /itemdb -|
+
+	Itemdb: &7Item&6: &c%arg 1% &6: &c%id of arg 1%
+
+	# >> COMMAND MESSAGE = /seen -|
+
+	Noplayerseen: &cYou have not defined the player to check !
+	Seen: &7IP of &c%arg 1% &7: &c%{ip.%arg 1%}%
+
+	# >> COMMAND MESSAGE = /near -|
+
+	Near: &c%loop-value% &7is at &c(%{_locs::%{_m}%}%&cm)&7.
+	Nearnoplayer: &cNo player in the vicinity !
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -322,28 +361,196 @@ options: # >> Continuation of message configuration!
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
-command /god:
+command /near:
+	permission: essentials.near
+	permission message: {@Noperms}
+	aliases: essentials:near
+	executable by: players
+	usage: &cError &6>> &f/near
+	trigger:
+		loop players in radius 200 of player:
+			add 1 to {_n}
+			set {_players::%{_n}%} to loop-player
+			set {_locs::%{_n}%} to distance between loop-player and player
+		if {_n} is greater than 0:
+			loop {_players::*}:
+				add 1 to {_m}
+				remove player from {_players::*}
+				message "{@Near}"
+		else:
+			send "{@Nearnoplayer}"
+
+command /seen [<offline player>]:
+	permission: essentials.seen
+	permission message: {@Noperms}
+	aliases: essentials:seen
+	executable by: players
+	usage: &cError &6>> &f/seen [player]
+	trigger:
+		if arg 1 is not set:
+			send "{@Noplayerseen}" to player
+		if arg 1 is online:
+			send "{@Seen}" to player
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
+			stop
+
+command /itemdb [<item=%tool%>]:
+	permission: essentials.itemdb
+	permission message: {@Noperms}
+	aliases: essentials:itemdb
+	executable by: players
+	usage: &cError &6>> &f/itemdb [name of tool]
+	trigger:
+		message "{@Itemdb}"
+		stop
+
+command /god [<offline player>]:
 	permission: essentials.god
 	permission message: {@Noperms}
 	aliases: essentials:god
 	executable by: players
-	usage: &cError &6>> &f/god
+	usage: &cError &6>> &f/god [player]
 	trigger:
-		if {essentials.god} is not set:
-			send "{@Godtome}"
-			set {essentials.god} to true
+		if arg 1 is not set:
+			if {essentials.dieu.%player%} is false:
+				set {essentials.dieu.%player%} to true
+				send "{@Godtome}" to player
+			else if {essentials.dieu.%player%} is true:
+				set {essentials.dieu.%player%} to false
+				send "{@Nogodtome}" to player
+			else if {essentials.dieu.%player%} is not set:
+				set {essentials.dieu.%player%} to true
+				send "{@Godtome}" to player
+		if arg 1 is online:
+			if sender has permission "essentials.god.others" or "essentials.*":
+				if {essentials.dieu.%arg%} is false:
+					set {essentials.dieu.%arg%} to true
+					send "{@Godtoplayeradmin}" to player
+					send "{@Godtoplayer}" to arg 1
+				if {essentials.dieu.%arg%} is true:
+					set {essentials.dieu.%arg%} to false
+					send "{@Nogodtoplayeradmin}" to player
+					send "{@Nogodtoplayer}" to arg 1
+				if {essentials.dieu.%arg%} is not set:
+					set {essentials.dieu.%arg%} to true
+					send "{@Godtoplayeradmin}" to player
+					send "{@Godtoplayer}" to arg 1
+			if sender doesn't have permission "essentials.god.others" or "essentials.*":
+				message "{@Noperms}"
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
 			stop
-		if {essentials.god} is set:
-			send "{@Nogodtome}"
-			delete {essentials.god}
 
 on join:
-	delete {essentials.god}
+	delete {essentials.dieu.%player%}
 
 on damage:
-	if {essentials.god} is true:
+	if {essentials.dieu.%victim%} is true:
 		cancel event
+	else:
+		stop
 
+command /list:
+	permission: essentials.list
+	permission message: {@Noperms}
+	aliases: essentials:list
+	usage: &cError &6>> &f/list
+	trigger:
+		send "{@List}"
+		stop
+
+command /pay [<offline player>] [<number>]:
+	permission: essentials.pay
+	permission message: {@Noperms}
+	aliases: essentials:pay
+	executable by: players
+	usage: &cError &6>> &f/pay [player] [number]
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> /pay [player] [number]"
+		if arg 1 is online:
+			if arg 2 is set:
+				if 0 is less than arg 2:
+					message "{@Paynonumberpositive}" to player
+				if {money.%UUID of player%} is less than arg 2:
+					message "{@Paynomoney}"
+				else:
+					remove arg 2 from {money.%UUID of player%}
+					add arg 2 to {money.%UUID of arg 1%}
+					message "{@Paytome}" to player
+					message "{@Paytoplayer}" to arg 1
+			if arg 2 is not set:
+				send "&cError &6>> /pay [player] [number]"
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
+			stop
+
+on first join:
+	set {money.%UUID of player%} to 50
+
+command /money [<offline player>]:
+	permission: essentials.money
+	permission message: {@Noperms}
+	aliases: essentials:money
+	executable by: players
+	usage: &cError &6>> &f/money [player]
+	trigger:
+		if arg 1 is not set:
+			send "{@Moneytome}"
+		if arg 1 is online:
+			if sender has permission "essentials.money.others" or "essentials.*":
+				send "{@Moneytoplayer}"
+			if sender doesn't have permission "essentials.money.others" or "essentials.*":
+				message "{@Noperms}"
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
+			stop
+
+command /eco [<text>] [<offline player>] [<number>]:
+	permission: essentials.eco
+	permission message: {@Noperms}
+	aliases: essentials:eco
+	executable by: players
+	usage: &cError &6>> &f/eco [give/remove] [player] [number]
+	trigger:
+		if arg 1 is not set:
+			message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+		if arg 1 is not "give" or "remove":
+			message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+		if arg 1 is "give":
+			if arg 2 is not set:
+				message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+			if arg 2 is online:
+				if arg 3 is not set:
+					message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+				if arg 3 is set:
+					add arg 3 to {money.%UUID of arg 2%}
+					send "{@Ecogivetoplayeradmin}"
+					message "{@Ecogivetome}" to arg 2
+			if arg 2 is offline:
+				message "{@Noplayerconnect}"
+				stop
+		if arg 1 is "remove":
+			if arg 2 is not set:
+				message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+			if arg 2 is online:
+				if arg 3 is not set:
+					message "&cError &6>> &f/eco [give/remove] [player] [number]" to player
+				if arg 3 is set:
+					if {money.%UUID of arg 2%} > arg 3:
+						remove arg 3 from {money.%UUID of arg 2%}
+						send "{@Ecoremovetoplayeradmin}"
+						message "{@Ecoremovetome}" to arg 2
+					else:
+						send "{@Ecoremovenomoneytome}"
+						stop
+			if arg 2 is offline:
+				message "{@Noplayerconnect}"
+				stop
+
+on first join:
+	delete {essentials.god}
 
 command /nick [<offline player>] [<text>]:
 	permission: essentials.nick
@@ -1439,9 +1646,14 @@ on chat:
 		stop
 
 on first join:
-	teleport player to {spawn}
 	broadcast "{@Firstjoin}"
 	stop
+
+on first join:
+	if {@Teleportspawn} is true:
+		teleport player to {spawn}
+	if {@Teleportspawn} is false:
+		stop
 
 on join:
 	if {@Messagejoinquit} is true:
@@ -1451,7 +1663,10 @@ on join:
 		stop
 
 on join: 
-	teleport player to {spawn}
+	if {@Teleportspawn} is true:
+		teleport player to {spawn}
+	if {@Teleportspawn} is false:
+		stop
 
 on quit:
 	if {@Messagejoinquit} is true:
