@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre1
+# |-> Version: 1.15Pre2
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -626,7 +626,7 @@ options: # >> Continuation of message configuration !
 
 	# >> MESSAGE CONSOLE LOADING -|
 
-	Loading: &7[Essentials] | &8loading...
+	Loading: &7[Essentials] &6|-> &8Loading finish !
 
 	# >> COMMAND MESSAGE = /spawnmob -|
 
@@ -4420,81 +4420,116 @@ on break:
 command /essentials [<text>]:
 	aliases: ess
 	permission: essentials.admin
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/essentials reload/info
 	permission message: {@Noperms}
 	trigger:
-		if arg 1 is "reload":
-			make console execute command "/sk reload essentials"
-			send "{@Reloadmsg}" to player
-			stop
-		if arg 1 is "info":
-			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-			send "Version >> 1.15Pre1" to player
-			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
-			stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/essentials reload/info" to player
-			stop
-		if arg 1 is not "reload" or "info":
-			send "&cError &6>> &f/essentials reload/info" to player
-			stop
+		if sender is a player:
+			if arg 1 is "reload":
+				make console execute command "/sk reload essentials"
+				send "{@Reloadmsg}" to player
+				stop
+			if arg 1 is "info":
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
+				send "&fVersion &6|-> &c1.15Pre2" to player
+				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/essentials reload/info" to player
+				stop
+			if arg 1 is not "reload" or "info":
+				send "&cError &6>> &f/essentials reload/info" to player
+				stop
+		if sender is console:
+			if arg 1 is "reload":
+				make console execute command "/sk reload essentials"
+				send "{@Reloadmsg}" to console
+				stop
+			if arg 1 is "info":
+				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to console
+				send "&fVersion &6|-> &c1.15Pre2" to console
+				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/essentials reload/info" to console
+				stop
+			if arg 1 is not "reload" or "info":
+				send "&cError &6>> &f/essentials reload/info" to console
+				stop
 
 command /feed [<offline player>]:
 	permission: essentials.feed
 	aliases: essentials:feed
 	usage: &cError &6>> &f/feed [player]
 	permission message: {@Noperms}
+	executable by: players, console
 	trigger:
-		if arg 1 is not set:
-			send "{@Feedtome}" to player
-			set hunger bar to 10
-			stop
-		if arg 1 is online:
-			if sender is a players:
-				if sender has permission "essentials.feed.others" or "essentials.*":
-					send "{@Feedtoplayerisadmin}" to player
-					send "{@Feedtoplayer}" to arg 1
-					set argument's food bar to 10
-					stop
-				if sender doesn't have permission "essentials.feed.others" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
-			if sender is console:
-				send "{@Feedtoplayerconsole}" to arg 1
-				set argument's food bar to 10
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Feedtome}" to player
+				set hunger bar to 10
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+			if arg 1 is online:
+				if sender is a players:
+					if sender has permission "essentials.feed.others" or "essentials.*":
+						send "{@Feedtoplayerisadmin}" to player
+						send "{@Feedtoplayer}" to arg 1
+						set arg's food bar to 10
+						stop
+					if sender doesn't have permission "essentials.feed.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+				if arg 1 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+		if sender is console:
+			if arg 1 is not set:
+				send "{@Noplayerconnect}" to console
+				stop
+			if arg 1 is online:
+				send "{@Feedtoplayerconsole}" to arg 1
+				set arg's food bar to 10
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 command /heal [<offline player>]:
 	permission: essentials.heal
 	usage: &cError &6>> &f/heal [player]
 	aliases: essentials:heal
+	executable by: players, console
 	permission message: {@Noperms}
 	trigger:
-		if arg 1 is not set:
-			send "{@Healtome}" to player
-			heal player
-			stop
-		if arg 1 is online:
-			if sender is a players:
-				if sender has permission "essentials.heal.others" or "essentials.*":
-					send "{@Healtoplayerisadmin}" to player
-					send "{@Healtoplayer}" to arg 1
-					heal arg 1
-					stop
-				if sender doesn't have permission "essentials.heal.others" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
-			if sender is console:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Healtome}" to player
+				heal player
+				stop
+			if arg 1 is online:
+				if sender is a players:
+					if sender has permission "essentials.heal.others" or "essentials.*":
+						send "{@Healtoplayerisadmin}" to player
+						send "{@Healtoplayer}" to arg 1
+						heal arg 1
+						stop
+					if sender doesn't have permission "essentials.heal.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			if arg 1 is not set:
+				send "{@Noplayerconnect}" to console
+				stop
+			if arg 1 is online:
 				send "{@Healtoplayerconsole}" to arg 1
 				heal arg 1
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 command /setspawn:
 	aliases: essentials:setspawn
