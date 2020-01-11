@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre1
+# Version: 1.14pre2
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -924,6 +924,63 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.list" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "List":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Homes]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.list" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.list" or "essentials.*":
+		if line 2 of block is "&1[List]":
+			make player execute command "/list"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.list" or "essentials.*":
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Fly":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Fly]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.*":
+		if line 2 of block is "&1[Fly]":
+			make player execute command "/fly"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.*":
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.motd" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Motd":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Motd]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.motd" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.motd" or "essentials.*":
+		if line 2 of block is "&1[Motd]":
+			make player execute command "/motd"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.motd" or "essentials.*":
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.homes" or "essentials.*":
@@ -4307,7 +4364,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.14 pre1" to player
+			send "Version >> 1.14pre2" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
