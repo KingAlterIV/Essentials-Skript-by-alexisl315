@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.1.2
+# Version: 1.2
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -45,10 +45,13 @@ options:
 	Messagejoinquit: true
 	Messagedeath: true
 
+	Weatherrain: true
+	Weatherthunder: true
+
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.1.2.
+	Essentialsversionmsg: &7Essentials is 1.2.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -688,6 +691,18 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on weather change to rain:
+	if {@Weatherrain} is false:
+		cancel event
+	if {@Weatherrain} is true:
+		stop
+
+on weather change to thunder:
+	if {@Weatherthunder} is false:
+		cancel event
+	if {@Weatherthunder} is true:
+		stop
 
 command /hat [<text>] [<offline player>]:
 	permission: essentials.hat
@@ -3370,33 +3385,33 @@ command /gm [<text>] [<offline player>]:
 	permission: essentials.gamemode
 	permission message: {@Noperms}
 	aliases: essentials:gamemode, gamemode, essentials:gm
-	usage: &cError &6>> &f/gamemode [0/1/2/3] [player]
+	usage: &cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/gamemode [0/1/2/3] [player]" to player
+			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]" to player
 		if arg 1 is not "1" or "2" or "3" or "0":
-			send "&cError &6>> &f/gamemode [0/1/2/3] [player]" to player
+			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]" to player
 		if arg 2 is not set:
 			if sender is a player:
-				if arg 1 is "1":
+				if arg 1 is "1" or "c":
 					set the gamemode of the player to creative
 					send "{@Gamemodetometocreative}" to player
 					stop
-				if arg 1 is "0":
+				if arg 1 is "0" or "s":
 					set the gamemode of the player to survival
 					send "{@Gamemodetometosurvival}" to player
 					stop
-				if arg 1 is "2":
+				if arg 1 is "2" or "a":
 					set the gamemode of the player to adventure
 					send "{@Gamemodetometoadventure}" to player
 					stop
-				if arg 1 is "3":
+				if arg 1 is "3" or "sp":
 					set the gamemode of the player to spectator
 					send "{@Gamemodetometospectator}" to player
 					stop
 			if sender is console:
 				if arg 2 is not set:
-					send "&cError &6>> &f/gamemode [0/1/2/3] [player]" to player
+					send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]" to player
 					stop
 		if arg 1 is set:
 			if arg 2 is online:
@@ -3405,43 +3420,43 @@ command /gm [<text>] [<offline player>]:
 					stop
 				if sender has permission "essentials.gamemode.others" or "essentials.*":
 					if sender is a player:
-						if arg 1 is "1":
+						if arg 1 is "1" or "c":
 							set the gamemode of the arg 2 to creative
 							send "{@Gamemodetoplayertocreative}" to arg 2
 							send "{@Gamemodetoplayeradmintocreative}" to player
 							stop
-						if arg 1 is "0":
+						if arg 1 is "0" or "s":
 							set the gamemode of the arg 2 to survival
 							send "{@Gamemodetoplayertosurvival}" to arg 2
 							send "{@Gamemodetoplayeradmintosurvival}" to player
 							stop
-						if arg 1 is "2":
+						if arg 1 is "2" or "a":
 							set the gamemode of the arg 2 to adventure
 							send "{@Gamemodetoplayertoadventure}" to arg 2
 							send "{@Gamemodetoplayeradmintoadventure}" to player
 							stop
-						if arg 1 is "3":
+						if arg 1 is "3" or "sp":
 							set the gamemode of the arg 2 to spectator
 							send "{@Gamemodetoplayertospectator}" to arg 2
 							send "{@Gamemodetoplayeradmintospectator}" to player
 							stop
 					if sender is console:
-						if arg 1 is "1":
+						if arg 1 is "1" or "c":
 							set the gamemode of the arg 2 to creative
 							send "{@Gamemodetoplayerisconsoletocreative}" to arg 2
 							send "{@Gamemodetoplayeradmintocreative}" to player
 							stop
-						if arg 1 is "0":
+						if arg 1 is "0" or "s":
 							set the gamemode of the arg 2 to survival
 							send "{@Gamemodetoplayerisconsoletosurvival}" to arg 2
 							send "{@Gamemodetoplayeradmintosurvival}" to player
 							stop
-						if arg 1 is "2":
+						if arg 1 is "2" or "a":
 							set the gamemode of the arg 2 to adventure
 							send "{@Gamemodetoplayerisconsoletoadventure}" to arg 2
 							send "{@Gamemodetoplayeradmintoadventure}" to player
 							stop
-						if arg 1 is "3":
+						if arg 1 is "3" or "sp":
 							set the gamemode of the arg 2 to spectator
 							send "{@Gamemodetoplayerisconsoletospectator}" to arg 2
 							send "{@Gamemodetoplayeradmintospectator}" to player
