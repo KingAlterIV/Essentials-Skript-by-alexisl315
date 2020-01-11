@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre5
+# |-> Version: 1.15Pre6
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -3194,178 +3194,195 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 	permission: essentials.adminhome
 	permission message: {@Noperms}
 	aliases: essentials:adminhome
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/adminhome [delhome/reset/homes/home/sethome] [player] [home]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-			send "&cError &6>> &f/adminhome reset [player]" to player
-			send "&cError &6>> &f/adminhome homes [player]" to player
-			send "&cError &6>> &f/adminhome home [player] [home]" to player
-			send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+				send "&cError &6>> &f/adminhome reset [player]" to player
+				send "&cError &6>> &f/adminhome homes [player]" to player
+				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+				stop
+			if arg 1 is not "delhome" or "reset" or "home" or "homes" or "sethome":
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+				send "&cError &6>> &f/adminhome reset [player]" to player
+				send "&cError &6>> &f/adminhome homes [player]" to player
+				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+				stop
+			if arg 1 is "reset":
+				if arg 2 is not set:
+					send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+					send "&cError &6>> &f/adminhome reset [player]" to player
+					send "&cError &6>> &f/adminhome homes [player]" to player
+					send "&cError &6>> &f/adminhome home [player] [home]" to player
+					send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+					stop
+				if arg 2 is online:
+					delete {homename.%arg 2%::*}
+					delete {home.%arg 2%::*}
+					set {homes.%arg 2%} to 0
+					send "{@Adminhomereset}" to player
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+			if arg 1 is "homes":
+				if arg 2 is not set:
+					send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+					send "&cError &6>> &f/adminhome reset [player]" to player
+					send "&cError &6>> &f/adminhome homes [player]" to player
+					send "&cError &6>> &f/adminhome home [player] [home]" to player
+					send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+					stop
+				if arg 2 is online:
+					send "{@Adminhomehome}" to player
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+			if arg 1 is "home":
+				if arg 2 is not set:
+					send "&cError &6>> &f/adminhome remove [player] [home]" to player
+					send "&cError &6>> &f/adminhome reset [player]" to player
+					send "&cError &6>> &f/adminhome homes [player]" to player
+					send "&cError &6>> &f/adminhome home [player] [home]" to player
+					send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+					stop
+				if arg 2 is online:
+					if arg 3 is set:
+						if {home.%arg 2%::%arg 3%} is set:
+							set {back::%uuid of player%} to location of player
+							teleport player to {home.%arg 2%::%arg 3%}
+							send "{@Adminhometeleporting}" to player
+						if {home.%arg 2%::%arg 3%} is not set:
+							send "{@Adminhomenohome}" to player
+							stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+			if arg 1 is "delhome":
+				if arg 2 is not set:
+					send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+					send "&cError &6>> &f/adminhome reset [player]" to player
+					send "&cError &6>> &f/adminhome homes [player]" to player
+					send "&cError &6>> &f/adminhome home [player] [home]" to player
+					send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+					stop
+				if arg 2 is online:
+					if arg 3 is set:
+						if {home.%arg 2%::%arg 3%} is set:
+							remove arg 3 from {homename.%arg 2%::*}
+							remove arg 3 from {home.%arg 2%::*}
+							send "{@Adminhomedelhome}" to player
+						if {home.%arg 2%::%arg 3%} is not set:
+							send "{@Adminhomenohome}" to player
+							stop
+			if arg 1 is "sethome":
+				if arg 2 is not set:
+					send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+					send "&cError &6>> &f/adminhome reset [player]" to player
+					send "&cError &6>> &f/adminhome homes [player]" to player
+					send "&cError &6>> &f/adminhome home [player] [home]" to player
+					send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+					stop
+				if arg 2 is online:
+					if arg 3 is set:
+						if {home.%arg 2%::%arg 3%} is not set:
+							add arg 3 to {homename.%arg 2%::*}
+							add arg 3 to {home.%arg 2%::*}
+							send "{@Adminhomesethome}" to player
+						if {home.%arg 2%::%arg 3%} is set:
+							send "{@Adminhomealready}" to player
+							stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is not "delhome" or "reset" or "home" or "homes" or "sethome":
-			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-			send "&cError &6>> &f/adminhome reset [player]" to player
-			send "&cError &6>> &f/adminhome homes [player]" to player
-			send "&cError &6>> &f/adminhome home [player] [home]" to player
-			send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-			stop
-		if arg 1 is "reset":
-			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-				send "&cError &6>> &f/adminhome reset [player]" to player
-				send "&cError &6>> &f/adminhome homes [player]" to player
-				send "&cError &6>> &f/adminhome home [player] [home]" to player
-				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-				stop
-			if arg 2 is online:
-				delete {homename.%arg 2%::*}
-				delete {home.%arg 2%::*}
-				set {homes.%arg 2%} to 0
-				send "{@Adminhomereset}" to player
-				stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
-		if arg 1 is "homes":
-			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-				send "&cError &6>> &f/adminhome reset [player]" to player
-				send "&cError &6>> &f/adminhome homes [player]" to player
-				send "&cError &6>> &f/adminhome home [player] [home]" to player
-				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-				stop
-			if arg 2 is online:
-				send "{@Adminhomehome}" to player
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
-		if arg 1 is "home":
-			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome remove [player] [home]" to player
-				send "&cError &6>> &f/adminhome reset [player]" to player
-				send "&cError &6>> &f/adminhome homes [player]" to player
-				send "&cError &6>> &f/adminhome home [player] [home]" to player
-				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-				stop
-			if arg 2 is online:
-				if arg 3 is set:
-					if {home.%arg 2%::%arg 3%} is set:
-						set {back::%uuid of player%} to location of player
-						teleport player to {home.%arg 2%::%arg 3%}
-						send "{@Adminhometeleporting}" to player
-					if {home.%arg 2%::%arg 3%} is not set:
-						send "{@Adminhomenohome}" to player
-						stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
-		if arg 1 is "delhome":
-			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-				send "&cError &6>> &f/adminhome reset [player]" to player
-				send "&cError &6>> &f/adminhome homes [player]" to player
-				send "&cError &6>> &f/adminhome home [player] [home]" to player
-				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-				stop
-			if arg 2 is online:
-				if arg 3 is set:
-					if {home.%arg 2%::%arg 3%} is set:
-						remove arg 3 from {homename.%arg 2%::*}
-						remove arg 3 from {home.%arg 2%::*}
-						send "{@Adminhomedelhome}" to player
-					if {home.%arg 2%::%arg 3%} is not set:
-						send "{@Adminhomenohome}" to player
-						stop
-		if arg 1 is "sethome":
-			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
-				send "&cError &6>> &f/adminhome reset [player]" to player
-				send "&cError &6>> &f/adminhome homes [player]" to player
-				send "&cError &6>> &f/adminhome home [player] [home]" to player
-				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
-				stop
-			if arg 2 is online:
-				if arg 3 is set:
-					if {home.%arg 2%::%arg 3%} is not set:
-						add arg 3 to {homename.%arg 2%::*}
-						add arg 3 to {home.%arg 2%::*}
-						send "{@Adminhomesethome}" to player
-					if {home.%arg 2%::%arg 3%} is set:
-						send "{@Adminhomealready}" to player
-						stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
 
 command /delhome [<text>]:
 	permission: essentials.delhome
 	permission message: {@Noperms}
 	aliases: essentials:delhome
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/delhome [home]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/delhome [home]"
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/delhome [home]"
+				stop
+			if arg 1 is set:
+				if {home.%player%::%arg 1%} is set:
+					delete {home.%player%::%arg 1%}
+					delete {homename.%player%::%arg 1%} 
+					send "{@Homedelete}" to player
+					remove 1 from {homes.%player%}
+					stop
+				if {home.%player%::%arg 1%} is not set:
+					send "{@Nohome}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			if {home.%player%::%arg 1%} is set:
-				delete {home.%player%::%arg 1%}
-				delete {homename.%player%::%arg 1%} 
-				send "{@Homedelete}" to player
-				remove 1 from {homes.%player%}
-				stop
-			if {home.%player%::%arg 1%} is not set:
-				send "{@Nohome}" to player
-				stop
 
 command /home [<text>]:
 	permission: essentials.home
 	permission message: {@Noperms}
 	aliases: essentials:home
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/home [home]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/home [home]" to player
-			stop
-		if arg 1 is set:
-			if {home.%player%::%arg 1%} is not set:
-				send "{@Nohome}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/home [home]" to player
 				stop
-			if {home.%player%::%arg 1%} is set:
-				if {@Homecooldownuse} is true:
-					if sender doesn't have permission "essentials.home.bypass" or "essentials.*":
-						send "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}" to player
-						wait {@Homecooldown} seconds
-						send "{@Hometeleporting}" to player
-						set {back::%uuid of player%} to location of player
-						teleport player to {home.%player%::%arg 1%}
-						stop
-					if sender has permission "essentials.home.bypass" or "essentials.*":
-						send "{@Hometeleporting}" to player
-						set {back::%uuid of player%} to location of player
-						teleport player to {home.%player%::%arg 1%}
-						stop
-				if {@Homecooldownuse} is false:
-					set {back::%uuid of player%} to location of player
-					teleport player to {home.%player%::%arg 1%}
-					send "{@Hometeleporting}" to player
+			if arg 1 is set:
+				if {home.%player%::%arg 1%} is not set:
+					send "{@Nohome}" to player
 					stop
+				if {home.%player%::%arg 1%} is set:
+					if {@Homecooldownuse} is true:
+						if sender doesn't have permission "essentials.home.bypass" or "essentials.*":
+							send "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}" to player
+							wait {@Homecooldown} seconds
+							send "{@Hometeleporting}" to player
+							set {back::%uuid of player%} to location of player
+							teleport player to {home.%player%::%arg 1%}
+							stop
+						if sender has permission "essentials.home.bypass" or "essentials.*":
+							send "{@Hometeleporting}" to player
+							set {back::%uuid of player%} to location of player
+							teleport player to {home.%player%::%arg 1%}
+							stop
+					if {@Homecooldownuse} is false:
+						set {back::%uuid of player%} to location of player
+						teleport player to {home.%player%::%arg 1%}
+						send "{@Hometeleporting}" to player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
+
 
 command /homes:
 	permission: essentials.homes
 	permission message: {@Noperms}
 	aliases: essentials:homes
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/homes
 	trigger:
-		send "{@Homeslist}" to player
-		stop
+		if sender is a player:
+			send "{@Homeslist}" to player
+			stop
+		if sender is console:
+			send "{@Homeslist}" to console
+			stop
 
 on join:
 	set {nick.%player%} to player
@@ -3379,83 +3396,99 @@ command /kickall [<text>]:
 	permission: essentials.kickall
 	permission message: {@Noperms}
 	aliases: essentials:kickall
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/kickall [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/kick [text]" to player
-			stop
-		if arg 1 is set:
-			loop all players:
-				kick all players because "{@Kickall}"
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/kickall [text]" to player
 				stop
+			if arg 1 is set:
+				loop all players:
+					kick all players because "{@Kickall}"
+					stop
+		if sender is console:
+			if arg 1 is not set:
+				send "&cError &6>> &f/kickall [text]" to console
+				stop
+			if arg 1 is set:
+				loop all players:
+					kick all players because "{@Kickall}"
+					stop
 
 command /unmute [<offline player>]:
 	permission: essentials.unmute
 	permission message: {@Noperms}
 	aliases: essentials:unmute
 	usage: &cError &6>> &f/unmute [player]
+	executable by: players, console
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/unmute [player]"
-			stop
-		if arg 1 is set:
-			if sender is a player:
-				if {mute.%arg-1%} is true:
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/unmute [player]"
+				stop
+			if arg 1 is online:
+				if {mute.%arg 1%} is true:
 					set {mute.seconds.%arg 1%} to false
-					set {mute.%arg-1%} to false
+					set {mute.%arg 1%} to false
 					broadcast "{@Unmutebroadcast}"
 					stop
-				if {mute.%arg-1%} is false:
+				if {mute.%arg 1%} is false:
 					send "{@Unmutealready}" to player
 					stop
-			if sender is console:
-				if {mute.%arg-1%} is true:
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			if arg 1 is online:
+				if {mute.%arg 1%} is true:
 					set {mute.seconds.%arg 1%} to false
-					set {mute.%arg-1%} to false
+					set {mute.%arg 1%} to false
 					broadcast "{@Unmutebroadcastisconsole}"
 					stop
-				if {mute.%arg-1%} is false:
-					send "{@Unmutealready}" to player
+				if {mute.%arg 1%} is false:
+					send "{@Unmutealready}" to console
 					stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/unmute [player]" to player
-			stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 command /mute [<offline player>] [<number>]:
 	permission: essentials.mute
 	permission message: {@Noperms}
 	aliases: essentials:mute
 	usage: &cError &6>> &f/mute [player] [seconds]
+	executable by: players, console
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/mute [player] [seconds]" to player
-			stop
-		if arg 1 is online:
-			if sender is a player:
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/mute [player] [seconds]" to player
+				stop
+			if arg 1 is online:
 				if arg 2 is set:
 					set {mute.seconds.%arg 1%} to arg 2
-					set {mute.%arg-1%} to true
+					set {mute.%arg 1%} to true
 					broadcast "{@Mutebroadcast}"
 					stop
 				if arg 2 is not set:
 					send "&cError &6>> &f/mute [player] [seconds]" to player
 					stop
-			if sender is console:
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			if arg 1 is online:
 				if arg 2 is set:
 					set {mute.seconds.%arg 1%} to arg 2
-					set {mute.%arg-1%} to true
+					set {mute.%arg 1%} to true
 					broadcast "{@Mutebroadcastisconsole}"
 					stop
 				if arg 2 is not set:
-					send "&cError &6>> &f/mute [player] [seconds]" to player
+					send "&cError &6>> &f/mute [player] [seconds]" to console
 					stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 every 1 second:
 	loop all players:
@@ -3485,50 +3518,54 @@ on chat:
 
 command /speed [<text>] [<number>]:
 	permission: essentials.speed
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	aliases: essentials:speed
 	usage: &cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
+				stop
+			if arg 1 is not "fly" or "walk" or "reset":
+				send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
+				stop
+			if arg 1 is "fly":
+				if sender has permission "essentials.speed.fly" or "essentials.*":
+					if arg 2 is set:
+						set the player's fly speed to arg 2
+						send "{@Speedfly}" to player
+						stop
+					if arg 2 is not set:
+						send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
+						stop
+				if sender doesn't have permission "essentials.speed.fly" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is "walk":
+				if sender has permission "essentials.speed.walk" or "essentials.*":
+					if arg 2 is set:
+						set the player's walk speed to arg 2
+						send "{@Speedwalk}"
+						stop
+					if arg 2 is not set:
+						send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
+						stop
+				if sender doesn't have permission "essentials.speed.walk" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is "reset":
+				if sender has permission "essentials.speed.reset" or "essentials.*":
+					set the player's walk speed to 0.2
+					set the player's fly speed to 0.1
+					send "{@Speedreset}" to player
+					stop
+				if sender doesn't have permission "essentials.speed.reset" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is not "fly" or "walk" or "reset":
-			send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
-			stop
-		if arg 1 is "fly":
-			if sender has permission "essentials.speed.fly" or "essentials.*":
-				if arg 2 is set:
-					set the player's fly speed to arg 2
-					send "{@Speedfly}" to player
-					stop
-				if arg 2 is not set:
-					send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
-					stop
-			if sender doesn't have permission "essentials.time.night" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-		if arg 1 is "walk":
-			if sender has permission "essentials.speed.walk" or "essentials.*":
-				if arg 2 is set:
-					set the player's walk speed to arg 2
-					send "{@Speedwalk}"
-					stop
-				if arg 2 is not set:
-					send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
-					stop
-			if sender doesn't have permission "essentials.speed.walk" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-		if arg 1 is "reset":
-			if sender has permission "essentials.speed.reset" or "essentials.*":
-				set the player's walk speed to 0.2
-				set the player's fly speed to 0.1
-				send "{@Speedreset}" to player
-				stop
-			if sender doesn't have permission "essentials.speed.reset" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
 
 on quit:
 	set the player's walk speed to 0.2
@@ -4595,7 +4632,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre5" to player
+				send "&fVersion &6|-> &c1.15Pre6" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4611,7 +4648,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre5" to console
+				send "&fVersion &6|-> &c1.15Pre6" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
