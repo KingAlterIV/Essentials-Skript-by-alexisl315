@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre8
+# |-> Version: 1.15Pre9
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -2099,61 +2099,73 @@ command /tpo [<offline player>] [<offline player>]:
 
 command /jump:
 	permission: essentials.jump
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/jump
 	aliases: essentials:jump
 	trigger:
-		teleport player to target block
-		stop
+		if sender is a player:
+			teleport player to target block
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /compass [<offline player>]:
 	permission: essentials.compass
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/compass [player]
 	aliases: essentials:compass , essentials:direction, direction
 	trigger:
-		if arg 1 isn't set:
-			send "{@Compasstome}" to player
-			stop
-		if arg 1 is set:
-			send "{@Compasstoplayer}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Compasstome}" to player
+				stop
+			if arg 1 is set:
+				send "{@Compasstoplayer}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /togglejail [<offline player>] [<text>]:
 	permission: essentials.jail
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/jail [player] [jail]
 	aliases: essentials:tjail, essentials:unjail, essentials:jail, tjail, unjail, jail
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/jail [player] [jail]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/jail [player] [jail]" to player
+				stop
+			if arg 1 is set:
+				if arg 2 is not set:
+					if {in.jail::%uuid of arg 1%} is set:
+						teleport arg 1 to {beforejail::%uuid of arg 1%}
+						clear {beforejail::%uuid of arg 1%}
+						clear {in.jail::%uuid of arg 1%}
+						send "{@Nojailplayer}" to arg 1
+						send "{@Nojailplayeradmin}" to player
+						stop
+					if {in.jail::%uuid of arg 1%} is not set:
+						send "&cError &6>> &f/jail [player] [jail]" to player
+						stop
+				if arg 2 is set:
+					if {jails::%arg 2%} is set:
+						set {beforejail::%uuid of arg 1%} to location of arg 1
+						teleport arg 1 to {jails::%arg 2%}
+						set {in.jail::%uuid of arg 1%} to 1
+						send "{@Jailplayer}" to arg 1
+						send "{@Jailplayeradmin}" to player
+						stop
+					if {jails::%arg 2%} is not set:
+						send "{@Nojail}" to player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			if arg 2 is not set:
-				if {in.jail::%uuid of arg 1%} is set:
-					teleport arg 1 to {beforejail::%uuid of arg 1%}
-					clear {beforejail::%uuid of arg 1%}
-					clear {in.jail::%uuid of arg 1%}
-					send "{@Nojailplayer}" to arg 1
-					send "{@Nojailplayeradmin}" to player
-					stop
-				else:
-					send "&cError &6>> &f/jail [player] [jail]" to player
-					stop
-			if arg 2 is set:
-				if {jails::%arg 2%} is set:
-					set {beforejail::%uuid of arg 1%} to location of arg 1
-					teleport arg 1 to {jails::%arg 2%}
-					set {in.jail::%uuid of arg 1%} to 1
-					send "{@Jailplayer}" to arg 1
-					send "{@Jailplayeradmin}" to player
-					stop
-				else:
-					send "{@Nojail}" to player
-					stop
 
 on drop:
 	if {in.jail::%uuid of player%} is set:
@@ -2191,91 +2203,107 @@ on damage:
 
 command /setjail [<text>]:
 	permission: essentials.setjail
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/setjail [jail]
 	aliases: essentials:setjail, essentials:createjail, createjail
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/setjail [jail]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/setjail [jail]" to player
+				stop
+			if arg 1 is set:
+				if {jails::%arg 1%} is not set:
+					set {jails::%arg 1%} to location of player
+					send "{@Setjailcreate}" to player
+					stop
+				if {jails::%arg 1%} is set:
+					send "{@Setjailalready}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			if {jails::%arg 1%} is not set:
-				set {jails::%arg 1%} to location of player
-				send "{@Setjailcreate}" to player
-				stop
-			else:
-				send "{@Setjailalready}" to player
-				stop
 
 command /jails:
 	permission: essentials.jails
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/jails
 	aliases: essentials:jails
 	trigger:
-		loop {jails::*}:
-			add loop-index to {_jl::*}
-		send "{@Jails}" to player
-		stop
+		if sender is a player:
+			loop {jails::*}:
+				add loop-index to {_jl::*}
+			send "{@Jails}" to player
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /deljail [<text>]:
 	permission: essentials.deljail
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/deljail [Jail]
 	aliases: essentials:deljail, essentials:remjail, essentials:rmjail , remjail, rmjail
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/deljail [Jail]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/deljail [Jail]" to player
+				stop
+			if arg 1 is set:
+				loop {jails::*}:
+					if {jails::%arg 1%} is set:
+						clear {jails::%arg 1%}
+						send "{@Deljailremove}" to player
+						stop
+					if {jails::%arg 1%} is not set:
+						send "{@Deljailnojail}" to player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			loop {jails::*}:
-				if {jails::%arg 1%} is set:
-					clear {jails::%arg 1%}
-					send "{@Deljailremove}" to player
-					stop
-				else:
-					send "{@Deljailnojail}" to player
-					stop
 
 command /tree [<text>]:
 	permission: essentials.tree
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
-	usage: &cError &6>> &f/tree [tree]
+	usage: &cError &6>> &f/tree [Jungle/Oak/Spruce/Acacia/Birch/Darkwood]
 	aliases: essentials:tree
 	trigger:
-		if arg 1 is "jungle":
-			grow tree of type any jungle tree above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is "oak":
-			grow oak above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is "spruce":
-			grow spruce above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is "acacia":
-			grow acacia above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is "birch":
-			grow birch above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is "darkwood":
-			grow dark oak above the targeted block
-			send "{@Tree}" to player
-			stop
-		if arg 1 is not "oak" or "jungle" or "spruce" or "acacia" or "birch" or "darkwood":
-			send "&cError &6>> &f/tree [tree]" to player
-			stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/tree [tree]" to player
+		if sender is a player:
+			if arg 1 is "jungle":
+				grow tree of type any jungle tree above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is "oak":
+				grow oak above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is "spruce":
+				grow spruce above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is "acacia":
+				grow acacia above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is "birch":
+				grow birch above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is "darkwood":
+				grow dark oak above the targeted block
+				send "{@Tree}" to player
+				stop
+			if arg 1 is not "oak" or "jungle" or "spruce" or "acacia" or "birch" or "darkwood":
+				send "&cError &6>> &f/tree [Jungle/Oak/Spruce/Acacia/Birch/Darkwood]" to player
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/tree [Jungle/Oak/Spruce/Acacia/Birch/Darkwood]" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /tpa [<offline player>]:
@@ -4853,7 +4881,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre8" to player
+				send "&fVersion &6|-> &c1.15Pre9" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4869,7 +4897,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre8" to console
+				send "&fVersion &6|-> &c1.15Pre9" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
