@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15.2
+# |-> Version: 1.15.3
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -1075,8 +1075,12 @@ command /op [<offline player>]:
 					op the arg 1
 					stop
 			if {essentials.op.%arg 1%} is true:
-				send "{@Optoalready}" to player
-				stop
+				if arg 1 is not set:
+					send "&cError &6>> &f/op [player]" to player
+					stop
+				if arg 1 is set:
+					send "{@Optoalready}" to player
+					stop
 		if sender is console:
 			if {essentials.op.%arg 1%} is not set:
 				if arg 1 is not set:
@@ -1089,8 +1093,12 @@ command /op [<offline player>]:
 					op the arg 1
 					stop
 			if {essentials.op.%arg 1%} is true:
-				send "{@Optoalready}" to console
-				stop
+				if arg 1 is not set:
+					send "&cError &6>> &f/op [player]" to player
+					stop
+				if arg 1 is set:
+					send "{@Optoalready}" to player
+					stop
 
 command /deop [<offline player>]:
 	permission: essentials.deop
@@ -1111,8 +1119,12 @@ command /deop [<offline player>]:
 					deop the arg 1
 					stop
 			if {essentials.op.%arg 1%} is not set:
-				send "{@Deoptoalready}" to player
-				stop
+				if arg 1 is not set:
+					send "&cError &6>> &f/deop [player]" to player
+					stop
+				if arg 1 is set:
+					send "{@Deoptoalready}" to player
+					stop
 		if sender is console:
 			if {essentials.op.%arg 1%} is true:
 				if arg 1 is not set:
@@ -1125,8 +1137,12 @@ command /deop [<offline player>]:
 					deop the arg 1
 					stop
 			if {essentials.op.%arg 1%} is not set:
-				send "{@Deoptoalready}" to console
-				stop
+				if arg 1 is not set:
+					send "&cError &6>> &f/deop [player]" to player
+					stop
+				if arg 1 is set:
+					send "{@Deoptoalready}" to player
+					stop
 
 command /chunkslime [<offline player>]:
 	permission: essentials.chunkslime
@@ -5444,7 +5460,7 @@ command /fly [<offline player>]:
 
 on death:
 	if {@Messagedeath} is true:
-		set {back} to location of player
+		set {back::%uuid of player%} to location of player
 		set death message to "{@Death}"
 		stop
 	if {@Messagedeath} is false:
@@ -5509,7 +5525,6 @@ command /clearinventory [<offline player>]:
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to console
 				stop
-
 
 command /suicide:
 	permission: essentials.suicide
@@ -5658,7 +5673,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15.2" to player
+				send "&fVersion &6|-> &c1.15.3" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5674,7 +5689,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15.2" to console
+				send "&fVersion &6|-> &c1.15.3" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
