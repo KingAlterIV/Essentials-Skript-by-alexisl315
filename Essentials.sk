@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre2
+# |-> Version: 1.15Pre3
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -118,7 +118,7 @@ options:
 	# >> COMMAND MESSAGE = /broadcast -|
 
 	Broadcast: &f%arg-1%
-	Broadcastcolor: &f%coloured argument 1%
+	Broadcastcolor: &f%coloured arg 1%
 
 	# >> COMMAND MESSAGE = /suicide -|
 
@@ -2283,7 +2283,7 @@ command /tpa [<offline player>]:
 	aliases: essentials:tpa
 	trigger:
 		if arg 1 is online:
-			set {tpa.%arg%} to player
+			set {tpa.%arg 1%} to player
 			send "{@Tpasendtoplayer}"  to player
 			send "{@Tpasendtoplayer2}" to arg 1
 			send "{@Tpa}" to arg 1
@@ -2778,7 +2778,7 @@ command /unbanip [<offline player>] [<Text>]:
 		if arg 1 is set:
 			if arg 2 is ip of arg 1:
 				if {banipplayer.%arg 1%} is true:
-					execute console command "/pardon-ip %arg 2%"
+					make console execute command "/pardon-ip %{ip.%arg 1%}%"
 					broadcast "{@Unbanip}"
 					IP-unban arg 1
 					set {banipplayer.%arg 1%} to false
@@ -4276,90 +4276,116 @@ command /tpall:
 command /clearinventory [<offline player>]:
 	permission: essentials.clearinventory
 	permission message: {@Noperms}
+	executable by: players, console
 	aliases: essentials:clearinventory, ci, clear, essentials:clear, essentials:ci
 	usage: &cError &6>> &f/clear [player]
 	trigger:
-		if arg 1 is not set:
-			clear player's inventory
-			send "{@Cleartome}" to player
-			stop
-		if arg 1 is set:
-			if sender has permission "essentials.clearinventory.others" or "essentials.*":
-				if sender is player:
+		if sender is a player:
+			if arg 1 is not set:
+				clear player's inventory
+				send "{@Cleartome}" to player
+				stop
+			if arg 1 is online:
+				if sender has permission "essentials.clearinventory.others" or "essentials.*":
 					clear argument's inventory
 					send "{@Cleartoplayerisadmin}" to arg 1
 					send "{@Cleartoplayer}" to player
 					stop
-				if sender is console:
-					clear argument's inventory
-					send "{@Cleartoplayerisconsole}" to arg 1
-					send "{@Cleartoplayer}" to player
-					stop
-			if sender doesn't have permission "essentials.clearinventory.others" or "essentials.*":
-				send "{@Noperms}" to player
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+				if sender doesn't have permission "essentials.clearinventory.others" or "essentials.*":
+					send "{@Noperms}" to player
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			if arg 1 is online:
+				clear argument's inventory
+				send "{@Cleartoplayerisconsole}" to arg 1
+				send "{@Cleartoplayer}" to console
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/clear [player]" to console
+				stop
+
 
 command /suicide:
 	permission: essentials.suicide
 	permission message: {@Noperms}
 	aliases: essentials:suicide
 	usage: &cError &6>> &f/suicide
-	executable by: players
+	executable by: players, console
 	trigger:
-		set {back} to location of player
-		kill player
-		broadcast "{@Suicide}"
-		stop
+		if sender is a player:
+			set {back::%uuid of player%} to location of player
+			kill player
+			broadcast "{@Suicide}"
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /broadcast [<text>]:
 	permission: essentials.broadcast
 	permission message: {@Noperms}
 	aliases: essentials:broadcast
 	usage: &cError &6>> &f/broadcast [text]
+	executable by: players, console
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/broadcast [Text]"
-			stop
-		if arg 1 is set:
-			if sender doesn't have permission "essentials.broadcast.color" or "essentials.*":
-				broadcast "{@Broadcast}"
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/broadcast [text]"
 				stop
-			if sender has permission "essentials.broadcast.color" or "essentials.*":
+			if arg 1 is set:
+				if sender doesn't have permission "essentials.broadcast.color" or "essentials.*":
+					broadcast "{@Broadcast}"
+					stop
+				if sender has permission "essentials.broadcast.color" or "essentials.*":
+					broadcast "{@Broadcastcolor}"
+					stop
+		if sender is console:
+			if arg 1 is set:
 				broadcast "{@Broadcastcolor}"
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/broadcast [Text]"
 				stop
 
 command /tp [<offline player>] [<offline player>]:
 	permission: essentials.tp
 	permission message: {@Noperms}
 	aliases: essentials:tp
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/tp [player] [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/tp [player] [player]"
-			stop
-		if arg 1 is online:
-			if arg 2 is not set:
-				set {back::%uuid of player%} to location of player
-				teleport player to argument 1
-				send "{@Tpteleporting}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/tp [player] [player]"
 				stop
-			if arg 2 is set:
-				if sender has permission "essentials.tp.others" or "essentials.*":
-					set {back::%uuid of arg 1%} to location of player
-					teleport argument 1 to arg 2
+			if arg 1 is online:
+				if arg 2 is not set:
+					set {back::%uuid of player%} to location of player
+					teleport player to arg 1
 					send "{@Tpteleporting}" to player
 					stop
-				if sender doesn't have permission "essentials.tp.others" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
-		if arg 2 is offline:
-			send "{@Noplayerconnect}" to player
+				if arg 2 is set:
+					if sender has permission "essentials.tp.others" or "essentials.*":
+						set {back::%uuid of arg 1%} to location of player
+						teleport argument 1 to arg 2
+						send "{@Tpteleporting}" to arg 1
+						stop
+					if sender doesn't have permission "essentials.tp.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+			if arg 2 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on chat:
@@ -4431,7 +4457,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre2" to player
+				send "&fVersion &6|-> &c1.15Pre3" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
