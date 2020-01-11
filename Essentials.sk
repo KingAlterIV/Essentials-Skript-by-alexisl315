@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre4
+# |-> Version: 1.15Pre5
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -3539,77 +3539,95 @@ command /slap [<offline player>]:
 	permission: essentials.slap
 	permission message: {@Noperms}
 	aliases: essentials:slap
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/slap [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/slap [player]" to player
-			stop
-		if arg 1 is online:
-			push argument 1 backwards at speed 1
-			send "{@Slaptome}" to arg 1
-			send "{@Slaptoplayeradmin}" to player
-			stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/slap [player]" to player
+				stop
+			if arg 1 is online:
+				push arg 1 backwards at speed 1
+				send "{@Slaptome}" to arg 1
+				send "{@Slaptoplayeradmin}" to player
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /day:
 	permission: essentials.night
 	permission message: {@Noperms}
 	aliases: essentials:night
+	executable by: players, console
 	usage: &cError &6>> &f/night
 	trigger:
-		set time to 6:00
-		send "{@Day}" to player
-		stop
+		if sender is a player:
+			set time to 6:00
+			send "{@Night}" to player
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /night:
 	permission: essentials.night
 	permission message: {@Noperms}
 	aliases: essentials:night
+	executable by: players, console
 	usage: &cError &6>> &f/night
 	trigger:
-		set time to 20:00
-		send "{@Night}" to player
-		stop
+		if sender is a player:
+			set time to 20:00
+			send "{@Night}" to player
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /time [<text>] [<text>]:
 	permission: essentials.time
 	permission message: {@Noperms}
 	aliases: essentials:time
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/time
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/time set [day/night]" to player
-			stop
-		if arg 1 is not "set":
-			send "&cError &6>> &f/time set [day/night]" to player
-			stop
-		if arg 1 is "set":
-			if arg 2 is not "day" or "night":
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> &f/time set [day/night]" to player
 				stop
-			if arg 2 is not set:
+			if arg 1 is not "set":
 				send "&cError &6>> &f/time set [day/night]" to player
 				stop
-			if arg 2 is "day":
-				if sender has permission "essentials.time.day" or "essentials.*":
-					set time to 6:00
-					send "{@Day}"
+			if arg 1 is "set":
+				if arg 2 is not "day" or "night":
+					send "&cError &6>> &f/time set [day/night]" to player
 					stop
-				if sender doesn't have permission "essentials.time.day" or "essentials.*":
-					send "{@Noperms}" to player
+				if arg 2 is not set:
+					send "&cError &6>> &f/time set [day/night]" to player
 					stop
-			if arg 2 is "night":
-				if sender has permission "essentials.time.night" or "essentials.*":
-					set time to 20:00
-					send "{@Night}" to player
-					stop
-				if sender doesn't have permission "essentials.time.night" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
+				if arg 2 is "day":
+					if sender has permission "essentials.time.day" or "essentials.*" or "essentials.time.*":
+						set time to 6:00
+						send "{@Day}"
+						stop
+					if sender doesn't have permission "essentials.time.day" or "essentials.*" or "essentials.time.*":
+						send "{@Noperms}" to player
+						stop
+				if arg 2 is "night":
+					if sender has permission "essentials.time.night" or "essentials.*" or "essentials.time.*":
+						set time to 20:00
+						send "{@Night}" to player
+						stop
+					if sender doesn't have permission "essentials.time.night" or "essentials.*" or "essentials.time.*":
+						send "{@Noperms}" to player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 every {@Antiafkcooldown} seconds:
 	loop all players:
@@ -3635,34 +3653,51 @@ command /afk [<offline player>]:
 	permission: essentials.afk
 	permission message: {@Noperms}
 	aliases: essentials:afk
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/afk [player]
 	trigger:
-		if arg 1 is not set:
-			if {afk.%player%} is not set:
-				broadcast "{@Afktome}"
-				set {afk.%player%} to true
+		if sender is a player:
+			if arg 1 is not set:
+				if {afk.%player%} is not set:
+					broadcast "{@Afktome}"
+					set {afk.%player%} to true
+					stop
+				if {afk.%player%} is set:
+					broadcast "{@Noafktome}"
+					delete {afk.%player%}
+					stop
+			if arg 1 is online:
+				if sender has permission "essentials.afk.others" or "essentials.*":
+					if {afk.%arg 1%} is not set:
+						broadcast "{@Afktoplayer}"
+						set {afk.%arg 1%} to true
+						stop
+					if {afk.%arg 1%} is set:
+						broadcast "{@Noafktoplayer}"
+						delete {afk.%arg 1%}
+						stop
+				if sender doesn't have permission "essentials.afk.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
 				stop
-			else:
-				broadcast "{@Noafktome}"
-				delete {afk.%player%}
+		if sender is console:
+			if arg 1 is not set:
+				send "&cError &6>> &f/afk [player]" to console
 				stop
-		if arg 1 is online:
-			if sender has permission "essentials.afk.others" or "essentials.*":
-				if {afk.%argument 1%} is not set:
+			if arg 1 is online:
+				if {afk.%arg 1%} is not set:
 					broadcast "{@Afktoplayer}"
-					set {afk.%argument 1%} to true
+					set {afk.%arg 1%} to true
 					stop
-				else:
+				if {afk.%arg 1%} is set:
 					broadcast "{@Noafktoplayer}"
-					delete {afk.%argument 1%}
+					delete {afk.%arg 1%}
 					stop
-			if sender doesn't have permission "essentials.afk.others" or "essentials.*":
-				send "{@Noperms}" to player
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
 
 on quit:
 	if {afk.%player%} is set:
@@ -3709,182 +3744,211 @@ command /enderchest [<offline player>]:
 	permission: essentials.enderchest
 	permission message: {@Noperms}
 	aliases: essentials:enderchest, ec, essentials:ec
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/enderchest [player]
 	trigger:
-		if arg 1 is not set:
-			open player's ender chest to player
-			send "{@Enderchesttome}" to player
-			stop
-		if arg 1 is online:
-			if sender has permission "essentials.enderchest.others" or "essentials.*":
-				open the arg 1's ender chest for the player
-				send "{@Enderchesttoplayer}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				open player's ender chest to player
+				send "{@Enderchesttome}" to player
 				stop
-			if sender doesn't have permission "essentials.enderchest.others" or "essentials.*":
-				send "{@Noperms}" to player
+			if arg 1 is online:
+				if sender has permission "essentials.enderchest.others" or "essentials.*":
+					open the arg 1's ender chest for player
+					send "{@Enderchesttoplayer}" to player
+					stop
+				if sender doesn't have permission "essentials.enderchest.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /skull [<offline player>]:
 	permission: essentials.skull
 	permission message: {@Noperms}
 	aliases: essentials:skull, head, playerhead, essentials:head, essentials:playerhead
-	executable by: players
-	usage: &cError &6>> &f/head [name]
+	executable by: players, console
+	usage: &cError &6>> &f/skull [name]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/head [name]" to player
-			stop
-		if arg 1 is set:
-			give skull of arg 1 to player
-			send "{@Skull}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/skull [name]" to player
+				stop
+			if arg 1 is set:
+				give skull of arg 1 to player
+				send "{@Skull}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /setwarp [<text>]:
 	permission: essentials.setwarp
 	permission message: {@Noperms}
 	aliases: essentials:setwarp
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/setwarp [warp]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/setwarp [warp]" to player
-			stop
-		if arg 1 is set:
-			set {warp.%argument 1%.location} to location of the player
-			send "{@Warpcreate}" to player
-			add arg 1 to {warplist::*}
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/setwarp [warp]" to player
+				stop
+			if arg 1 is set:
+				set {warp.%arg 1%.location} to location of player
+				send "{@Warpcreate}" to player
+				add arg 1 to {warplist::*}
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /delwarp [<text>]:
 	permission: essentials.delwarp
 	permission message: {@Noperms}
 	aliases: essentials:delwarp
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/delwarp [warp]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/delwarp [warp]" to player
-			stop
-		if arg 1 is set:
-			delete {warp.%argument 1%.location}
-			send "{@Warpdelete}" to player
-			remove arg 1 from {warplist::*}
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/delwarp [warp]" to player
+				stop
+			if arg 1 is set:
+				delete {warp.%arg 1%.location}
+				send "{@Warpdelete}" to player
+				remove arg 1 from {warplist::*}
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /warp [<text>] [<offline player>]:
 	permission: essentials.warp
 	permission message: {@Noperms}
 	aliases: essentials:warp
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/warp [warp]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/warp [warp]" to player
-			stop
-		if arg 1 is set:
-			if sender has permission "essentials.warp.%argument 1%" or "essentials.*" or "essentials.warp.*":
-				if {@Warpcooldownuse} is true:
-					if arg 2 is not set:
-						if sender has permission "essentials.warp.bypass" or "essentials.*":
-							if {warp.%argument 1%.location} is set:
-								set {back::%uuid of player%} to location of player
-								teleport player to {warp.%argument 1%.location}
-								send "{@Warpteleporting}" to player
-								stop
-							else:
-								send "{@Nowarpset}" to player
-								stop
-						if sender doesn't have permission "essentials.warp.bypass" or "essentials.*":
-							if {warp.%argument 1%.location} is set:
-								send "{@Warpcooldown1} {@Warpcooldown} {@Warpcooldown2}" to player
-								wait {@Warpcooldown} seconds
-								set {back::%uuid of player%} to location of player
-								teleport player to {warp.%argument 1%.location}
-								send "{@Warpteleporting}" to player
-								stop
-							else:
-								send "{@Nowarpset}" to player
-								stop
-					if arg 2 is online:
-						if {warp.%argument 1%.location} is set:
-							set {back::%uuid of arg 2%} to location of player
-							teleport arg 2 to {warp.%argument 1%.location}
-							send "{@Warpteleporting}" to arg 2
-							stop
-						else:
-							send "{@Nowarpset}" to player
-							stop
-				if {@Warpcooldownuse} is false:
-					if arg 2 is not set:
-						if {warp.%argument 1%.location} is set:
-							set {back::%uuid of player%} to location of player
-							teleport player to {warp.%argument 1%.location}
-							send "{@Warpteleporting}" to player
-							stop
-						else:
-							send "{@Nowarpset}" to player
-							stop
-					if arg 2 is online:
-						if {warp.%argument 1%.location} is set:
-							set {back::%uuid of arg 2%} to location of player
-							teleport arg 2 to {warp.%argument 1%.location}
-							send "{@Warpteleporting}" to arg 2
-							stop
-						else:
-							send "{@Nowarpset}" to player
-							stop
-			if sender doesn't have permission "essentials.warp.%argument 1%" or "essentials.*":
-				send "{@Noperms}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/warp [warp]" to player
 				stop
+			if arg 1 is set:
+				if sender has permission "essentials.warp.%arg 1%" or "essentials.*" or "essentials.warp.*":
+					if {@Warpcooldownuse} is true:
+						if arg 2 is not set:
+							if sender has permission "essentials.warp.bypass" or "essentials.*":
+								if {warp.%arg 1%.location} is set:
+									set {back::%uuid of player%} to location of player
+									teleport player to {warp.%arg 1%.location}
+									send "{@Warpteleporting}" to player
+									stop
+								if {warp.%arg 1%.location} is not set:
+									send "{@Nowarpset}" to player
+									stop
+							if sender doesn't have permission "essentials.warp.bypass" or "essentials.*":
+								if {warp.%arg 1%.location} is set:
+									send "{@Warpcooldown1} {@Warpcooldown} {@Warpcooldown2}" to player
+									wait {@Warpcooldown} seconds
+									set {back::%uuid of player%} to location of player
+									teleport player to {warp.%arg 1%.location}
+									send "{@Warpteleporting}" to player
+									stop
+								if {warp.%arg 1%.location} is not set:
+									send "{@Nowarpset}" to player
+									stop
+						if arg 2 is online:
+							if {warp.%arg 1%.location} is set:
+								set {back::%uuid of arg 2%} to location of arg 2
+								teleport arg 2 to {warp.%arg 1%.location}
+								send "{@Warpteleporting}" to arg 2
+								stop
+							if {warp.%arg 1%.location} is not set:
+								send "{@Nowarpset}" to player
+								stop
+					if {@Warpcooldownuse} is false:
+						if arg 2 is not set:
+							if {warp.%arg 1%.location} is set:
+								set {back::%uuid of player%} to location of player
+								teleport player to {warp.%arg 1%.location}
+								send "{@Warpteleporting}" to player
+								stop
+							if {warp.%arg 1%.location} is not set:
+								send "{@Nowarpset}" to player
+								stop
+						if arg 2 is online:
+							if {warp.%arg 1%.location} is set:
+								set {back::%uuid of arg 2%} to location of arg 2
+								teleport arg 2 to {warp.%arg 1%.location}
+								send "{@Warpteleporting}" to arg 2
+								stop
+							if {warp.%arg 1%.location} is not set:
+								send "{@Nowarpset}" to player
+								stop
+				if sender doesn't have permission "essentials.warp.%arg 1%" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /warps:
 	permission: essentials.warps
 	permission message: {@Noperms}
 	aliases: essentials:warps
+	executable by: players, console
 	usage: &cError &6>> &f/warps
 	trigger:
-		send "{@Warplist}"
-		stop
+		if sender is a player:
+			send "{@Warplist}" to player
+			stop
+		if sender is console:
+			send "{@Warplist}" to console
+			stop
 
 command /msg [<offline player>] [<text>]:
 	permission: essentials.reply
 	permission message: {@Noperms}
 	aliases: essentials:msg, m, t, whisper, essentials:whisper, essentials:m, essentials:t
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/msg [player] [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/msg [player] [text]" to player
-			stop
-		if arg 1 is online:
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> &f/msg [player] [text]" to player
 				stop
-			if arg 2 is set:
-				if sender doesn't have permission "essentials.msg.color" or "essentials.*":
-					if {essentials.%player%.ignore} is arg 1:
-						send "{@Msgignore}" to player
-						stop
-					else:
-						send "{@Msgformattome}" to arg 1
-						send "{@Msgformattoplayer}" to player
-						set {essentials.%argument 1%.reply} to player
-						stop
-				if sender has permission "essentials.msg.color" or "essentials.*":
-					if {essentials.%player%.ignore} is arg 1:
-						send "{@Msgignore}" to player
-						stop
-					else:
-						send "{@Msgformatcolortoplayer}" to arg 1
-						send "{@Msgformatcolortome}" to player
-						set {essentials.%argument 1%.reply} to player
-						stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+			if arg 1 is online:
+				if arg 2 is not set:
+					send "&cError &6>> &f/msg [player] [text]" to player
+					stop
+				if arg 2 is set:
+					if sender doesn't have permission "essentials.msg.color" or "essentials.*":
+						if {essentials.%player%.ignore} is arg 1:
+							send "{@Msgignore}" to player
+							stop
+						else:
+							send "{@Msgformattome}" to arg 1
+							send "{@Msgformattoplayer}" to player
+							set {essentials.%argument 1%.reply} to player
+							stop
+					if sender has permission "essentials.msg.color" or "essentials.*":
+						if {essentials.%player%.ignore} is arg 1:
+							send "{@Msgignore}" to player
+							stop
+						else:
+							send "{@Msgformatcolortoplayer}" to arg 1
+							send "{@Msgformatcolortome}" to player
+							set {essentials.%argument 1%.reply} to player
+							stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /r [<text>]:
@@ -4531,7 +4595,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre4" to player
+				send "&fVersion &6|-> &c1.15Pre5" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4547,7 +4611,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre4" to console
+				send "&fVersion &6|-> &c1.15Pre5" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
