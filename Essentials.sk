@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.9
+# Version: 0.10
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -504,6 +504,34 @@ options: # >> Continuation of message configuration!
 	Tpacceptteleporting: &7Teleporting...
 	Tpdeny: &7Teleport request deny !
 
+
+	# >> COMMAND MESSAGE = /tree, /bigtree -|
+
+	Tree: &7A tree has been grown above the block you are looking at.
+
+	# >> COMMAND MESSAGE = /deljail, /jail, /setjail, /jail -|
+
+	Deljailremove: &7Jail &c%arg 1% &7has been removed.
+	Deljailnojail: &c%arg 1% is not a jail.
+	Deljailalready: &cJail %arg 1% is already set.
+
+	Jails: &7The current jails are: &c%{_jl::*}%
+
+	Setjailcreate: &7Jail &c%arg 1% &7has been set.
+
+	Nojailplayeradmin: &c%arg 1% &7is no longer jailed.
+	Jailplayeradmin: &c%arg 1% &7is now jailed.
+	Nojailplayer: &cYou are no longer jailed by %player%.
+	Jailplayer: &cYou are now jailed by %player%.
+	Nojail: &c%arg 2% is not a jail.
+
+	Jailchat: &cYou cannot speak while in jail.
+
+	# >> COMMAND MESSAGE = /compass -|
+
+	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% degrees&7).
+	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7).
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -513,11 +541,183 @@ options: # >> Continuation of message configuration!
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+command /jump:
+	permission: essentials.jump
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/jump
+	aliases: essentials:jump
+	trigger:
+		teleport player to target block
+		stop
+
+command /compass [<offline player>]:
+	permission: essentials.compass
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/compass [player]
+	aliases: essentials:compass , essentials:direction, /direction
+	trigger:
+		if arg 1 isn't set:
+			send "{@Compasstome}" to player
+			stop
+		if arg 1 is set:
+			send "{@Compasstoplayer}" to player
+			stop
+
+command /togglejail [<offline player>] [<text>]:
+	permission: essentials.jail
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/jail [player] [jail]
+	aliases: essentials:tjail, essentials:/unjail, essentials:/jail, /tjail, /unjail, /jail
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/jail [player] [jail]"
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				if {in.jail::%uuid of arg 1%} is set:
+					teleport arg 1 to {beforejail::%uuid of arg 1%}
+					clear {beforejail::%uuid of arg 1%}
+					clear {in.jail::%uuid of arg 1%}
+					send "{@Nojailplayer}" to arg 1
+					send "{@Nojailplayeradmin}"
+					stop
+				else:
+					send "&cError &6>> &f/jail [player] [jail]"
+					stop
+			if arg 2 is set:
+				if {jails::%arg 2%} is set:
+					set {beforejail::%uuid of arg 1%} to location of arg 1
+					teleport arg 1 to {jails::%arg 2%}
+					set {in.jail::%uuid of arg 1%} to 1
+					send "{@Jailplayer}" to arg 1
+					send "{@Jailplayeradmin}"
+					stop
+				else:
+					send "{@Nojail}"
+					stop
+
+on drop:
+	if {in.jail::%uuid of player%} is set:
+		cancel the event
+		stop	
+
+on click:
+	if {in.jail::%uuid of player%} is set:
+		cancel the event
+		stop	
+on teleport:
+	if {in.jail::%uuid of player%} is set:
+		cancel the event
+
+on mine:
+	if {in.jail::%uuid of player%} is set:
+		cancel the event
+
+on any movement:
+	if {in.jail::%uuid of player%} is set:
+		cancel the event
+		stop
+
+on damage:
+	if {in.jail::%uuid of attacker%} is set:
+		cancel the event
+	else if {in.jail::%uuid of victim%} is set:
+		cancel the event
+
+command /setjail [<text>]:
+	permission: essentials.setjail
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/setjail [jail]
+	aliases: essentials:setjail, essentials:createjail, createjail
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/setjail [jail]"
+			stop
+		if arg 1 is set:
+			if {jails::%arg 1%} is not set:
+				set {jails::%arg 1%} to location of player
+				send "{@Setjailcreate}"
+				stop
+			else:
+				message "{@Deljailalready}"
+
+command /jails:
+	permission: essentials.jails
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/jails
+	aliases: essentials:jails
+	trigger:
+		loop {jails::*}:
+			add loop-index to {_jl::*}
+		send "{@Jails}"
+		stop
+
+command /deljail [<text>]:
+	permission: essentials.deljail
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/deljail [Jail]
+	aliases: essentials:deljail, essentials:remjail, essentials:rmjail , /remjail, /rmjail
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/deljail [Jail]"
+			stop
+		if arg 1 is set:
+			loop {jails::*}:
+				if {jails::%arg 1%} is set:
+					clear {jails::%arg 1%}
+					send "{@Deljailremove}"
+					stop
+				else:
+					send "{@Deljailnojail}"
+					stop
+
+command /tree [<text>]:
+	permission: essentials.tree
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tree [tree]
+	aliases: essentials:tree
+	trigger:
+		if arg 1 is "jungle":
+			grow tree of type any jungle tree above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is "oak":
+			grow oak above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is "spruce":
+			grow spruce above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is "acacia":
+			grow acacia above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is "birch":
+			grow birch above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is "darkwood":
+			grow dark oak above the targeted block
+			message "{@Tree}"
+			stop
+		if arg 1 is not "oak" or "jungle" or "spruce" or "acacia" or "birch" or "darkwood":
+			message "&cError &6>> &f/tree [tree]"
+		if arg 1 is not set:
+			message "&cError &6>> &f/tree [tree]"
+
 command /tpa [<offline player>]:
 	permission: essentials.tpa
 	executable by: players
 	permission message: {@Noperms}
-	usage: &cError &6>> &f/tpa
+	usage: &cError &6>> &f/tpa [player]
 	aliases: essentials:tpa
 	trigger:
 		if arg is set:
