@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.11.1
+# Version: 1.12
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,6 +53,13 @@ options:
 	Damageall: true
 
 	Portailcreate: true
+
+	# You can add or remove messages in cooldown auto-message !
+
+	Cooldownautomessagemsg1: 60
+	Cooldownautomessagemsg2: 120
+
+	Automessage: true
 
 	Clearlagtoentityarrows: true
 	Clearlagtoentityitemsdropped: true
@@ -875,6 +882,24 @@ options: # >> Continuation of message configuration !
 	Clearlagentityarrows: &7You have clear &c%{_count}% &7entity arrows.
 	Clearlagentityitemsdropped: &7You have clear &c%{_count}% &7entity dropped.
 	Clearlagentityplayers: &7You have clear &c%{_count}% &7entity players.
+
+
+	# >> COMMAND MESSAGE/CONFIG = AUTO MESSAGE -|
+
+	# >> You can add or delete messages by following the following:
+
+	#
+	#	every {@CooldownautomessagemsgNUMBER-FOR-MESSAGE} seconds: 
+	#		if {@Automessage} is true:
+	#			broadcast "NAME OF MESSAGE..."
+	#		if {@Automessage} is false:
+	#			stop
+
+every {@Cooldownautomessagemsg1} seconds:
+	if {@Automessage} is true:
+		broadcast "&7[&eBroadcast&7] &fHello the server !"
+	if {@Automessage} is false:
+		stop
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -4178,7 +4203,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.11.1" to player
+			send "Version >> 1.12" to player
 			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
