@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre8
+# Version: 1.14pre9
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -938,24 +938,24 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
-		if line 2 of block is "&1[Balance]":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
+		if line 2 of block is "&1[Broadcast]":
 			if line 3 of block is line 3:
-				make player execute command "/balance %line 3%"
+				make player execute command "/broadcast %line 3%"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
 		stop
 
 on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.balance" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.broadcast" or "essentials.*":
 		if line 1 is "[Essentials]":
-			if line 2 is "Balance":
+			if line 2 is "Broadcast":
 				set line 1 of block to ""
-				set line 2 of block to "&1[Balance]"
+				set line 2 of block to "&1[Broadcast]"
 				set line 3 of block to line 3
 				send "{@Signcommands}"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.balance" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.broadcast" or "essentials.*":
 		stop
 
 on right click on sign:
@@ -4404,7 +4404,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre8" to player
+			send "Version >> 1.14pre9" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
