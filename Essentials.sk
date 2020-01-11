@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.5
+# Version: 1.5.0.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,7 +53,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.5.
+	Essentialsversionmsg: &7Essentials is 1.5.0.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -3564,22 +3564,22 @@ command /gm [<text>] [<offline player>]:
 			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]" to player
 		if arg 2 is not set:
 			if sender is a player:
-				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
+				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
 					if arg 1 is "1" or "c":
 						set the gamemode of the player to creative
 						send "{@Gamemodetometocreative}" to player
 						stop
-				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival" or "essentials.*":
+				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.survival" or "essentials.*":
 					if arg 1 is "0" or "s":
 						set the gamemode of the player to survival
 						send "{@Gamemodetometosurvival}" to player
 						stop
-				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure" or "essentials.*":
+				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.adventure" or "essentials.*":
 					if arg 1 is "2" or "a":
 						set the gamemode of the player to adventure
 						send "{@Gamemodetometoadventure}" to player
 						stop
-				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
+				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
 					if arg 1 is "3" or "sp":
 						set the gamemode of the player to spectator
 						send "{@Gamemodetometospectator}" to player
