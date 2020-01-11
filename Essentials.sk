@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.5
+# Version: 0.6
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -259,6 +259,10 @@ options: # >> Continuation of message configuration!
 	Adminhomereset: &7You have removed the player homes &c%arg 2%&7.
 	Homecooldown1: &7You will be teleporting in
 	Homecooldown2: &7seconds.
+	Adminhomenohome: &cThere is no home calling %arg 3%
+	Adminhometeleporting: You have been teleported to a player home.
+
+	Adminhomehome: &9Homes: &b%{homename.%arg 2%::*}%
 
 	# >> You can delete or add permission to have numbers of home per homes.
 	# >> You can add permissions by adding !
@@ -304,6 +308,10 @@ options: # >> Continuation of message configuration!
 	Nicktoplayeradmin: &8You have changed the nickname of &c%arg-1% &8in &c%coloured arg-2%
 	Nicktoplayer: &cYour nickname was changed !
 
+	# >> COMMAND MESSAGE = /god -|
+
+	Godtome: &7You have activated your god mode.
+	Nogodtome: &7You have disabled your god mode.
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -313,6 +321,29 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /god:
+	permission: essentials.god
+	permission message: {@Noperms}
+	aliases: essentials:god
+	executable by: players
+	usage: &cError &6>> &f/god
+	trigger:
+		if {essentials.god} is not set:
+			send "{@Godtome}"
+			set {essentials.god} to true
+			stop
+		if {essentials.god} is set:
+			send "{@Nogodtome}"
+			delete {essentials.god}
+
+on join:
+	delete {essentials.god}
+
+on damage:
+	if {essentials.god} is true:
+		cancel event
+
 
 command /nick [<offline player>] [<text>]:
 	permission: essentials.nick
@@ -342,28 +373,62 @@ command /nick [<offline player>] [<text>]:
 			message "{@Noplayerconnect}"
 			stop
 
-command /adminhome [<text>] [<offline player>]:
+command /adminhome [<text>] [<offline player>] [<text>]:
 	permission: essentials.adminhome
 	permission message: {@Noperms}
 	aliases: essentials:adminhome
 	executable by: players
-	usage: &cError &6>> &f/adminhome reset [player]
+	usage: &cError &6>> &f/adminhome [reset/homes/home] [player] [home]
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/adminhome reset [player]"
+			send "&cError &6>> &f/adminhome homes [player]"
+			send "&cError &6>> &f/adminhome home [player] [home]"
 			stop
-		if arg 1 is not "reset":
+		if arg 1 is not "reset" or "home" or "homes":
 			send "&cError &6>> &f/adminhome reset [player]"
+			send "&cError &6>> &f/adminhome homes [player]"
+			send "&cError &6>> &f/adminhome home [player] [home]"
 			stop
 		if arg 1 is "reset":
 			if arg 2 is not set:
 				send "&cError &6>> &f/adminhome reset [player]"
+				send "&cError &6>> &f/adminhome homes [player]"
+				send "&cError &6>> &f/adminhome home [player] [home]"
 				stop
 			if arg 2 is online:
 				delete {homename.%arg 2%::*}
 				delete {home.%arg 2%::*}
 				set {homes.%arg 2%} to 0
 				send "{@Adminhomereset}"
+			if arg 2 is offline:
+				message "{@Noplayerconnect}"
+				stop
+		if arg 1 is "homes":
+			if arg 2 is not set:
+				send "&cError &6>> &f/adminhome reset [player]"
+				send "&cError &6>> &f/adminhome homes [player]"
+				send "&cError &6>> &f/adminhome home [player] [home]"
+				stop
+			if arg 2 is online:
+				send "{@Adminhomehome}"
+			if arg 2 is offline:
+				message "{@Noplayerconnect}"
+				stop
+		if arg 1 is "home":
+			if arg 2 is not set:
+				send "&cError &6>> &f/adminhome reset [player]"
+				send "&cError &6>> &f/adminhome homes [player]"
+				send "&cError &6>> &f/adminhome home [player] [home]"
+				stop
+			if arg 2 is online:
+				if arg 3 is set:
+					if {home.%arg 2%::%arg 3%} is set:
+						teleport player to {home.%arg 2%::%arg 3%}
+						send "{@Adminhometeleporting}"
+					if {home.%arg 2%::%arg 3%} is not set:
+						message "{@Adminhomenohome}"
+						stop
 			if arg 2 is offline:
 				message "{@Noplayerconnect}"
 				stop
