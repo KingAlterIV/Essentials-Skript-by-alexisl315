@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre12
+# |-> Version: 1.15Pre13
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -954,6 +954,9 @@ command /pvp [<text>]:
 			if arg 1 is not set:
 				send "&cError &6>> &f/pvp [enable/disable | on/off]" to player
 				stop
+			if arg 1 is "enable" or "on" or "disable" or "off":
+				send "&cError &6>> &f/pvp [enable/disable | on/off]" to player
+				stop
 			if arg 1 is "enable" or "on":
 				if sender has permission "essentials.pvp.*" or "essentials.pvp.enable" or "essentials.*":
 					if {pvp.enable} is not set:
@@ -1213,16 +1216,16 @@ command /maintenance [<text>]:
 	permission: essentials.maintenance
 	permission message: {@Noperms}
 	executable by: players, console
-	usage: &cError &6>> &f/maintenance [enable/diable]
+	usage: &cError &6>> &f/maintenance [enable/diable | on/off]
 	trigger:
 		if sender is a player:
 			if arg-1 is not set:
-				send "&cError &6>> &fmaintenance [enable/diable]" to player
+				send "&cError &6>> &fmaintenance [enable/diable | on/off]" to player
 				stop
 			if arg-1 is not "enable" or "disable":
-				send "&cError &6>> &fmaintenance [enable/diable]" to player
+				send "&cError &6>> &fmaintenance [enable/diable | on/off]" to player
 				stop
-			if arg-1 is "enable":
+			if arg-1 is "enable" or "on":
 				if player has permission "essentials.maintenance.enable" or "essentials.maintenance.*" or "essentials.*":
 					if {Essentialsmaintenance.enable} is false:
 						if {@Maintenancecooldownuse} is true:
@@ -1240,7 +1243,7 @@ command /maintenance [<text>]:
 				if {Essentialsmaintenance.enable} is true:
 					send "{@Maintenancealreadyenable}"
 					stop
-			if arg-1 is "disable":
+			if arg-1 is "disable" or "off":
 				if player has permission "essentials.maintenance.disable" or "essentials.maintenance.*" or "essentials.*":
 					if {Essentialsmaintenance.enable} is true:
 						loop all players:
@@ -5063,7 +5066,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre12" to player
+				send "&fVersion &6|-> &c1.15Pre13" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5079,7 +5082,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre12" to console
+				send "&fVersion &6|-> &c1.15Pre13" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
