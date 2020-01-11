@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre23
+# |-> Version: 1.15Pre24
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -79,6 +79,7 @@ options:
 	Nopermission: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
+	Worldcreatefinish: &cThe world create is finish.
 
 	Motdtoserver: &6Welcome to the server%nl%&7Server Minigames/Survival... !
 
@@ -973,6 +974,10 @@ options: # >> Continuation of message configuration !
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+on world init:
+	send "{@Worldcreatefinish}" to console
+	stop
+
 command /bedteleport [<offline player>]:
 	permission: essentials.bedteleport
 	executable by: players, console
@@ -1141,7 +1146,7 @@ command /fakebroadcastmessage [<text>] [<offline player>]:
 			if arg 1 is not set:
 				send "&cError &6>> &f/fbm [fake message/list] [player]" to console
 				stop
-			if arg 1 is not "list" or "op" or "deop":
+			if arg 1 is not "list" or "op" or "deop" or "playerisconnected" or "firstjoin":
 				send "&cError &6>> &f/fbm [fake message/list] [player]" to console
 				stop
 			if arg 1 is "list":
@@ -5393,7 +5398,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre23" to player
+				send "&fVersion &6|-> &c1.15Pre24" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5409,7 +5414,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre23" to console
+				send "&fVersion &6|-> &c1.15Pre24" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
