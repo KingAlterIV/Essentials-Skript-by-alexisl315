@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.4
+# Version: 0.5
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -12,6 +12,9 @@ options:
 
 	Warpcooldown: 5
 	Warpcooldownuse: true
+
+	Homecooldown: 5
+	Homecooldownuse: true
 
 	Antiafkcooldown: 300
 	Antiafkcooldownuse: true
@@ -131,7 +134,7 @@ options: # >> Continuation of message configuration!
 	# >> COMMAND MESSAGE = /hat -|
 
 	Noitemhat: &cYou can not wear an item, only the blocks are portable.
-	Itememptyhat: &7You already wear a hat!
+	Itemalreadyhat: &7You already wear a hat!
 	Itemdeletehat: &7You took off your hat.
 	Itemhat: &7You put the hat: &c%argument 1%
 
@@ -232,7 +235,7 @@ options: # >> Continuation of message configuration!
 
 	Mutebroadcast: &c%arg 1% &7a été rendu muet par &c%player% &7pour &c%number argument% &7secondes.
 	Unmutebroadcast: &c%player% &7a rendu la parole à &c%arg-1%&7.
-	Unmuteempty: &c%arg 1% &7a déjà la parole !
+	Unmutealready: &c%arg 1% &7a déjà la parole !
 	Mute: &7Vous êtes muet encore &c%{mute.seconds.%player%}% &7seconde(s)
 	Unmutebroadcastisconsole: &cConsole &7a rendu la parole à &c%arg-1%&7.
 	Mutebroadcastisconsole: &c%arg 1% &7a été rendu muet par &cConsole &7pour &c%number argument% &7secondes.
@@ -243,6 +246,64 @@ options: # >> Continuation of message configuration!
 	Kick: &cKicked for &c%coloured arg 2%
 
 	Kickall: &cKicked for &c%coloured arg 1%
+
+	# >> COMMAND MESSAGE = /home, /sethome, /homes, /delhome, /adminhome -|
+
+	Homeslist: &9Homes: &b%{homename.%player%::*}%
+
+	Hometeleporting: &7You have been teleported to your home.
+	Nohome: &cYou do not have a home calling %arg 1%
+	Homedelete: &7You have deleted home &c%arg 1%&7.
+	Homecreate: &7You created the home &c%arg 1%&7.
+	Homealready: &7You already have the home &c%arg 1%&7.
+	Adminhomereset: &7You have removed the player homes &c%arg 2%&7.
+	Homecooldown1: &7You will be teleporting in
+	Homecooldown2: &7seconds.
+
+	# >> You can delete or add permission to have numbers of home per homes.
+	# >> You can add permissions by adding !
+	#
+	#	if sender has permission "essentials.home.NAMEOFHOME" or "essentials.*": 
+	#		if {homes.%player%} = NUMBEROFHOME ":
+	#			message "&7You can not set more than NAMEOFHOME homes!"
+	#			stop
+
+command /sethome [<text>]:
+	permission: essentials.sethome
+	permission message: {@Noperms}
+	aliases: essentials:sethome
+	executable by: players
+	usage: &cError &6>> &f/sethome [home]
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/sethome [home]"
+			stop
+		if arg 1 is set:
+			if sender has permission "essentials.home.3" or "essentials.*":
+				if {homes.%player%} = 3:
+					message "&7You cannot set more than 3 homes!"
+					stop
+			if sender has permission "essentials.home.6" or "essentials.*":
+				if {homes.%player%} = 6:
+					message "&7You cannot set more than 6 homes!"
+					stop
+			if {home.%player%::%arg 1%} is set:
+				send "{@Homealready}"
+			if {home.%player%::%arg 1%} is not set:
+				add 1 to {homes.%player%}
+				send "{@Homecreate}"
+				set {home.%player%::%arg 1%} to location of player
+				set {homename.%player%::%arg 1%} to arg 1
+				stop
+
+options: # >> Continuation of message configuration!
+
+	# >> COMMAND MESSAGE = /nick -|
+
+	Nickredefine: &8You have redefined the player nickname &c%arg-1%&8.
+	Nicktoplayeradmin: &8You have changed the nickname of &c%arg-1% &8in &c%coloured arg-2%
+	Nicktoplayer: &cYour nickname was changed !
+
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -268,18 +329,101 @@ command /nick [<offline player>] [<text>]:
 				if arg 2 is "off":
 					set {nick.%player%} to arg 1
 					set {nom.%player%} to false
-					send "&8Vous avez redéfini le pseudo du joueur &c%arg-1%&8." to player
+					send "{@Nickredefine}" to player
 				else:
-					message "&8Vous avez changé le pseudo de &c%arg-1% &8en &c%coloured arg-2%"
+					message "{@Nicktoplayeradmin}"
 					set {nick.%player%} to coloured arg 2
 					set {nom.%player%} to true
-					send "&cVotre surnom a été changer !" to arg 1
+					send "{@Nicktoplayer}" to arg 1
 			if arg 2 is not set:
 				send "&cError &6>> &f/nick [player] [text]"
 				stop
 		if arg 1 is offline:
 			message "{@Noplayerconnect}"
 			stop
+
+command /adminhome [<text>] [<offline player>]:
+	permission: essentials.adminhome
+	permission message: {@Noperms}
+	aliases: essentials:adminhome
+	executable by: players
+	usage: &cError &6>> &f/adminhome reset [player]
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/adminhome reset [player]"
+			stop
+		if arg 1 is not "reset":
+			send "&cError &6>> &f/adminhome reset [player]"
+			stop
+		if arg 1 is "reset":
+			if arg 2 is not set:
+				send "&cError &6>> &f/adminhome reset [player]"
+				stop
+			if arg 2 is online:
+				delete {homename.%arg 2%::*}
+				delete {home.%arg 2%::*}
+				set {homes.%arg 2%} to 0
+				send "{@Adminhomereset}"
+			if arg 2 is offline:
+				message "{@Noplayerconnect}"
+				stop
+
+command /delhome [<text>]:
+	permission: essentials.delhome
+	permission message: {@Noperms}
+	aliases: essentials:delhome
+	executable by: players
+	usage: &cError &6>> &f/delhome [home]
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/delhome [home]"
+			stop
+		if arg 1 is set:
+			if {home.%player%::%arg 1%} is set:
+				delete {home.%player%::%arg 1%}
+				delete {homename.%player%::%arg 1%} 
+				message "{@Homedelete}"
+				remove 1 from {homes.%player%}
+				stop
+			if {home.%player%::%arg 1%} is not set:
+				message "{@Nohome}"
+				stop
+
+command /home [<text>]:
+	permission: essentials.home
+	permission message: {@Noperms}
+	aliases: essentials:home
+	executable by: players
+	usage: &cError &6>> &f/home [home]
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/home [home]"
+			stop
+		if arg 1 is set:
+			if {home.%player%::%arg 1%} is not set:
+				message "{@Nohome}"
+				stop
+			if {home.%player%::%arg 1%} is set:
+				if {@Homecooldownuse} is true:
+					message "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}"
+					wait {@Homecooldown} seconds
+					message "{@Hometeleporting}"
+					teleport player to {home.%player%::%arg 1%}
+					stop
+				if {@Homecooldownuse} is false:
+					teleport player to {home.%player%::%arg 1%}
+					message "{@Hometeleporting}"
+					stop
+
+command /homes:
+	permission: essentials.homes
+	permission message: {@Noperms}
+	aliases: essentials:homes
+	executable by: players
+	usage: &cError &6>> &f/homes
+	trigger:
+		send "{@Homeslist}"
+		stop
 
 on join:
 	set {nick.%player%} to player
@@ -317,7 +461,7 @@ command /unmute [<offline player>]:
 					set {mute.%arg-1%} to false
 					broadcast "{@Unmutebroadcast}"
 				if {mute.%arg-1%} is false:
-					send "{@Unmuteempty}"
+					send "{@Unmutealready}"
 					stop
 			if sender is console:
 				if {mute.%arg-1%} is true:
@@ -325,7 +469,7 @@ command /unmute [<offline player>]:
 					set {mute.%arg-1%} to false
 					broadcast "{@Unmutebroadcastisconsole}"
 				if {mute.%arg-1%} is false:
-					send "{@Unmuteempty}"
+					send "{@Unmutealready}"
 					stop
 		if arg 1 is offline:
 			message "{@Noplayerconnect}"
@@ -969,7 +1113,7 @@ command /hat [<material>]:
 				stop
 		if arg 1 is set:
 			helmet slot of player is not empty:
-				message "{@Itememptyhat}"
+				message "{@Itemalreadyhat}"
 				stop trigger
 			equip player with argument 1
 			send "{@Itemhat}"
