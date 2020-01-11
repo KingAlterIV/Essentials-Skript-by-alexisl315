@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.2
+# Version: 1.3
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -51,7 +51,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.2.
+	Essentialsversionmsg: &7Essentials is 1.3.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -683,6 +683,13 @@ options: # >> Continuation of message configuration!
 	Nohat: &7You do not have a hat.
 	Hattoair: &cYou do not have a block or object as a hat.
 
+	# >> COMMAND MESSAGE = /weather -|
+
+	Weathertoclear: &7You suppressed rain or thunder.
+	Weathertosun: &7You put the sun.
+	Weathertorain: &7You put the rain.
+	Weathertothunder: &7You put the thunder.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -691,6 +698,71 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.workbench" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Workbench":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Workbench]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.workbench" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Workbench]":
+			make player execute command "/workbench"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		stop
+
+command /weather [<text>]:
+	permission: essentials.weather
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/weather [sun/rain/thunder/clear]
+	aliases: essentials:weather, essentials:toggledownfall, toggledownfall
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/weather [sun/rain/thunder/clear]" to player
+			stop
+		if arg 1 is not "sun" or "clear" or "thunder" or "rain":
+			send "&cError &6>> &f/weather [sun/rain/thunder/clear]" to player
+			stop
+		if arg 1 is "clear":
+			if sender has permission "essentials.weather.*" or "essentials.weather.clear" or "essentials.*":
+				set weather to sunny
+				send "{@Weathertoclear}" to player
+				stop
+			if sender doesn't have permission "essentials.weather.*" or "essentials.weather.clear" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
+		if arg 1 is "sun":
+			if sender has permission "essentials.weather.*" or "essentials.weather.sun" or "essentials.*":
+				set weather to sunny
+				send "{@Weathertosun}" to player
+				stop
+			if sender doesn't have permission "essentials.weather.*" or "essentials.weather.sun" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
+		if arg 1 is "rain":
+			if sender has permission "essentials.weather.*" or "essentials.weather.rain" or "essentials.*":
+				set weather to rain
+				send "{@Weathertorain}" to player
+				stop
+			if sender doesn't have permission "essentials.weather.*" or "essentials.weather.rain" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
+		if arg 1 is "thunder":
+			if sender has permission "essentials.weather.*" or "essentials.weather.thunder" or "essentials.*":
+				set weather to thunder
+				send "{@Weathertothunder}" to player
+				stop
+			if sender doesn't have permission "essentials.weather.*" or "essentials.weather.thunder" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
 
 on weather change to rain:
 	if {@Weatherrain} is false:
