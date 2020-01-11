@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.4
+# Version: 1.4.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,7 +53,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.4.
+	Essentialsversionmsg: &7Essentials is 1.4.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -703,20 +703,75 @@ options: # >> Continuation of message configuration!
 
 on chat:
 	if {@Emoticonuse} is true:
-		if sender has permission "essentials.emoticon.{<3}" or "essentials.*":
-			replace all "{<3}" in message with "❤"
+		if sender has permission "essentials.emoticon.{life1}" or "essentials.*":
+			replace all "{life1}" in message with "❤"
 			stop
-		if sender has permission "essentials.emoticon.{correct}" or "essentials.*":
+		if sender has permission "essentials.emoticon.{life2}" or "essentials.*":
+			replace all "{life2}" in message with "♥"
+			stop
+		if sender has permission "essentials.emoticon.{life3}" or "essentials.*":
+			replace all "{life3}" in message with "❥"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{correct}" or "essentials.*":
 			replace all "{correct}" in message with "✔"
 			stop
-		if sender has permission "essentials.emoticon.{incorrect}" or "essentials.*":
-			replace all "{incorrect}" in message with "✘"
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect1}" or "essentials.*":
+			replace all "{incorrect1}" in message with "✘"
 			stop
-		if sender doesn't have permission "essentials.emoticon.{<3}" or "essentials.*":
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect2}" or "essentials.*":
+			replace all "{incorrect2}" in message with "✗"
 			stop
-		if sender doesn't have permission "essentials.emoticon.{correct}" or "essentials.*":
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect3}" or "essentials.*":
+			replace all "{incorrect3}" in message with "✕"
 			stop
-		if sender doesn't have permission "essentials.emoticon.{incorrect}" or "essentials.*":
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{plane}" or "essentials.*":
+			replace all "{plane}" in message with "✈"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{music1}" or "essentials.*":
+			replace all "{music1}" in message with "♪"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{music2}" or "essentials.*":
+			replace all "{music2}" in message with "♫"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{king1}" or "essentials.*":
+			replace all "{king1}" in message with "♛"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{king2}" or "essentials.*":
+			replace all "{king2}" in message with "♕"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{king3}" or "essentials.*":
+			replace all "{king3}" in message with "♚"
+			stop
+		if sender has permission "essentials.emoticon.*" or "essentials.emoticon.{phone}" or "essentials.*":
+			replace all "{phone}" in message with "☎"
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{life1}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{life2}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{life3}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{correct}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect1}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect2}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{incorrect3}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{plane}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{music1}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{music2}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{king1}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{king2}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{king3}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.*" or "essentials.emoticon.{phone}" or "essentials.*":
 			stop
 	if {@Emoticonuse} is false:
 		stop
