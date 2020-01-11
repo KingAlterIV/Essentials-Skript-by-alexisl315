@@ -2,7 +2,22 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.6
+# Version: 1.0.7
+
+# >> %player% : This is a variable that allows you to put your nickname.
+# >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
+# >> %message% : This is a variable that can send a message to the game.
+# >> %colored message% : This is a variable that sends a color message to the game.
+# >> %loop-player% : This is a variable that allows you to group all players in the game.
+# >> %player's location% : This is a variable that locates your coordinate.
+# >> %player's world% : This is a variable that locates your position relative to a world.
+# >> %player's level% : This is a variable that can locate your level of XP.
+# >> %player's health% : This is a variable that can locate your life.
+# >> %player's hunger% : This is a variable that can locate your hunger.
+# >> %player's uuid% : This is a variable that can locate your skin.
+# >> %player's gamemode% : This is a variable that locates your gamemode.
+# >> %player's tool% : This is a variable that locates your item you have.
+
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -33,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.6.
+	Essentialsversionmsg: &7Essentials is 1.0.7.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -62,12 +77,12 @@ options:
 	# >> COMMAND MESSAGE = /heal, /feed -|
 
 	Feedtome: &7You have been satiated.
-	Feedtoplayerisadmin: &6You have satisfied &c%arg-1%&6.
+	Feedtoplayerisadmin: &6You have satisfied &c%arg 1%&6.
 	Feedtoplayer: &6You have been satiated by &c%player%&6.
 	Feedtoplayerconsole: &6You have been satiated by &cConsole&7.
 
 	Healtome: &7You have been neat.
-	Healtoplayerisadmin: &6You have sneat &c%arg-1%&6.
+	Healtoplayerisadmin: &6You have sneat &c%arg 1%&6.
 	Healtoplayer: &6You have been neat by &c%player%&6.
 	Healtoplayerconsole: &6You have been neat by &cConsole&7.
 
@@ -85,7 +100,7 @@ options:
 	Cleartome: &7You have deleted your inventory.
 	Cleartoplayerisadmin: &6Your inventory has been deleted by &c%players%&6.
 	Cleartoplayerisconsole: &6Your inventory has been deleted by &cConsole&6.
-	Cleartoplayer: &6The player &c%arg-1% &6inventory has been deleted.
+	Cleartoplayer: &6The player &c%arg 1% &6inventory has been deleted.
 
 	# >> COMMAND MESSAGE = /fly -|
 	
@@ -100,8 +115,8 @@ options:
 
 	# >> COMMAND MESSAGE = /me -|
 
-	Mebroadcast: &f* %player% &6>> &f%argument 1%
-	Mebroadcastcolor: &f* %player% &6>> &f%coloured argument 1%
+	Mebroadcast: &f* %player% &6>> &f%arg 1%
+	Mebroadcastcolor: &f* %player% &6>> &f%coloured arg 1%
 
 	# >> COMMAND MESSAGE = /gamemode -|
 
@@ -117,10 +132,10 @@ options:
 	Gamemodetoplayerisconsoletocreative: &6Your game mode has been updated by &cConsole&6: &cCreative&7.
 	Gamemodetoplayerisconsoletoadventure: &6Your game mode has been updated by &cConsole&6: &cAdventure&7.
 	Gamemodetoplayerisconsoletospectator: &6Your game mode has been updated by &cConsole&6: &cSpectator&7.
-	Gamemodetoplayeradmintosurvival: &6The player game mode &c%arg-2%&6 has been updated: &cSurvival&7.
-	Gamemodetoplayeradmintocreative: &6The player game mode &c%arg-2%&6 has been updated: &cCreative&7.
-	Gamemodetoplayeradmintoadventure: &6The player game mode &c%arg-2%&6 has been updated: &cAdventure&7.
-	Gamemodetoplayeradmintospectator: &6The player game mode &c%arg-2%&6 has been updated: &cSpectator&7.
+	Gamemodetoplayeradmintosurvival: &6The player game mode &c%arg 2%&6 has been updated: &cSurvival&7.
+	Gamemodetoplayeradmintocreative: &6The player game mode &c%arg 2%&6 has been updated: &cCreative&7.
+	Gamemodetoplayeradmintoadventure: &6The player game mode &c%arg 2%&6 has been updated: &cAdventure&7.
+	Gamemodetoplayeradmintospectator: &6The player game mode &c%arg 2%&6 has been updated: &cSpectator&7.
 
 	# >> COMMAND MESSAGE = /motd -|
 
@@ -149,11 +164,11 @@ options: # >> Continuation of message configuration!
 	Noitemhat: &cYou can not wear an item, only the blocks are portable.
 	Itemalreadyhat: &7You already wear a hat!
 	Itemdeletehat: &7You took off your hat.
-	Itemhat: &7You put the hat: &c%argument 1%
+	Itemhat: &7You put the hat: &c%arg 1%
 
 	# >> COMMAND MESSAGE = /helpop -|
 
-	Helpop: &c&l[&cHelpop&c&l] &c%player% &8: %arg-1%
+	Helpop: &c&l[&cHelpop&c&l] &c%player% &8: %arg 1%
 
 	# >> COMMAND MESSAGE = /freeze -|
 
@@ -173,29 +188,29 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /ignore, /unignore -|
 
-	Ignore: &7You ignore the player &c%argument 1%&7.
-	Unignore: &7You do not know the player &c%argument 1%&7.
+	Ignore: &7You ignore the player &c%arg 1%&7.
+	Unignore: &7You do not know the player &c%arg 1%&7.
 
 	# >> COMMAND MESSAGE = /msg, /reply -|
 
 	Msgignore: &7You are unaware of this player.
 
-	Msgformattome: &7[&c%player% &7> %argument 1%] &6: &7%argument 2%
-	Msgformattoplayer: &7[%player% > &c%argument 1%&7] &6: &7%argument 2%
-	Msgformatcolortome: &7[&c%player% &7> %argument 1%] &6: &7%coloured argument 2%
-	Msgformatcolortoplayer: &7[%player% > &c%argument 1%&7] &6: &7%coloured argument 2%
+	Msgformattome: &7[&c%player% &7> %arg 1%] &6: &7%arg 2%
+	Msgformattoplayer: &7[%player% > &c%arg 1%&7] &6: &7%arg 2%
+	Msgformatcolortome: &7[&c%player% &7> %arg 1%] &6: &7%coloured arg 2%
+	Msgformatcolortoplayer: &7[%player% > &c%arg 1%&7] &6: &7%coloured arg 2%
 
-	Replyformattome: &7[&c%player%&7] &6: &7%argument 1%
-	Replyformattoplayer: &7[%player%] &6: &7%argument 1%
-	Replyformatcolortome: &7[&c%player%&7] &6: &7%coloured argument 1%
-	Replyformatcolortoplayer: &7[%player%] &6: &7%coloured argument 1%
+	Replyformattome: &7[&c%player%&7] &6: &7%arg 1%
+	Replyformattoplayer: &7[%player%] &6: &7%arg 1%
+	Replyformatcolortome: &7[&c%player%&7] &6: &7%coloured arg 1%
+	Replyformatcolortoplayer: &7[%player%] &6: &7%coloured arg 1%
 
 	# >> COMMAND MESSAGE = /warp, /setwarp, /delwarp, /warps -|
 
 	Nowarpset: &cThe warp %argument 1% does not exist!
 
-	Warpcreate: &7The warp &c%argument 1% &7has been successfully created!
-	Warpdelete: &7The warp &c%argument 1% &7has been successfully deleted!
+	Warpcreate: &7The warp &c%arg 1% &7has been successfully created!
+	Warpdelete: &7The warp &c%arg 1% &7has been successfully deleted!
 
 	Warplist: &9Warps: &b%{warplist::*}%
 	Warpteleporting: &7Teleporting...
@@ -205,17 +220,17 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /skull, /enderchest -|
 
-	Skull: &7You have given yourself a &c%argument 1%&7.
+	Skull: &7You have given yourself a &c%arg 1%&7.
 
 	Enderchesttome: &7You have opened your enderchest.
-	Enderchesttoplayer: &7You have opened of player &c%argument 1% &7enderchest.
+	Enderchesttoplayer: &7You have opened of player &c%arg 1% &7enderchest.
 
 	# >> COMMAND MESSAGE = /afk -|
 
 	Afktome: &c%player% &6is now AFK!
 	Noafktome: &c%player% &6is no longer AFK!
-	Afktoplayer: &c%argument 1% &6is now AFK!
-	Noafktoplayer: &c%argument 1% &6is no longer AFK!
+	Afktoplayer: &c%arg 1% &6is now AFK!
+	Noafktoplayer: &c%arg 1% &6is no longer AFK!
 	Afktomeisantiafk: &c%loop-player% &6is no longer AFK!
 
 	Afkkickreason: &cYou've been kick for afk!
@@ -228,7 +243,7 @@ options: # >> Continuation of message configuration!
 	# >> COMMAND MESSAGE = /slap -|
 
 	Slaptome: &6You were slapped by &c%player%&7.
-	Slaptoplayeradmin: &6The player &c%argument 1% &6has been slapped.
+	Slaptoplayeradmin: &6The player &c%arg 1% &6has been slapped.
 
 	# >> COMMAND MESSAGE = /speed -|
 
@@ -239,10 +254,10 @@ options: # >> Continuation of message configuration!
 	# >> COMMAND MESSAGE = /mute, /unmute -|
 
 	Mutebroadcast: &c%arg 1% &7a été rendu muet par &c%player% &7pour &c%number argument% &7secondes.
-	Unmutebroadcast: &c%player% &7a rendu la parole à &c%arg-1%&7.
+	Unmutebroadcast: &c%player% &7a rendu la parole à &c%arg 1%&7.
 	Unmutealready: &c%arg 1% &7a déjà la parole !
 	Mute: &7Vous êtes muet encore &c%{mute.seconds.%player%}% &7seconde(s)
-	Unmutebroadcastisconsole: &cConsole &7a rendu la parole à &c%arg-1%&7.
+	Unmutebroadcastisconsole: &cConsole &7a rendu la parole à &c%arg 1%&7.
 	Mutebroadcastisconsole: &c%arg 1% &7a été rendu muet par &cConsole &7pour &c%number argument% &7secondes.
 
 	# >> COMMAND MESSAGE = /kick, /kickall -|
@@ -310,8 +325,8 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /nick -|
 
-	Nickredefine: &8You have redefined the player nickname &c%arg-1%&8.
-	Nicktoplayeradmin: &8You have changed the nickname of &c%arg-1% &8in &c%coloured arg-2%
+	Nickredefine: &8You have redefined the player nickname &c%arg 1%&8.
+	Nicktoplayeradmin: &8You have changed the nickname of &c%arg 1% &8in &c%coloured arg 2%
 	Nicktoplayer: &cYour nickname was changed !
 
 	# >> COMMAND MESSAGE = /money, /eco, /pay -|
@@ -338,8 +353,8 @@ options: # >> Continuation of message configuration!
 	Nogodtome: &7You have disabled your god mode.
 	Godtoplayer: &c%player% &6has activated your god mode.
 	Nogodtoplayer: &c%player% &6has disabled your god mode.
-	Godtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been activated.
-	Nogodtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been disabled.
+	Godtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been activated.
+	Nogodtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been disabled.
 
 	# >> COMMAND MESSAGE = /seen -|
 
@@ -564,7 +579,7 @@ options: # >> Continuation of message configuration!
 
 	Notpa: &cYou have no pending teleport requests !
 	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
-	Tpasendtoplayer: &7Teleport request sent to &c%arg% &7!
+	Tpasendtoplayer: &7Teleport request sent to &c%arg 1% &7!
 	Tpasendtoplayer2: &7Teleportation request for &c%player% &7!
 	Tpaccept: &7Teleport request accepted !
 	Tpacceptteleporting: &7Teleporting...
@@ -651,6 +666,63 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.night" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Night":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Night]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.night" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Night]":
+			make player execute command "/night"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.day" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Day":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Day]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.day" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Day]":
+			make player execute command "/day"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.balance" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Balance":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Balance]"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.balance" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Balance]":
+			make player execute command "/money"
+			stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use" or "essentials.*":
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.heal" or "essentials.*":
@@ -1377,7 +1449,7 @@ command /tpa [<offline player>]:
 		if arg 1 is online:
 			set {tpa.%arg%} to player
 			send "{@Tpasendtoplayer}"  to player
-			send "{@Tpasendtoplayer2}:" to arg 1
+			send "{@Tpasendtoplayer2}" to arg 1
 			send "{@Tpa}" to arg 1
 			stop
 		if arg 1 is offline:
