@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre20
+# |-> Version: 1.15Pre20b
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -1038,7 +1038,7 @@ command /fakebroadcastmessage [<text>] [<offline player>]:
 						stop
 			if arg 1 is "playerisconnected":
 				if arg 2 is not set:
-					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.op" or "essentials.*":
+					if sender has permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.playerisconnected" or "essentials.*":
 						send "&cError &6>> &f/fbm [fake message/list] [player]" to player
 						stop
 					if sender doesn't have permission "essentials.fakebroadcastmessage.*" or "essentials.fakebroadcastmessage.fakes.playerisconnected" or "essentials.fakebroadcastmessage.fakes.*" or "essentials.*":
@@ -5307,7 +5307,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre20" to player
+				send "&fVersion &6|-> &c1.15Pre20b" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5323,7 +5323,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre20" to console
+				send "&fVersion &6|-> &c1.15Pre20b" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
