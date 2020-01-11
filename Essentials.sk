@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6
+# Version: 1.6.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,12 +53,16 @@ options:
 	Damageofplayer: true
 	Damageoffall: true
 	Damageoffire: true
-	Damageofwater: true
+
+	Removemoneytodeath: false
+	Moneytodeath: 50
+	Moneytodeathmessage1: &cYou lost
+	Moneytodeathmessage2: &c€.
 
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.
+	Essentialsversionmsg: &7Essentials is 1.6.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -506,7 +510,7 @@ command /seen [<player>]:
 				send "{@Noperms}" to player
 				stop
 
-options: # >> Continuation of message configuration!
+options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /workbench -|
 
@@ -826,6 +830,14 @@ on command "/bukkit:a":
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+on death:
+	if {@Removemoneytodeath} is true:
+		remove {@Moneytodeath} from {money.%UUID of player%}
+		send "{@Moneytodeathmessage1} {@Moneytodeath} {@Moneytodeathmessage2}" to player
+		stop
+	if {@Removemoneytodeath} is false:
+		stop
+
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.serverbungeecord" or "essentials.*":
 		if line 1 is "[Essentials]":
@@ -865,12 +877,6 @@ on damage:
 			if {@Damageoffire} is true:
 				stop
 			if {@Damageoffire} is false:
-				cancel event
-				stop
-		damage cause is water:
-			if {@Damageofwater} is true:
-				stop
-			if {@Damageofwater} is false:
 				cancel event
 				stop
 
