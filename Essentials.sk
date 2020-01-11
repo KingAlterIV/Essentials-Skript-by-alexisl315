@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.8.1
+# Version: 1.8.2
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.8.1.
+	Essentialsversionmsg: &7Essentials is 1.8.2.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -2774,7 +2774,7 @@ command /eco [<text>] [<offline player>] [<number>]:
 	permission message: {@Noperms}
 	aliases: essentials:eco
 	executable by: players
-	usage: &cError &6>> &f/eco [give/remove] [player] [number]
+	usage: &cError &6>> &f/eco [give/remove/set] [player] [number]
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
@@ -3206,7 +3206,7 @@ command /speed [<text>] [<number>]:
 				if arg 2 is not set:
 					send "&cError &6>> &f/speed [fly/walk/reset] [0/0.1/1]" to player
 					stop
-			if sender doesn't have permission "essentials.time.night" or "essentials.*":
+			if sender doesn't have permission "essentials.speed.walk" or "essentials.*":
 				send "{@Noperms}" to player
 				stop
 		if arg 1 is "reset":
@@ -3215,7 +3215,7 @@ command /speed [<text>] [<number>]:
 				set the player's fly speed to 0.1
 				send "{@Speedreset}" to player
 				stop
-			if sender doesn't have permission "essentials.time.night" or "essentials.*":
+			if sender doesn't have permission "essentials.speed.reset" or "essentials.*":
 				send "{@Noperms}" to player
 				stop
 
