@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.5.0.1
+# Version: 1.5.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -50,10 +50,14 @@ options:
 
 	Emoticonuse: true
 
+	Damageofplayer: true
+	Damageoffall: true
+	Damageoffire: true
+
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.5.0.1.
+	Essentialsversionmsg: &7Essentials is 1.5.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -704,6 +708,27 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on damage:
+	victim is a player:
+		attacker is a player:
+			if {@Damageofplayer} is true:
+				stop
+			if {@Damageofplayer} is false:
+				cancel event
+				stop
+		damage cause is fall:
+			if {@Damageoffall} is true:
+				stop
+			if {@Damageoffall} is false:
+				cancel event
+				stop
+		damage cause is fire:
+			if {@Damageoffire} is true:
+				stop
+			if {@Damageoffire} is false:
+				cancel event
+				stop
 
 command /clearchat:
 	permission: essentials.clearchat
@@ -3200,7 +3225,7 @@ command /enderchest [<offline player>]:
 			stop
 		if arg 1 is online:
 			if sender has permission "essentials.enderchest.others" or "essentials.*":
-				open the arg-1's ender chest for the player
+				open the arg 1's ender chest for the player
 				send "{@Enderchesttoplayer}" to player
 				stop
 			if sender doesn't have permission "essentials.enderchest.others" or "essentials.*":
@@ -3215,13 +3240,13 @@ command /skull [<text>]:
 	permission message: {@Noperms}
 	aliases: essentials:skull, head, playerhead, essentials:head, essentials:playerhead
 	executable by: players
-	usage: &cError &6>> &f/head [warp]
+	usage: &cError &6>> &f/head [name]
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/head [warp]" to player
+			send "&cError &6>> &f/head [name]" to player
 			stop
 		if arg 1 is set:
-			execute console command "/give %player% skull 64 3 {SkullOwner:%arg-1%}"
+			execute console command "/give %player% skull 64 3 {SkullOwner:%arg 1%}"
 			send "{@Skull}" to player
 			stop
 
