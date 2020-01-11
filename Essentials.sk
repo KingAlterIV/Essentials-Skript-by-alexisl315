@@ -1,22 +1,22 @@
-# >> Essentials << # |->> Skript developed by alexisl315
+# |-> Essentials << # |->> Skript developed by alexisl315 (Lennord)
 
-# The skript allows you to have a remake of the Essentials plugin.
+# |-> The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14.2
+# |-> Version: 1.15Pre1
 
-# >> %player% : This is a variable that allows you to put your nickname.
-# >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
-# >> %message% : This is a variable that can send a message to the game.
-# >> %colored message% : This is a variable that sends a color message to the game.
-# >> %loop-player% : This is a variable that allows you to group all players in the game.
-# >> %player's location% : This is a variable that locates your coordinate.
-# >> %player's world% : This is a variable that locates your position relative to a world.
-# >> %player's level% : This is a variable that can locate your level of XP.
-# >> %player's health% : This is a variable that can locate your life.
-# >> %player's hunger% : This is a variable that can locate your hunger.
-# >> %player's uuid% : This is a variable that can locate your skin.
-# >> %player's gamemode% : This is a variable that locates your gamemode.
-# >> %player's tool% : This is a variable that locates your item you have.
+# |-> %player% : This is a variable that allows you to put your nickname.
+# |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
+# |-> %message% : This is a variable that can send a message to the game.
+# |-> %colored message% : This is a variable that sends a color message to the game.
+# |-> %loop-player% : This is a variable that allows you to group all players in the game.
+# |-> %player's location% : This is a variable that locates your coordinate.
+# |-> %player's world% : This is a variable that locates your position relative to a world.
+# |-> %player's level% : This is a variable that can locate your level of XP.
+# |-> %player's health% : This is a variable that can locate your life.
+# |-> %player's hunger% : This is a variable that can locate your hunger.
+# |-> %player's uuid% : This is a variable that can locate your skin.
+# |-> %player's gamemode% : This is a variable that locates your gamemode.
+# |-> %player's tool% : This is a variable that locates your item you have.
 
 
 options:
@@ -76,6 +76,8 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
+
+	Errortoconsoleisnotplayerusecommands: &cYou can not use this command in the server console !
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -4427,8 +4429,8 @@ command /essentials [<text>]:
 			send "{@Reloadmsg}" to player
 			stop
 		if arg 1 is "info":
-			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-1-14-3-support.39698/" to player
-			send "Version >> 1.14.2" to player
+			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
+			send "Version >> 1.15Pre1" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
@@ -4498,78 +4500,103 @@ command /setspawn:
 	aliases: essentials:setspawn
 	permission: essentials.setspawn
 	usage: &cError &6>> &f/setspawn
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	trigger:
-		send "{@Setspawn}" to player
-		set {spawn} to location of player
-		stop
+		if sender is a player:
+			send "{@Setspawn}" to player
+			set {spawn} to location of player
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /spawn [<offline player>]:
 	aliases: essentials:spawn
+	executable by: players, console
 	usage: &cError &6>> &f/spawn [player]
 	permission: essentials.spawn
 	permission message: {@Noperms}
 	trigger:
-		if {spawn} isn't set:
-			send "{@Nospawnpoint}" to player
-			stop
-		else:
-			if arg 1 is not set:
-				if {@Spawncooldownuse} is true:
-					if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
-						send "{@Spawncooldown1} {@Spawncooldown} {@Spawncooldown2}" to player
-						wait {@Spawncooldown} seconds
+		if sender is a player:
+			if {spawn} is not set:
+				send "{@Nospawnpoint}" to player
+				stop
+			if {spawn} is set:
+				if arg 1 is not set:
+					if {@Spawncooldownuse} is true:
+						if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
+							send "{@Spawncooldown1} {@Spawncooldown} {@Spawncooldown2}" to player
+							wait {@Spawncooldown} seconds
+							set {back::%uuid of player%} to location of player
+							teleport player to {spawn}
+							send "{@Spawnteleporting}" to player
+							stop
+						if sender has permission "essentials.spawn.bypass" or "essentials.*":
+							set {back::%uuid of player%} to location of player
+							teleport player to {spawn}
+							send "{@Spawnteleporting}" to player
+							stop
+					if {@Spawncooldownuse} is false:
 						set {back::%uuid of player%} to location of player
 						teleport player to {spawn}
 						send "{@Spawnteleporting}" to player
 						stop
-					if sender has permission "essentials.spawn.bypass" or "essentials.*":
-						set {back::%uuid of player%} to location of player
-						teleport player to {spawn}
-						send "{@Spawnteleporting}" to player
-						stop
-				if {@Spawncooldownuse} is false:
-					set {back::%uuid of player%} to location of player
-					teleport player to {spawn}
-					send "{@Spawnteleporting}" to player
-					stop
-			if arg 1 is online:
-				if sender has permission "essentials.spawn.others" or "essentials.*":
-					if arg 1 is offline:
-						send "{@Noplayerconnect}" to player
-						stop
-					if arg 1 is online:
-						if sender is a player:
+				if arg 1 is online:
+					if sender has permission "essentials.spawn.others" or "essentials.*":
+						if arg 1 is offline:
+							send "{@Noplayerconnect}" to player
+							stop
+						if arg 1 is online:
 							send "{@Teleportspawnisplayer}" to arg 1
 							set {back::%uuid of arg 1%} to location of arg 1
 							send "{@Spawnteleporting}" to arg 1
-							teleport argument 1 to {spawn}
+							teleport arg 1 to {spawn}
 							stop
-						if sender is console:
-							send "{@Teleportspawnisconsole}" to arg 1
-							set {back::%uuid of arg 1%} to location of arg 1
-							send "{@Spawnteleporting}" to arg 1
-							teleport argument 1 to {spawn}
-							stop
-				if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
-					send "{@Noperms}" to player
+					if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+				if arg 1 is offline:
+					send "{@Noplayerconnect}" to player
 					stop
-			if arg 1 is offline:
-				send "{@Noplayerconnect}" to player
+		if sender is console:
+			if {spawn} is not set:
+				send "{@Nospawnpoint}" to console
 				stop
+			if {spawn} is set:
+				if arg 1 is not set:
+					if {@Spawncooldownuse} is true:
+						send "{@Errortoconsoleisnotplayerusecommands}" to console
+						stop
+				if arg 1 is online:
+					if arg 1 is offline:
+						send "{@Noplayerconnect}" to console
+						stop
+					if arg 1 is online:
+						send "{@Teleportspawnisplayer}" to arg 1
+						set {back::%uuid of arg 1%} to location of arg 1
+						send "{@Spawnteleporting}" to arg 1
+						teleport arg 1 to {spawn}
+						stop
+				if arg 1 is offline:
+					send "{@Noplayerconnect}" to console
+					stop
 
 command /delspawn:
 	permission: essentials.delspawn
 	aliases: essentials:delspawn
 	usage: &cError &6>> &f/delspawn
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	trigger:
-		if {spawn} is set:
-			delete {spawn}
-			send "{@Deletespawn}" to player
-			stop
-		if {spawn} isn't set:
-			send "{@Nospawnpoint}" to player
+		if sender is a player:
+			if {spawn} is set:
+				delete {spawn}
+				send "{@Deletespawn}" to player
+				stop
+			if {spawn} isn't set:
+				send "{@Nospawnpoint}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
