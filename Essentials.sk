@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.10
+# Version: 0.11
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -494,17 +494,6 @@ options: # >> Continuation of message configuration!
 	Signcommands: &7You have to create a sign with a command.
 	Signwarpnowarp: &cYou are no warp !
 
-	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny -|
-
-	Notpa: &cYou have no pending teleport requests !
-	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
-	Tpasendtoplayer: &7Teleport request sent to &c%arg% &7!
-	Tpasendtoplayer2: &7Teleportation request for &c%player% &7!
-	Tpaccept: &7Teleport request accepted !
-	Tpacceptteleporting: &7Teleporting...
-	Tpdeny: &7Teleport request deny !
-
-
 	# >> COMMAND MESSAGE = /tree, /bigtree -|
 
 	Tree: &7A tree has been grown above the block you are looking at.
@@ -532,6 +521,40 @@ options: # >> Continuation of message configuration!
 	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% degrees&7).
 	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7).
 
+	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny, /tpo, /tpohere -|
+
+	Notpa: &cYou have no pending teleport requests !
+	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
+	Tpasendtoplayer: &7Teleport request sent to &c%arg% &7!
+	Tpasendtoplayer2: &7Teleportation request for &c%player% &7!
+	Tpaccept: &7Teleport request accepted !
+	Tpacceptteleporting: &7Teleporting...
+	Tpdeny: &7Teleport request deny !
+
+	Tpoteleporting: &7Teleporting...
+	Tpoplayeradmin: &7Teleportation of &c%arg 1% &7towards &c%arg 2%&7.
+
+	Tpohereteleporting: &7Teleporting...
+
+	# >> LMESSAGE CONSOLE LOADING -|
+
+	Loading: &7[Essentials] | &8loading...
+
+	# >> COMMAND MESSAGE = /spawnmob -|
+
+	Spawnmob: &7You made spawn &c%arg 2% %arg 1%&7.
+
+	# >> COMMAND MESSAGE = /sudo -|
+
+	Sudo: &7You did well execute the command &c%arg 2% &7at &c%arg 1%&7.
+
+	# >> COMMAND MESSAGE = /repair -|
+
+	Repairtome: &7You have successfully repaired your: &c%player's tool%&7.
+	Repairalltome: &7You have successfully repaired all your stuff.
+	Repairalltoplayeradmin: &7You have successfully repaired the player's stuff &c%arg 2%&7.
+	Repairalltoplayer: &7Your stuff has been repaired by &c%player%&7.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -540,6 +563,182 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /repair [<text>] [<offline player>]:
+	permission: essentials.repair
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/repair [all] [player]
+	aliases: essentials:repair
+	trigger:
+		if arg 1 is not set:
+			repair player's tool
+			send "{@Repairtome}"
+		if arg 1 is "all":
+			if arg 2 is not set:
+				send "{@Repairalltome}"
+				repair slot 0 of player
+				repair slot 1 of player
+				repair slot 2 of player
+				repair slot 3 of player
+				repair slot 4 of player
+				repair slot 5 of player
+				repair slot 6 of player
+				repair slot 7 of player
+				repair slot 8 of player
+				repair slot 9 of player
+				repair slot 10 of player
+				repair slot 11 of player
+				repair slot 12 of player
+				repair slot 13 of player
+				repair slot 14 of player
+				repair slot 15 of player
+				repair slot 16 of player
+				repair slot 17 of player
+				repair slot 18 of player
+				repair slot 19 of player
+				repair slot 20 of player
+				repair slot 21 of player
+				repair slot 22 of player
+				repair slot 23 of player
+				repair slot 24 of player
+				repair slot 25 of player
+				repair slot 26 of player
+				repair slot 27 of player
+				repair slot 28 of player
+				repair slot 29 of player
+				repair slot 30 of player
+				repair slot 31 of player
+				repair slot 32 of player
+				repair slot 33 of player
+				repair slot 34 of player
+				repair slot 35 of player
+				repair helmet slot of player		
+				repair chestplate slot of player
+				repair leggings slot of player
+				repair boots slot of player
+				stop
+			if arg 2 is online:
+				if sender has permission "essentials.repair.others" or "essentials.*":
+					send "{@Repairalltoplayeradmin}" to player
+					send "{@Repairalltoplayer}" to arg 2
+					repair slot 0 of arg 2
+					repair slot 1 of arg 2
+					repair slot 2 of arg 2
+					repair slot 3 of arg 2
+					repair slot 4 of arg 2
+					repair slot 5 of arg 2
+					repair slot 6 of arg 2
+					repair slot 7 of arg 2
+					repair slot 8 of arg 2
+					repair slot 9 of arg 2
+					repair slot 10 of arg 2
+					repair slot 11 of arg 2
+					repair slot 12 of arg 2
+					repair slot 13 of arg 2
+					repair slot 14 of arg 2
+					repair slot 15 of arg 2
+					repair slot 16 of arg 2
+					repair slot 17 of arg 2
+					repair slot 18 of arg 2
+					repair slot 19 of arg 2
+					repair slot 20 of arg 2
+					repair slot 21 of arg 2
+					repair slot 22 of arg 2
+					repair slot 23 of arg 2
+					repair slot 24 of arg 2
+					repair slot 25 of arg 2
+					repair slot 26 of arg 2
+					repair slot 27 of arg 2
+					repair slot 28 of arg 2
+					repair slot 29 of arg 2
+					repair slot 30 of arg 2
+					repair slot 31 of arg 2
+					repair slot 32 of arg 2
+					repair slot 33 of arg 2
+					repair slot 34 of arg 2
+					repair slot 35 of arg 2
+					repair helmet slot of arg 2		
+					repair chestplate slot of arg 2
+					repair leggings slot of arg 2
+					repair boots slot of arg 2
+					stop
+				if sender doesn't have permission "essentials.repair.others" or "essentials.*":
+					send "{@Noperms}"
+			if arg 2 is offline:
+				send "{@Noplayerconnect}" to player
+
+command /sudo [<offline player>] [<text>]:
+	permission: essentials.sudo
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/sudo [player] [commands]
+	aliases: essentials:sudo
+	trigger:
+		if arg 1 is online:
+			if arg 2 is set:
+				execute arg 1 command "%arg 2%"
+				send "{@Sudo}" to player
+				stop
+			if arg 2 is not set:
+				send "&cError &6>> &f/sudo [player] [commands]" to player
+		if arg 1 is not set:
+			send "&cError &6>> &f/sudo [player] [commands]" to player
+		if arg 1 is offline:
+			send "{@Noplayerconnect}" to player
+
+command /spawnmob [<entity types>] [<number>]:
+	permission: essentials.spawnmob
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/spawnmob [entity] [number]
+	aliases: essentials:spawnmob
+	trigger:
+		if arg 1 is set:
+			if arg 2 is not set:
+				send "&cError &6>> &f/spawnmob [entity] [number]" to player
+				stop
+			else:
+				spawn arg 2 of arg 1 at the player
+				send "{@Spawnmob}" to player
+				stop
+		if arg 1 is not set:
+			send "&cError &6>> &f/spawnmob [entity] [number]" to player
+			stop
+
+on load:
+	message "{@Loading}" to console
+
+command /tpohere [<offline player>]:
+	permission: essentials.tpohere
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tpohere [player]
+	aliases: essentials:tpohere
+	trigger:
+		send "{@Tpohereteleporting}" to player
+		teleport player to arg 1
+
+command /tpo [<offline player>] [<offline player>]:
+	permission: essentials.tpo
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tpo [player] [player]
+	aliases: essentials:tpo
+	trigger: 
+		if arg 1 is not set:
+			message "&cError &6>> &f/tpo [player] [player]"
+		if arg 1 is online:
+			if arg 2 is online:
+				send "&bTéléportation.." to arg 1
+				teleport arg 1 to arg 2
+				send "{@Tpoplayeradmin}" to player
+				send "{@Tpoteleporting}" to arg 1
+			if arg 2 is offline:
+				send "{@Noplayerconnect}"
+				stop
+			if arg 2 is not set:
+				message "&cError &6>> &f/tpo [player] [player]"
 
 command /jump:
 	permission: essentials.jump
@@ -720,12 +919,15 @@ command /tpa [<offline player>]:
 	usage: &cError &6>> &f/tpa [player]
 	aliases: essentials:tpa
 	trigger:
-		if arg is set:
+		if arg 1 is online:
 			set {tpa.%arg%} to player
 			message "{@Tpasendtoplayer}"  to player
-			message "{@Tpasendtoplayer2}:" to arg
-			message "{@Tpa}" to arg
-		else:
+			message "{@Tpasendtoplayer2}:" to arg 1
+			message "{@Tpa}" to arg 1
+		if arg 1 is offline:
+			send "{@Noplayerconnect}"
+			stop	
+		if arg 1 is not set:
 			message "&cError &6>> &f/tpa [player]"
 
 command /tpaccept:
@@ -982,6 +1184,8 @@ command /burn [<offline player>] [<timespan>]:
 				send "{@Burntoplayeradmin}" to player
 				send "{@Burntome}" to arg 1
 				stop
+			if arg 2 is not set:
+				message "&cError &6>> &f/burn [player] [times]"
 		if arg 1 is offline:
 			message "{@Noplayerconnect}"
 			stop
@@ -1173,7 +1377,7 @@ command /unban [<offline player>]:
 command /unbanip [<offline player>] [<Text>]:
 	permission: essentials.unbanip
 	permission message: {@Noperms}
-	aliases: essentials:unbanip, /unban-ip, essentials.unban-ip
+	aliases: essentials:unbanip, /unban-ip, essentials:unban-ip
 	usage: &cError &6>> &f/unbanip [player] [IP]
 	trigger:
 		if arg 1 is not set:
@@ -2732,7 +2936,7 @@ command /spawn [<offline player>]:
 			message "{@Nospawnpoint}"
 			stop
 		else:
-			argument 1 is not set:
+			if arg 1 is not set:
 				if {@Spawncooldownuse} is true:
 					if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
 						message "{@Spawncooldown1} {@Spawncooldown} {@Spawncooldown2}"
@@ -2748,7 +2952,7 @@ command /spawn [<offline player>]:
 					set {back::%uuid of player%} to location of player
 					teleport player to {spawn}
 					message "{@Spawnteleporting}"
-			else:
+			if arg 1 is online:
 				if sender has permission "essentials.spawn.others" or "essentials.*":
 					if argument is online:
 						set {back::%uuid of arg 1%} to location of player
@@ -2765,6 +2969,8 @@ command /spawn [<offline player>]:
 						teleport argument 1 to {spawn}
 				if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
 					message "{@Noperms}"
+			if arg 1 is offline:
+				message "{@Noplayerconnect}"
 
 command /delspawn:
 	permission: essentials.delspawn
