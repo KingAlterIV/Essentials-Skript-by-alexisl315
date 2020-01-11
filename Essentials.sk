@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre9
+# Version: 1.14pre10
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -925,6 +925,30 @@ options: # >> Continuation of message configuration !
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+command /chat [<text>]:
+	permission: essentials.chat
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/chat [clear]
+	aliases: essentials:chat
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/chat [clear]" to player
+			stop
+		if arg 1 is not "clear":
+			send "&cError &6>> &f/chat [clear]" to player
+			stop
+		if arg 1 is "clear":
+			if sender has permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
+				loop 300 times:
+					broadcast ""
+				loop 1 times:
+					broadcast "{@Clearchat}"
+					stop
+			if sender doesn't have permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
+
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.me" or "essentials.*":
 		if line 1 is "[Essentials]":
@@ -1197,18 +1221,6 @@ on damage:
 	if {@Damageall} is false:
 		cancel event
 		stop
-
-command /clearchat:
-	permission: essentials.clearchat
-	executable by: players
-	permission message: {@Noperms}
-	usage: &cError &6>> &f/clearchat
-	aliases: essentials:clearchat, essentials:cc, cc
-	trigger:
-		loop 300 times:
-			broadcast ""
-		loop 1 times:
-			broadcast "{@Clearchat}"
 
 on chat:
 	if {@Emoticonuse} is true:
@@ -4404,7 +4416,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre9" to player
+			send "Version >> 1.14pre10" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
