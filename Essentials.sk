@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre6
+# Version: 1.14pre7
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -2898,7 +2898,7 @@ command /near:
 			stop
 
 on join:
-    set {ip.%player%} to "%ip of player%"
+    set {ip.%player%} to ip of player
     stop
 
 command /god [<offline player>]:
@@ -3659,7 +3659,7 @@ command /enderchest [<offline player>]:
 			send "{@Noplayerconnect}" to player
 			stop
 
-command /skull [<text>]:
+command /skull [<offline player>]:
 	permission: essentials.skull
 	permission message: {@Noperms}
 	aliases: essentials:skull, head, playerhead, essentials:head, essentials:playerhead
@@ -4362,7 +4362,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre6" to player
+			send "Version >> 1.14pre7" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
