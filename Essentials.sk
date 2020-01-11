@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6.2
+# Version: 1.6.3
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -60,7 +60,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.2.
+	Essentialsversionmsg: &7Essentials is 1.6.3.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -504,7 +504,7 @@ command /seen [<player>]:
 				send "&7Health&6: &c%arg 1's health%&c/10" to player
 				send "&7Hunger&6: &c%arg 1's hunger%&c/10" to player
 				stop
-			if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
+			if sender doesn't have permission "essentials.seen.others" or "essentials.*":
 				send "{@Noperms}" to player
 				stop
 
@@ -711,6 +711,7 @@ on command "/pl":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -718,6 +719,7 @@ on command "/plugins":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -725,6 +727,7 @@ on command "/?":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -732,6 +735,7 @@ on command "/ver":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -739,6 +743,7 @@ on command "/version":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -746,6 +751,7 @@ on command "/a":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -753,6 +759,7 @@ on command "/about":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -760,6 +767,7 @@ on command "/bukkit:about":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -767,6 +775,7 @@ on command "/bukkit:?":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -774,6 +783,7 @@ on command "/bukkit:ver":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -781,6 +791,7 @@ on command "/bukkit":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -788,6 +799,7 @@ on command "/icanhasbukkit":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -795,6 +807,7 @@ on command "/bukkit:plugins":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -802,6 +815,7 @@ on command "/bukkit:plugins":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -809,6 +823,7 @@ on command "/bukkit:pl":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -816,6 +831,7 @@ on command "/bukkit:a":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
+		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
@@ -869,7 +885,7 @@ command /clearchat:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/clearchat
-	aliases: essentials:clearchat,  essentials:cc,  cc
+	aliases: essentials:clearchat, essentials:cc, cc
 	trigger:
 		loop 300 times:
 			broadcast ""
