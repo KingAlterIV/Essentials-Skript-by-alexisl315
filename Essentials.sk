@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6.4
+# Version: 1.6.5
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -60,7 +60,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.4.
+	Essentialsversionmsg: &7Essentials is 1.6.5.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -811,7 +811,7 @@ on command "/bukkit:plugins":
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
 		stop
 
-on command "/bukkit:plugins":
+on command "/bukkit:version":
 	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
 		send "{@Noperms}" to player
 		cancel event
@@ -833,6 +833,13 @@ on command "/bukkit:a":
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:help":
+	if sender doesn't have permission "essentials.blockcommand.bypass":
+		cancel event
+		stop
+	if sender has permission "essentials.blockcommand.bypass":
 		stop
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
