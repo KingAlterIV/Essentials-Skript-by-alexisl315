@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.7
+# Version: 1.0.8
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.7.
+	Essentialsversionmsg: &7Essentials is 1.0.8.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -658,6 +658,15 @@ options: # >> Continuation of message configuration!
 
 	Nodrop: &cYou do not have permission to drop an item.
 
+	# >> COMMAND MESSAGE = /vanish -|
+
+	Vanishtome: &7You are &cVanish&7.
+	Novanishtome: &7You are no longer &cVanish&7.
+	Vanishtoplayer: &7You are &cVanish&7.
+	Novanishtoplayer: &7You are no longer &cVanish&7.
+	Vanishtoplayeradmin: &7The player &c%arg 1% &7is now in vanish.
+	Novanishtoplayeradmin: &7The player &c%arg 1% &7is no longer vanish.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -666,6 +675,62 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /vanish [<offline player>]:
+	permission: essentials.vanish
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/vanish [player]
+	aliases: essentials:vanish
+	trigger:
+		if arg 1 is not set:
+			if {vanish.%player%} is not set:
+				execute console command "/effect %player% invisibility 99999 255 false"
+				send "{@Vanishtome}"
+				set {vanish.%player%} to true
+				stop
+			else:
+				execute console command "/effect %player% clear"
+				stop
+				send "{@Novanishtome}"
+				delete {vanish.%player%}
+				stop
+		if sender has permission "essentials.vanish.others" or "essentials.*":
+			stop
+			if arg 1 is online:
+				if {vanish.%arg 1%} is not set:
+					execute console command "/effect %arg 1% invisibility 99999 255 false"
+					send "{@Vanishtoplayer}" to arg 1
+					send "{@Vanishtoplayeradmin}" to player
+					set {vanish.%arg 1%} to true
+					stop
+				else:
+					execute console command "/effect %arg 1% clear"
+					stop
+					send "{@Novanishtoplayer}" to arg 1
+					send "{@Novanishtoplayeradmin}" to player
+					delete {vanish.%arg 1%}
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender doesn't have permission "essentials.vanish.others" or "essentials.*":
+			stop
+
+on join:	
+	execute console command "/gamerule sendCommandFeedback false"
+	execute console command "/effect %player% clear"
+	stop
+
+on join:	
+	if {vanish.%player%} is set:
+		delete {vanish.%player%}
+		stop
+
+on quit:	
+	if {vanish.%player%} is set:
+		delete {vanish.%player%}
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.night" or "essentials.*":
