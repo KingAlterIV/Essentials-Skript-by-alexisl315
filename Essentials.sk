@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre12
+# Version: 1.14pre13
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -714,9 +714,10 @@ options: # >> Continuation of message configuration !
 	Weathertorain: &7You put the rain.
 	Weathertothunder: &7You put the thunder.
 
-	# >> COMMAND MESSAGE = /clearchat -|
+	# >> COMMAND MESSAGE = /chat
+ -|
 
-	Clearchat: &cThe broadcast has been deleted.
+	Chatclear: &cThe broadcast has been deleted.
 
 	# >> COMMAND MESSAGE/CONFIG = BLOCK COMMAND -|
 
@@ -935,7 +936,7 @@ command /lag [<text>]:
 		if arg 1 is not set:
 			send "&cError &6>> &f/lag [clear]" to player
 			stop
-		if arg 1 is not "clear" or "show":
+		if arg 1 is not "clear":
 			send "&cError &6>> &f/lag [clear]" to player
 			stop
 		if arg 1 is "clear":
@@ -981,7 +982,7 @@ command /chat [<text>]:
 				loop 300 times:
 					broadcast ""
 				loop 1 times:
-					broadcast "{@Clearchat}"
+					broadcast "{@Chatclear}"
 					stop
 			if sender doesn't have permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
 				send "{@Noperms}" to player
@@ -4427,8 +4428,8 @@ command /essentials [<text>]:
 			send "{@Reloadmsg}" to player
 			stop
 		if arg 1 is "info":
-			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre12" to player
+			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-1-bungeecord-support-new-1-14-1-support.39698/" to player
+			send "Version >> 1.14pre13" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
