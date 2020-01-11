@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.3.5
+# Version: 1.3.5.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -51,7 +51,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.3.5.
+	Essentialsversionmsg: &7Essentials is 1.3.5.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -2728,14 +2728,14 @@ command /home [<text>]:
 				stop
 			if {home.%player%::%arg 1%} is set:
 				if {@Homecooldownuse} is true:
-					if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
+					if sender doesn't have permission "essentials.home.bypass" or "essentials.*":
 						send "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}" to player
 						wait {@Homecooldown} seconds
 						send "{@Hometeleporting}" to player
 						set {back::%uuid of player%} to location of player
 						teleport player to {home.%player%::%arg 1%}
 						stop
-					if sender has permission "essentials.spawn.bypass" or "essentials.*":
+					if sender has permission "essentials.home.bypass" or "essentials.*":
 						send "{@Hometeleporting}" to player
 						set {back::%uuid of player%} to location of player
 						teleport player to {home.%player%::%arg 1%}
