@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.11
+# Version: 0.12
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -23,6 +23,9 @@ options:
 
 	Backcooldown: 5
 	Backcooldownuse: true
+
+	Kitcooldown: 5
+	Kitcooldownuse: true
 
 	Messagejoinquit: true
 	Messagedeath: true
@@ -133,6 +136,11 @@ command /motd:
 		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-"
 		send "&cWelcome to the server !"
 		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-"
+		send ""
+		if {e-mail.%player%} > 0:
+			send "&fYou have &c%{e-mail.%player%}% message ! &fEnter &c/mail read &fto see your mail."
+		else:
+			send "&7You do not have mail." to player
 
 options: # >> Continuation of message configuration!
 
@@ -489,11 +497,6 @@ options: # >> Continuation of message configuration!
 
 	Fireball: &cYou have launched a fireball.
 
-	# >> COMMAND MESSAGE = SIGN COMMANDS -|
-
-	Signcommands: &7You have to create a sign with a command.
-	Signwarpnowarp: &cYou are no warp !
-
 	# >> COMMAND MESSAGE = /tree, /bigtree -|
 
 	Tree: &7A tree has been grown above the block you are looking at.
@@ -502,11 +505,11 @@ options: # >> Continuation of message configuration!
 
 	Deljailremove: &7Jail &c%arg 1% &7has been removed.
 	Deljailnojail: &c%arg 1% is not a jail.
-	Deljailalready: &cJail %arg 1% is already set.
 
 	Jails: &7The current jails are: &c%{_jl::*}%
 
 	Setjailcreate: &7Jail &c%arg 1% &7has been set.
+	Setjailalready: &cThe jail %arg 1% already exists.
 
 	Nojailplayeradmin: &c%arg 1% &7is no longer jailed.
 	Jailplayeradmin: &c%arg 1% &7is now jailed.
@@ -536,7 +539,7 @@ options: # >> Continuation of message configuration!
 
 	Tpohereteleporting: &7Teleporting...
 
-	# >> LMESSAGE CONSOLE LOADING -|
+	# >> MESSAGE CONSOLE LOADING -|
 
 	Loading: &7[Essentials] | &8loading...
 
@@ -555,6 +558,44 @@ options: # >> Continuation of message configuration!
 	Repairalltoplayeradmin: &7You have successfully repaired the player's stuff &c%arg 2%&7.
 	Repairalltoplayer: &7Your stuff has been repaired by &c%player%&7.
 
+	# >> COMMAND MESSAGE = /powertool -|
+
+	Powertooltoremove: &7All orders have been removed from &c%player's tool%&7.
+	Powertool: &7Order &c%arg 1% &7assigned to &c%player's tool%&7.
+
+	# >> COMMAND MESSAGE = /mail -|
+
+	Mailread: &7To mark your mail as read, type &c/mail clear&7.
+	Mailclear: &7All your e-mails have been deleted !
+	Mailsendtoplayer: &c%player% &7sent you an e-mail !
+	Mailsendtome: &7You sent the e-mail to the player &c%player% &7!
+	Nomail: &7You do not have mail.
+
+	# >> COMMAND MESSAGE = /createkit, /deletekit, /kit, /kits -|
+
+	# ! >> To have a kit, you have to have the inventory empty ! << ! #
+
+	Createkit: &7The kit &c%arg 1% &7has been successfully created.
+	Createkitalready: &cThe %arg 1% kit has already been created.
+
+	Deletekit: &7The kit &c%arg 1% &7has been successfully deleted.
+	Deletekitalready: &cThe %arg 1% kit has already been removed.
+
+	kit: &7You have taken the kit &c%arg 1%&7.
+	Nokit: &cThe kit %arg 1% does not exist.
+
+	Kitcooldown1: &7You will be teleporting in
+	Kitcooldown2: &7seconds.
+
+	Kits: &9Kits: &b%{kit::*}%
+
+		# >> COMMAND MESSAGE = SIGN COMMANDS -|
+
+	Signcommands: &7You have to create a sign with a command.
+
+	Signwarpnowarp: &cYou are no warp !
+	Signkitnokit: &cYou are no kit !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -563,6 +604,266 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.kit" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Kit":
+				if {kit.%player%::%line 3%} is set:
+					set line 1 of block to ""
+					set line 2 of block to "&1[Kit]"
+					set line 3 of block to "%line 3%"
+					send "{@Signcommands}"
+				if {kit.%player%::%line 3%} is not set:
+					send "{@Signkitnokit}" to player
+					stop
+	if sender doesn't have permission "essentials.sign.kit" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Kit]":
+			if {kit.%player%::%line 3%} is set:
+				make player execute command "/kit %line 3%"
+			if {kit.%player%::%line 3%} is not set:
+				send "{@Signkitnokit}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.use" or "essentials.*":
+		stop
+
+command /createkit [<text>]:
+	permission: essentials.createkit
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/createkit [kit]
+	aliases: essentials:createkit
+	trigger:
+		if arg 1 is set:
+			if {kit.%player%::%arg 1%} is not set:
+				set {_count} to 0
+				loop 36 times:
+					set {inv.%player%.%{_count}%.%arg 1%} to slot {_count} of player's inventory
+					add 1 to {_count}
+					set {helmet.%arg 1%.kit.%player%} to the player's helmet
+					set {chestplate.%arg 1%.kit.%player%} to the player's chestplate
+					set {legs.%arg 1%.kit.%player%} to the player's legs
+					set {boot.%arg 1%.kit.%player%} to the player's boot
+				loop 1 times:
+					send "{@Createkit}" to player
+					set {kit.%player%::%arg 1%} to true
+					add arg 1 to {kit::*}
+					stop
+			if {kit.%player%::%arg 1%} is true:
+				send "{@Createkitalready}" to player
+				stop
+		if arg 1 is not set:
+			send "&cError &6>> &f/createkit [kit]"
+
+command /deletekit [<text>]:
+	permission: essentials.deletekit
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/deletekit [kit]
+	aliases: essentials:deletekit
+	trigger:
+		if arg 1 is set:
+			if {kit.%player%::%arg 1%} is set:
+				delete {helmet.%arg 1%.kit.%player%}
+				delete {chestplate.%arg 1%.kit.%player%}
+				delete {legs.%arg 1%.kit.%player%}
+				delete {boot.%arg 1%.kit.%player%}
+				delete {inv.%arg 1%.kit.%player%}
+				delete {kit.%player%::%arg 1%}
+				remove arg 1 from {kit::*}
+				send "{@Deletekit}" to player
+				stop
+			if {kit.%player%::%arg 1%} is not set:
+				send "{@Deletekitalready}" to player
+				stop
+		if arg 1 is not set:
+			send "&cError &6>> &f/deletekit [kit]"
+
+command /kit [<text>]:
+	permission: essentials.kit
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/kit [kit]
+	aliases: essentials:kit
+	trigger:
+		if arg 1 is set:
+			if sender has permission "essentials.kit.%argument 1%" or "essentials.*":
+				if sender has permission "essentials.kit.bypass" or "essentials.*":
+					if {kit.%player%::%arg 1%} is set:
+						loop 36 times:
+							set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+							add 1 to {_count}
+							set the player's helmet to {helmet.%arg 1%.kit.%player%}
+							set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+							set the player's leggings to {legs.%arg 1%.kit.%player%}
+							set the player's boots to {boot.%arg 1%.kit.%player%}
+						loop 1 times:
+							send "{@kit}" to player
+							stop
+					if {kit.%player%::%arg 1%} is not set:
+						send "{@Nokit}" to player
+						stop
+					if {kit.%player%::%arg 1%} is set:
+						loop 36 times:
+							set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+							add 1 to {_count}
+							set the player's helmet to {helmet.%arg 1%.kit.%player%}
+							set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+							set the player's leggings to {legs.%arg 1%.kit.%player%}
+							set the player's boots to {boot.%arg 1%.kit.%player%}
+						loop 1 times:
+							send "{@kit}" to player
+							stop
+					if {kit.%player%::%arg 1%} is not set:
+						send "{@Nokit}" to player
+						stop
+				if sender doesn't have permission "essentials.kit.bypass" or "essentials.*":
+					if {@Kitcooldownuse} is true:
+						if {kit.%player%::%arg 1%} is set:
+							loop 36 times:
+								message "{@Kitcooldown1} {@Kitcooldown} {@Kitcooldown2}"
+								wait {@Kitcooldown} seconds
+								set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+								add 1 to {_count}
+								set the player's helmet to {helmet.%arg 1%.kit.%player%}
+								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+								set the player's leggings to {legs.%arg 1%.kit.%player%}
+								set the player's boots to {boot.%arg 1%.kit.%player%}
+							loop 1 times:
+								send "{@kit}" to player
+								stop
+						if {kit.%player%::%arg 1%} is not set:
+							send "{@Nokit}" to player
+							stop
+					if {@Kitcooldownuse} is false:
+						if {kit.%player%::%arg 1%} is set:
+							loop 36 times:
+								set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+								add 1 to {_count}
+								set the player's helmet to {helmet.%arg 1%.kit.%player%}
+								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+								set the player's leggings to {legs.%arg 1%.kit.%player%}
+								set the player's boots to {boot.%arg 1%.kit.%player%}
+							loop 1 times:
+								send "{@kit}" to player
+								stop
+						if {kit.%player%::%arg 1%} is not set:
+							send "{@Nokit}" to player
+							stop
+			if sender doesn't have permission "essentials.kit.%argument 1%" or "essentials.*":
+				message "{@Noperms}"
+		if arg 1 is not set:
+			send "&cError &6>> &f/kit [kit]"
+
+command /kits:
+	permission: essentials.kits
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/kits
+	aliases: essentials:kits
+	trigger:
+		send "{@Kits}"
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.mail" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Mail":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Mail]"
+				send "{@Signcommands}"
+	if sender doesn't have permission "essentials.sign.mail" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.use" or "essentials.*":
+		if line 2 of block is "&1[Mail]":
+			make player execute command "/mail read"
+	if sender doesn't have permission "essentials.sign.use" or "essentials.*":
+		stop
+
+command /mail [<text>] [<offline player>] [<text>]:
+	permission: essentials.mail
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/mail [read/clear/send] [player] [text]
+	aliases: essentials:mail
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
+			stop
+		if arg 1 is not "read" or "clear" or "send":
+			send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
+			stop
+		if arg 1 is "read":
+			if sender doesn't have permission "essentials.mail.read" or "essentials.*":
+				message "{@Noperms}"
+			if sender has permission "essentials.mail.read" or "essentials.*":
+				set {_count} to 0
+				loop {e-mail.%player%} times:
+					add 1 to {_count}
+					send "%{e-mail.message.%{_count}%}%"
+				send "{@Mailread}"
+				stop
+		if arg 1 is "clear":
+			if sender doesn't have permission "essentials.mail.clear" or "essentials.*":
+				message "{@Noperms}"
+			if sender has permission "essentials.mail.clear" or "essentials.*":
+				if {e-mail.%player%} > 0:
+					set {_count} to 0
+					loop {e-mail.%player%} times:
+						add 1 to {_count}
+						clear {e-mail.message.%{_count}%}
+						delete {e-mail.message.%{_count}%}
+					set {e-mail.%player%} to 0
+					send "{@Mailclear}" to player
+					stop
+				else:
+					send "{@Nomail}"
+					stop
+		if arg 1 is "send":
+			if arg 2 is set:
+				if arg 3 is set:
+					if sender doesn't have permission "essentials.mail.send" or "essentials.*":
+						message "{@Noperms}"
+					if sender has permission "essentials.mail.send" or "essentials.*":
+						send "{@Mailsendtoplayer}" to arg 2
+						send "{@Mailsendtome}" to player
+						add 1 to {e-mail.%arg 2%}
+						set {e-mail.message.%{e-mail.%arg 2%}%} to "&c%player% &7>> &c%arg 3%"
+				if arg 3 is not set:
+					send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
+			if arg 2 is not set:
+				send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
+
+command /powertool [<text>]:
+	permission: essentials.powertool
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/powertool [command]
+	aliases: essentials:powertool
+	trigger:		
+		if arg 1 is not set:
+			clear {powertool::%player's uuid%::%player's tool%}
+			set {_tool} to player's tool
+			set tool of player to 1 of player's tool
+			send "{@Powertooltoremove}" to player
+			set player's tool to {_tool}
+			stop
+		if arg 1 is set:
+			set {powertool::%player's uuid%::%player's tool%} to arg 1
+			send "{@Powertool}" to player
+			stop
+				
+on click:
+	if {powertool::%player's uuid%::%player's tool%} is set:
+		cancel event
+		make player execute command "%{powertool::%player's uuid%::%player's tool%}%"
+		stop
 
 command /repair [<text>] [<offline player>]:
 	permission: essentials.repair
@@ -672,7 +973,7 @@ command /sudo [<offline player>] [<text>]:
 	permission: essentials.sudo
 	executable by: players
 	permission message: {@Noperms}
-	usage: &cError &6>> &f/sudo [player] [commands]
+	usage: &cError &6>> &f/sudo [player] [command]
 	aliases: essentials:sudo
 	trigger:
 		if arg 1 is online:
@@ -842,7 +1143,7 @@ command /setjail [<text>]:
 				send "{@Setjailcreate}"
 				stop
 			else:
-				message "{@Deljailalready}"
+				message "{@Setjailalready}"
 
 command /jails:
 	permission: essentials.jails
