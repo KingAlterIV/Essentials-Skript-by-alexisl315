@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6.1
+# Version: 1.6.2
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -50,9 +50,7 @@ options:
 
 	Emoticonuse: true
 
-	Damageofplayer: true
-	Damageoffall: true
-	Damageoffire: true
+	Damageall: true
 
 	Removemoneytodeath: false
 	Moneytodeath: 50
@@ -62,7 +60,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.1.
+	Essentialsversionmsg: &7Essentials is 1.6.2.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -859,26 +857,12 @@ on right click on sign:
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		stop
 
-on damage:
-	victim is a player:
-		attacker is a player:
-			if {@Damageofplayer} is true:
-				stop
-			if {@Damageofplayer} is false:
-				cancel event
-				stop
-		damage cause is fall:
-			if {@Damageoffall} is true:
-				stop
-			if {@Damageoffall} is false:
-				cancel event
-				stop
-		damage cause is fire:
-			if {@Damageoffire} is true:
-				stop
-			if {@Damageoffire} is false:
-				cancel event
-				stop
+on damage::
+	if {@Damageall} is true:
+		stop
+	if {@Damageall} is false:
+		cancel event
+		stop
 
 command /clearchat:
 	permission: essentials.clearchat
