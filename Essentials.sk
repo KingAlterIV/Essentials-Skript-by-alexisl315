@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre2
+# Version: 1.14pre3
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -930,7 +930,7 @@ on sign change:
 		if line 1 is "[Essentials]":
 			if line 2 is "List":
 				set line 1 of block to ""
-				set line 2 of block to "&1[Homes]"
+				set line 2 of block to "&1[List]"
 				send "{@Signcommands}" to player
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.list" or "essentials.*":
@@ -4363,8 +4363,8 @@ command /essentials [<text>]:
 			send "{@Reloadmsg}" to player
 			stop
 		if arg 1 is "info":
-			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.14pre2" to player
+			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
+			send "Version >> 1.14pre3" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
