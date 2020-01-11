@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.10
+# Version: 1.10.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -4129,7 +4129,7 @@ on break:
 		stop
 
 command /essentials [<text>]:
-	aliases: essentials:reload, essentials:version
+	aliases: ess
 	permission: essentials.admin
 	executable by: players
 	usage: &cError &6>> &f/essentials reload/info
@@ -4141,7 +4141,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.10" to player
+			send "Version >> 1.10.1" to player
 			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
