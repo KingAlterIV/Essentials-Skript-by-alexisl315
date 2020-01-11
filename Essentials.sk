@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.9.1
+# Version: 1.10
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,6 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.9.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -4133,21 +4132,23 @@ command /essentials [<text>]:
 	aliases: essentials:reload, essentials:version
 	permission: essentials.admin
 	executable by: players
-	usage: &cError &6>> &f/essentials reload/version
+	usage: &cError &6>> &f/essentials reload/info
 	permission message: {@Noperms}
 	trigger:
 		if arg 1 is "reload":
 			make console execute command "/sk reload essentials"
 			send "{@Reloadmsg}" to player
 			stop
-		if arg 1 is "version":
-			send "{@Essentialsversionmsg}" to player
+		if arg 1 is "info":
+			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
+			send "Version >> 1.10" to player
+			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
-			send "&cError &6>> &f/essentials reload/version" to player
+			send "&cError &6>> &f/essentials reload/info" to player
 			stop
-		if arg 1 is not "reload" or "version":
-			send "&cError &6>> &f/essentials reload/version" to player
+		if arg 1 is not "reload" or "info":
+			send "&cError &6>> &f/essentials reload/info" to player
 			stop
 
 command /feed [<offline player>]:
