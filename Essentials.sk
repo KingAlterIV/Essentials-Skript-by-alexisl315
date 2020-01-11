@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.5.1
+# Version: 1.6
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,11 +53,12 @@ options:
 	Damageofplayer: true
 	Damageoffall: true
 	Damageoffire: true
+	Damageofwater: true
 
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.5.1.
+	Essentialsversionmsg: &7Essentials is 1.6.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -700,6 +701,122 @@ options: # >> Continuation of message configuration!
 
 	Clearchat: &cThe broadcast has been deleted.
 
+	# >> COMMAND MESSAGE/CONFIG = BLOCK COMMAND -|
+
+	# You can change block command !
+
+on command "/pl":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/plugins":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/?":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/ver":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/version":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/a":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/about":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:about":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:?":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:ver":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/icanhasbukkit":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:plugins":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:plugins":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:pl":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/bukkit:a":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -708,6 +825,27 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.serverbungeecord" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Bungeecord":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Server]"
+				set line 3 of block to "%line 3%"
+				send "{@Signcommands}" to player
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.serverbungeecord" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
+		if line 2 of block is "&1[Server]":
+			if line 3 of block is "%line 3%":
+				make player execute command "/server %line 3%"
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
+		stop
 
 on damage:
 	victim is a player:
@@ -727,6 +865,12 @@ on damage:
 			if {@Damageoffire} is true:
 				stop
 			if {@Damageoffire} is false:
+				cancel event
+				stop
+		damage cause is water:
+			if {@Damageofwater} is true:
+				stop
+			if {@Damageofwater} is false:
 				cancel event
 				stop
 
@@ -825,7 +969,7 @@ on sign change:
 				set line 2 of block to "&1[Workbench]"
 				send "{@Signcommands}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.*" or "essentials.sign.create.workbench" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.workbench" or "essentials.*":
 		stop
 
 on right click on sign:
