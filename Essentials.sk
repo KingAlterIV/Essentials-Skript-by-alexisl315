@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.8.2
+# Version: 1.9
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.8.2.
+	Essentialsversionmsg: &7Essentials is 1.9.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -861,6 +861,12 @@ on command "/deop":
 	if sender has permission "essentials.blockcommand.bypass":
 		stop
 
+options: # >> Continuation of message configuration !
+
+	# >> COMMAND MESSAGE = /invsee -|
+
+	Invsee: &6You have opened inventory of &c%arg 1%&6.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -869,6 +875,21 @@ on command "/deop":
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /invsee [<player>]:
+	permission: essentials.invsee
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/invsee [player]
+	aliases: essentials:invsee
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/invsee [player]" to player
+			stop
+		if arg 1 is set:
+			send "{@Invsee}" to player
+			open arg 1's inventory to player
+			stop
 
 on portal create:
 	if {@Portailcreate} is false:
@@ -1799,7 +1820,7 @@ command /compass [<offline player>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/compass [player]
-	aliases: essentials:compass , essentials:direction, /direction
+	aliases: essentials:compass , essentials:direction, direction
 	trigger:
 		if arg 1 isn't set:
 			send "{@Compasstome}" to player
@@ -1813,7 +1834,7 @@ command /togglejail [<offline player>] [<text>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/jail [player] [jail]
-	aliases: essentials:tjail, essentials:/unjail, essentials:/jail, /tjail, /unjail, /jail
+	aliases: essentials:tjail, essentials:unjail, essentials:jail, tjail, unjail, jail
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/jail [player] [jail]" to player
@@ -1912,7 +1933,7 @@ command /deljail [<text>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/deljail [Jail]
-	aliases: essentials:deljail, essentials:remjail, essentials:rmjail , /remjail, /rmjail
+	aliases: essentials:deljail, essentials:remjail, essentials:rmjail , remjail, rmjail
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/deljail [Jail]" to player
@@ -1990,7 +2011,7 @@ command /tpaccept:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/tpaccept
-	aliases: /tpyes, essentials:tpaccept, essentials:tpyes
+	aliases: tpyes, essentials:tpaccept, essentials:tpyes
 	trigger:
 		if {tpa.%player%} is set:
 			send "{@Tpaccept}" to player
@@ -2009,7 +2030,7 @@ command /tpdeny:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/tpaccept
-	aliases: /tpno, essentials:tpdeny, essentials:tpno
+	aliases: tpno, essentials:tpdeny, essentials:tpno
 	trigger:
 		if {tpa.%player%} is set:
 			send "{@Tpdeny}" to player
@@ -2169,7 +2190,7 @@ command /fireball:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/fireball
-	aliases: /enchantment, essentials:enchantment, essentials:enchant
+	aliases: enchantment, essentials:enchantment, essentials:enchant
 	trigger:
 		shoot a fireball from the player
 		send "{@Fireball}" to player
@@ -2180,7 +2201,7 @@ command /enchant [<enchantment type>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/enchant [enchantment type]
-	aliases: /enchantment, essentials:enchantment, essentials:enchant
+	aliases: enchantment, essentials:enchantment, essentials:enchant
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/enchant [enchantment type]" to player
@@ -2198,7 +2219,7 @@ command /ext [<offline player>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/ext [player]
-	aliases: /extinguish, essentials:extinguish, essentials:ext
+	aliases: extinguish, essentials:extinguish, essentials:ext
 	trigger:
 		if arg 1 is not set:
 			set the player on fire for 0 seconds
@@ -2221,7 +2242,7 @@ command /depth [<offline player>]:
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/depth [player]
-	aliases: /height, essentials:height, essentials:depth
+	aliases: height, essentials:height, essentials:depth
 	trigger:
 		if arg 1 is not set:
 			send "{@Depthtome}" to player
@@ -2268,7 +2289,7 @@ command /unlimited [<offline player>]:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/unlimited
 	executable by: players
-	aliases: /ul, /unl, essentials:unlimited, essentials:ul, essentials:unl
+	aliases: ul, unl, essentials:unlimited, essentials:ul, essentials:unl
 	trigger:
 		if arg 1 is not set:
 			if {unlimited::%uuid of player%} is not set:
@@ -2308,7 +2329,7 @@ command /workbench:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/workbench
 	executable by: players
-	aliases: /craft, /wb, essentials:workbench, essentials:craft, essentials:wb
+	aliases: craft, wb, essentials:workbench, essentials:craft, essentials:wb
 	trigger:
 		open workbench inventory to the player
 		send "{@Workbench}" to player
@@ -2318,7 +2339,7 @@ command /banip [<offline player>] [<text>]:
 	permission: essentials.banip
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/banip [player] [reason]
-	aliases: /ban-ip, essentials:banip, essentials:ban-ip
+	aliases: ban-ip, essentials:banip, essentials:ban-ip
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/banip [player] [reason]" to player
@@ -2456,7 +2477,7 @@ command /unban [<offline player>]:
 command /unbanip [<offline player>] [<Text>]:
 	permission: essentials.unbanip
 	permission message: {@Noperms}
-	aliases: essentials:unbanip, /unban-ip, essentials:unban-ip
+	aliases: essentials:unbanip, unban-ip, essentials:unban-ip
 	usage: &cError &6>> &f/unbanip [player] [IP]
 	trigger:
 		if arg 1 is not set:
@@ -2482,7 +2503,7 @@ command /antioch:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/antioch
 	executable by: players
-	aliases: /grenade, /tnt, essentials:grenade, essentials:tnt, essentials:antioch
+	aliases: grenade, tnt, essentials:grenade, essentials:tnt, essentials:antioch
 	trigger:
 		spawn 1 primed tnt at the targeted block
 		send "{@Antioch}" to player
@@ -2504,7 +2525,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/xp [show/set/give/remove] [player] [number]
 	executable by: players
-	aliases: /exp, essentials:xp, essentials:exp
+	aliases: exp, essentials:xp, essentials:exp
 	trigger:
 		if arg 1 is not "show" or "set" or "give" or "remove":
 			send "&cError &6>> &f/xp [show/set/give/remove] [player] [number]" to player
@@ -2578,7 +2599,7 @@ command /back:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/back
 	executable by: players
-	aliases: /return, essentials:back, essentials:return
+	aliases: return, essentials:back, essentials:return
 	trigger:
 		if {back} isn't set:
 			send "{@Nobackpoint}" to player
@@ -2603,7 +2624,7 @@ command /back:
 command /list:
 	permission: essentials.list
 	permission message: {@Noperms}
-	aliases: essentials:getpos, /who, /playerlist, /online, /plist, essentials:who, essentials:playerlist, essentials:online, essentials:plist
+	aliases: who, playerlist, online, plist, essentials:who, essentials:playerlist, essentials:online, essentials:plist
 	usage: &cError &6>> &f/list
 	executable by: players
 	trigger:
@@ -2616,7 +2637,7 @@ command /list:
 command /getpos [<offline player>]:
 	permission: essentials.getpos
 	permission message: {@Noperms}
-	aliases: essentials:getpos, /coords, /position, /whereami, /getlocation, /getloc, essentials:getloc, essentials:getlocation, essentials:whereami, essentials:position, essentials:coords
+	aliases: essentials:getpos, coords, position, whereami, getlocation, getloc, essentials:getloc, essentials:getlocation, essentials:whereami, essentials:position, essentials:coords
 	usage: &cError &6>> &f/getpos [player]
 	executable by: players
 	trigger:
@@ -2751,7 +2772,7 @@ on first join:
 command /money [<offline player>]:
 	permission: essentials.money
 	permission message: {@Noperms}
-	aliases: essentials:money, /balance, /bal, essentials:balance, essentials:bal
+	aliases: essentials:money, balance, bal, essentials:balance, essentials:bal
 	executable by: players
 	usage: &cError &6>> &f/money [player]
 	trigger:
@@ -3543,7 +3564,7 @@ command /warps:
 command /msg [<offline player>] [<text>]:
 	permission: essentials.reply
 	permission message: {@Noperms}
-	aliases: essentials:msg, m, t, whisper, essentials:r, essentials:whisper, essentials:m, essentials:t
+	aliases: essentials:msg, m, t, whisper, essentials:whisper, essentials:m, essentials:t
 	executable by: players
 	usage: &cError &6>> &f/msg [player] [text]
 	trigger:
