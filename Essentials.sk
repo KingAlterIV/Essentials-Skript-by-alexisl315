@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.3.5.1
+# Version: 1.4
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,10 +48,12 @@ options:
 	Weatherrain: true
 	Weatherthunder: true
 
+	Emoticonuse: true
+
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.3.5.1.
+	Essentialsversionmsg: &7Essentials is 1.4.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -698,6 +700,26 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on chat:
+	if {@Emoticonuse} is true:
+		if sender has permission "essentials.emoticon.{<3}" or "essentials.*":
+			replace all "{<3}" in message with "❤"
+			stop
+		if sender has permission "essentials.emoticon.{correct}" or "essentials.*":
+			replace all "{correct}" in message with "✔"
+			stop
+		if sender has permission "essentials.emoticon.{incorrect}" or "essentials.*":
+			replace all "{incorrect}" in message with "✘"
+			stop
+		if sender doesn't have permission "essentials.emoticon.{<3}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.{correct}" or "essentials.*":
+			stop
+		if sender doesn't have permission "essentials.emoticon.{incorrect}" or "essentials.*":
+			stop
+	if {@Emoticonuse} is false:
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.workbench" or "essentials.*":
@@ -3799,17 +3821,17 @@ command /essentials [<text>]:
 	usage: &cError &6>> &f/essentials reload/version
 	permission message: {@Noperms}
 	trigger:
-		if arg-1 is "reload":
+		if arg 1 is "reload":
 			make console execute command "/sk reload essentials"
 			send "{@Reloadmsg}" to player
 			stop
-		if arg-1 is "version":
+		if arg 1 is "version":
 			send "{@Essentialsversionmsg}" to player
 			stop
-		if arg-1 is not set:
+		if arg 1 is not set:
 			send "&cError &6>> &f/essentials reload/version" to player
 			stop
-		if arg-1 is not "reload" or "version":
+		if arg 1 is not "reload" or "version":
 			send "&cError &6>> &f/essentials reload/version" to player
 			stop
 
@@ -3911,10 +3933,10 @@ command /spawn [<offline player>]:
 					stop
 			if arg 1 is online:
 				if sender has permission "essentials.spawn.others" or "essentials.*":
-					if argument is offline:
+					if arg 1 is offline:
 						send "{@Noplayerconnect}" to player
 						stop
-					if argument is online:
+					if arg 1 is online:
 						if sender is a player:
 							send "{@Teleportspawnisplayer}" to arg 1
 							set {back::%uuid of arg 1%} to location of arg 1
