@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre7
+# Version: 1.14pre8
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -926,6 +926,48 @@ options: # >> Continuation of message configuration !
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
 on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.me" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Me":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Me]"
+				set line 3 of block to line 3
+				send "{@Signcommands}"
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.me" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
+		if line 2 of block is "&1[Balance]":
+			if line 3 of block is line 3:
+				make player execute command "/balance %line 3%"
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
+		stop
+
+on sign change:
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.balance" or "essentials.*":
+		if line 1 is "[Essentials]":
+			if line 2 is "Balance":
+				set line 1 of block to ""
+				set line 2 of block to "&1[Balance]"
+				set line 3 of block to line 3
+				send "{@Signcommands}"
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.balance" or "essentials.*":
+		stop
+
+on right click on sign:
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
+		if line 2 of block is "&1[Me]":
+			if line 3 of block is line 3:
+				make player execute command "/me %line 3%"
+				stop
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
+		stop
+
+on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.list" or "essentials.*":
 		if line 1 is "[Essentials]":
 			if line 2 is "List":
@@ -1134,7 +1176,7 @@ on sign change:
 			if line 2 is "Bungeecord":
 				set line 1 of block to ""
 				set line 2 of block to "&1[Server]"
-				set line 3 of block to "%line 3%"
+				set line 3 of block to line 3
 				send "{@Signcommands}" to player
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.serverbungeecord" or "essentials.*":
@@ -1143,7 +1185,7 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		if line 2 of block is "&1[Server]":
-			if line 3 of block is "%line 3%":
+			if line 3 of block is line 3:
 				make player execute command "/server %line 3%"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
@@ -1577,7 +1619,7 @@ on sign change:
 				if {kit.%player%::%line 3%} is set:
 					set line 1 of block to ""
 					set line 2 of block to "&1[Kit]"
-					set line 3 of block to "%line 3%"
+					set line 3 of block to line 3
 					send "{@Signcommands}"
 				if {kit.%player%::%line 3%} is not set:
 					send "{@Signkitnokit}" to player
@@ -1716,7 +1758,7 @@ command /kit [<text>]:
 								set the player's leggings to {legs.%arg 1%.kit.%player%}
 								set the player's boots to {boot.%arg 1%.kit.%player%}
 							loop 1 times:
-								sen#81FF00d "{@kit}" to player
+								send "{@kit}" to player
 								stop
 						if {kit.%player%::%arg 1%} is not set:
 							send "{@Nokit}" to player
@@ -1956,7 +1998,7 @@ command /sudo [<offline player>] [<text>]:
 	trigger:
 		if arg 1 is online:
 			if arg 2 is set:
-				execute arg 1 command "%arg 2%"
+				execute arg 1 command arg 2
 				send "{@Sudo}" to player
 				stop
 			if arg 2 is not set:
@@ -2269,7 +2311,7 @@ on sign change:
 				if {warp.%line 3%.location} is set:
 					set line 1 of block to ""
 					set line 2 of block to "&1[Warp]"
-					set line 3 of block to "%line 3%"
+					set line 3 of block to line 3
 					send "{@Signcommands}" to player
 					stop
 				if {warp.%line 3%.location} is not set:
@@ -2585,15 +2627,15 @@ command /banip [<offline player>] [<text>]:
 			if arg 2 is set:
 				if sender doesn't have permission "essentials.chat.color" or "essentials.*":
 					if {banipplayer.%arg-1%} is false:
-						ip-ban arg 1 because "%arg 2%"
+						ip-ban arg 1 because arg 2
 						broadcast "{@Banip} %arg 2%"
-						kick arg 1 because "%arg 2%"
+						kick arg 1 because arg 2
 						set {banipplayer.%arg-1%} to true
 						stop
 					if {banipplayer.%arg-1%} is not set:
-						ip-ban arg 1 because "%arg 2%"
+						ip-ban arg 1 because arg 2
 						broadcast "{@Banip} %arg 2%"
-						kick arg 1 because "%arg 2%"
+						kick arg 1 because arg 2
 						set {banipplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg-1%} is true:
@@ -2601,15 +2643,15 @@ command /banip [<offline player>] [<text>]:
 						stop
 				if sender has permission "essentials.chat.color" or "essentials.*":
 					if {banipplayer.%arg-1%} is false:
-						ip-ban arg 1 because "%colored arg 2%"
+						ip-ban arg 1 because colored arg 2
 						broadcast "{@Banip} %colored arg 2%"
-						kick arg 1 because "%colored arg 2%"
+						kick arg 1 because colored arg 2
 						set {banipplayer.%arg-1%} to true
 						stop
 					if {banipplayer.%arg 1%} is not set:
-						ip-ban arg 1 because "%colored arg 2%"
+						ip-ban arg 1 because colored arg 2
 						broadcast "{@Banip} %colored arg 2%"
-						kick arg 1 because "%colored arg 2%"
+						kick arg 1 because colored arg 2
 						set {banipplayer.%arg-1%} to true
 						stop
 					if {banplayer.%arg 1%} is true:
@@ -2644,30 +2686,30 @@ command /ban [<offline player>] [<text>]:
 			if arg 2 is set:
 				if sender doesn't have permission "essentials.chat.color" or "essentials.*":
 					if {banplayer.%arg 1%} is false:
-						ban arg 1 because "%arg 2%"
+						ban arg 1 because arg 2
 						broadcast "{@Ban} %arg 2%"
-						kick arg 1 because "%arg 2%"
+						kick arg 1 because arg 2
 						set {banplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg 1%} is not set:
-						ban arg 1 because "%arg 2%"
+						ban arg 1 because arg 2
 						broadcast "{@Ban} %arg 2%"
-						kick arg 1 because "%arg 2%"
+						kick arg 1 because arg 2
 						set {banplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg 1%} is true:
 						send "{@Banalready}" to player
 				if sender has permission "essentials.chat.color" or "essentials.*":
 					if {banplayer.%arg 1%} is false:
-						ban arg 1 because "%colored arg 2%"
+						ban arg 1 because colored arg 2
 						broadcast "{@Ban} %colored arg 2%"
-						kick arg 1 because "%colored arg 2%"
+						kick arg 1 because colored arg 2
 						set {banplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg 1%} is not set:
-						ban arg 1 because "%colored arg 2%"
+						ban arg 1 because colored arg 2
 						broadcast "{@Ban} %colored arg 2%"
-						kick arg 1 because "%colored arg 2%"
+						kick arg 1 because colored arg 2
 						set {banplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg 1%} is true:
@@ -2708,7 +2750,7 @@ command /unbanip [<offline player>] [<Text>]:
 			send "&cError &6>> &f/unbanip [player] [IP]" to player
 			stop
 		if arg 1 is set:
-			if arg 2 is "%ip of arg 1%":
+			if arg 2 is ip of arg 1:
 				if {banipplayer.%arg 1%} is true:
 					execute console command "/pardon-ip %arg 2%"
 					broadcast "{@Unbanip}"
@@ -4362,7 +4404,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre7" to player
+			send "Version >> 1.14pre8" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
