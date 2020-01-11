@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.9
+# Version: 1.0.10
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.9.
+	Essentialsversionmsg: &7Essentials is 1.0.10.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -159,13 +159,6 @@ command /motd:
 
 options: # >> Continuation of message configuration!
 
-	# >> COMMAND MESSAGE = /hat -|
-
-	Noitemhat: &cYou can not wear an item, only the blocks are portable.
-	Itemalreadyhat: &7You already wear a hat!
-	Itemdeletehat: &7You took off your hat.
-	Itemhat: &7You put the hat: &c%arg 1%
-
 	# >> COMMAND MESSAGE = /helpop -|
 
 	Helpop: &c&l[&cHelpop&c&l] &c%player% &8: %arg 1%
@@ -272,16 +265,18 @@ options: # >> Continuation of message configuration!
 	Homeslist: &9Homes: &b%{homename.%player%::*}%
 
 	Hometeleporting: &7You have been teleported to your home.
-	Nohome: &cYou do not have a home calling %arg 1%
+	Nohome: &cYou do not have a home calling %arg 1%&7.
 	Homedelete: &7You have deleted home &c%arg 1%&7.
 	Homecreate: &7You created the home &c%arg 1%&7.
 	Homealready: &7You already have the home &c%arg 1%&7.
 	Adminhomereset: &7You have removed the player homes &c%arg 2%&7.
 	Homecooldown1: &7You will be teleporting in
 	Homecooldown2: &7seconds.
-	Adminhomenohome: &cThere is no home calling %arg 3%
-	Adminhometeleporting: You have been teleported to a player home.
-	Adminhomedelhome: &7You have removed %arg 3% for the player home &c%arg 2%&7.
+	Adminhomenohome: &cThere is no home calling %arg 3%.
+	Adminhometeleporting: &6You have been teleported to a player home.
+	Adminhomedelhome: &6You have removed &c%arg 3% &6for the player home &c%arg 2%&6.
+	Adminhomesethome: &6You have set &c%arg 3% &6for the player home &c%arg 2%&6.
+	Adminhomealready: &6Home &c%arg 3% &6already exists.
 
 	Adminhomehome: &9Homes: &b%{homename.%arg 2%::*}%
 
@@ -1874,19 +1869,19 @@ command /banip [<offline player>] [<text>]:
 			stop
 		if arg 1 is set:
 			if arg 2 is not set:
-				if {banipplayer.%arg-1%} is false:
+				if {banipplayer.%arg 1%} is false:
 					ip-ban arg 1 because "{@Banipreasondefault}"
 					broadcast "{@Banip} {@Banipreasondefault}"
 					kick arg 1 because "{@Banipreasondefault}"
 					set {banipplayer.%arg-1%} to true
 					stop
-				if {banipplayer.%arg-1%} is not set:
+				if {banipplayer.%arg 1%} is not set:
 					ip-ban arg 1 because "{@Banipreasondefault}"
 					broadcast "{@Banip} {@Banipreasondefault}"
 					kick arg 1 because "{@Banipreasondefault}"
-					set {banipplayer.%arg-1%} to true
+					set {banipplayer.%arg 1%} to true
 					stop
-				if {banplayer.%arg-1%} is true:
+				if {banplayer.%arg 1%} is true:
 					send "{@Banipalready}" to player
 					stop
 			if arg 2 is set:
@@ -1901,7 +1896,7 @@ command /banip [<offline player>] [<text>]:
 						ip-ban arg 1 because "%arg 2%"
 						broadcast "{@Banip} %arg 2%"
 						kick arg 1 because "%arg 2%"
-						set {banipplayer.%arg-1%} to true
+						set {banipplayer.%arg 1%} to true
 						stop
 					if {banplayer.%arg-1%} is true:
 						send "{@Banipalready}" to player
@@ -1913,13 +1908,13 @@ command /banip [<offline player>] [<text>]:
 						kick arg 1 because "%colored arg 2%"
 						set {banipplayer.%arg-1%} to true
 						stop
-					if {banipplayer.%arg-1%} is not set:
+					if {banipplayer.%arg 1%} is not set:
 						ip-ban arg 1 because "%colored arg 2%"
 						broadcast "{@Banip} %colored arg 2%"
 						kick arg 1 because "%colored arg 2%"
 						set {banipplayer.%arg-1%} to true
 						stop
-					if {banplayer.%arg-1%} is true:
+					if {banplayer.%arg 1%} is true:
 						send "{@Banipalready}" to player
 						stop
 
@@ -2434,19 +2429,21 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 	permission message: {@Noperms}
 	aliases: essentials:adminhome
 	executable by: players
-	usage: &cError &6>> &f/adminhome [delhome/reset/homes/home] [player] [home]
+	usage: &cError &6>> &f/adminhome [delhome/reset/homes/home/sethome] [player] [home]
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 			send "&cError &6>> &f/adminhome reset [player]" to player
 			send "&cError &6>> &f/adminhome homes [player]" to player
 			send "&cError &6>> &f/adminhome home [player] [home]" to player
+			send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 			stop
-		if arg 1 is not "delhome" or "reset" or "home" or "homes":
+		if arg 1 is not "delhome" or "reset" or "home" or "homes" or "sethome":
 			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 			send "&cError &6>> &f/adminhome reset [player]" to player
 			send "&cError &6>> &f/adminhome homes [player]" to player
 			send "&cError &6>> &f/adminhome home [player] [home]" to player
+			send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 			stop
 		if arg 1 is "reset":
 			if arg 2 is not set:
@@ -2454,6 +2451,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 				stop
 			if arg 2 is online:
 				delete {homename.%arg 2%::*}
@@ -2470,6 +2468,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 				stop
 			if arg 2 is online:
 				send "{@Adminhomehome}" to player
@@ -2482,6 +2481,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 				stop
 			if arg 2 is online:
 				if arg 3 is set:
@@ -2501,6 +2501,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
 				stop
 			if arg 2 is online:
 				if arg 3 is set:
@@ -2511,6 +2512,26 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 					if {home.%arg 2%::%arg 3%} is not set:
 						send "{@Adminhomenohome}" to player
 						stop
+		if arg 1 is "sethome":
+			if arg 2 is not set:
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
+				send "&cError &6>> &f/adminhome reset [player]" to player
+				send "&cError &6>> &f/adminhome homes [player]" to player
+				send "&cError &6>> &f/adminhome home [player] [home]" to player
+				send "&cError &6>> &f/adminhome sethome [player] [home]" to player
+				stop
+			if arg 2 is online:
+				if arg 3 is set:
+					if {home.%arg 2%::%arg 3%} is not set:
+						add arg 3 to {homename.%arg 2%::%arg 3%}
+						add arg 3 to {home.%arg 2%::%arg 3%}
+						send "{@Adminhomesethome}" to player
+					if {home.%arg 2%::%arg 3%} is set:
+						send "{@Adminhomealready}" to player
+						stop
+			if arg 2 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
 			if arg 2 is offline:
 				send "{@Noplayerconnect}" to player
 				stop
@@ -3268,41 +3289,6 @@ command /helpop [<text>]:
 				if loop-players has permission "essentials.helpop.receive" or "essentials.*":
 					send "{@Helpop}" to loop-player
 					stop
-
-on quit:
-	if {hat:hat} is true:
-		set helmet of player to air
-		stop
-
-command /hat [<material>]:
-	permission: essentials.hat
-	permission message: {@Noperms}
-	aliases: essentials:hat
-	executable by: players
-	usage: &cError &6>> &f/hat [Matérial]
-	trigger:
-		id of arg 1 is set:
-			send "{@Noitemhat}" to player
-			stop trigger
-		if arg 1 is not set:
-			if {hat:hat} is true:
-				helmet slot of player is not empty:
-					set helmet of player to air
-					send "{@Itemdeletehat}" to player
-					stop
-				helmet slot of player is empty:
-					send "&cError &6>> &f/hat [Matérial]" to player
-					stop
-			if {hat:hat} is false:
-				stop
-		if arg 1 is set:
-			helmet slot of player is not empty:
-				send "{@Itemalreadyhat}" to player
-				stop trigger
-			equip player with arg 1
-			send "{@Itemhat}" to player
-			set {hat:hat} to true
-			stop
 
 on join:
 	if sender doesn't have permission "essentials.motd" or "essentials.*":
