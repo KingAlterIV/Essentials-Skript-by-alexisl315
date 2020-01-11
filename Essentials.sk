@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15.3
+# |-> Version: 1.15.4
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -614,8 +614,8 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /compass -|
 
-	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% degrees&7) !
-	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7) !
+	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% &cdegrees&7) !
+	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% &cdegrees&7) !
 
 	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny, /tpo, /tpohere -|
 
@@ -992,8 +992,18 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly.others" or "essentials.sign.use.fly.*" or "essentials.*":
 		if line 2 of block is "&1[Fly]":
 			if line 3 of block is line 3:
-				make player execute command "/fly %line 3%"
-				stop
+				if {fly.%arg-1%} is not set:
+					send "{@Flytoplayerisadmin}" to player
+					send "{@Flytoplayer}" to arg 1
+					set arg 1's flight mode to true
+					set {fly.%arg-1%} to true
+					stop
+				if {fly.%arg-1%} is set:
+					send "{@Noflytoplayerisadmin}" to player
+					send "{@Noflytoplayer}" to arg 1
+					set arg 1's flight mode to false
+					delete {fly.%arg 1%}
+					stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly.others" or "essentials.sign.use.fly.*" or "essentials.*":
 		stop
 
@@ -1011,8 +1021,16 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.sign.use.fly.*" or "essentials.*":
 		if line 2 of block is "&1[Fly]":
-			make player execute command "/fly"
-			stop
+			if {fly.%player%} is not set:
+				send "{@Flytome}" to player
+				set player's flight mode to true
+				set {fly.%player%} to true
+				stop
+			if {fly.%player%} is set:
+				send "{@Noflytome}" to player
+				set player's flight mode to false
+				delete {fly.%player%}
+				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.sign.create.fly.*" or "essentials.*":
 		stop
 
@@ -1032,8 +1050,13 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport.others" or "essentials.sign.use.bedteleport.*" or "essentials.*":
 		if line 2 of block is "&1[Bedteleport]":
 			if line 3 of block is line 3:
-				make player execute command "/bedteleport %line 3%"
-				stop
+				if bed of arg 1 exists:
+					teleport player to bed of arg 1
+					send "{@Bedteleportteleporting}" to player
+					stop
+				if bed of arg 1 is not set:
+					send "{@Bedteleportnotbedexisttoplayer}" to player
+					stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport.others" or "essentials.sign.use.bedteleport.*" or "essentials.*":
 		stop
 		
@@ -1051,8 +1074,13 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.sign.use.bedteleport.*" or "essentials.*":
 		if line 2 of block is "&1[Bedteleport]":
-			make player execute command "/bedteleport"
-			stop
+			if bed of player exists:
+				teleport player to bed of player
+				send "{@Bedteleportteleporting}" to player
+				stop
+			if bed of player is not set:
+				send "{@Bedteleportnotbedexisttoplayer}" to player
+				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.sign.use.bedteleport.*" or "essentials.*":
 		stop
 
@@ -1414,12 +1442,10 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.seed" or "essentials.*":
 		if line 2 of block is "&1[Seed]":
-			make player execute command "/seed"
+			send "{@Seed}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.seed" or "essentials.*":
 		stop
-
-
 
 command /nuke:
 	permission: essentials.nuke
@@ -1462,7 +1488,7 @@ command /pvp [<text>]:
 			if arg 1 is not set:
 				send "&cError &6>> &f/pvp [enable/disable | on/off]" to player
 				stop
-			if arg 1 is "enable" or "on" or "disable" or "off":
+			if arg 1 is not "enable" or "on" or "disable" or "off":
 				send "&cError &6>> &f/pvp [enable/disable | on/off]" to player
 				stop
 			if arg 1 is "enable" or "on":
@@ -1598,7 +1624,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
 		if line 2 of block is "&1[Broadcast]":
 			if line 3 of block is line 3:
-				make player execute command "/broadcast %line 3%"
+				broadcast "{@Broadcast}"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
 		stop
@@ -1619,7 +1645,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
 		if line 2 of block is "&1[Me]":
 			if line 3 of block is line 3:
-				make player execute command "/me %line 3%"
+				broadcast "{@Mebroadcast}"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
 		stop
@@ -1638,8 +1664,11 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.list" or "essentials.*":
 		if line 2 of block is "&1[List]":
-			make player execute command "/list"
-			stop
+			loop all players:
+				add loop-player to {_list::*}
+				set {_list} to "%{_list::*}%"
+				send "{@list}" to player
+				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.list" or "essentials.*":
 		stop
 
@@ -1676,7 +1705,7 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.homes" or "essentials.*":
 		if line 2 of block is "&1[Homes]":
-			make player execute command "/homes"
+			send "{@Homeslist}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.homes" or "essentials.*":
 		stop
@@ -1695,7 +1724,7 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.warps" or "essentials.*":
 		if line 2 of block is "&1[warps]":
-			make player execute command "/warps"
+			send "{@Warplist}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.warps" or "essentials.*":
 		stop
@@ -1808,7 +1837,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		if line 2 of block is "&1[Server]":
 			if line 3 of block is line 3:
-				make player execute command "/server %line 3%"
+				connect player to "%line 3%"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		stop
@@ -2024,7 +2053,8 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.workbench" or "essentials.*":
 		if line 2 of block is "&1[Workbench]":
-			make player execute command "/workbench"
+			open workbench inventory to the player
+			send "{@Workbench}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.workbench" or "essentials.*":
 		stop
@@ -2235,7 +2265,8 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.night" or "essentials.*":
 		if line 2 of block is "&1[Night]":
-			make player execute command "/night"
+			set time to 20:00
+			send "{@Night}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.night" or "essentials.*":
 		stop
@@ -2254,7 +2285,8 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.day" or "essentials.*":
 		if line 2 of block is "&1[Day]":
-			make player execute command "/day"
+			set time to 6:00
+			send "{@Day}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.day" or "essentials.*":
 		stop
@@ -2273,7 +2305,7 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
 		if line 2 of block is "&1[Balance]":
-			make player execute command "/money"
+			send "{@Moneytome}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.balance" or "essentials.*":
 		stop
@@ -2292,7 +2324,8 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		if line 2 of block is "&1[Heal]":
-			make player execute command "/heal"
+			send "{@Healtome}" to player
+			heal player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		stop
@@ -2311,7 +2344,8 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		if line 2 of block is "&1[Feed]":
-			make player execute command "/feed"
+			send "{@Feedtome}" to player
+			set hunger bar to 10
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		stop
@@ -2338,7 +2372,9 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.trash" or "essentials.*":
 		if line 2 of block is "&1[Trash]":
-			make player execute command "/trash"
+			wait 2 ticks
+			open chest with {@Trashnumberchest} rows named "{@Trashname}" to player
+			send "{@Trash}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.trash" or "essentials.*":
 		stop
@@ -2379,6 +2415,7 @@ on right click on sign:
 		if line 2 of block is "&1[Kit]":
 			if {kit.%player%::%line 3%} is set:
 				make player execute command "/kit %line 3%"
+				stop
 			if {kit.%player%::%line 3%} is not set:
 				send "{@Signkitnokit}" to player
 				stop
@@ -2552,7 +2589,11 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.mail" or "essentials.*":
 		if line 2 of block is "&1[Mail]":
-			make player execute command "/mail read"
+			set {_count} to 0
+			loop {e-mail.%player%} times:
+				add 1 to {_count}
+				send "%{e-mail.message.%{_count}%}%"
+			send "{@Mailread}"
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.mail" or "essentials.*":
 		stop
@@ -3161,7 +3202,10 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.warp" or "essentials.*":
 		if line 2 of block is "&1[Warp]":
 			if {warp.%line 3%.location} is set:
-				make player execute command "/warp %line 3%"
+				set {back::%uuid of player%} to location of player
+				teleport player to {warp.%line 3%.location}
+				send "{@Warpteleporting}" to player
+				stop
 			if {warp.%line 3%.location} is not set:
 				send "{@Signwarpnowarp}" to player
 				stop
@@ -3223,8 +3267,9 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
-			if line 3 of block is "Creatif":
-				make player execute command "/gm 1"
+			if line 3 of block is "Creative":
+				set the gamemode of the player to creative
+				send "{@Gamemodetometocreative}" to player
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		stop
@@ -3233,7 +3278,9 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Survival":
-				make player execute command "/gm 0"
+				set the gamemode of the player to survival
+				send "{@Gamemodetometosurvival}" to player
+				stop
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
 		stop
@@ -3242,7 +3289,8 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Adventure":
-				make player execute command "/gm 2"
+				set the gamemode of the player to adventure
+				send "{@Gamemodetometoadventure}" to player
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
 		stop
@@ -3251,7 +3299,8 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Spectator":
-				make player execute command "/gm 3"
+				set the gamemode of the player to spectator
+				send "{@Gamemodetometospectator}" to player
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
 		stop
@@ -3270,8 +3319,18 @@ on sign change:
 on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.spawn" or "essentials.*":
 		if line 2 of block is "&1[Spawn]":
-			make player execute command "/spawn"
-			stop
+			if {@Spawncooldownuse} is true:
+				send "{@Spawncooldown1} {@Spawncooldown} {@Spawncooldown2}" to player
+				wait {@Spawncooldown} seconds
+				set {back::%uuid of player%} to location of player
+				teleport player to {spawn}
+				send "{@Spawnteleporting}" to player
+				stop
+			if {@Spawncooldownuse} is false:
+				set {back::%uuid of player%} to location of player
+				teleport player to {spawn}
+				send "{@Spawnteleporting}" to player
+				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.spawn" or "essentials.*":
 		stop
 
@@ -4172,8 +4231,6 @@ command /eco [<text>] [<offline player>] [<number>]:
 					stop
 			if arg 1 is "remove":
 				if sender has permission "essentials.eco.*" or "essentials.eco.remove" or "essentials.*":
-					send "{@Nopermission}" to player
-					stop
 					if arg 2 is not set:
 						send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 						stop
@@ -4281,6 +4338,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 					stop
 				if arg 2 is online:
 					send "{@Adminhomehome}" to player
+					stop
 				if arg 2 is offline:
 					send "{@Noplayerconnect}" to player
 					stop
@@ -4298,6 +4356,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 							set {back::%uuid of player%} to location of player
 							teleport player to {home.%arg 2%::%arg 3%}
 							send "{@Adminhometeleporting}" to player
+							stop
 						if {home.%arg 2%::%arg 3%} is not set:
 							send "{@Adminhomenohome}" to player
 							stop
@@ -4318,6 +4377,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 							remove arg 3 from {homename.%arg 2%::*}
 							remove arg 3 from {home.%arg 2%::*}
 							send "{@Adminhomedelhome}" to player
+							stop
 						if {home.%arg 2%::%arg 3%} is not set:
 							send "{@Adminhomenohome}" to player
 							stop
@@ -4335,6 +4395,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 							add arg 3 to {homename.%arg 2%::*}
 							add arg 3 to {home.%arg 2%::*}
 							send "{@Adminhomesethome}" to player
+							stop
 						if {home.%arg 2%::%arg 3%} is set:
 							send "{@Adminhomealready}" to player
 							stop
@@ -4423,7 +4484,7 @@ command /homes:
 			send "{@Homeslist}" to player
 			stop
 		if sender is console:
-			send "{@Homeslist}" to console
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on join:
@@ -5137,12 +5198,11 @@ command /freeze [<offline player>]:
 					send "{@Freezetoplayeradmin}" to player
 					stop
 				if {freeze.%arg 1%.frozen} is set:
-					if {freeze.%arg 1%.frozen} is set:
-						delete {freeze.%arg 1%..frozen}
-						send "{@Nofreezetome}" to arg 1
-						send "{@Nofreezetoplayeradmin}" to player
-						delete {freeze.%arg 1%.frozen.gm}
-						stop
+					delete {freeze.%arg 1%..frozen}
+					send "{@Nofreezetome}" to arg 1
+					send "{@Nofreezetoplayeradmin}" to player
+					delete {freeze.%arg 1%.frozen.gm}
+					stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to player
 				stop
@@ -5673,7 +5733,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15.3" to player
+				send "&fVersion &6|-> &c1.15.4" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5689,7 +5749,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15.3" to console
+				send "&fVersion &6|-> &c1.15.4" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
