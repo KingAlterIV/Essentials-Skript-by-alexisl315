@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre3
+# Version: 1.14pre4
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -1652,7 +1652,6 @@ command /deletekit [<text>]:
 
 command /kit [<text>]:
 	permission: essentials.kit
-	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/kit [kit]
 	aliases: essentials:kit
@@ -1672,7 +1671,7 @@ command /kit [<text>]:
 							send "{@kit}" to player
 							stop
 					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}" to player
+						send "{@Nokit}"
 						stop
 					if {kit.%player%::%arg 1%} is set:
 						loop 36 times:
@@ -1686,7 +1685,7 @@ command /kit [<text>]:
 							send "{@kit}" to player
 							stop
 					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}" to player
+						send "{@Nokit}"
 						stop
 				if sender doesn't have permission "essentials.kit.bypass" or "essentials.*":
 					if {@Kitcooldownuse} is true:
@@ -1704,7 +1703,7 @@ command /kit [<text>]:
 								send "{@kit}" to player
 								stop
 						if {kit.%player%::%arg 1%} is not set:
-							send "{@Nokit}" to player
+							send "{@Nokit}"
 							stop
 					if {@Kitcooldownuse} is false:
 						if {kit.%player%::%arg 1%} is set:
@@ -1716,10 +1715,10 @@ command /kit [<text>]:
 								set the player's leggings to {legs.%arg 1%.kit.%player%}
 								set the player's boots to {boot.%arg 1%.kit.%player%}
 							loop 1 times:
-								send "{@kit}" to player
+								sen#81FF00d "{@kit}" to player
 								stop
 						if {kit.%player%::%arg 1%} is not set:
-							send "{@Nokit}" to player
+							send "{@Nokit}"
 							stop
 			if sender doesn't have permission "essentials.kit.%argument 1%" or "essentials.*":
 				send "{@Noperms}" to player
@@ -1730,12 +1729,11 @@ command /kit [<text>]:
 
 command /kits:
 	permission: essentials.kits
-	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/kits
 	aliases: essentials:kits
 	trigger:
-		send "{@Kits}" to player
+		send "{@Kits}"#D9FF00
 		stop
 
 on sign change:
@@ -3777,10 +3775,9 @@ command /warps:
 	permission: essentials.warps
 	permission message: {@Noperms}
 	aliases: essentials:warps
-	executable by: players
 	usage: &cError &6>> &f/warps
 	trigger:
-		send "{@Warplist}" to player
+		send "{@Warplist}"
 		stop
 
 command /msg [<offline player>] [<text>]:
@@ -4364,7 +4361,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre3" to player
+			send "Version >> 1.14pre4" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
