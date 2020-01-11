@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre13
+# |-> Version: 1.15Pre14
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -934,6 +934,10 @@ options: # >> Continuation of message configuration !
 	Pvptoalreadyenable: &cPvp is already enabled !
 	Pvptoalreadydisable: &cPvp is already disable !
 
+	# >> COMMAND MESSAGE = /thor -|
+
+	Thor: &7You have invoked a flash !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -942,6 +946,21 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /thor:
+	permission: essentials.thor
+	executable by: players, console
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/thor
+	aliases: essentials:thor
+	trigger:
+		if sender is a player:
+			send "{@Thor}" to player
+			strike lightning at the targeted block
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /pvp [<text>]:
 	permission: essentials.pvp
@@ -5066,7 +5085,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre13" to player
+				send "&fVersion &6|-> &c1.15Pre14" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5082,7 +5101,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre13" to console
+				send "&fVersion &6|-> &c1.15Pre14" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
