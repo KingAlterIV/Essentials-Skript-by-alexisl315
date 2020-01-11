@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.8
+# Version: 0.9
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -411,6 +411,10 @@ command /seen [<player>]:
 				set {_ban} to "{@Seenyes}"
 			else:
 				set {_ban} to "{@Seenno}"
+			if {freeze.%argument%.frozen.gm} is true:
+				set {_freeze} to "{@Seenyes}"
+			else:
+				set {_freeze} to "{@Seenno}"
 			send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_"
 			send "&7IP&6: &c%{ip.%arg 1%}%" to player
 			send "&7UUID&6: &c%arg 1's uuid%"
@@ -418,6 +422,7 @@ command /seen [<player>]:
 			send "&7Afk&6: &c%{_afk}%"
 			send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€"
 			send "&7Gamemode&6: &c%arg 1's gamemode%"
+			send "&7Freeze: &c%{_freeze}%"
 			send "&7Mute&6: &c%{_mute}%"
 			send "&7Ban&6: &c%{_ban}%"
 			send "&7Coords&6: &c%arg 1's location%"
@@ -487,7 +492,17 @@ options: # >> Continuation of message configuration!
 	# >> COMMAND MESSAGE = SIGN COMMANDS -|
 
 	Signcommands: &7You have to create a sign with a command.
-	Signwarpnowarp: &cVous n'avez pas de warp !
+	Signwarpnowarp: &cYou are no warp !
+
+	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny -|
+
+	Notpa: &cYou have no pending teleport requests !
+	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
+	Tpasendtoplayer: &7Teleport request sent to &c%arg% &7!
+	Tpasendtoplayer2: &7Teleportation request for &c%player% &7!
+	Tpaccept: &7Teleport request accepted !
+	Tpacceptteleporting: &7Teleporting...
+	Tpdeny: &7Teleport request deny !
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -497,6 +512,52 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /tpa [<offline player>]:
+	permission: essentials.tpa
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tpa
+	aliases: essentials:tpa
+	trigger:
+		if arg is set:
+			set {tpa.%arg%} to player
+			message "{@Tpasendtoplayer}"  to player
+			message "{@Tpasendtoplayer2}:" to arg
+			message "{@Tpa}" to arg
+		else:
+			message "&cError &6>> &f/tpa [player]"
+
+command /tpaccept:
+	permission: essentials.tpdeny
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tpaccept
+	aliases: /tpyes, essentials:tpaccept, essentials:tpyes
+	trigger:
+		if {tpa.%player%} is set:
+			message "{@Tpaccept}"
+			message "{@Tpaccept}" to {tpa.%player%}
+			message "{@Tpacceptteleporting}" to {tpa.%player%}
+			teleport {tpa.%player%} to player
+			wait 1 tick
+			delete {tpa.%player%}
+		else:
+			message "{@Notpa}"
+
+command /tpdeny:
+	permission: essentials.tpdeny
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/tpaccept
+	aliases: /tpno, essentials:tpdeny, essentials:tpno
+	trigger:
+		if {tpa.%player%} is set:
+			message "{@Tpdeny}"
+			message "{@Tpdeny}" to {tpa.%player%}
+			delete {tpa.%player%}
+		else:
+			message "{@Notpa}"
 
 on sign change:
 	if sender has permission "essentials.sign.warp" or "essentials.*":
@@ -659,7 +720,7 @@ command /enchant [<enchantment type>]:
 			send "{@Enchant}"
 			stop
 
-command /ext [<offlineplayer>]:
+command /ext [<offline player>]:
 	permission: essentials.ext
 	executable by: players
 	permission message: {@Noperms}
@@ -682,7 +743,7 @@ command /ext [<offlineplayer>]:
 			message "{@Noplayerconnect}"
 			stop
 
-command /depth [<offlineplayer>]:
+command /depth [<offline player>]:
 	permission: essentials.depth
 	executable by: players
 	permission message: {@Noperms}
@@ -702,7 +763,7 @@ command /depth [<offlineplayer>]:
 			message "{@Noplayerconnect}"
 			stop
 
-command /burn [<offlineplayer>] [<timespan>]:
+command /burn [<offline player>] [<timespan>]:
 	permission: essentials.burn
 	executable by: players
 	permission message: {@Noperms}
@@ -725,7 +786,7 @@ command /burn [<offlineplayer>] [<timespan>]:
 			message "{@Noplayerconnect}"
 			stop
 
-command /unlimited [<offlineplayer>]:
+command /unlimited [<offline player>]:
 	permission: essentials.unlimited
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/unlimited
@@ -774,7 +835,7 @@ command /workbench:
 		send "{@Workbench}"
 		stop
 
-command /banip [<offlineplayer>] [<text>]:
+command /banip [<offline player>] [<text>]:
 	permission: essentials.banip
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/banip [player] [reason]
@@ -831,7 +892,7 @@ command /banip [<offlineplayer>] [<text>]:
 					if {banplayer.%arg-1%} is true:
 						send "{@Banipalready}" to player
 
-command /ban [<offlineplayer>] [<text>]:
+command /ban [<offline player>] [<text>]:
 	permission: essentials.ban
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/ban [player] [reason]
@@ -1579,7 +1640,7 @@ command /slap [<offline player>]:
 	usage: &cError &6>> &f/slap [player]
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/time set [day/night]"
+			send "&cError &6>> &f/slap [player]"
 			stop
 		if arg 1 is online:
 			push argument 1 backwards at speed 1
@@ -1796,7 +1857,7 @@ command /warp [<text>] [<offline player>]:
 			send "&cError &6>> &f/warp [warp]"
 			stop
 		if arg 1 is set:
-			if sender has permission "essentials.warp.%argument 1%" or "essentials.*":
+			if sender has permission "essentials.warp.%argument 1%" or "essentials.*" or "essentials.warp.*":
 				if {@Warpcooldownuse} is true:
 					if arg 2 is not set:
 						if sender has permission "essentials.warp.bypass" or "essentials.*":
