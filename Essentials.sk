@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15.4
+# |-> Version: 1.15.5
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -120,8 +120,10 @@ options:
 
 	# >> COMMAND MESSAGE = /broadcast -|
 
-	Broadcast: &f%arg-1%
+	Broadcast: &f%arg 1%
 	Broadcastcolor: &f%coloured arg 1%
+
+	Broadcasttopanel: &f%line 3 of block%
 
 	# >> COMMAND MESSAGE = /suicide -|
 
@@ -149,6 +151,8 @@ options:
 
 	Mebroadcast: &f* %player% &6>> &f%arg 1%
 	Mebroadcastcolor: &f* %player% &6>> &f%coloured arg 1%
+
+	Mebroadcasttopanel: &f* %player% &6>> &f%line 3 of block%
 
 	# >> COMMAND MESSAGE = /gamemode -|
 
@@ -945,6 +949,7 @@ options: # >> Continuation of message configuration !
 	Bedteleportteleporting: &7Teleporting...
 	Bedteleportnotbedexisttome: &cYou do not have a bed !
 	Bedteleportnotbedexisttoplayer: &cThe player &c%arg 1% &cdoes not have a bed !
+	Bedteleportnotbedexisttoplayertopanel: &cThe player &c%line 3 of block% &cdoes not have a bed !
 
 	# >> COMMAND MESSAGE = /chunk -|
 
@@ -977,49 +982,18 @@ options: # >> Continuation of message configuration !
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
 on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly.others" or " essentials.sign.create.fly.*" or "essentials.*":
-		if line 1 is "[Essentials]":
-			if line 2 is "Fly":
-				set line 1 of block to ""
-				set line 2 of block to "&1[Fly]"
-				set line 3 of block to line 3
-				send "{@Signcommands}" to player
-				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly.others" or " essentials.sign.create.fly.*" or "essentials.*":
-		stop
-
-on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly.others" or "essentials.sign.use.fly.*" or "essentials.*":
-		if line 2 of block is "&1[Fly]":
-			if line 3 of block is line 3:
-				if {fly.%arg-1%} is not set:
-					send "{@Flytoplayerisadmin}" to player
-					send "{@Flytoplayer}" to arg 1
-					set arg 1's flight mode to true
-					set {fly.%arg-1%} to true
-					stop
-				if {fly.%arg-1%} is set:
-					send "{@Noflytoplayerisadmin}" to player
-					send "{@Noflytoplayer}" to arg 1
-					set arg 1's flight mode to false
-					delete {fly.%arg 1%}
-					stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly.others" or "essentials.sign.use.fly.*" or "essentials.*":
-		stop
-
-on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.sign.create.fly.*" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.*":
 		if line 1 is "[Essentials]":
 			if line 2 is "Fly":
 				set line 1 of block to ""
 				set line 2 of block to "&1[Fly]"
 				send "{@Signcommands}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.sign.create.fly.*" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.sign.use.fly.*" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.*":
 		if line 2 of block is "&1[Fly]":
 			if {fly.%player%} is not set:
 				send "{@Flytome}" to player
@@ -1031,57 +1005,31 @@ on right click on sign:
 				set player's flight mode to false
 				delete {fly.%player%}
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.sign.create.fly.*" or "essentials.*":
-		stop
-
-on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport.others" or "essentials.sign.create.bedteleport.*" or "essentials.*":
-		if line 1 is "[Essentials]":
-			if line 2 is "Bedteleport":
-				set line 1 of block to ""
-				set line 2 of block to "&1[Bedteleport]"
-				set line 3 of block to line 3
-				send "{@Signcommands}" to player
-				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport.others" or "essentials.sign.create.bedteleport.*" or "essentials.*":
-		stop
-
-on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport.others" or "essentials.sign.use.bedteleport.*" or "essentials.*":
-		if line 2 of block is "&1[Bedteleport]":
-			if line 3 of block is line 3:
-				if bed of arg 1 exists:
-					teleport player to bed of arg 1
-					send "{@Bedteleportteleporting}" to player
-					stop
-				if bed of arg 1 is not set:
-					send "{@Bedteleportnotbedexisttoplayer}" to player
-					stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport.others" or "essentials.sign.use.bedteleport.*" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.fly" or "essentials.*":
 		stop
 		
 on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport" or "essentials.sign.create.bedteleport.*" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport" or "essentials.*":
 		if line 1 is "[Essentials]":
 			if line 2 is "Bedteleport":
 				set line 1 of block to ""
 				set line 2 of block to "&1[Bedteleport]"
 				send "{@Signcommands}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport" or "essentials.sign.create.bedteleport.*" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.sign.use.bedteleport.*" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.*":
 		if line 2 of block is "&1[Bedteleport]":
 			if bed of player exists:
 				teleport player to bed of player
 				send "{@Bedteleportteleporting}" to player
 				stop
 			if bed of player is not set:
-				send "{@Bedteleportnotbedexisttoplayer}" to player
+				send "{@Bedteleportnotbedexisttoplayertopanel}" to player
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.sign.use.bedteleport.*" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.bedteleport" or "essentials.*":
 		stop
 
 command /op [<offline player>]:
@@ -1624,7 +1572,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
 		if line 2 of block is "&1[Broadcast]":
 			if line 3 of block is line 3:
-				broadcast "{@Broadcast}"
+				broadcast "{@Broadcasttopanel}"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.broadcast" or "essentials.*":
 		stop
@@ -1645,7 +1593,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
 		if line 2 of block is "&1[Me]":
 			if line 3 of block is line 3:
-				broadcast "{@Mebroadcast}"
+				broadcast "{@Mebroadcasttopanel}"
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.me" or "essentials.*":
 		stop
@@ -1837,7 +1785,7 @@ on right click on sign:
 	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		if line 2 of block is "&1[Server]":
 			if line 3 of block is line 3:
-				connect player to "%line 3%"
+				connect player to line 3 of block
 				stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.serverbungeecord" or "essentials.*":
 		stop
@@ -2207,7 +2155,6 @@ command /vanish [<offline player>]:
 					stop
 				if {vanish.%player%} is set:
 					execute console command "/effect %player% clear"
-					stop
 					send "{@Novanishtome}"
 					delete {vanish.%player%}
 					stop
@@ -5733,7 +5680,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15.4" to player
+				send "&fVersion &6|-> &c1.15.5" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5749,7 +5696,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15.4" to console
+				send "&fVersion &6|-> &c1.15.5" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
