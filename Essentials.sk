@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.1
+# Version: 0.2
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -10,8 +10,16 @@ options:
 	Spawncooldown: 5
 	Spawncooldownuse: true
 
+	Messagejoinquit: true
+
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
+	Reloadmsg: &cYou have reloaded the plugin.
+
+	Join: &6The player %player% logged on to the server.
+	Quit: &6The player disconnected from the server.
+
+	Nobuild: &cYou could not build!
 
 	# >> COMMAND MESSAGE = /spawn, /setspawn, /delspawn -|
 
@@ -22,7 +30,20 @@ options:
 	Spawnteleporting: &7Teleporting...
 	Teleportspawnisplayer: &6You have been teleported to spawn by &c%player%&6.
 	Teleportspawnisconsole: &6You have been teleported to spawn by &cConsole&6.
+
 	Deletespawn: &7You removed the spawn point.
+
+	# >> COMMAND MESSAGE = /heal, /feed -|
+
+	Feedtome: &7You have been satiated.
+	Feedtoplayerisadmin: &7You have satisfied &c%arg-1%&7.
+	Feedtoplayer: &6You have been satiated by &c%player%&7.
+	Feedtoplayerconsole: &6You have been satiated by &cConsole&7.
+
+	Healtome: &7You have been neat.
+	Healtoplayerisadmin: &7You have sneat &c%arg-1%&7.
+	Healtoplayer: &6You have been neat by &c%player%&7.
+	Healtoplayerconsole: &6You have been neat by &cConsole&7.
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -33,6 +54,99 @@ options:
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+on chat:
+	if sender has permission "essentials.chat.color" or "essentials.*":
+		replace all "&" in the message with "§"
+	if sender doesn't have permission "essentials.chat.color" or "essentials.*":
+		stop
+
+on join:
+	if {@Messagejoinquit} is true:
+		set join message to "{@Join}"
+	if {@Messagejoinquit} is false:
+		stop
+
+on quit:
+	if {@Messagejoinquit} is true:
+		set quit message to "{@Quit}"
+	if {@Messagejoinquit} is false:
+		stop
+
+on build:
+	if player has permission "essentials.build" or "essentials.*":
+		stop
+	if player doesn't have permission "essentials.build" or "essentials.*":
+		cancel event
+		send "{@Nobuild}"
+
+on break:
+	if player has permission "essentials.build" or "essentials.*":
+		stop
+	if player doesn't have permission "essentials.build" or "essentials.*":
+		cancel event
+		send "{@Nobuild}"
+
+command /essentials [<text>]:
+	aliases: essentials:reload
+	permission: essentials.reload
+	executable by: players
+	permission message: {@Noperms}
+	trigger:
+		if arg-1 is "reload":
+			if sender has permission "essentials.reload" or "essentials.*":
+				make console execute command "/sk reload essentials"
+				send "{@Reloadmsg}"
+				stop
+		if arg-1 is not set:
+			message "&cError &6>> &f/essentials reload"
+			stop
+		if arg-1 is not "reload":
+			message "&cError &6>> &f/essentials reload"
+			stop
+
+command /feed [<offline player>]:
+	permission: essentials.feed
+	aliases: essentials:feed
+	permission message: {@Noperms}
+	trigger:
+		if arg 1 is not set:
+			send "{@Feedtome}"
+			set hunger bar to 10
+		if arg 1 is online:
+			if sender is a players:
+				if sender has permission "essentials.feed.others" or "essentials.*":
+					send "{@Feedtoplayerisadmin}"
+					message "{@Feedtoplayer}" to arg 1
+					set argument's food bar to 10
+				if sender doesn't have permission "essentials.feed.others" or "essentials.*":
+					message "{@Noperms}"
+			if sender is console:
+				message "{@Feedtoplayerconsole}" to arg 1
+				set argument's food bar to 10
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
+
+command /heal [<offline player>]:
+	permission: essentials.heal
+	aliases: essentials:heal
+	permission message: {@Noperms}
+	trigger:
+		if arg 1 is not set:
+			send "{@Healtome}"
+			heal player
+		if arg 1 is online:
+			if sender is a players:
+				if sender has permission "essentials.heal.others" or "essentials.*":
+					send "{@Healtoplayerisadmin}"
+					message "{@Healtoplayer}" to arg 1
+					heal argument 1
+				if sender doesn't have permission "essentials.heal.others" or "essentials.*":
+					message "{@Noperms}"
+			if sender is console:
+				message "{@Healtoplayerconsole}" to arg 1
+				heal argument 1
+		if arg 1 is offline:
+			message "{@Noplayerconnect}"
 
 command /setspawn:
 	aliases: essentials:setspawn
