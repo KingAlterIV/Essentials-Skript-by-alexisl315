@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.12
+# Version: 1.13
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,6 +53,9 @@ options:
 	Damageall: true
 
 	Portailcreate: true
+
+	Maintenancecooldownuse: true
+	Maintenancecooldown: 10
 
 	# You can add or remove messages in cooldown auto-message !
 
@@ -901,6 +904,18 @@ every {@Cooldownautomessagemsg1} seconds:
 	if {@Automessage} is false:
 		stop
 
+options: # >> Continuation of message configuration !
+
+	# >> COMMAND MESSAGE = /maintenance -|
+
+	Maintenanceenablejoin: &cThe server is in maintenance !
+	Maintenancekick: &cYou have been kicked from the server !
+	Maintenancecooldown1: &cThe server will have a
+	Maintenancecooldown2: &cseconds !
+	Maintenanceenable: &cServer maintenance has been disabled !
+	Maintenancealreadyenable: &6Server maintenance is already enabled !
+	Maintenancealreadydisable: &6Server maintenance is already disabled !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -910,6 +925,57 @@ every {@Cooldownautomessagemsg1} seconds:
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+command /maintenance [<text>]:
+	permission: essentials.maintenance
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/maintenance [enable/diable]
+	trigger:
+		if arg-1 is not set:
+			send "&cError &6>> &fmaintenance enable/disable" to player
+			stop
+		if arg-1 is not "enable" or "disable":
+			send "&cError &6>> &fmaintenance enable/disable" to player
+			stop
+		if arg-1 is "enable":
+			if player has permission "essentials.maintenance.enable" or "essentials.maintenance.*" or "essentials.*":
+				if {Essentialsmaintenance.enable} is false:
+					if {@Maintenancecooldownuse} is true:
+						loop all players:
+							broadcast "{@Maintenancecooldown1} {@Maintenancecooldown} {@Maintenancecooldown2}"
+							set {Essentialsmaintenance.enable} to true
+							wait {@Maintenancecooldown} seconds
+							kick players due to "{@Maintenancekick}"
+							stop
+					if {@Maintenancecooldownuse} is false:
+						loop all players:
+							set {Essentialsmaintenance.enable} to true
+							kick players due to "{@Maintenancekick}"
+							stop
+			if {Essentialsmaintenance.enable} is true:
+				send "{@Maintenancealreadyenable}"
+				stop
+		if arg-1 is "disable":
+			if player has permission "essentials.maintenance.disable" or "essentials.maintenance.*" or "essentials.*":
+				if {Essentialsmaintenance.enable} is true:
+					loop all players:
+						set {Essentialsmaintenance.enable} to false
+						send "{@Maintenanceenable}" to player
+						stop
+			if {Essentialsmaintenance.enable} is false:
+				send "{@Maintenancealreadydisable}" to player
+				stop
+
+on connect:
+	if {Essentialsmaintenance.enable} is true:
+		if player doesn't have permission "essentials.maintenance.bypass" or "essentials.maintenance.*" or "essentials.*":
+			kick player due to "{@Maintenanceenablejoin}"
+		else:
+			stop
+	if {Essentialsmaintenance.enable} is false:
+		stop
+
+on load: 
+	set {Essentialsmaintenance.enable} to false
 
 command /clearlag:
 	permission: essentials.clearlag
@@ -4203,7 +4269,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.12" to player
+			send "Version >> 1.13" to player
 			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
