@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 0.12
+# Version: 1.0
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -596,6 +596,11 @@ options: # >> Continuation of message configuration!
 	Signwarpnowarp: &cYou are no warp !
 	Signkitnokit: &cYou are no kit !
 
+		# >> COMMAND MESSAGE = OPEN BIN COMMANDS -|
+
+	Trashname: &0&lBin
+	Trash: &7You opened the trash !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -604,6 +609,17 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /trash:
+	permission: essentials.trash
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/trash
+	aliases: essentials:trash, essentials:bin, bin
+	trigger:
+		open chest with 6 rows named "{@Trashname}" to player
+		send "{@Trash}" to player
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.kit" or "essentials.*":
@@ -2466,6 +2482,7 @@ on any movement:
 	if {afk.%player%} is set:
 		broadcast "{@Noafktome}"
 		delete {afk.%player%}
+		stop
 
 on tool change:
 	if {afk.%player%} is set:
