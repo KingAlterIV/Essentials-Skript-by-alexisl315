@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.4
+# Version: 1.0.5
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -33,7 +33,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.4.
+	Essentialsversionmsg: &7Essentials is 1.0.5.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -134,10 +134,9 @@ command /motd:
 	aliases: essentials:motd
 	usage: &cError &6>> &f/motd
 	trigger:
-		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-"
-		send "&cWelcome to the server !"
-		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-"
-		send ""
+		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-" to player
+		send "&cWelcome to the server !" to player
+		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-" to player
 		if {e-mail.%player%} > 0:
 			send "&fYou have &c%{e-mail.%player%}% message ! &fEnter &c/mail read &fto see your mail."
 		else:
@@ -292,17 +291,17 @@ command /sethome [<text>]:
 		if arg 1 is set:
 			if sender has permission "essentials.home.3" or "essentials.*":
 				if {homes.%player%} = 3:
-					message "&7You cannot set more than 3 homes!"
+					send "&7You cannot set more than 3 homes!" to player
 					stop
 			if sender has permission "essentials.home.6" or "essentials.*":
 				if {homes.%player%} = 6:
-					message "&7You cannot set more than 6 homes!"
+					send "&7You cannot set more than 6 homes!" to player
 					stop
 			if {home.%player%::%arg 1%} is set:
-				send "{@Homealready}"
+				send "{@Homealready}" to player
 			if {home.%player%::%arg 1%} is not set:
 				add 1 to {homes.%player%}
-				send "{@Homecreate}"
+				send "{@Homecreate}" to player
 				set {home.%player%::%arg 1%} to location of player
 				set {homename.%player%::%arg 1%} to arg 1
 				stop
@@ -399,13 +398,11 @@ command /seen [<player>]:
 	usage: &cError &6>> &f/seen [player]
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/seen [player]" to player
-		if arg 1 is online:
-			if {afk.%argument 1%} is set:
+			if {afk.%player%} is set:
 				set {_afk} to "{@Seenyes}"
 			else:
 				set {_afk} to "{@Seenno}"
-			if {essentials.god.%arg 1%} is true:
+			if {essentials.god.%player%} is true:
 				set {_god} to "{@Seenyes}"
 			else:
 				set {_god} to "{@Seenno}"
@@ -413,30 +410,71 @@ command /seen [<player>]:
 				set {_mute} to "{@Seenyes}"
 			else:
 				set {_mute} to "{@Seenno}"
-			if {banplayer.%arg-1%} is true:
+			if {banplayer.%player%} is true:
 				set {_ban} to "{@Seenyes}"
 			else:
 				set {_ban} to "{@Seenno}"
-			if {freeze.%argument%.frozen.gm} is true:
+			if {freeze.%player%.frozen.gm} is true:
 				set {_freeze} to "{@Seenyes}"
 			else:
 				set {_freeze} to "{@Seenno}"
-			send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_"
-			send "&7IP&6: &c%{ip.%arg 1%}%" to player
-			send "&7UUID&6: &c%arg 1's uuid%"
-			send "&7god mode&6: &c%{_god}%"
-			send "&7Afk&6: &c%{_afk}%"
-			send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€"
-			send "&7Gamemode&6: &c%arg 1's gamemode%"
-			send "&7Freeze: &c%{_freeze}%"
-			send "&7Mute&6: &c%{_mute}%"
-			send "&7Ban&6: &c%{_ban}%"
-			send "&7Coords&6: &c%arg 1's location%"
-			send "&7World&6: &c%arg 1's world%"
-			send "&7Exp&6: &c%arg 1's level%"
-			send "&7Health&6: &c%arg 1's health%&c/10"
-			send "&7Hunger&6: &c%arg 1's hunger%&c/10"	
+			send "&7-_-_-_-_-_-_-_ &c%player% &7-_-_-_-_-_-_-_" to player
+			send "&7IP&6: &c%{ip.%player%}%" to player
+			send "&7UUID&6: &c%player's uuid%" to player
+			send "&7god mode&6: &c%{_god}%" to player
+			send "&7Afk&6: &c%{_afk}%" to player
+			send "&7Money&6: &c%{money.%UUID of player%}% &c€" to player
+			send "&7Gamemode&6: &c%player's gamemode%" to player
+			send "&7Freeze: &c%{_freeze}%" to player
+			send "&7Mute&6: &c%{_mute}%" to player
+			send "&7Ban&6: &c%{_ban}%" to player
+			send "&7Coords&6: &c%player's location%" to player
+			send "&7World&6: &c%player's world%" to player
+			send "&7Exp&6: &c%player's level%" to player
+			send "&7Health&6: &c%player's health%&c/10" to player
+			send "&7Hunger&6: &c%player's hunger%&c/10" to player
 			stop
+		if arg 1 is online:
+			if sender has permission "essentials.seen.others" or "essentials.*":
+				if {afk.%argument 1%} is set:
+					set {_afk} to "{@Seenyes}"
+				else:
+					set {_afk} to "{@Seenno}"
+				if {essentials.god.%arg 1%} is true:
+					set {_god} to "{@Seenyes}"
+				else:
+					set {_god} to "{@Seenno}"
+				if {mute.%arg-1%} is true:
+					set {_mute} to "{@Seenyes}"
+				else:
+					set {_mute} to "{@Seenno}"
+				if {banplayer.%arg-1%} is true:
+					set {_ban} to "{@Seenyes}"
+				else:
+					set {_ban} to "{@Seenno}"
+				if {freeze.%argument%.frozen.gm} is true:
+					set {_freeze} to "{@Seenyes}"
+				else:
+					set {_freeze} to "{@Seenno}"
+				send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_" to player
+				send "&7IP&6: &c%{ip.%arg 1%}%" to player
+				send "&7UUID&6: &c%arg 1's uuid%" to player
+				send "&7god mode&6: &c%{_god}%" to player
+				send "&7Afk&6: &c%{_afk}%" to player
+				send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€" to player
+				send "&7Gamemode&6: &c%arg 1's gamemode%" to player
+				send "&7Freeze: &c%{_freeze}%" to player
+				send "&7Mute&6: &c%{_mute}%" to player
+				send "&7Ban&6: &c%{_ban}%" to player
+				send "&7Coords&6: &c%arg 1's location%" to player
+				send "&7World&6: &c%arg 1's world%" to player
+				send "&7Exp&6: &c%arg 1's level%" to player
+				send "&7Health&6: &c%arg 1's health%&c/10" to player
+				send "&7Hunger&6: &c%arg 1's hunger%&c/10" to player
+				stop
+			if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
 
 options: # >> Continuation of message configuration!
 
@@ -601,6 +639,10 @@ options: # >> Continuation of message configuration!
 
 	Trashnumberchest: 6
 
+	# >> COMMAND MESSAGE = DROP PERMISSION -|
+
+	Nodrop: &cYou do not have permission to drop an item.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -609,6 +651,14 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on drop:
+	if player has permission "essentials.drop" or "essentials.*":
+		stop
+	if player doesn't have permission "essentials.drop" or "essentials.*":
+		cancel event
+		send "{@Nodrop}" to player
+		stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.trash" or "essentials.*":
@@ -636,6 +686,7 @@ command /trash:
 	usage: &cError &6>> &f/trash
 	aliases: essentials:trash, essentials:bin, bin
 	trigger:
+		wait 2 ticks
 		open chest with {@Trashnumberchest} rows named "{@Trashname}" to player
 		send "{@Trash}" to player
 		stop
@@ -3403,18 +3454,18 @@ on break:
 
 command /essentials [<text>]:
 	aliases: essentials:reload, essentials:version
-	permission: essentials.reload and essentials.version
+	permission: essentials.admin
 	executable by: players
 	usage: &cError &6>> &f/essentials reload/version
 	permission message: {@Noperms}
 	trigger:
 		if arg-1 is "reload":
-			if sender has permission "essentials.reload" or "essentials.*":
+			if sender has permission "essentials.admin" or "essentials.*":
 				make console execute command "/sk reload essentials"
 				send "{@Reloadmsg}" to player
 				stop
 		if arg-1 is "version":
-			if sender has permission "essentials.version" or "essentials.*":
+			if sender has permission "essentials.admin" or "essentials.*":
 				send "{@Essentialsversionmsg}" to player
 				stop
 		if arg-1 is not set:
