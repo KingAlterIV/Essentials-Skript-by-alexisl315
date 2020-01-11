@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6.5
+# Version: 1.6.6
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -60,7 +60,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.5.
+	Essentialsversionmsg: &7Essentials is 1.6.6.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -837,6 +837,7 @@ on command "/bukkit:a":
 
 on command "/bukkit:help":
 	if sender doesn't have permission "essentials.blockcommand.bypass":
+		send "{@Noperms}" to player
 		cancel event
 		stop
 	if sender has permission "essentials.blockcommand.bypass":
@@ -2074,39 +2075,39 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Creatif":
 				make player execute command "/gm 1"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" "essentials.sign.use.gamemode.survival" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Survival":
 				make player execute command "/gm 0"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Adventure":
 				make player execute command "/gm 2"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Spectator":
 				make player execute command "/gm 3"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
 		stop
 
 on sign change:
