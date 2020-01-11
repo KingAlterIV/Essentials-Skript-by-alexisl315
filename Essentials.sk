@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre10
+# Version: 1.14pre11
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -925,6 +925,44 @@ options: # >> Continuation of message configuration !
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+command /lag [<text>]:
+	permission: essentials.chat
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/lag [clear]
+	aliases: essentials:lag
+	trigger:
+		if arg 1 is not set:
+			send "&cError &6>> &f/lag [clear]" to player
+			stop
+		if arg 1 is not "clear" or "show":
+			send "&cError &6>> &f/lag [clear]" to player
+			stop
+		if arg 1 is "clear":
+			if sender has permission "essentials.lag.*" or "essentials.lag.clear" or "essentials.*":
+				clear {_count}
+				if {_count} is not set:
+					set {_count} to 0
+				if {@Clearlagtoentityarrows} is true:
+					loop entities:
+						loop-entity is arrows
+						clear loop-entity
+						add 1 to {_count}
+						send "{@Clearlagentityarrows}" to player
+				if {@Clearlagtoentityitemsdropped} is true:
+					loop entities:
+						loop-entity is a dropped item
+						clear loop-entity
+						add 1 to {_count}
+						send "{@Clearlagentityitemsdropped}" to player
+				if {@Clearlagtoentityitemsdropped} is false:
+					stop
+			if {@Clearlagtoentityplayers} is false:
+				stop
+			if sender doesn't have permission "essentials.lag.*" or "essentials.lag.clear" or "essentials.*":
+				send "{@Noperms}" to player
+				stop
+
 command /chat [<text>]:
 	permission: essentials.chat
 	executable by: players
@@ -1092,10 +1130,10 @@ command /maintenance [<text>]:
 	usage: &cError &6>> &f/maintenance [enable/diable]
 	trigger:
 		if arg-1 is not set:
-			send "&cError &6>> &fmaintenance enable/disable" to player
+			send "&cError &6>> &fmaintenance [enable/diable]" to player
 			stop
 		if arg-1 is not "enable" or "disable":
-			send "&cError &6>> &fmaintenance enable/disable" to player
+			send "&cError &6>> &fmaintenance [enable/diable]" to player
 			stop
 		if arg-1 is "enable":
 			if player has permission "essentials.maintenance.enable" or "essentials.maintenance.*" or "essentials.*":
@@ -1137,32 +1175,6 @@ on connect:
 
 on load: 
 	set {Essentialsmaintenance.enable} to false
-
-command /clearlag:
-	permission: essentials.clearlag
-	permission message: {@Noperms}
-	usage: &cError &6>> &f/clearlag
-	aliases: essentials:clearlag
-	trigger:
-		clear {_count}
-		if {_count} is not set:
-			set {_count} to 0
-		if {@Clearlagtoentityarrows} is true:
-			loop entities:
-				loop-entity is arrows
-				clear loop-entity
-				add 1 to {_count}
-				send "{@Clearlagentityarrows}" to player
-		if {@Clearlagtoentityitemsdropped} is true:
-			loop entities:
-				loop-entity is a dropped item
-				clear loop-entity
-				add 1 to {_count}
-				send "{@Clearlagentityitemsdropped}" to player
-		if {@Clearlagtoentityitemsdropped} is false:
-			stop
-		if {@Clearlagtoentityplayers} is false:
-			stop
 
 command /invsee [<player>]:
 	permission: essentials.invsee
@@ -4416,7 +4428,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre10" to player
+			send "Version >> 1.14pre11" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
