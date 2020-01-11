@@ -1,1 +1,1 @@
-# Shitty-Essentials-Skript-by-alexisl315
+This github was made to show the false updates of alexisl315’s Essentials skript.
