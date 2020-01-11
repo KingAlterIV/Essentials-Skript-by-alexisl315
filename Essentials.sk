@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.9
+# Version: 1.9.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.9.
+	Essentialsversionmsg: &7Essentials is 1.9.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -1549,10 +1549,10 @@ command /mail [<text>] [<offline player>] [<text>]:
 			send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
 			stop
 		if arg 1 is "read":
-			if sender doesn't have permission "essentials.mail.read" or "essentials.*":
+			if sender doesn't have permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
 				send "{@Noperms}" to player
 				stop
-			if sender has permission "essentials.mail.read" or "essentials.*":
+			if sender has permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
 				set {_count} to 0
 				loop {e-mail.%player%} times:
 					add 1 to {_count}
@@ -1560,10 +1560,10 @@ command /mail [<text>] [<offline player>] [<text>]:
 				send "{@Mailread}"
 				stop
 		if arg 1 is "clear":
-			if sender doesn't have permission "essentials.mail.clear" or "essentials.*":
+			if sender doesn't have permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
 				send "{@Noperms}" to player
 				stop
-			if sender has permission "essentials.mail.clear" or "essentials.*":
+			if sender has permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
 				if {e-mail.%player%} > 0:
 					set {_count} to 0
 					loop {e-mail.%player%} times:
@@ -1579,9 +1579,9 @@ command /mail [<text>] [<offline player>] [<text>]:
 		if arg 1 is "send":
 			if arg 2 is set:
 				if arg 3 is set:
-					if sender doesn't have permission "essentials.mail.send" or "essentials.*":
+					if sender doesn't have permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
 						send "{@Noperms}" to player
-					if sender has permission "essentials.mail.send" or "essentials.*":
+					if sender has permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
 						send "{@Mailsendtoplayer}" to arg 2
 						send "{@Mailsendtome}" to player
 						add 1 to {e-mail.%arg 2%}
