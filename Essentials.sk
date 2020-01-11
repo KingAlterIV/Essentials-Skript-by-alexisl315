@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.3
+# Version: 1.0.4
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -33,7 +33,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.3.
+	Essentialsversionmsg: &7Essentials is 1.0.4.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -267,7 +267,7 @@ options: # >> Continuation of message configuration!
 	Homecooldown2: &7seconds.
 	Adminhomenohome: &cThere is no home calling %arg 3%
 	Adminhometeleporting: You have been teleported to a player home.
-	Adminhomeremovehome: &7You have removed %arg 3% for the player home &c%arg 2%&7.
+	Adminhomedelhome: &7You have removed %arg 3% for the player home &c%arg 2%&7.
 
 	Adminhomehome: &9Homes: &b%{homename.%arg 2%::*}%
 
@@ -2197,23 +2197,23 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 	permission message: {@Noperms}
 	aliases: essentials:adminhome
 	executable by: players
-	usage: &cError &6>> &f/adminhome [delete/reset/homes/home] [player] [home]
+	usage: &cError &6>> &f/adminhome [delhome/reset/homes/home] [player] [home]
 	trigger:
 		if arg 1 is not set:
-			send "&cError &6>> &f/adminhome remove [player] [home]" to player
+			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 			send "&cError &6>> &f/adminhome reset [player]" to player
 			send "&cError &6>> &f/adminhome homes [player]" to player
 			send "&cError &6>> &f/adminhome home [player] [home]" to player
 			stop
-		if arg 1 is not "remove" or "reset" or "home" or "homes":
-			send "&cError &6>> &f/adminhome remove [player] [home]" to player
+		if arg 1 is not "delhome" or "reset" or "home" or "homes":
+			send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 			send "&cError &6>> &f/adminhome reset [player]" to player
 			send "&cError &6>> &f/adminhome homes [player]" to player
 			send "&cError &6>> &f/adminhome home [player] [home]" to player
 			stop
 		if arg 1 is "reset":
 			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome remove [player] [home]" to player
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
@@ -2229,7 +2229,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 				stop
 		if arg 1 is "homes":
 			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome remove [player] [home]" to player
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
@@ -2258,9 +2258,9 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 			if arg 2 is offline:
 				send "{@Noplayerconnect}" to player
 				stop
-		if arg 1 is "remove":
+		if arg 1 is "delhome":
 			if arg 2 is not set:
-				send "&cError &6>> &f/adminhome remove [player] [home]" to player
+				send "&cError &6>> &f/adminhome delhome [player] [home]" to player
 				send "&cError &6>> &f/adminhome reset [player]" to player
 				send "&cError &6>> &f/adminhome homes [player]" to player
 				send "&cError &6>> &f/adminhome home [player] [home]" to player
@@ -2270,7 +2270,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 					if {home.%arg 2%::%arg 3%} is set:
 						remove arg 3 from {homename.%arg 2%::%arg 3%}
 						remove arg 3 from {home.%arg 2%::%arg 3%}
-						send "{@Adminhomeremovehome}" to player
+						send "{@Adminhomedelhome}" to player
 					if {home.%arg 2%::%arg 3%} is not set:
 						send "{@Adminhomenohome}" to player
 						stop
