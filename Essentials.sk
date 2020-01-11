@@ -1,0 +1,92 @@
+# >> Essentials << # |->> Skript developed by alexisl315
+
+# The skript allows you to have a remake of the Essentials plugin.
+
+# Version: 0.1
+
+options:
+	# >> |- MESSAGE/CONFIG -|
+
+	Spawncooldown: 5
+	Spawncooldownuse: true
+
+	Noperms: &cYou don't have permission.
+	Noplayerconnect: &cThe player is not connected.
+
+	# >> COMMAND MESSAGE = /spawn, /setspawn, /delspawn -|
+
+	Setspawn: &7You have to place the spawn point.
+	Nospawnpoint: &cThe spawn is not set!
+	Spawncooldown1: &7You will be teleporting in
+	Spawncooldown2: &7seconds.
+	Spawnteleporting: &7Teleporting...
+	Teleportspawnisplayer: &6You have been teleported to spawn by &c%player%&6.
+	Teleportspawnisconsole: &6You have been teleported to spawn by &cConsole&6.
+	Deletespawn: &7You removed the spawn point.
+
+# ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
+#  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
+# (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+#
+#                              THE CODE
+# ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
+#  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
+# (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+
+command /setspawn:
+	aliases: essentials:setspawn
+	permission: essentials.setspawn
+	permission message: {@Noperms}
+	trigger:
+		message "{@Setspawn}"
+		set {spawn} to location of player
+
+command /spawn [<offline player>]:
+	aliases: essentials:spawn
+	permission: essentials.spawn
+	permission message: {@Noperms}
+	trigger:
+		if {spawn} isn't set:
+			message "{@Nospawnpoint}"
+			stop
+		else:
+			argument 1 is not set:
+				if {@Spawncooldownuse} is true:
+					if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
+						message "{@Spawncooldown1} {@Spawncooldown} {@Spawncooldown2}"
+						wait {@Spawncooldown} seconds
+						teleport player to {spawn}
+						message "{@Spawnteleporting}"
+					if sender has permission "essentials.spawn.bypass" or "essentials.*":
+						teleport player to {spawn}
+						message "{@Spawnteleporting}"
+				if {@Spawncooldownuse} is false:
+					teleport player to {spawn}
+					message "{@Spawnteleporting}"
+			else:
+				if sender has permission "essentials.spawn.others" or "essentials.*":
+					if argument is online:
+						teleport argument 1 to {spawn}
+					if argument is offline:
+						message "{@Noplayerconnect}"
+					if sender is a player:
+						message "{@Teleportspawnisplayer}" to argument 1
+						teleport argument 1 to {spawn}
+					if sender is console:
+						message "{@Teleportspawnisconsole}" to argument 1
+						teleport argument 1 to {spawn}
+				if sender doesn't have permission "essentials.spawn.others" or "essentials.*":
+					message "{@Noperms}"
+
+command /delspawn:
+	permission: essentials.delspawn
+	aliases: essentials:delspawn
+	permission message: {@Noperms}
+	trigger:
+		if {spawn} is set:
+			delete {spawn}
+			message "{@Deletespawn}"
+		if {spawn} isn't set:
+			message "{@Nospawnpoint}"
+			stop
