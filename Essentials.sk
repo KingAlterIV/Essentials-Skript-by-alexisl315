@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.11
+# Version: 1.11.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -3485,7 +3485,7 @@ command /skull [<text>]:
 			send "&cError &6>> &f/head [name]" to player
 			stop
 		if arg 1 is set:
-			execute console command "/give %player% skull 64 3 {SkullOwner:%arg 1%}"
+			give skull of %arg 1% to player
 			send "{@Skull}" to player
 			stop
 
@@ -4178,7 +4178,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.11" to player
+			send "Version >> 1.11.1" to player
 			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
