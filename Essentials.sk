@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.1
+# Version: 1.1.0.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.1.
+	Essentialsversionmsg: &7Essentials is 1.1.0.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -674,10 +674,11 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /hat -|
 
-	Hattome: &7You put a block block that you have in your hand.
+	Hattome: &7You put a block that you have in your hand.
 	Hattoplayer: &7Your hat was put by the player &c%player%&7.
 	Hattoplayeradmin: &6You put a block block that you have in the hand to the player &c%arg 2%&6.
-	Nohat: &7You have do for hat.
+	Nohat: &7You do not have a hat.
+	Hattoair: &cYou do not have a block or object as a hat.
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -698,6 +699,9 @@ command /hat [<text>] [<offline player>]:
 		if arg 1 is not set:
 			send "&cError &6>> &f/hat off [player]"
 			stop
+		if tool is air:
+			send "{@Hattoair}" to player
+			stop
 		if arg 1 is "off":
 			if arg 2 is not set:
 				set player's helmet to air
@@ -717,8 +721,8 @@ command /hat [<text>] [<offline player>]:
 					stop
 		if arg 1 is not "off":
 			if arg 2 is not set:
-				set player's helmet to air
-				send "{@Nohat}" to player
+				set player's helmet to player's tool
+				send "{@Hattome}" to player
 				stop
 			if sender has permission "essentials.hat.others" or "essentials.*":
 				if arg 2 is online:
