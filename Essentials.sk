@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.6.6
+# Version: 1.7
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -52,6 +52,8 @@ options:
 
 	Damageall: true
 
+	Portailcreate: true
+
 	Removemoneytodeath: false
 	Moneytodeath: 50
 	Moneytodeathmessage1: &cYou lost
@@ -60,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.6.6.
+	Essentialsversionmsg: &7Essentials is 1.7.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -843,6 +845,22 @@ on command "/bukkit:help":
 	if sender has permission "essentials.blockcommand.bypass":
 		stop
 
+on command "/op":
+	if sender doesn't have permission "essentials.blockcommand.bypass" or "essentials.*":
+		send "{@Noperms}" to player
+		cancel event
+		stop
+	if sender has permission "essentials.blockcommand.bypass" or "essentials.*":
+		stop
+
+on command "/deop":
+	if sender doesn't have permission "essentials.blockcommand.bypass":
+		send "{@Noperms}" to player
+		cancel event
+		stop
+	if sender has permission "essentials.blockcommand.bypass":
+		stop
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -851,6 +869,13 @@ on command "/bukkit:help":
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+on portal create:
+	if {@Portailcreate} is false:
+		cancel event
+		stop
+	if {@Portailcreate} is true:
+		stop
 
 on death:
 	if {@Removemoneytodeath} is true:
@@ -2084,7 +2109,7 @@ on right click on sign:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" "essentials.sign.use.gamemode.survival" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Survival":
 				make player execute command "/gm 0"
