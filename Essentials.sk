@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.3.4
+# Version: 1.3.5
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -51,7 +51,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.3.4.
+	Essentialsversionmsg: &7Essentials is 1.3.5.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -2661,8 +2661,8 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 			if arg 2 is online:
 				if arg 3 is set:
 					if {home.%arg 2%::%arg 3%} is set:
-						remove arg 3 from {homename.%arg 2%::%arg 3%}
-						remove arg 3 from {home.%arg 2%::%arg 3%}
+						remove arg 3 from {homename.%arg 2%::*}
+						remove arg 3 from {home.%arg 2%::*}
 						send "{@Adminhomedelhome}" to player
 					if {home.%arg 2%::%arg 3%} is not set:
 						send "{@Adminhomenohome}" to player
@@ -2678,8 +2678,8 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 			if arg 2 is online:
 				if arg 3 is set:
 					if {home.%arg 2%::%arg 3%} is not set:
-						add arg 3 to {homename.%arg 2%::%arg 3%}
-						add arg 3 to {home.%arg 2%::%arg 3%}
+						add arg 3 to {homename.%arg 2%::*}
+						add arg 3 to {home.%arg 2%::*}
 						send "{@Adminhomesethome}" to player
 					if {home.%arg 2%::%arg 3%} is set:
 						send "{@Adminhomealready}" to player
@@ -2728,12 +2728,18 @@ command /home [<text>]:
 				stop
 			if {home.%player%::%arg 1%} is set:
 				if {@Homecooldownuse} is true:
-					send "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}" to player
-					wait {@Homecooldown} seconds
-					send "{@Hometeleporting}" to player
-					set {back::%uuid of player%} to location of player
-					teleport player to {home.%player%::%arg 1%}
-					stop
+					if sender doesn't have permission "essentials.spawn.bypass" or "essentials.*":
+						send "{@Homecooldown1} {@Homecooldown} {@Homecooldown2}" to player
+						wait {@Homecooldown} seconds
+						send "{@Hometeleporting}" to player
+						set {back::%uuid of player%} to location of player
+						teleport player to {home.%player%::%arg 1%}
+						stop
+					if sender has permission "essentials.spawn.bypass" or "essentials.*":
+						send "{@Hometeleporting}" to player
+						set {back::%uuid of player%} to location of player
+						teleport player to {home.%player%::%arg 1%}
+						stop
 				if {@Homecooldownuse} is false:
 					set {back::%uuid of player%} to location of player
 					teleport player to {home.%player%::%arg 1%}
