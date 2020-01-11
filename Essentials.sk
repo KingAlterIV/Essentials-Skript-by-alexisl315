@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre18
+# |-> Version: 1.15Pre19
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -17,7 +17,7 @@
 # |-> %player's uuid% : This is a variable that can locate your skin.
 # |-> %player's gamemode% : This is a variable that locates your gamemode.
 # |-> %player's tool% : This is a variable that locates your item you have.
-
+# |-> %seed of player's world% : This is a variable that seed of player world.
 
 options:
 	# >> |- MESSAGE/CONFIG -|
@@ -467,7 +467,7 @@ command /seen [<player>]:
 			send "&7-_-_-_-_-_-_-_ &c%player% &7-_-_-_-_-_-_-_" to player
 			send "&7IP&6: &c%{ip.%player%}%" to player
 			send "&7UUID&6: &c%player's uuid%" to player
-			send "&7god mode&6: &c%{_god}%" to player
+			send "&7God mode&6: &c%{_god}%" to player
 			send "&7Afk&6: &c%{_afk}%" to player
 			send "&7Vanish&6: &c%{_vanish}%" to player
 			send "&7Money&6: &c%{money.%UUID of player%}% &c€" to player
@@ -480,6 +480,7 @@ command /seen [<player>]:
 			send "&7Exp&6: &c%player's level%" to player
 			send "&7Health&6: &c%player's health%&c/10" to player
 			send "&7Hunger&6: &c%player's hunger%&c/10" to player
+			send "&7Seed world&6: &c%seed of player's world%" to player
 			stop
 		if arg 1 is online:
 			if sender has permission "essentials.seen.others" or "essentials.*":
@@ -510,7 +511,7 @@ command /seen [<player>]:
 				send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_" to player
 				send "&7IP&6: &c%{ip.%arg 1%}%" to player
 				send "&7UUID&6: &c%arg 1's uuid%" to player
-				send "&7god mode&6: &c%{_god}%" to player
+				send "&7God mode&6: &c%{_god}%" to player
 				send "&7Afk&6: &c%{_afk}%" to player
 				send "&7Vanish&6: &c%{_vanish}%" to player
 				send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€" to player
@@ -523,6 +524,7 @@ command /seen [<player>]:
 				send "&7Exp&6: &c%arg 1's level%" to player
 				send "&7Health&6: &c%arg 1's health%&c/10" to player
 				send "&7Hunger&6: &c%arg 1's hunger%&c/10" to player
+				send "&7Seed world&6: &c%seed of arg 1's world%" to player
 				stop
 			if sender doesn't have permission "essentials.seen.others" or "essentials.*":
 				send "{@Nopermission}" to player
@@ -615,6 +617,9 @@ options: # >> Continuation of message configuration !
 	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7).
 
 	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny, /tpo, /tpohere -|
+
+	Tpacooldownteleportuse: true
+	Tpacooldownteleportinseconds: 10
 
 	Notpa: &cYou have no pending teleport requests !
 	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
@@ -2692,13 +2697,23 @@ command /tpaccept:
 	trigger:
 		if sender is a player:
 			if {tpa.%player%} is set:
-				send "{@Tpaccept}" to player
-				send "{@Tpaccept}" to {tpa.%player%}
-				send "{@Tpacceptteleporting}" to {tpa.%player%}
-				teleport {tpa.%player%} to player
-				wait 1 tick
-				delete {tpa.%player%}
-				stop
+				if {@Tpacooldownteleportuse} is false:
+					send "{@Tpaccept}" to player
+					send "{@Tpaccept}" to {tpa.%player%}
+					send "{@Tpacceptteleporting}" to {tpa.%player%}
+					teleport {tpa.%player%} to player
+					wait 1 tick
+					delete {tpa.%player%}
+					stop
+				if {@Tpacooldownteleportuse} is true:
+					send "{@Tpaccept}" to player
+					send "{@Tpaccept}" to {tpa.%player%}
+					wait {@Tpacooldownteleportinseconds} seconds
+					teleport {tpa.%player%} to player
+					send "{@Tpacceptteleporting}" to {tpa.%player%}
+					wait 1 tick
+					delete {tpa.%player%}
+					stop
 			if {tpa.%player%} is not set:
 				send "{@Notpa}" to player
 				stop
@@ -5259,7 +5274,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre18" to player
+				send "&fVersion &6|-> &c1.15Pre19" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5275,7 +5290,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre18" to console
+				send "&fVersion &6|-> &c1.15Pre19" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
