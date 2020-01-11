@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.10.1
+# Version: 1.11
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,6 +53,10 @@ options:
 	Damageall: true
 
 	Portailcreate: true
+
+	Clearlagtoentityarrows: true
+	Clearlagtoentityitemsdropped: true
+	Clearlagtoentityplayers: true
 
 	Removemoneytodeath: false
 	Moneytodeath: 50
@@ -866,6 +870,12 @@ options: # >> Continuation of message configuration !
 
 	Invsee: &6You have opened inventory of &c%arg 1%&6.
 
+	# >> COMMAND MESSAGE = /clearlag -|
+
+	Clearlagentityarrows: &7You have clear &c%{_count}% &7entity arrows.
+	Clearlagentityitemsdropped: &7You have clear &c%{_count}% &7entity dropped.
+	Clearlagentityplayers: &7You have clear &c%{_count}% &7entity players.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -874,6 +884,33 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+
+command /clearlag:
+	permission: essentials.clearlag
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/clearlag
+	aliases: essentials:clearlag
+	trigger:
+		clear {_count}
+		if {_count} is not set:
+			set {_count} to 0
+		if {@Clearlagtoentityarrows} is true:
+			loop entities:
+				loop-entity is arrows
+				clear loop-entity
+				add 1 to {_count}
+				send "{@Clearlagentityarrows}" to player
+		if {@Clearlagtoentityitemsdropped} is true:
+			loop entities:
+				loop-entity is a dropped item
+				clear loop-entity
+				add 1 to {_count}
+				send "{@Clearlagentityitemsdropped}" to player
+		if {@Clearlagtoentityitemsdropped} is false:
+			stop
+		if {@Clearlagtoentityplayers} is false:
+			stop
 
 command /invsee [<player>]:
 	permission: essentials.invsee
@@ -4141,7 +4178,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-13-2-bungeecord-support.39698/" to player
-			send "Version >> 1.10.1" to player
+			send "Version >> 1.11" to player
 			send "Creator >> Alexisl315 (Aliase:Lennord)" to player
 			stop
 		if arg 1 is not set:
