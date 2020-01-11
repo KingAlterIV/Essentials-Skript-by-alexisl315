@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre25
+# |-> Version: 1.15Pre26
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -54,9 +54,6 @@ options:
 
 	Portailcreate: true
 
-	Booktosigntomessagetouse: true
-	Booktosigntomessage: &7You have finished writing a book, share your book with the best writer on the server !
-
 	Maintenancecooldownuse: true
 	Maintenancecooldown: 10
 
@@ -65,7 +62,7 @@ options:
 	Cooldownautomessagemsg1: 60
 	Cooldownautomessagemsg2: 120
 
-	Automessage: true
+	Automessage: false
 
 	Clearlagtoentityarrows: true
 	Clearlagtoentityitemsdropped: true
@@ -95,31 +92,31 @@ options:
 	Chatformat: &7%{nick.%player%}% &6: &f%message%
 	Chatformatcolor: &7%{nick.%player%}% &6: &f%colored message%
 
-	Nobuild: &cYou could not build!
+	Nobuild: &cYou could not build !
 
 	# >> COMMAND MESSAGE = /spawn, /setspawn, /delspawn -|
 
-	Setspawn: &7You have to place the spawn point.
-	Nospawnpoint: &cThe spawn is not set!
+	Setspawn: &7You have to place the spawn point !
+	Nospawnpoint: &cThe spawn is not set !
 	Spawncooldown1: &7You will be teleporting in
-	Spawncooldown2: &7seconds.
+	Spawncooldown2: &7seconds !
 	Spawnteleporting: &7Teleporting...
-	Teleportspawnisplayer: &6You have been teleported to spawn by &c%player%&6.
-	Teleportspawnisconsole: &6You have been teleported to spawn by &cConsole&6.
+	Teleportspawnisplayer: &6You have been teleported to spawn by &c%player% &6!
+	Teleportspawnisconsole: &6You have been teleported to spawn by &cConsole &6!
 
 	Deletespawn: &7You removed the spawn point.
 
 	# >> COMMAND MESSAGE = /heal, /feed -|
 
-	Feedtome: &7You have been satiated.
-	Feedtoplayerisadmin: &6You have satisfied &c%arg 1%&6.
-	Feedtoplayer: &6You have been satiated by &c%player%&6.
-	Feedtoplayerconsole: &6You have been satiated by &cConsole&7.
+	Feedtome: &7You have been satiated !
+	Feedtoplayerisadmin: &6You have satisfied &c%arg 1% &6!
+	Feedtoplayer: &6You have been satiated by &c%player% &6!
+	Feedtoplayerconsole: &6You have been satiated by &cConsole &7!
 
-	Healtome: &7You have been neat.
-	Healtoplayerisadmin: &6You have sneat &c%arg 1%&6.
-	Healtoplayer: &6You have been neat by &c%player%&6.
-	Healtoplayerconsole: &6You have been neat by &cConsole&7.
+	Healtome: &7You have been neat !
+	Healtoplayerisadmin: &6You have sneat &c%arg 1% &6!
+	Healtoplayer: &6You have been neat by &c%player% &6!
+	Healtoplayerconsole: &6You have been neat by &cConsole &7!
 
 	# >> COMMAND MESSAGE = /broadcast -|
 
@@ -132,21 +129,21 @@ options:
 
 	# >> COMMAND MESSAGE = /clearinventory -|
 
-	Cleartome: &7You have deleted your inventory.
-	Cleartoplayerisadmin: &6Your inventory has been deleted by &c%players%&6.
-	Cleartoplayerisconsole: &6Your inventory has been deleted by &cConsole&6.
-	Cleartoplayer: &6The player &c%arg 1% &6inventory has been deleted.
+	Cleartome: &7You have deleted your inventory!
+	Cleartoplayerisadmin: &6Your inventory has been deleted by &c%players%&6!
+	Cleartoplayerisconsole: &6Your inventory has been deleted by &cConsole&6!
+	Cleartoplayer: &6The player &c%arg 1% &6inventory has been deleted!
 
 	# >> COMMAND MESSAGE = /fly -|
 	
-	Flytome: &7You can now fly.
-	Noflytome: &7You can now no longer fly.
-	Flytoplayer: &6You can now fly by &c%players%&6.
-	Noflytoplayer: &6You can now no longer fly by &c%players%&6.
-	Flytoplayerisadmin: &6The player &c%arg-1% &6can now fly.
-	Noflytoplayerisadmin: &6The player &c%arg-1% &6can no longer fly.
-	Flytoplayerisconsole: &6You can now fly by &cConsole&6.
-	Noflytoplayerisconsole: &6You can now no longer fly by &cConsole&6.
+	Flytome: &7You can now fly !
+	Noflytome: &7You can now no longer fly !
+	Flytoplayer: &6You can now fly by &c%players% &6!
+	Noflytoplayer: &6You can now no longer fly by &c%players% &6!
+	Flytoplayerisadmin: &6The player &c%arg-1% &6can now fly !
+	Noflytoplayerisadmin: &6The player &c%arg-1% &6can no longer fly !
+	Flytoplayerisconsole: &6You can now fly by &cConsole &6!
+	Noflytoplayerisconsole: &6You can now no longer fly by &cConsole &6!
 
 	# >> COMMAND MESSAGE = /me -|
 
@@ -155,28 +152,28 @@ options:
 
 	# >> COMMAND MESSAGE = /gamemode -|
 
-	Gamemodetometosurvival: &7Your game mode has been updated: &cSurvival&7.
-	Gamemodetometocreative: &7Your game mode has been updated: &cCreative&7.
-	Gamemodetometoadventure: &7Your game mode has been updated: &cAdventure&7.
-	Gamemodetometospectator: &7Your game mode has been updated: &cSpectator&7.
-	Gamemodetoplayertosurvival: &6Your game mode has been updated by &c%players%&6: &cSurvival&7.
-	Gamemodetoplayertocreative: &6Your game mode has been updated by &c%players%&6: &cCreative&7.
-	Gamemodetoplayertoadventure: &6Your game mode has been updated by &c%players%&6: &cAdventure&7.
-	Gamemodetoplayertospectator: &6Your game mode has been updated by &c%players%&6: &cSpectator&7.
-	Gamemodetoplayerisconsoletosurvival: &6Your game mode has been updated by &cConsole&6: &cSurvival&7.
-	Gamemodetoplayerisconsoletocreative: &6Your game mode has been updated by &cConsole&6: &cCreative&7.
-	Gamemodetoplayerisconsoletoadventure: &6Your game mode has been updated by &cConsole&6: &cAdventure&7.
-	Gamemodetoplayerisconsoletospectator: &6Your game mode has been updated by &cConsole&6: &cSpectator&7.
-	Gamemodetoplayeradmintosurvival: &6The player game mode &c%arg 2%&6 has been updated: &cSurvival&7.
-	Gamemodetoplayeradmintocreative: &6The player game mode &c%arg 2%&6 has been updated: &cCreative&7.
-	Gamemodetoplayeradmintoadventure: &6The player game mode &c%arg 2%&6 has been updated: &cAdventure&7.
-	Gamemodetoplayeradmintospectator: &6The player game mode &c%arg 2%&6 has been updated: &cSpectator&7.
+	Gamemodetometosurvival: &7Your game mode has been updated: &cSurvival &7!
+	Gamemodetometocreative: &7Your game mode has been updated: &cCreative &7!
+	Gamemodetometoadventure: &7Your game mode has been updated: &cAdventure &7!
+	Gamemodetometospectator: &7Your game mode has been updated: &cSpectator &7!
+	Gamemodetoplayertosurvival: &6Your game mode has been updated by &c%players%&6: &cSurvival &7!
+	Gamemodetoplayertocreative: &6Your game mode has been updated by &c%players%&6: &cCreative &7!
+	Gamemodetoplayertoadventure: &6Your game mode has been updated by &c%players%&6: &cAdventure &7!
+	Gamemodetoplayertospectator: &6Your game mode has been updated by &c%players%&6: &cSpectator &7!
+	Gamemodetoplayerisconsoletosurvival: &6Your game mode has been updated by &cConsole&6: &cSurvival &7!
+	Gamemodetoplayerisconsoletocreative: &6Your game mode has been updated by &cConsole&6: &cCreative &7!
+	Gamemodetoplayerisconsoletoadventure: &6Your game mode has been updated by &cConsole&6: &cAdventure &7!
+	Gamemodetoplayerisconsoletospectator: &6Your game mode has been updated by &cConsole&6: &cSpectator &7!
+	Gamemodetoplayeradmintosurvival: &6The player game mode &c%arg 2%&6 has been updated: &cSurvival &7!
+	Gamemodetoplayeradmintocreative: &6The player game mode &c%arg 2%&6 has been updated: &cCreative &7!
+	Gamemodetoplayeradmintoadventure: &6The player game mode &c%arg 2%&6 has been updated: &cAdventure &7!
+	Gamemodetoplayeradmintospectator: &6The player game mode &c%arg 2%&6 has been updated: &cSpectator &7!
 
 	# >> COMMAND MESSAGE = /motd -|
 
-	# >> You can change, add, remove phrases, sentences are between quotation marks after the wordd "send".
-	# >> To add a metter phrase, send at the same height as the other "send" and then enclose between your quotes.
-	# >> To delete your sentence, remove the word "send" then your sentence that is between the quotation marks.
+	# >> You can change, add, remove phrases, sentences are between quotation marks after the wordd "send" !
+	# >> To add a metter phrase, send at the same height as the other "send" and then enclose between your quotes !
+	# >> To delete your sentence, remove the word "send" then your sentence that is between the quotation marks !
 
 command /motd:
 	permission: essentials.motd
@@ -189,7 +186,7 @@ command /motd:
 		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-" to player
 		if {e-mail.%player%} > 0:
 			send "&fYou have &c%{e-mail.%player%}% message ! &fEnter &c/mail read &fto see your mail." to player
-		else:
+		if {e-mail.%player%} < 0:
 			send "&7You do not have mail." to player
 
 options: # >> Continuation of message configuration !
@@ -201,23 +198,23 @@ options: # >> Continuation of message configuration !
 	# >> COMMAND MESSAGE = /freeze -|
 
 	Freezetome: &cYou are frozen !
-	Freezetoplayeradmin: &c%arg 1% has been frozen !
+	Freezetoplayeradmin: &c%arg 1% &chas been frozen !
 	Nofreezetome: &cYou are unfrozen !
-	Nofreezetoplayeradmin: &c%arg 1% has been unfrozen !
+	Nofreezetoplayeradmin: &c%arg 1% &chas been unfrozen !
 
 	# >> COMMAND MESSAGE = /tp, /tpall, /tphere -|
 
 	Tpteleporting: &7Teleporting...
 
 	Tpallteleporting: &7Teleporting...
-	Tpallteleportingisadmin: &7You have teleport of all players.
+	Tpallteleportingisadmin: &7You have teleport of all players !
 
 	Tphereteleporting: &7Teleporting...
 
 	# >> COMMAND MESSAGE = /ignore, /unignore -|
 
-	Ignore: &7You ignore the player &c%arg 1%&7.
-	Unignore: &7You do not know the player &c%arg 1%&7.
+	Ignore: &7You ignore the player &c%arg 1% &7!
+	Unignore: &7You do not know the player &c%arg 1% &7!
 
 	# >> COMMAND MESSAGE = /msg, /reply -|
 
@@ -235,10 +232,10 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /warp, /setwarp, /delwarp, /warps -|
 
-	Nowarpset: &cThe warp %argument 1% does not exist!
+	Nowarpset: &cThe warp %arg 1% &cdoes not exist !
 
-	Warpcreate: &7The warp &c%arg 1% &7has been successfully created!
-	Warpdelete: &7The warp &c%arg 1% &7has been successfully deleted!
+	Warpcreate: &7The warp &c%arg 1% &7has been successfully created !
+	Warpdelete: &7The warp &c%arg 1% &7has been successfully deleted !
 
 	Warplist: &9Warps: &b%{warplist::*}%
 	Warpteleporting: &7Teleporting...
@@ -248,45 +245,45 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /skull, /enderchest -|
 
-	Skull: &7You have given yourself a &c%arg 1%&7.
+	Skull: &7You have given yourself a &c%arg 1% &7!
 
-	Enderchesttome: &7You have opened your enderchest.
-	Enderchesttoplayer: &7You have opened of player &c%arg 1% &7enderchest.
+	Enderchesttome: &7You have opened your enderchest !
+	Enderchesttoplayer: &7You have opened of player &c%arg 1% &7enderchest !
 
 	# >> COMMAND MESSAGE = /afk -|
 
-	Afktome: &c%player% &6is now AFK!
-	Noafktome: &c%player% &6is no longer AFK!
-	Afktoplayer: &c%arg 1% &6is now AFK!
-	Noafktoplayer: &c%arg 1% &6is no longer AFK!
-	Afktomeisantiafk: &c%loop-player% &6is no longer AFK!
+	Afktome: &c%player% &6is now AFK !
+	Noafktome: &c%player% &6is no longer AFK !
+	Afktoplayer: &c%arg 1% &6is now AFK !
+	Noafktoplayer: &c%arg 1% &6is no longer AFK !
+	Afktomeisantiafk: &c%loop-player% &6is no longer AFK !
 
-	Afkkickreason: &cYou've been kick for afk!
+	Afkkickreason: &cYou've been kick for afk !
 
 	# >> COMMAND MESSAGE = /night, /day, /time -|
 
-	Day: &7You set the day.
-	Night: &7You set the night.
+	Day: &7You set the day !
+	Night: &7You set the night !
 
 	# >> COMMAND MESSAGE = /slap -|
 
-	Slaptome: &6You were slapped by &c%player%&7.
-	Slaptoplayeradmin: &6The player &c%arg 1% &6has been slapped.
+	Slaptome: &6You were slapped by &c%player% &7!
+	Slaptoplayeradmin: &6The player &c%arg 1% &6has been slapped!
 
 	# >> COMMAND MESSAGE = /speed -|
 
-	Speedreset: &7You have removed your speed.
-	Speedfly: &7You changed your speed.
-	Speedwalk: &7You changed your speed.
+	Speedreset: &7You have removed your speed !
+	Speedfly: &7You changed your speed !
+	Speedwalk: &7You changed your speed !
 
 	# >> COMMAND MESSAGE = /mute, /unmute -|
 
-	Mutebroadcast: &c%arg 1% &7a été rendu muet par &c%player% &7pour &c%number argument% &7secondes.
-	Unmutebroadcast: &c%player% &7a rendu la parole à &c%arg 1%&7.
-	Unmutealready: &c%arg 1% &7a déjà la parole !
-	Mute: &7Vous êtes muet encore &c%{mute.seconds.%player%}% &7seconde(s)
-	Unmutebroadcastisconsole: &cConsole &7a rendu la parole à &c%arg 1%&7.
-	Mutebroadcastisconsole: &c%arg 1% &7a été rendu muet par &cConsole &7pour &c%number argument% &7secondes.
+	Mutebroadcast: &c%arg 1% &7was silenced by &c%player% &7for &c%number argument% &7seconds !
+	Unmutebroadcast: &c%player% &7gave the floor to &c%arg 1% &7!
+	Unmutealready: &c%arg 1% &7already has the floor !
+	Mute: &7You are silent again &c%{mute.seconds.%player%}% &7seconds !
+	Unmutebroadcastisconsole: &cConsole &7gave the floor to &c%arg 1% &7!
+	Mutebroadcastisconsole: &c%arg 1% &7was silenced by &cConsole &7for &c%number argument% &7seconds !
 
 	# >> COMMAND MESSAGE = /kick, /kickall -|
 
@@ -300,19 +297,19 @@ options: # >> Continuation of message configuration !
 
 	Homeslist: &9Homes: &b%{homename.%player%::*}%
 
-	Hometeleporting: &7You have been teleported to your home.
-	Nohome: &cYou do not have a home calling %arg 1%&7.
-	Homedelete: &7You have deleted home &c%arg 1%&7.
-	Homecreate: &7You created the home &c%arg 1%&7.
-	Homealready: &7You already have the home &c%arg 1%&7.
-	Adminhomereset: &7You have removed the player homes &c%arg 2%&7.
+	Hometeleporting: &7You have been teleported to your home !
+	Nohome: &cYou do not have a home calling %arg 1% &7!
+	Homedelete: &7You have deleted home &c%arg 1% &7!
+	Homecreate: &7You created the home &c%arg 1% &7!
+	Homealready: &7You already have the home &c%arg 1% &7!
+	Adminhomereset: &7You have removed the player homes &c%arg 2% &7!
 	Homecooldown1: &7You will be teleporting in
-	Homecooldown2: &7seconds.
-	Adminhomenohome: &cThere is no home calling %arg 3%.
-	Adminhometeleporting: &6You have been teleported to a player home.
-	Adminhomedelhome: &6You have removed &c%arg 3% &6for the player home &c%arg 2%&6.
-	Adminhomesethome: &6You have set &c%arg 3% &6for the player home &c%arg 2%&6.
-	Adminhomealready: &6Home &c%arg 3% &6already exists.
+	Homecooldown2: &7seconds !
+	Adminhomenohome: &cThere is no home calling %arg 3% !
+	Adminhometeleporting: &6You have been teleported to a player home !
+	Adminhomedelhome: &6You have removed &c%arg 3% &6for the player home &c%arg 2% &6!
+	Adminhomesethome: &6You have set &c%arg 3% &6for the player home &c%arg 2% &6!
+	Adminhomealready: &6Home &c%arg 3% &6already exists !
 
 	Adminhomehome: &9Homes: &b%{homename.%arg 2%::*}%
 
@@ -356,36 +353,36 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /nick -|
 
-	Nickredefine: &8You have redefined the player nickname &c%arg 1%&8.
-	Nicktoplayeradmin: &8You have changed the nickname of &c%arg 1% &8in &c%coloured arg 2%
+	Nickredefine: &7You have redefined the player nickname &c%arg 1% &7!
+	Nicktoplayeradmin: &7You have changed the nickname of &c%arg 1% &8in &c%coloured arg 2% &7!
 	Nicktoplayer: &cYour nickname was changed !
 
 	# >> COMMAND MESSAGE = /money, /eco, /pay -|
 
-	Moneytome: &7You have &c%{money.%UUID of player%}% &c€&7.
-	Moneytoplayer: &7The player &c%arg 1% &7has &c%{money.%UUID of arg 1%}% &c€&7.
+	Moneytome: &7You have &c%{money.%UUID of player%}% &c€ &7!
+	Moneytoplayer: &7The player &c%arg 1% &7has &c%{money.%UUID of arg 1%}% &c€ &7!
 
-	Ecogivetoplayeradmin: &6You have to add &c%arg 3% &c€ &6to player &c%arg 2%&6.
-	Ecogivetome: &c%player% &6you to add &c%arg 3% &c€&6.
-	Ecoremovetoplayeradmin: &6You have removed &c%arg 3% &c€ &6to player &c%arg 2%&7.
-	Ecoremovetome: &c%player% &6has you removed %arg 3% &c€&6.
+	Ecogivetoplayeradmin: &6You have to add &c%arg 3% &c€ &6to player &c%arg 2% &6!
+	Ecogivetome: &c%player% &6you to add &c%arg 3% &c€ &6!
+	Ecoremovetoplayeradmin: &6You have removed &c%arg 3% &c€ &6to player &c%arg 2% &7!
+	Ecoremovetome: &c%player% &6has you removed %arg 3% &c€ &6!
 	Ecoremovenomoneytome: &c%arg-2% does not have enough money !
-	Ecosettoplayeradmin: &6You have to set &c%arg 3% &c€ &6to player &c%arg 2%&6.
-	Ecosettome: &c%player% &6has set your money on &c%arg 3% &c€&6.
+	Ecosettoplayeradmin: &6You have to set &c%arg 3% &c€ &6to player &c%arg 2% &6!
+	Ecosettome: &c%player% &6has set your money on &c%arg 3% &c€ &6!
 
 	Paynomoney: &cYou do not have enough money !
 	Paynonumberpositive: &cYou can not put negative number !
-	Paytome: &7You have sent &c%arg 2% &c€ &7to player &c%arg 1%&7.
-	Paytoplayer: &c%player% &7you to send &c%arg 2% &c€&7.
+	Paytome: &7You have sent &c%arg 2% &c€ &7to player &c%arg 1% &7!
+	Paytoplayer: &c%player% &7you to send &c%arg 2% &c€ &7!
 
 	# >> COMMAND MESSAGE = /god -|
 
-	Godtome: &7You have activated your god mode.
-	Nogodtome: &7You have disabled your god mode.
-	Godtoplayer: &c%player% &6has activated your god mode.
-	Nogodtoplayer: &c%player% &6has disabled your god mode.
-	Godtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been activated.
-	Nogodtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been disabled.
+	Godtome: &7You have activated your god mode !
+	Nogodtome: &7You have disabled your god mode !
+	Godtoplayer: &c%player% &6has activated your god mode !
+	Nogodtoplayer: &c%player% &6has disabled your god mode !
+	Godtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been activated !
+	Nogodtoplayeradmin: &6The god mode of the &c%arg 1% &6player has been disabled !
 
 	# >> COMMAND MESSAGE = /seen -|
 
@@ -394,35 +391,35 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /near -|
 
-	Near: &c%loop-value% &7is at &c(%{_locs::%{_m}%}%&cm)&7.
+	Near: &c%loop-value% &7is at &c(%{_locs::%{_m}%}%&cm) &7!
 	Nearnoplayer: &cNo player in the vicinity !
 
 	# >> COMMAND MESSAGE = /getpos -|
 
-	Getpostome: &7%player%&6: &c%player's location%&c.
-	Getpostoplayer: &7%arg 1%&6: &c%arg 1's location%&c.
+	Getpostome: &7%player%&6: &c%player's location% &c!
+	Getpostoplayer: &7%arg 1%&6: &c%arg 1's location% &c!
 
 	# >> COMMAND MESSAGE = /list -|
 
-	list: &7Player(s) online&6: &c%{_list::*}%&c.
+	list: &7Player(s) online&6: &c%{_list::*}% &c!
 
 	# >> COMMAND MESSAGE = /list -|
 
 	Backteleporting: &7Teleporting...
-	Nobackpoint: &cYou have no back point for the return.
+	Nobackpoint: &cYou have no back point for the return !
 	Backcooldown1: &7You will be teleporting in
-	Backcooldown2: &7seconds.
+	Backcooldown2: &7seconds !
 
 	# >> COMMAND MESSAGE = /xp -|
 
-	Expshowtome: &7%player%&6: &c%player's level%&c.
-	Expshowtoplayeradmin: &7%arg 2%&6: &c%level of arg 2%&c.
-	Expsettoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed.
-	Expsettoplayer: &7Your level bar has been modified.
-	Expgivetoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed.
-	Expgivetoplayer: &7Your level bar has been modified.
-	Expremovetoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed.
-	Expremovetoplayer: &7Your level bar has been modified.
+	Expshowtome: &7%player%&6: &c%player's level% &c!
+	Expshowtoplayeradmin: &7%arg 2%&6: &c%level of arg 2% &c!
+	Expsettoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed !
+	Expsettoplayer: &7Your level bar has been modified !
+	Expgivetoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed !
+	Expgivetoplayer: &7Your level bar has been modified !
+	Expremovetoplayeradmin: &6The player's level bar &c%arg 2% &6has been changed !
+	Expremovetoplayer: &7Your level bar has been modified !
 
 	# >> COMMAND MESSAGE = /break, /antioch -|
 
@@ -538,87 +535,87 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /workbench -|
 
-	Workbench: &7You have opened your workbench.
+	Workbench: &7You have opened your workbench !
 
 	# >> COMMAND MESSAGE = /banip, /ban -|
 
-	Banipreasondefault: &cThe Ban Hammer has Spoken.
+	Banipreasondefault: &cThe Ban Hammer has Spoken !
 	Banip: &c%arg 1% &6has been IP-banned for
 
-	Banreasondefault: &cThe Ban Hammer has Spoken.
+	Banreasondefault: &cThe Ban Hammer has Spoken !
 	Ban: &c%arg 1% &6has been banned for
 
-	Banalready: &cYou have already banned the player %arg 1%.
-	Banipalready: &cYou have already banned [IP] from the player %arg 1%.
+	Banalready: &cYou have already banned the player &c%arg 1% &c!
+	Banipalready: &cYou have already banned [IP] from the player &c%arg 1% &c!
 
 	# >> COMMAND MESSAGE = /unban, /unbanip -|
 
-	Unban: &c%arg 1% &6was unbanned by &c%player%&6.
-	Unbanip: &c%arg 1% &6was IP-unbanned by &c%player%&6.
-	Unbantoconsole: &c%arg 1% &6was unbanned by &cConsole&6.
-	Unbaniptoconsole: &c%arg 1% &6was IP-unbanned by &cConsole&6.
+	Unban: &c%arg 1% &6was unbanned by &c%player% &6!
+	Unbanip: &c%arg 1% &6was IP-unbanned by &c%player% &6!
+	Unbantoconsole: &c%arg 1% &6was unbanned by &cConsole &6!
+	Unbaniptoconsole: &c%arg 1% &6was IP-unbanned by &cConsole &6!
 
-	Unbanalready: &cYou already have unbanned for the player %arg 1%.
-	Unbanipalready: &cYou already have an unbanned [IP] of player %arg 1%.
+	Unbanalready: &cYou already have unbanned for the player &c%arg 1% &c!
+	Unbanipalready: &cYou already have an unbanned [IP] of player &c%arg 1% &c!
 
 	# >> COMMAND MESSAGE = /unlimited -|
 
-	Unlimitedenabletome: &6You have &cenabled &6the unlimited placing of blocks.
-	Unlimiteddisabletome: &6You have &cdisabled &6the unlimited placing of blocks.
-	Unlimitedenabletoplayeradmin: &6The unlimited placing of blocks has been enabled for &c%arg 1%&6.
-	Unlimiteddisabletoplayeradmin: &6The unlimited placing of blocks has been disable for &c%arg 1%&6.
+	Unlimitedenabletome: &6You have &cenabled &6the unlimited placing of blocks !
+	Unlimiteddisabletome: &6You have &cdisabled &6the unlimited placing of blocks !
+	Unlimitedenabletoplayeradmin: &6The unlimited placing of blocks has been enabled for &c%arg 1% &6!
+	Unlimiteddisabletoplayeradmin: &6The unlimited placing of blocks has been disable for &c%arg 1% &6!
 
 	# >> COMMAND MESSAGE = /burn -|
 
-	Burntome: &6You have been burned by the player &c%player%&6.
-	Burntoplayeradmin: &6You burned the player &c%arg 1%&6.
+	Burntome: &6You have been burned by the player &c%player% &6!
+	Burntoplayeradmin: &6You burned the player &c%arg 1% &6!
 
 	# >> COMMAND MESSAGE = /depth -|
 
-	Depthtome: &7You are &c%altitude of the player% &7blocks above bedrock.
-	Depthtoplayeradmin: &c%arg 1% &7is &c%altitude of arg 1% &7blocks above bedrock.
+	Depthtome: &7You are &c%altitude of the player% &7blocks above bedrock !
+	Depthtoplayeradmin: &c%arg 1% &7is &c%altitude of arg 1% &7blocks above bedrock !
 
 	# >> COMMAND MESSAGE = /ext -|
 
-	Exttome: &7You are no longer on fire.
-	Exttoplayerme: &6You are no longer on fire by &c%player%&6.
-	Exttoplayeradmin: &c%arg 1% &6is no longer on fire.
+	Exttome: &7You are no longer on fire !
+	Exttoplayerme: &6You are no longer on fire by &c%player% &6!
+	Exttoplayeradmin: &c%arg 1% &6is no longer on fire !
 
 	# >> COMMAND MESSAGE = /enchant -|
 
-	Enchanttoair: &cYou cannot enchant air.
-	Enchant: &7Your item has been enchanted with &c%arg 1%&7.
+	Enchanttoair: &cYou cannot enchant air !
+	Enchant: &7Your item has been enchanted with &c%arg 1% &7!
 
 	# >> COMMAND MESSAGE = /fireball -|
 
-	Fireball: &cYou have launched a fireball.
+	Fireball: &cYou have launched a fireball !
 
 	# >> COMMAND MESSAGE = /tree, /bigtree -|
 
-	Tree: &7A tree has been grown above the block you are looking at.
+	Tree: &7A tree has been grown above the block you are looking at !
 
 	# >> COMMAND MESSAGE = /deljail, /jail, /setjail, /jail -|
 
-	Deljailremove: &7Jail &c%arg 1% &7has been removed.
-	Deljailnojail: &c%arg 1% is not a jail.
+	Deljailremove: &7Jail &c%arg 1% &7has been removed !
+	Deljailnojail: &c%arg 1% &cis not a jail !
 
-	Jails: &7The current jails are: &c%{_jl::*}%
+	Jails: &7The current jails are&6: &c%{_jl::*}%
 
-	Setjailcreate: &7Jail &c%arg 1% &7has been set.
-	Setjailalready: &cThe jail %arg 1% already exists.
+	Setjailcreate: &7Jail &c%arg 1% &7has been set !
+	Setjailalready: &cThe jail %arg 1% &calready exists !
 
-	Nojailplayeradmin: &c%arg 1% &7is no longer jailed.
-	Jailplayeradmin: &c%arg 1% &7is now jailed.
-	Nojailplayer: &cYou are no longer jailed by %player%.
-	Jailplayer: &cYou are now jailed by %player%.
-	Nojail: &c%arg 2% is not a jail.
+	Nojailplayeradmin: &c%arg 1% &7is no longer jailed !
+	Jailplayeradmin: &c%arg 1% &7is now jailed !
+	Nojailplayer: &cYou are no longer jailed by &c%player% &c!
+	Jailplayer: &cYou are now jailed by &c%player% &c!
+	Nojail: &c%arg 2% is not a jail !
 
-	Jailchat: &cYou cannot speak while in jail.
+	Jailchat: &cYou cannot speak while in jail !
 
 	# >> COMMAND MESSAGE = /compass -|
 
-	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% degrees&7).
-	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7).
+	Compasstome: &7Orientation: &c%player's facing% &7(&c%player's yaw% degrees&7) !
+	Compasstoplayer: &7Orientation of %arg 1%: &c%arg 1's facing% &7(&c%arg 1's yaw% degrees&7) !
 
 	# >> COMMAND MESSAGE = /tpa, /tpaccept, /tpdeny, /tpo, /tpohere -|
 
@@ -626,7 +623,7 @@ options: # >> Continuation of message configuration !
 	Tpacooldownteleportinseconds: 10
 
 	Notpa: &cYou have no pending teleport requests !
-	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny&7.
+	Tpa: &7You have a player request% player%, made &c/tpaccept &7or &c/tpdeny &7!
 	Tpasendtoplayer: &7Teleport request sent to &c%arg 1% &7!
 	Tpasendtoplayer2: &7Teleportation request for &c%player% &7!
 	Tpaccept: &7Teleport request accepted !
@@ -634,7 +631,7 @@ options: # >> Continuation of message configuration !
 	Tpdeny: &7Teleport request deny !
 
 	Tpoteleporting: &7Teleporting...
-	Tpoplayeradmin: &7Teleportation of &c%arg 1% &7towards &c%arg 2%&7.
+	Tpoplayeradmin: &7Teleportation of &c%arg 1% &7towards &c%arg 2% &7!
 
 	Tpohereteleporting: &7Teleporting...
 
@@ -644,44 +641,44 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /spawnmob -|
 
-	Spawnmob: &7You made spawn &c%arg 2% %arg 1%&7.
+	Spawnmob: &7You made spawn &c%arg 2% %arg 1% &7!
 
 	# >> COMMAND MESSAGE = /sudo -|
 
-	Sudo: &7You did well execute the command &c%arg 2% &7at &c%arg 1%&7.
+	Sudo: &7You did well execute the command &c%arg 2% &7at &c%arg 1% &7!
 
 	# >> COMMAND MESSAGE = /repair -|
 
-	Repairtome: &7You have successfully repaired your: &c%player's tool%&7.
-	Repairalltome: &7You have successfully repaired all your stuff.
-	Repairalltoplayeradmin: &7You have successfully repaired the player's stuff &c%arg 2%&7.
-	Repairalltoplayer: &7Your stuff has been repaired by &c%player%&7.
+	Repairtome: &7You have successfully repaired your: &c%player's tool% &7!
+	Repairalltome: &7You have successfully repaired all your stuff !
+	Repairalltoplayeradmin: &7You have successfully repaired the player's stuff &c%arg 2% &7!
+	Repairalltoplayer: &7Your stuff has been repaired by &c%player% &7!
 
 	# >> COMMAND MESSAGE = /powertool -|
 
-	Powertooltoremove: &7All orders have been removed from &c%player's tool%&7.
-	Powertool: &7Order &c%arg 1% &7assigned to &c%player's tool%&7.
+	Powertooltoremove: &7All orders have been removed from &c%player's tool% &7!
+	Powertool: &7Order &c%arg 1% &7assigned to &c%player's tool% &7!
 
 	# >> COMMAND MESSAGE = /mail -|
 
-	Mailread: &7To mark your mail as read, type &c/mail clear&7.
+	Mailread: &7To mark your mail as read, type &c/mail clear &7!
 	Mailclear: &7All your e-mails have been deleted !
 	Mailsendtoplayer: &c%player% &7sent you an e-mail !
 	Mailsendtome: &7You sent the e-mail to the player &c%player% &7!
-	Nomail: &7You do not have mail.
+	Nomail: &7You do not have mail !
 
 	# >> COMMAND MESSAGE = /createkit, /deletekit, /kit, /kits -|
 
 	# ! >> To have a kit, you have to have the inventory empty ! << ! #
 
-	Createkit: &7The kit &c%arg 1% &7has been successfully created.
-	Createkitalready: &cThe %arg 1% kit has already been created.
+	Createkit: &7The kit &c%arg 1% &7has been successfully created !
+	Createkitalready: &cThe &c%arg 1% &ckit has already been created !
 
-	Deletekit: &7The kit &c%arg 1% &7has been successfully deleted.
-	Deletekitalready: &cThe %arg 1% kit has already been removed.
+	Deletekit: &7The kit &c%arg 1% &7has been successfully deleted !
+	Deletekitalready: &cThe &c%arg 1% &ckit has already been removed !
 
-	kit: &7You have taken the kit &c%arg 1%&7.
-	Nokit: &cThe kit %arg 1% does not exist.
+	kit: &7You have taken the kit &c%arg 1% &7!
+	Nokit: &cThe kit &c%arg 1% &cdoes not exist !
 
 	Kitcooldown1: &7You will be teleporting in
 	Kitcooldown2: &7seconds.
@@ -690,7 +687,7 @@ options: # >> Continuation of message configuration !
 
 		# >> COMMAND MESSAGE = SIGN COMMANDS -|
 
-	Signcommands: &7You have to create a sign with a command.
+	Signcommands: &7You have to create a sign with a command !
 
 	Signwarpnowarp: &cYou are no warp !
 	Signkitnokit: &cYou are no kit !
@@ -704,35 +701,35 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = DROP PERMISSION -|
 
-	Nodrop: &cYou do not have permission to drop an item.
+	Nodrop: &cYou do not have permission to drop an item !
 
 	# >> COMMAND MESSAGE = /vanish -|
 
-	Vanishtome: &7You are &cVanish&7.
-	Novanishtome: &7You are no longer &cVanish&7.
-	Vanishtoplayer: &7You are &cVanish&7.
-	Novanishtoplayer: &7You are no longer &cVanish&7.
-	Vanishtoplayeradmin: &6The player &c%arg 1% &6is now in vanish.
-	Novanishtoplayeradmin: &6The player &c%arg 1% &6is no longer vanish.
+	Vanishtome: &7You are &cVanish &7!
+	Novanishtome: &7You are no longer &cVanish &7!
+	Vanishtoplayer: &7You are &cVanish &7!
+	Novanishtoplayer: &7You are no longer &cVanish &7!
+	Vanishtoplayeradmin: &6The player &c%arg 1% &6is now in vanish !
+	Novanishtoplayeradmin: &6The player &c%arg 1% &6is no longer vanish !
 
 	# >> COMMAND MESSAGE = /hat -|
 
-	Hattome: &7You put a block that you have in your hand.
-	Hattoplayer: &7Your hat was put by the player &c%player%&7.
-	Hattoplayeradmin: &6You put a block block that you have in the hand to the player &c%arg 2%&6.
-	Nohat: &7You do not have a hat.
-	Hattoair: &cYou do not have a block or object as a hat.
+	Hattome: &7You put a block that you have in your hand !
+	Hattoplayer: &7Your hat was put by the player &c%player% &7!
+	Hattoplayeradmin: &6You put a block block that you have in the hand to the player &c%arg 2% &6!
+	Nohat: &7You do not have a hat !
+	Hattoair: &cYou do not have a block or object as a hat !
 
 	# >> COMMAND MESSAGE = /weather -|
 
-	Weathertoclear: &7You suppressed rain or thunder.
-	Weathertosun: &7You put the sun.
-	Weathertorain: &7You put the rain.
-	Weathertothunder: &7You put the thunder.
+	Weathertoclear: &7You suppressed rain or thunder !
+	Weathertosun: &7You put the sun !
+	Weathertorain: &7You put the rain !
+	Weathertothunder: &7You put the thunder !
 
 	# >> COMMAND MESSAGE = /chat -|
 
-	Chatclear: &cThe broadcast has been deleted.
+	Chatclear: &cThe broadcast has been deleted !
 
 	# >> COMMAND MESSAGE/CONFIG = BLOCK COMMAND -|
 
@@ -894,13 +891,13 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /invsee -|
 
-	Invsee: &6You have opened inventory of &c%arg 1%&6.
+	Invsee: &6You have opened inventory of &c%arg 1% &6!
 
 	# >> COMMAND MESSAGE = /lag -|
 
-	Clearlagentityarrows: &7You have clear &c%{_count}% &7entity arrows.
-	Clearlagentityitemsdropped: &7You have clear &c%{_count}% &7entity dropped.
-	Clearlagentityplayers: &7You have clear &c%{_count}% &7entity players.
+	Clearlagentityarrows: &7You have clear &c%{_count}% &7entity arrows !
+	Clearlagentityitemsdropped: &7You have clear &c%{_count}% &7entity dropped !
+	Clearlagentityplayers: &7You have clear &c%{_count}% &7entity players !
 
 
 	# >> COMMAND MESSAGE/CONFIG = AUTO MESSAGE -|
@@ -963,7 +960,14 @@ options: # >> Continuation of message configuration !
 
 	Bedteleportteleporting: &7Teleporting...
 	Bedteleportnotbedexisttome: &cYou do not have a bed !
-	Bedteleportnotbedexisttoplayer: &cThe player &c%arg 1% &cdoes not have a bed!
+	Bedteleportnotbedexisttoplayer: &cThe player &c%arg 1% &cdoes not have a bed !
+
+	# >> COMMAND MESSAGE = /chunk -|
+
+	Slimechunktome: &7The chunk of location of player is a slime chunk !
+	Slimechunktoplayeradmin: &7The chunk of location of &c%arg 1% &7is a slime chunk !
+	Slimenochunktome: &7The chunk of location of player is not a slime chunk !
+	Slimenochunktoplayeradmin: &7The chunk of location of &c%arg 1% &7is not a slime chunk !
 
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
@@ -973,6 +977,39 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /chunkslime [<offline player>]:
+	permission: essentials.chunkslime
+	executable by: players, console
+	permission message: {@Nopermission}
+	usage: &cError &6>> &f/chunkslime [player]
+	aliases: essentials:chunkslime
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				if chunk at player is a slime chunk:
+					send "{@Slimechunktome}" to player
+					stop
+				if chunk at player is not a slime chunk:
+					send "{@Slimenochunktome}" to player
+					stop
+			if arg 1 is offline:
+				send "&cError &6>> &f/chunkslime [player]" to player
+				stop
+			if arg 1 is online:
+				if sender has permission "essentials.chunkslime.others" or "essentials.*":
+					if chunk at arg 1 is a slime chunk:
+						send "{@Slimechunktoplayeradmin}" to player
+						stop
+					if chunk at arg 1 is not a slime chunk:
+						send "{@Slimenochunktoplayeradmin}" to player
+						stop
+				if sender doesn't have permission "essentials.chunkslime.others" or "essentials.*":
+					send "{@Nopermission}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 on world init:
 	send "{@Worldcreatefinish}" to console
@@ -1387,9 +1424,8 @@ command /chat [<text>]:
 				if sender has permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
 					loop 300 times:
 						broadcast ""
-					loop 1 times:
-						broadcast "{@Chatclear}"
-						stop
+					broadcast "{@Chatclear}"
+					stop
 				if sender doesn't have permission "essentials.chat.*" or "essentials.chat.clear" or "essentials.*":
 					send "{@Nopermission}" to player
 					stop
@@ -2237,11 +2273,10 @@ command /createkit [<text>]:
 						set {chestplate.%arg 1%.kit.%player%} to the player's chestplate
 						set {legs.%arg 1%.kit.%player%} to the player's legs
 						set {boot.%arg 1%.kit.%player%} to the player's boot
-					loop 1 times:
-						send "{@Createkit}" to player
-						set {kit.%player%::%arg 1%} to true
-						add arg 1 to {kit::*}
-						stop
+					send "{@Createkit}" to player
+					set {kit.%player%::%arg 1%} to true
+					add arg 1 to {kit::*}
+					stop
 				if {kit.%player%::%arg 1%} is true:
 					send "{@Createkitalready}" to player
 					stop
@@ -2300,9 +2335,8 @@ command /kit [<text>]:
 								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
 								set the player's leggings to {legs.%arg 1%.kit.%player%}
 								set the player's boots to {boot.%arg 1%.kit.%player%}
-							loop 1 times:
-								send "{@kit}" to player
-								stop
+							send "{@kit}" to player
+							stop
 						if {kit.%player%::%arg 1%} is not set:
 							send "{@Nokit}" to player
 							stop
@@ -2314,9 +2348,8 @@ command /kit [<text>]:
 								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
 								set the player's leggings to {legs.%arg 1%.kit.%player%}
 								set the player's boots to {boot.%arg 1%.kit.%player%}
-							loop 1 times:
-								send "{@kit}" to player
-								stop
+							send "{@kit}" to player
+							stop
 						if {kit.%player%::%arg 1%} is not set:
 							send "{@Nokit}" to player
 							stop
@@ -2332,9 +2365,8 @@ command /kit [<text>]:
 									set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
 									set the player's leggings to {legs.%arg 1%.kit.%player%}
 									set the player's boots to {boot.%arg 1%.kit.%player%}
-								loop 1 times:
-									send "{@kit}" to player
-									stop
+								send "{@kit}" to player
+								stop
 							if {kit.%player%::%arg 1%} is not set:
 								send "{@Nokit}" to player
 								stop
@@ -2347,9 +2379,8 @@ command /kit [<text>]:
 									set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
 									set the player's leggings to {legs.%arg 1%.kit.%player%}
 									set the player's boots to {boot.%arg 1%.kit.%player%}
-								loop 1 times:
-									send "{@kit}" to player
-									stop
+								send "{@kit}" to player
+								stop
 							if {kit.%player%::%arg 1%} is not set:
 								send "{@Nokit}" to player
 								stop
@@ -5513,7 +5544,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre25" to player
+				send "&fVersion &6|-> &c1.15Pre26" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5529,7 +5560,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre25" to console
+				send "&fVersion &6|-> &c1.15Pre26" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
