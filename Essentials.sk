@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre11
+# Version: 1.14pre12
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -926,7 +926,7 @@ options: # >> Continuation of message configuration !
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
 command /lag [<text>]:
-	permission: essentials.chat
+	permission: essentials.lag
 	executable by: players
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/lag [clear]
@@ -4428,7 +4428,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre11" to player
+			send "Version >> 1.14pre12" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
