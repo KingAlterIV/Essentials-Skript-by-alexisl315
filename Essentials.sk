@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre21
+# |-> Version: 1.15Pre22
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -957,6 +957,12 @@ options: # >> Continuation of message configuration !
 	Fakebroadcastmessagetodeop: &6The player &c%arg 2% &6as been put in deop mode of the server !
 	Fakebroadcastmessagetoplayerjoiningame: &6The player &c%arg 2% &6just connected to the server !
 
+	# >> COMMAND MESSAGE = /bedteleport -|
+
+	Bedteleportteleporting: &7Teleporting...
+	Bedteleportnotbedexisttome: &cYou do not have a bed !
+	Bedteleportnotbedexisttoplayer: &cThe player &c%arg 1% &cdoes not have a bed!
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -966,16 +972,48 @@ options: # >> Continuation of message configuration !
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+command /bedteleport [<offline player>]:
+	permission: essentials.bedteleport
+	executable by: players, console
+	permission message: {@Nopermission}
+	usage: &cError &6>> &f/bt
+	aliases: essentials:bedteleport, bt, essentials:bt
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				if bed of player exists:
+					teleport player to bed of player
+					send "{@Bedteleportteleporting}" to player
+					stop
+				if bed of player is not set:
+					send "{@Bedteleportnotbedexisttome}" to player
+					stop
+			if arg 1 is set:
+				if sender has permission "essentials.bedteleport.others" or "essentials.*":
+					if bed of arg 1 exists:
+						teleport player to bed of arg 1
+						send "{@Bedteleportteleporting}" to player
+						stop
+					if bed of arg 1 is not set:
+						send "{@Bedteleportnotbedexisttoplayer}" to player
+						stop
+				if sender doesn't have permission "essentials.bedteleport.others" or "essentials.*":
+					send "{@Nopermission}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
+
 on rightclick with fishing rod:
-	if player has permission "essentials.grapnel" or "essentials.*":
-		if {grappler.%player%.use} is not set:
-			set {grappler.%player%.use} to true
+	if player has permission "essentials.grapple" or "essentials.*":
+		if {grapple.%player%.use} is not set:
+			set {grapple.%player%.use} to true
 			stop
-		if {grappler.%player%.use} is true:
+		if {grapple.%player%.use} is true:
 			teleport player to target block
-			delete {grappler.%player%.use}
+			delete {grapple.%player%.use}
 			stop
-	if player doesn't have permission "essentials.grapnel" or "essentials.*":
+	if player doesn't have permission "essentials.grapple" or "essentials.*":
 		stop
 
 command /fakebroadcastmessage [<text>] [<offline player>]:
@@ -5322,7 +5360,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre21" to player
+				send "&fVersion &6|-> &c1.15Pre22" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5338,7 +5376,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre21" to console
+				send "&fVersion &6|-> &c1.15Pre22" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
