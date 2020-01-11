@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.14pre5
+# Version: 1.14pre6
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -4008,7 +4008,7 @@ command /gm [<text>] [<offline player>]:
 	trigger:
 		if arg 1 is not set:
 			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
-		if arg 1 is not "1" or "2" or "3" or "0":
+		if arg 1 is not "1" or "2" or "3" or "0" or "c" or "a" or "sp" or "s" or "survival" or "creative" or "adventure" or "spectator":
 			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
 		if arg 2 is not set:
 			if sender is a player:
@@ -4362,7 +4362,7 @@ command /essentials [<text>]:
 			stop
 		if arg 1 is "info":
 			send "Spigot link >> https://www.spigotmc.org/resources/essentials-1-8-1-14-bungeecord-support-new-1-14-support.39698/" to player
-			send "Version >> 1.14pre5" to player
+			send "Version >> 1.14pre6" to player
 			send "Creator >> Alexisl315 (Aliase: ~ Lennord)" to player
 			stop
 		if arg 1 is not set:
