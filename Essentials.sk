@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre9
+# |-> Version: 1.15Pre10
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -76,6 +76,8 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
+
+	Motdtoserver: &6Welcome to the server%nl%&7Server Minigames/Survival... !
 
 	Errortoconsoleisnotplayerusecommands: &cYou can not use this command in the server console !
 
@@ -930,6 +932,9 @@ options: # >> Continuation of message configuration !
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
 
+on server list ping:
+    set the motd to "{@Motdtoserver}"
+
 command /lag [<text>]:
 	permission: essentials.lag
 	executable by: players
@@ -1669,115 +1674,77 @@ on right click on sign:
 
 command /createkit [<text>]:
 	permission: essentials.createkit
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/createkit [kit]
 	aliases: essentials:createkit
 	trigger:
-		if arg 1 is set:
-			if {kit.%player%::%arg 1%} is not set:
-				set {_count} to 0
-				loop 36 times:
-					set {inv.%player%.%{_count}%.%arg 1%} to slot {_count} of player's inventory
-					add 1 to {_count}
-					set {helmet.%arg 1%.kit.%player%} to the player's helmet
-					set {chestplate.%arg 1%.kit.%player%} to the player's chestplate
-					set {legs.%arg 1%.kit.%player%} to the player's legs
-					set {boot.%arg 1%.kit.%player%} to the player's boot
-				loop 1 times:
-					send "{@Createkit}" to player
-					set {kit.%player%::%arg 1%} to true
-					add arg 1 to {kit::*}
+		if sender is a player:
+			if arg 1 is set:
+				if {kit.%player%::%arg 1%} is not set:
+					set {_count} to 0
+					loop 36 times:
+						set {inv.%player%.%{_count}%.%arg 1%} to slot {_count} of player's inventory
+						add 1 to {_count}
+						set {helmet.%arg 1%.kit.%player%} to the player's helmet
+						set {chestplate.%arg 1%.kit.%player%} to the player's chestplate
+						set {legs.%arg 1%.kit.%player%} to the player's legs
+						set {boot.%arg 1%.kit.%player%} to the player's boot
+					loop 1 times:
+						send "{@Createkit}" to player
+						set {kit.%player%::%arg 1%} to true
+						add arg 1 to {kit::*}
+						stop
+				if {kit.%player%::%arg 1%} is true:
+					send "{@Createkitalready}" to player
 					stop
-			if {kit.%player%::%arg 1%} is true:
-				send "{@Createkitalready}" to player
+			if arg 1 is not set:
+				send "&cError &6>> &f/createkit [kit]" to player
 				stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/createkit [kit]" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /deletekit [<text>]:
 	permission: essentials.deletekit
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/deletekit [kit]
 	aliases: essentials:deletekit
 	trigger:
-		if arg 1 is set:
-			if {kit.%player%::%arg 1%} is set:
-				delete {helmet.%arg 1%.kit.%player%}
-				delete {chestplate.%arg 1%.kit.%player%}
-				delete {legs.%arg 1%.kit.%player%}
-				delete {boot.%arg 1%.kit.%player%}
-				delete {inv.%arg 1%.kit.%player%}
-				delete {kit.%player%::%arg 1%}
-				remove arg 1 from {kit::*}
-				send "{@Deletekit}" to player
+		if sender is a player:
+			if arg 1 is set:
+				if {kit.%player%::%arg 1%} is set:
+					delete {helmet.%arg 1%.kit.%player%}
+					delete {chestplate.%arg 1%.kit.%player%}
+					delete {legs.%arg 1%.kit.%player%}
+					delete {boot.%arg 1%.kit.%player%}
+					delete {inv.%arg 1%.kit.%player%}
+					delete {kit.%player%::%arg 1%}
+					remove arg 1 from {kit::*}
+					send "{@Deletekit}" to player
+					stop
+				if {kit.%player%::%arg 1%} is not set:
+					send "{@Deletekitalready}" to player
+					stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/deletekit [kit]" to player
 				stop
-			if {kit.%player%::%arg 1%} is not set:
-				send "{@Deletekitalready}" to player
-				stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/deletekit [kit]" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /kit [<text>]:
 	permission: essentials.kit
 	permission message: {@Noperms}
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/kit [kit]
 	aliases: essentials:kit
 	trigger:
-		if arg 1 is set:
-			if sender has permission "essentials.kit.%argument 1%" or "essentials.*":
-				if sender has permission "essentials.kit.bypass" or "essentials.*":
-					if {kit.%player%::%arg 1%} is set:
-						loop 36 times:
-							set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
-							add 1 to {_count}
-							set the player's helmet to {helmet.%arg 1%.kit.%player%}
-							set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
-							set the player's leggings to {legs.%arg 1%.kit.%player%}
-							set the player's boots to {boot.%arg 1%.kit.%player%}
-						loop 1 times:
-							send "{@kit}" to player
-							stop
-					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}" to player
-						stop
-					if {kit.%player%::%arg 1%} is set:
-						loop 36 times:
-							set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
-							add 1 to {_count}
-							set the player's helmet to {helmet.%arg 1%.kit.%player%}
-							set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
-							set the player's leggings to {legs.%arg 1%.kit.%player%}
-							set the player's boots to {boot.%arg 1%.kit.%player%}
-						loop 1 times:
-							send "{@kit}" to player
-							stop
-					if {kit.%player%::%arg 1%} is not set:
-						send "{@Nokit}" to player
-						stop
-				if sender doesn't have permission "essentials.kit.bypass" or "essentials.*":
-					if {@Kitcooldownuse} is true:
-						if {kit.%player%::%arg 1%} is set:
-							loop 36 times:
-								send "{@Kitcooldown1} {@Kitcooldown} {@Kitcooldown2}" to player
-								wait {@Kitcooldown} seconds
-								set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
-								add 1 to {_count}
-								set the player's helmet to {helmet.%arg 1%.kit.%player%}
-								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
-								set the player's leggings to {legs.%arg 1%.kit.%player%}
-								set the player's boots to {boot.%arg 1%.kit.%player%}
-							loop 1 times:
-								send "{@kit}" to player
-								stop
-						if {kit.%player%::%arg 1%} is not set:
-							send "{@Nokit}" to player
-							stop
-					if {@Kitcooldownuse} is false:
+		if sender is a player:
+			if arg 1 is set:
+				if sender has permission "essentials.kit.%arg 1%" or "essentials.*":
+					if sender has permission "essentials.kit.bypass" or "essentials.*":
 						if {kit.%player%::%arg 1%} is set:
 							loop 36 times:
 								set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
@@ -1792,11 +1759,61 @@ command /kit [<text>]:
 						if {kit.%player%::%arg 1%} is not set:
 							send "{@Nokit}" to player
 							stop
-			if sender doesn't have permission "essentials.kit.%argument 1%" or "essentials.*":
-				send "{@Noperms}" to player
+						if {kit.%player%::%arg 1%} is set:
+							loop 36 times:
+								set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+								add 1 to {_count}
+								set the player's helmet to {helmet.%arg 1%.kit.%player%}
+								set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+								set the player's leggings to {legs.%arg 1%.kit.%player%}
+								set the player's boots to {boot.%arg 1%.kit.%player%}
+							loop 1 times:
+								send "{@kit}" to player
+								stop
+						if {kit.%player%::%arg 1%} is not set:
+							send "{@Nokit}" to player
+							stop
+					if sender doesn't have permission "essentials.kit.bypass" or "essentials.*":
+						if {@Kitcooldownuse} is true:
+							if {kit.%player%::%arg 1%} is set:
+								loop 36 times:
+									send "{@Kitcooldown1} {@Kitcooldown} {@Kitcooldown2}" to player
+									wait {@Kitcooldown} seconds
+									set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+									add 1 to {_count}
+									set the player's helmet to {helmet.%arg 1%.kit.%player%}
+									set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+									set the player's leggings to {legs.%arg 1%.kit.%player%}
+									set the player's boots to {boot.%arg 1%.kit.%player%}
+								loop 1 times:
+									send "{@kit}" to player
+									stop
+							if {kit.%player%::%arg 1%} is not set:
+								send "{@Nokit}" to player
+								stop
+						if {@Kitcooldownuse} is false:
+							if {kit.%player%::%arg 1%} is set:
+								loop 36 times:
+									set slot {_count} of player's inventory to {inv.%player%.%{_count}%.%arg 1%}
+									add 1 to {_count}
+									set the player's helmet to {helmet.%arg 1%.kit.%player%}
+									set the player's chestplate to {chestplate.%arg 1%.savestuff.%player%}
+									set the player's leggings to {legs.%arg 1%.kit.%player%}
+									set the player's boots to {boot.%arg 1%.kit.%player%}
+								loop 1 times:
+									send "{@kit}" to player
+									stop
+							if {kit.%player%::%arg 1%} is not set:
+								send "{@Nokit}" to player
+								stop
+				if sender doesn't have permission "essentials.kit.%arg 1%" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/kit [kit]" to player
 				stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/kit [kit]" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /kits:
@@ -1804,9 +1821,14 @@ command /kits:
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/kits
 	aliases: essentials:kits
+	executable by: players, console
 	trigger:
-		send "{@Kits}"#D9FF00
-		stop
+		if sender is a player:
+			send "{@Kits}" to player
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.mail" or "essentials.*":
@@ -1829,80 +1851,88 @@ on right click on sign:
 
 command /mail [<text>] [<offline player>] [<text>]:
 	permission: essentials.mail
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/mail [read/clear/send] [player] [text]
 	aliases: essentials:mail
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
-			stop
-		if arg 1 is not "read" or "clear" or "send":
-			send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
-			stop
-		if arg 1 is "read":
-			if sender doesn't have permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
-				send "{@Noperms}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
 				stop
-			if sender has permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
-				set {_count} to 0
-				loop {e-mail.%player%} times:
-					add 1 to {_count}
-					send "%{e-mail.message.%{_count}%}%"
-				send "{@Mailread}"
+			if arg 1 is not "read" or "clear" or "send":
+				send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
 				stop
-		if arg 1 is "clear":
-			if sender doesn't have permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
-				send "{@Noperms}" to player
-				stop
-			if sender has permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
-				if {e-mail.%player%} > 0:
+			if arg 1 is "read":
+				if sender doesn't have permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+				if sender has permission "essentials.mail.read" or "essentials.mail.*" or "essentials.*":
 					set {_count} to 0
 					loop {e-mail.%player%} times:
 						add 1 to {_count}
-						clear {e-mail.message.%{_count}%}
-						delete {e-mail.message.%{_count}%}
-					set {e-mail.%player%} to 0
-					send "{@Mailclear}" to player
+						send "%{e-mail.message.%{_count}%}%"
+					send "{@Mailread}"
 					stop
-				else:
-					send "{@Nomail}" to player
+			if arg 1 is "clear":
+				if sender doesn't have permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
-		if arg 1 is "send":
-			if arg 2 is set:
-				if arg 3 is set:
-					if sender doesn't have permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
-						send "{@Noperms}" to player
-					if sender has permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
-						send "{@Mailsendtoplayer}" to arg 2
-						send "{@Mailsendtome}" to player
-						add 1 to {e-mail.%arg 2%}
-						set {e-mail.message.%{e-mail.%arg 2%}%} to "&c%player% &7>> &c%arg 3%"
+				if sender has permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
+					if {e-mail.%player%} > 0:
+						set {_count} to 0
+						loop {e-mail.%player%} times:
+							add 1 to {_count}
+							clear {e-mail.message.%{_count}%}
+							delete {e-mail.message.%{_count}%}
+						set {e-mail.%player%} to 0
+						send "{@Mailclear}" to player
 						stop
-				if arg 3 is not set:
+					else:
+						send "{@Nomail}" to player
+						stop
+			if arg 1 is "send":
+				if arg 2 is set:
+					if arg 3 is set:
+						if sender doesn't have permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
+							send "{@Noperms}" to player
+						if sender has permission "essentials.mail.send" or "essentials.mail.*" or "essentials.*":
+							send "{@Mailsendtoplayer}" to arg 2
+							send "{@Mailsendtome}" to player
+							add 1 to {e-mail.%arg 2%}
+							set {e-mail.message.%{e-mail.%arg 2%}%} to "&c%player% &7>> &c%arg 3%"
+							stop
+					if arg 3 is not set:
+						send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
+						stop
+				if arg 2 is not set:
 					send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
 					stop
-			if arg 2 is not set:
-				send "&cError &6>> &f/mail [read/clear/send] [player] [text]" to player
-				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /powertool [<text>]:
 	permission: essentials.powertool
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/powertool [command]
 	aliases: essentials:powertool
 	trigger:		
-		if arg 1 is not set:
-			clear {powertool::%player's uuid%::%player's tool%}
-			set {_tool} to player's tool
-			set tool of player to 1 of player's tool
-			send "{@Powertooltoremove}" to player
-			set player's tool to {_tool}
-			stop
-		if arg 1 is set:
-			set {powertool::%player's uuid%::%player's tool%} to arg 1
-			send "{@Powertool}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				clear {powertool::%player's uuid%::%player's tool%}
+				set {_tool} to player's tool
+				set tool of player to 1 of player's tool
+				send "{@Powertooltoremove}" to player
+				set player's tool to {_tool}
+				stop
+			if arg 1 is set:
+				set {powertool::%player's uuid%::%player's tool%} to arg 1
+				send "{@Powertool}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 				
 on click:
@@ -1913,189 +1943,209 @@ on click:
 
 command /repair [<text>] [<offline player>]:
 	permission: essentials.repair
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/repair [all] [player]
 	aliases: essentials:repair
 	trigger:
-		if arg 1 is not set:
-			repair player's tool
-			send "{@Repairtome}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				repair player's tool
+				send "{@Repairtome}" to player
+				stop
+			if arg 1 is "all":
+				if arg 2 is not set:
+					send "{@Repairalltome}" to player
+					repair slot 0 of player
+					repair slot 1 of player
+					repair slot 2 of player
+					repair slot 3 of player
+					repair slot 4 of player
+					repair slot 5 of player
+					repair slot 6 of player
+					repair slot 7 of player
+					repair slot 8 of player
+					repair slot 9 of player
+					repair slot 10 of player
+					repair slot 11 of player
+					repair slot 12 of player
+					repair slot 13 of player
+					repair slot 14 of player
+					repair slot 15 of player
+					repair slot 16 of player
+					repair slot 17 of player
+					repair slot 18 of player
+					repair slot 19 of player
+					repair slot 20 of player
+					repair slot 21 of player
+					repair slot 22 of player
+					repair slot 23 of player
+					repair slot 24 of player
+					repair slot 25 of player
+					repair slot 26 of player
+					repair slot 27 of player
+					repair slot 28 of player
+					repair slot 29 of player
+					repair slot 30 of player
+					repair slot 31 of player
+					repair slot 32 of player
+					repair slot 33 of player
+					repair slot 34 of player
+					repair slot 35 of player
+					repair helmet slot of player		
+					repair chestplate slot of player
+					repair leggings slot of player
+					repair boots slot of player
+					stop
+				if arg 2 is online:
+					if sender has permission "essentials.repair.others" or "essentials.*":
+						send "{@Repairalltoplayeradmin}" to player
+						send "{@Repairalltoplayer}" to arg 2
+						repair slot 0 of arg 2
+						repair slot 1 of arg 2
+						repair slot 2 of arg 2
+						repair slot 3 of arg 2
+						repair slot 4 of arg 2
+						repair slot 5 of arg 2
+						repair slot 6 of arg 2
+						repair slot 7 of arg 2
+						repair slot 8 of arg 2
+						repair slot 9 of arg 2
+						repair slot 10 of arg 2
+						repair slot 11 of arg 2
+						repair slot 12 of arg 2
+						repair slot 13 of arg 2
+						repair slot 14 of arg 2
+						repair slot 15 of arg 2
+						repair slot 16 of arg 2
+						repair slot 17 of arg 2
+						repair slot 18 of arg 2
+						repair slot 19 of arg 2
+						repair slot 20 of arg 2
+						repair slot 21 of arg 2
+						repair slot 22 of arg 2
+						repair slot 23 of arg 2
+						repair slot 24 of arg 2
+						repair slot 25 of arg 2
+						repair slot 26 of arg 2
+						repair slot 27 of arg 2
+						repair slot 28 of arg 2
+						repair slot 29 of arg 2
+						repair slot 30 of arg 2
+						repair slot 31 of arg 2
+						repair slot 32 of arg 2
+						repair slot 33 of arg 2
+						repair slot 34 of arg 2
+						repair slot 35 of arg 2
+						repair helmet slot of arg 2		
+						repair chestplate slot of arg 2
+						repair leggings slot of arg 2
+						repair boots slot of arg 2
+						stop
+					if sender doesn't have permission "essentials.repair.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is "all":
-			if arg 2 is not set:
-				send "{@Repairalltome}" to player
-				repair slot 0 of player
-				repair slot 1 of player
-				repair slot 2 of player
-				repair slot 3 of player
-				repair slot 4 of player
-				repair slot 5 of player
-				repair slot 6 of player
-				repair slot 7 of player
-				repair slot 8 of player
-				repair slot 9 of player
-				repair slot 10 of player
-				repair slot 11 of player
-				repair slot 12 of player
-				repair slot 13 of player
-				repair slot 14 of player
-				repair slot 15 of player
-				repair slot 16 of player
-				repair slot 17 of player
-				repair slot 18 of player
-				repair slot 19 of player
-				repair slot 20 of player
-				repair slot 21 of player
-				repair slot 22 of player
-				repair slot 23 of player
-				repair slot 24 of player
-				repair slot 25 of player
-				repair slot 26 of player
-				repair slot 27 of player
-				repair slot 28 of player
-				repair slot 29 of player
-				repair slot 30 of player
-				repair slot 31 of player
-				repair slot 32 of player
-				repair slot 33 of player
-				repair slot 34 of player
-				repair slot 35 of player
-				repair helmet slot of player		
-				repair chestplate slot of player
-				repair leggings slot of player
-				repair boots slot of player
-				stop
-			if arg 2 is online:
-				if sender has permission "essentials.repair.others" or "essentials.*":
-					send "{@Repairalltoplayeradmin}" to player
-					send "{@Repairalltoplayer}" to arg 2
-					repair slot 0 of arg 2
-					repair slot 1 of arg 2
-					repair slot 2 of arg 2
-					repair slot 3 of arg 2
-					repair slot 4 of arg 2
-					repair slot 5 of arg 2
-					repair slot 6 of arg 2
-					repair slot 7 of arg 2
-					repair slot 8 of arg 2
-					repair slot 9 of arg 2
-					repair slot 10 of arg 2
-					repair slot 11 of arg 2
-					repair slot 12 of arg 2
-					repair slot 13 of arg 2
-					repair slot 14 of arg 2
-					repair slot 15 of arg 2
-					repair slot 16 of arg 2
-					repair slot 17 of arg 2
-					repair slot 18 of arg 2
-					repair slot 19 of arg 2
-					repair slot 20 of arg 2
-					repair slot 21 of arg 2
-					repair slot 22 of arg 2
-					repair slot 23 of arg 2
-					repair slot 24 of arg 2
-					repair slot 25 of arg 2
-					repair slot 26 of arg 2
-					repair slot 27 of arg 2
-					repair slot 28 of arg 2
-					repair slot 29 of arg 2
-					repair slot 30 of arg 2
-					repair slot 31 of arg 2
-					repair slot 32 of arg 2
-					repair slot 33 of arg 2
-					repair slot 34 of arg 2
-					repair slot 35 of arg 2
-					repair helmet slot of arg 2		
-					repair chestplate slot of arg 2
-					repair leggings slot of arg 2
-					repair boots slot of arg 2
-					stop
-				if sender doesn't have permission "essentials.repair.others" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
 
 command /sudo [<offline player>] [<text>]:
 	permission: essentials.sudo
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/sudo [player] [command]
 	aliases: essentials:sudo
 	trigger:
-		if arg 1 is online:
-			if arg 2 is set:
-				execute arg 1 command arg 2
-				send "{@Sudo}" to player
-				stop
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is online:
+				if arg 2 is set:
+					execute arg 1 command arg 2
+					send "{@Sudo}" to player
+					stop
+				if arg 2 is not set:
+					send "&cError &6>> &f/sudo [player] [commands]" to player
+					stop
+			if arg 1 is not set:
 				send "&cError &6>> &f/sudo [player] [commands]" to player
 				stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/sudo [player] [commands]" to player
-			stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /spawnmob [<entity types>] [<number>]:
 	permission: essentials.spawnmob
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/spawnmob [entity] [number]
 	aliases: essentials:spawnmob
 	trigger:
-		if arg 1 is set:
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is set:
+				if arg 2 is not set:
+					send "&cError &6>> &f/spawnmob [entity] [number]" to player
+					stop
+				if arg 2 is set:
+					spawn arg 2 of arg 1 at the player
+					send "{@Spawnmob}" to player
+					stop
+			if arg 1 is not set:
 				send "&cError &6>> &f/spawnmob [entity] [number]" to player
 				stop
-			else:
-				spawn arg 2 of arg 1 at the player
-				send "{@Spawnmob}" to player
-				stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/spawnmob [entity] [number]" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on load:
-	message "{@Loading}" to console
+	send "{@Loading}" to console
+	stop
 
 command /tpohere [<offline player>]:
 	permission: essentials.tpohere
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/tpohere [player]
 	aliases: essentials:tpohere
 	trigger:
-		send "{@Tpohereteleporting}" to player
-		teleport player to arg 1
-		stop
+		if sender is a player:
+			send "{@Tpohereteleporting}" to player
+			teleport player to arg 1
+			stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /tpo [<offline player>] [<offline player>]:
 	permission: essentials.tpo
-	executable by: players
+	executable by: players, console
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/tpo [player] [player]
 	aliases: essentials:tpo
 	trigger: 
-		if arg 1 is not set:
-			send "&cError &6>> &f/tpo [player] [player]" to player
-			stop
-		if arg 1 is online:
-			if arg 2 is online:
-				send "{@Tpoteleporting}" to arg 1
-				teleport arg 1 to arg 2
-				send "{@Tpoplayeradmin}" to player
-				send "{@Tpoteleporting}" to arg 1
-				stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
-				stop
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> &f/tpo [player] [player]" to player
 				stop
+			if arg 1 is online:
+				if arg 2 is online:
+					teleport arg 1 to arg 2
+					send "{@Tpoplayeradmin}" to player
+					send "{@Tpoteleporting}" to arg 1
+					stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop
+				if arg 2 is not set:
+					send "&cError &6>> &f/tpo [player] [player]" to player
+					stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 command /jump:
 	permission: essentials.jump
@@ -3095,7 +3145,7 @@ command /xp [<text>] [<offline player>] [<integer>]:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
-command /back:
+command /back [<offline player>]:
 	permission: essentials.back
 	permission message: {@Noperms}
 	usage: &cError &6>> &f/back
@@ -3103,24 +3153,49 @@ command /back:
 	aliases: return, essentials:back, essentials:return
 	trigger:
 		if sender is a player:
-			if {back::%uuid of player%} is not set:
-				send "{@Nobackpoint}" to player
-				stop
-			if {back::%uuid of player%} is set:
-				if {@Backcooldownuse} is true:
-					if sender doesn't have permission "essentials.back.bypass" or "essentials.*":
-						send "{@Backcooldown1} {@Backcooldown} {@Backcooldown2}" to player
-						wait {@Backcooldown} seconds
+			if arg 1 is not set:
+				if {back::%uuid of player%} is not set:
+					send "{@Nobackpoint}" to player
+					stop
+				if {back::%uuid of player%} is set:
+					if {@Backcooldownuse} is true:
+						if sender doesn't have permission "essentials.back.bypass" or "essentials.*":
+							send "{@Backcooldown1} {@Backcooldown} {@Backcooldown2}" to player
+							wait {@Backcooldown} seconds
+							teleport player to {back::%uuid of player%}
+							send "{@Backteleporting}" to player
+							stop
+						if sender has permission "essentials.back.bypass" or "essentials.*":
+							teleport player to {back::%uuid of player%}
+							send "{@Backteleporting}" to player
+							stop
+					if {@Backcooldownuse} is false:
 						teleport player to {back::%uuid of player%}
 						send "{@Backteleporting}" to player
 						stop
-					if sender has permission "essentials.back.bypass" or "essentials.*":
-						teleport player to {back::%uuid of player%}
-						send "{@Backteleporting}" to player
+			if arg 1 is online:
+				if sender doesn't have permission "essentials.back.others" or "essentials.*":
+					if {back::%uuid of arg 1%} is not set:
+						send "{@Nobackpoint}" to player
 						stop
-				if {@Backcooldownuse} is false:
-					teleport player to {back::%uuid of player%}
-					send "{@Backteleporting}" to player
+					if {back::%uuid of arg 1%} is set:
+						if {@Backcooldownuse} is true:
+							if sender doesn't have permission "essentials.back.bypass.others" or "essentials.*":
+								send "{@Backcooldown1} {@Backcooldown} {@Backcooldown2}" to arg 1
+								wait {@Backcooldown} seconds
+								teleport arg 1 to {back::%uuid of arg 1%}
+								send "{@Backteleporting}" to arg 1
+								stop
+							if sender has permission "essentials.back.bypass.others" or "essentials.*":
+								teleport arg 1 to {back::%uuid of arg 1%}
+								send "{@Backteleporting}" to arg 1
+								stop
+						if {@Backcooldownuse} is false:
+							teleport arg 1 to {back::%uuid of arg 1%}
+							send "{@Backteleporting}" to arg 1
+							stop
+				if sender has permission "essentials.back.others" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
 		if sender is console:
 			send "{@Errortoconsoleisnotplayerusecommands}" to console
@@ -4881,7 +4956,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre9" to player
+				send "&fVersion &6|-> &c1.15Pre10" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4897,7 +4972,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-4-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre9" to console
+				send "&fVersion &6|-> &c1.15Pre10" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
