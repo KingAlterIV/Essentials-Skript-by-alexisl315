@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.11
+# Version: 1.1
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -48,7 +48,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.0.11.
+	Essentialsversionmsg: &7Essentials is 1.1.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -3319,7 +3319,8 @@ command /kick [<offline player>] [<text>]:
 			if arg 2 is set:
 				broadcast "{@Kickbroadcast}"
 				kick arg 1 because "{@Kick}"
-			else if arg 2 is not set:
+				stop
+			if arg 2 is not set:
 				send "&cError &6>> &f/kick [player] [text]" to player
 				stop
 		if arg 1 is offline:
@@ -3391,18 +3392,22 @@ command /gm [<text>] [<offline player>]:
 						if arg 1 is "1":
 							set the gamemode of the arg 2 to creative
 							send "{@Gamemodetoplayertocreative}" to arg 2
+							send "{@Gamemodetoplayeradmintocreative}" to player
 							stop
 						if arg 1 is "0":
 							set the gamemode of the arg 2 to survival
 							send "{@Gamemodetoplayertosurvival}" to arg 2
+							send "{@Gamemodetoplayeradmintosurvival}" to player
 							stop
 						if arg 1 is "2":
 							set the gamemode of the arg 2 to adventure
 							send "{@Gamemodetoplayertoadventure}" to arg 2
+							send "{@Gamemodetoplayeradmintoadventure}" to player
 							stop
 						if arg 1 is "3":
 							set the gamemode of the arg 2 to spectator
 							send "{@Gamemodetoplayertospectator}" to arg 2
+							send "{@Gamemodetoplayeradmintospectator}" to player
 							stop
 					if sender is console:
 						if arg 1 is "1":
@@ -3637,6 +3642,7 @@ on first join:
 on first join:
 	if {@Teleportspawntojoin} is true:
 		teleport player to {spawn}
+		stop
 	if {@Teleportspawntojoin} is false:
 		stop
 
@@ -3650,6 +3656,7 @@ on join:
 on join: 
 	if {@Teleportspawntojoin} is true:
 		teleport player to {spawn}
+		stop
 	if {@Teleportspawntojoin} is false:
 		stop
 
@@ -3684,14 +3691,12 @@ command /essentials [<text>]:
 	permission message: {@Noperms}
 	trigger:
 		if arg-1 is "reload":
-			if sender has permission "essentials.admin" or "essentials.*":
-				make console execute command "/sk reload essentials"
-				send "{@Reloadmsg}" to player
-				stop
+			make console execute command "/sk reload essentials"
+			send "{@Reloadmsg}" to player
+			stop
 		if arg-1 is "version":
-			if sender has permission "essentials.admin" or "essentials.*":
-				send "{@Essentialsversionmsg}" to player
-				stop
+			send "{@Essentialsversionmsg}" to player
+			stop
 		if arg-1 is not set:
 			send "&cError &6>> &f/essentials reload/version" to player
 			stop
