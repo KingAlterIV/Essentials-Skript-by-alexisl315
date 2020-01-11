@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.0.2
+# Version: 1.0.2.1
 
 
 options:
@@ -340,10 +340,6 @@ options: # >> Continuation of message configuration!
 	Nogodtoplayer: &c%player% &6has disabled your god mode.
 	Godtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been activated.
 	Nogodtoplayeradmin: &6The god mode of the &c%arg-1% &6player has been disabled.
-
-	# >> COMMAND MESSAGE = /itemdb -|
-
-	Itemdb: &7Item&6: &c%arg 1% &6: &c%id of arg 1%
 
 	# >> COMMAND MESSAGE = /seen -|
 
@@ -1957,16 +1953,6 @@ on join:
     set {ip.%player%} to "%ip of player%"
     stop
 
-command /itemdb [<item=%tool%>]:
-	permission: essentials.itemdb
-	permission message: {@Noperms}
-	aliases: essentials:itemdb
-	executable by: players
-	usage: &cError &6>> &f/itemdb [name of tool]
-	trigger:
-		send "{@Itemdb}" to player
-		stop
-
 command /god [<offline player>]:
 	permission: essentials.god
 	permission message: {@Noperms}
@@ -2504,7 +2490,7 @@ command /day:
 	trigger:
 		set time to 6:00
 		send "{@Day}" to player
-		send
+		stop
 
 command /night:
 	permission: essentials.night
@@ -2514,7 +2500,7 @@ command /night:
 	trigger:
 		set time to 20:00
 		send "{@Night}" to player
-		send
+		stop
 
 command /time [<text>] [<text>]:
 	permission: essentials.time
@@ -3016,7 +3002,7 @@ command /hat [<material>]:
 	executable by: players
 	usage: &cError &6>> &f/hat [Matérial]
 	trigger:
-		id of arg 1 is greater than 255:
+		id of arg 1 is set:
 			send "{@Noitemhat}" to player
 			stop trigger
 		if arg 1 is not set:
