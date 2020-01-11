@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15Pre3
+# |-> Version: 1.15Pre4
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -284,7 +284,8 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /kick, /kickall -|
 
-	Kickbroadcast: &c%arg 1% &7has been expelled by &c%player% &7for &c%coloured arg 2%
+	Kickbroadcastisplayer: &c%arg 1% &7has been expelled by &c%player% &7for &c%coloured arg 2%
+	Kickbroadcastisconsole: &c%arg 1% &7has been expelled by &cConsole &7for &c%coloured arg 2%
 	Kick: &cKicked for &c%coloured arg 2%
 
 	Kickall: &cKicked for &c%coloured arg 1%
@@ -3890,104 +3891,120 @@ command /r [<text>]:
 	permission: essentials.reply
 	permission message: {@Noperms}
 	aliases: essentials:reply, reply, essentials:r
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/reply [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/reply [text]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/reply [text]" to player
+				stop
+			if arg 1 is set:
+				if sender doesn't have permission "essentials.reply.color" or "essentials.*":
+					if {essentials.%player%.ignore} is set:
+						send "{@Msgignore}" to player
+						stop
+					if {essentials.%player%.reply} is online:
+						send "{@Replyformattoplayer}" to {essentials.%player%.reply}
+						send "{@Replyformattome}" to player
+						stop
+					if {essentials.%player%.reply} is offline:
+						send "&cError &6>> &f/msg [player] [text]"
+						stop
+				if sender has permission "essentials.reply.color" or "essentials.*":
+					if {essentials.%player%.ignore} is set:
+						send "{@Msgignore}" to player
+						stop
+					if {essentials.%player%.reply} is online:
+						send "{@Replyformatcolortoplayer}" to {essentials.%player%.reply}
+						send "{@Replyformatcolortome}" to player
+						stop
+					if {essentials.%player%.reply} is offline:
+						send "&cError &6>> &f/msg [player] [text]" to player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			if sender doesn't have permission "essentials.reply.color" or "essentials.*":
-				if {essentials.%player%.ignore} is set:
-					send "{@Msgignore}" to player
-					stop
-				if {essentials.%player%.reply} is online:
-					send "{@Replyformattoplayer}" to {essentials.%player%.reply}
-					send "{@Replyformattome}" to player
-					stop
-				if {essentials.%player%.reply} is offline:
-					send "&cError &6>> &f/msg [player] [text]"
-					stop
-			if sender has permission "essentials.reply.color" or "essentials.*":
-				if {essentials.%player%.ignore} is set:
-					send "{@Msgignore}" to player
-					stop
-				if {essentials.%player%.reply} is online:
-					send "{@Replyformatcolortoplayer}" to {essentials.%player%.reply}
-					send "{@Replyformatcolortome}" to player
-					stop
-				if {essentials.%player%.reply} is offline:
-					send "&cError &6>> &f/msg [player] [text]" to player
-					stop
 
 command /ignore [<offline player>]:
 	permission: essentials.ignore
 	permission message: {@Noperms}
 	aliases: essentials:ignore
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/ignore [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/ignore [player]" to player
-			stop
-		if arg 1 is online:
-			if {essentials.%argument 1%.ignore} is not set:
-				set {essentials.%argument 1%.ignore} to player
-				send "{@Ignore}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/ignore [player]" to player
 				stop
-			else:
-				delete {essentials.%argument 1%.ignore}
-				send "{@Unignore}" to player
+			if arg 1 is online:
+				if {essentials.%arg 1%.ignore} is not set:
+					set {essentials.%arg 1%.ignore} to player
+					send "{@Ignore}" to player
+					stop
+				if {essentials.%arg 1%.ignore} is set:
+					delete {essentials.%arg 1%.ignore}
+					send "{@Unignore}" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /tphere [<offline player>]:
 	permission: essentials.tphere
 	permission message: {@Noperms}
 	aliases: essentials:tphere
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/tphere [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/tphere [player]" to player
-			stop
-		if arg 1 is online:
-			set {back::%uuid of arg 1%} to location of player
-			teleport argument to player
-			send "{@Tphereteleporting}" to arg 1
-			stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/tphere [player]" to player
+				stop
+			if arg 1 is online:
+				set {back::%uuid of arg 1%} to location of arg 1
+				teleport arg 1 to player
+				send "{@Tphereteleporting}" to arg 1
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /freeze [<offline player>]:
 	permission: essentials.freeze
 	permission message: {@Noperms}
 	aliases: essentials:freeze
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/freeze [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/freeze [player]" to player
-			stop
-		if arg 1 is online:
-			if {freeze.%argument%.frozen} isn't set:
-				set {freeze.%argument%.frozen} to true
-				set {freeze.%argument%.frozen.gm} to true
-				send "{@Freezetome}" to arg 1
-				send "{@Freezetoplayeradmin}" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/freeze [player]" to player
 				stop
-			else:
-				if {freeze.%argument%.frozen} is set:
-					delete {freeze.%argument%.frozen}
-					send "{@Nofreezetome}" to arg 1
-					send "{@Nofreezetoplayeradmin}" to player
-					delete {freeze.%argument%.frozen.gm}
+			if arg 1 is online:
+				if {freeze.%arg 1%.frozen} is not set:
+					set {freeze.%arg 1%.frozen} to true
+					set {freeze.%arg 1%.frozen.gm} to true
+					send "{@Freezetome}" to arg 1
+					send "{@Freezetoplayeradmin}" to player
 					stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
+				if {freeze.%arg 1%.frozen} is set:
+					if {freeze.%arg 1%.frozen} is set:
+						delete {freeze.%arg 1%..frozen}
+						send "{@Nofreezetome}" to arg 1
+						send "{@Nofreezetoplayeradmin}" to player
+						delete {freeze.%arg 1%.frozen.gm}
+						stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 on join:
@@ -4027,39 +4044,59 @@ command /kick [<offline player>] [<text>]:
 	permission: essentials.kick
 	permission message: {@Noperms}
 	aliases: essentials:kick
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/kick [player] [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/kick [player] [text]"
-			stop
-		if arg 1 is online:
-			if arg 2 is set:
-				broadcast "{@Kickbroadcast}"
-				kick arg 1 because "{@Kick}"
-				stop
-			if arg 2 is not set:
+		if sender is a player:
+			if arg 1 is not set:
 				send "&cError &6>> &f/kick [player] [text]" to player
 				stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+			if arg 1 is online:
+				if arg 2 is set:
+					broadcast "{@Kickbroadcastisplayer}"
+					kick arg 1 because "{@Kick}"
+					stop
+				if arg 2 is not set:
+					send "&cError &6>> &f/kick [player] [text]" to player
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to player
+				stop
+		if sender is console:
+			if arg 1 is not set:
+				send "&cError &6>> &f/kick [player] [text]" to console
+				stop
+			if arg 1 is online:
+				if arg 2 is set:
+					broadcast "{@Kickbroadcastisconsole}"
+					kick arg 1 because "{@Kick}"
+					stop
+				if arg 2 is not set:
+					send "&cError &6>> &f/kick [player] [text]" to console
+					stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 command /helpop [<text>]:
 	permission: essentials.helpop
 	permission message: {@Noperms}
 	aliases: essentials:helpop
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/helpop [text]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/helpop [text]" to player
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/helpop [text]" to player
+				stop
+			if arg 1 is set:
+				loop all players:
+					if loop-players has permission "essentials.helpop.receive" or "essentials.*":
+						send "{@Helpop}" to loop-player
+						stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
-		if arg 1 is set:
-			loop all players:
-				if loop-players has permission "essentials.helpop.receive" or "essentials.*":
-					send "{@Helpop}" to loop-player
-					stop
 
 on join:
 	if sender doesn't have permission "essentials.motd" or "essentials.*":
@@ -4070,16 +4107,19 @@ on join:
 
 command /gm [<text>] [<offline player>]:
 	permission: essentials.gamemode
+	executable by: players, console
 	permission message: {@Noperms}
 	aliases: essentials:gamemode, gamemode, essentials:gm
 	usage: &cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]
 	trigger:
-		if arg 1 is not set:
-			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
-		if arg 1 is not "1" or "2" or "3" or "0" or "c" or "a" or "sp" or "s" or "survival" or "creative" or "adventure" or "spectator":
-			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
-		if arg 2 is not set:
-			if sender is a player:
+		if sender is a player:
+			if arg 1 is not set:
+				send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
+				stop
+			if arg 1 is not "1" or "2" or "3" or "0" or "c" or "a" or "sp" or "s" or "survival" or "creative" or "adventure" or "spectator":
+				send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
+				stop
+			if arg 2 is not set:
 				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
 					if arg 1 is "1" or "c" or "creative":
 						set the gamemode of the player to creative
@@ -4112,90 +4152,114 @@ command /gm [<text>] [<offline player>]:
 				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
 					send "{@Noperms}" to player
 					stop
-			if sender is console:
-				if arg 2 is not set:
-					send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to player
-					stop
-		if arg 1 is set:
-			if arg 2 is online:
-				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.others" or "essentials.*":
-					send "{@Noperms}" to player
-					stop
-				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.others" or "essentials.*":
-					if sender is a player:
+			if arg 1 is set:
+				if arg 2 is online:
+					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+					if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator.others" or "essentials.*":
+						send "{@Noperms}" to player
+						stop
+					if sender has permission "essentials.gamemode.*" or "essentials.gamemode.creative.others" or "essentials.*":
 						if arg 1 is "1" or "c" or "creative":
 							set the gamemode of the arg 2 to creative
 							send "{@Gamemodetoplayertocreative}" to arg 2
 							send "{@Gamemodetoplayeradmintocreative}" to player
 							stop
+					if sender has permission "essentials.gamemode.*" or "essentials.gamemode.survival.others" or "essentials.*":
 						if arg 1 is "0" or "s" or "survival":
 							set the gamemode of the arg 2 to survival
 							send "{@Gamemodetoplayertosurvival}" to arg 2
 							send "{@Gamemodetoplayeradmintosurvival}" to player
 							stop
+					if sender has permission "essentials.gamemode.*" or "essentials.gamemode.adventure.others" or "essentials.*":
 						if arg 1 is "2" or "a" or "adventure":
 							set the gamemode of the arg 2 to adventure
 							send "{@Gamemodetoplayertoadventure}" to arg 2
 							send "{@Gamemodetoplayeradmintoadventure}" to player
 							stop
+					if sender has permission "essentials.gamemode.*" or "essentials.gamemode.spectator.others" or "essentials.*":
 						if arg 1 is "3" or "sp" or "spectator":
 							set the gamemode of the arg 2 to spectator
 							send "{@Gamemodetoplayertospectator}" to arg 2
 							send "{@Gamemodetoplayeradmintospectator}" to player
 							stop
-					if sender is console:
-						if arg 1 is "1" or "c" or "creative":
-							set the gamemode of the arg 2 to creative
-							send "{@Gamemodetoplayerisconsoletocreative}" to arg 2
-							send "{@Gamemodetoplayeradmintocreative}" to player
-							stop
-						if arg 1 is "0" or "s" or "survival":
-							set the gamemode of the arg 2 to survival
-							send "{@Gamemodetoplayerisconsoletosurvival}" to arg 2
-							send "{@Gamemodetoplayeradmintosurvival}" to player
-							stop
-						if arg 1 is "2" or "a" or "adventure":
-							set the gamemode of the arg 2 to adventure
-							send "{@Gamemodetoplayerisconsoletoadventure}" to arg 2
-							send "{@Gamemodetoplayeradmintoadventure}" to player
-							stop
-						if arg 1 is "3" or "sp" or "spectator":
-							set the gamemode of the arg 2 to spectator
-							send "{@Gamemodetoplayerisconsoletospectator}" to arg 2
-							send "{@Gamemodetoplayeradmintospectator}" to player
-							stop
-			if arg 2 is offline:
-				send "{@Noplayerconnect}" to player
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to player
+					stop		
+		if sender is console:
+			if arg 1 is not set:
+				send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to console
 				stop
+			if arg 1 is not "1" or "2" or "3" or "0" or "c" or "a" or "sp" or "s" or "survival" or "creative" or "adventure" or "spectator":
+				send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to console
+				stop
+			if arg 1 is set:
+				if arg 2 is not set:
+					send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp or survival/creative/adventure/spectator] [player]" to console
+					stop
+				if arg 2 is online:
+					if arg 1 is "1" or "c" or "creative":
+						set the gamemode of the arg 2 to creative
+						send "{@Gamemodetoplayerisconsoletocreative}" to arg 2
+						send "{@Gamemodetoplayeradmintocreative}" to console
+						stop
+					if arg 1 is "0" or "s" or "survival":
+						set the gamemode of the arg 2 to survival
+						send "{@Gamemodetoplayerisconsoletosurvival}" to arg 2
+						send "{@Gamemodetoplayeradmintosurvival}" to console
+						stop
+					if arg 1 is "2" or "a" or "adventure":
+						set the gamemode of the arg 2 to adventure
+						send "{@Gamemodetoplayerisconsoletoadventure}" to arg 2
+						send "{@Gamemodetoplayeradmintoadventure}" to console
+						stop
+					if arg 1 is "3" or "sp" or "spectator":
+						set the gamemode of the arg 2 to spectator
+						send "{@Gamemodetoplayerisconsoletospectator}" to arg 2
+						send "{@Gamemodetoplayeradmintospectator}" to console
+						stop
+				if arg 2 is offline:
+					send "{@Noplayerconnect}" to console
+					stop
 
 command /me [<text>]:
 	permission: essentials.me
 	permission message: {@Noperms}
 	aliases: essentials:me
-	executable by: players
-	usage: &cError &6>> &f/me [Text]
+	executable by: players, console
+	usage: &cError &6>> &f/me [text]
 	trigger:
-		if arg 1 is set:
-			if sender doesn't have permission "essentials.me.color" or "essentials.*":
-				broadcast "{@Mebroadcast}"
+		if sender is a player:
+			if arg 1 is set:
+				if sender doesn't have permission "essentials.me.color" or "essentials.*":
+					broadcast "{@Mebroadcast}"
+					stop
+				if sender has permission "essentials.me.color" or "essentials.*":
+					broadcast "{@Mebroadcastcolor}"
+					stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/me [Text]" to player
 				stop
-			if sender has permission "essentials.me.color" or "essentials.*":
-				broadcast "{@Mebroadcastcolor}"
-				stop
-			broadcast "* %player% %argument 1%"
-			stop
-		if arg 1 is not set:
-			send "&cError &6>> &f/me [Text]" to player
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /fly [<offline player>]:
 	permission: essentials.fly
 	permission message: {@Noperms}
+	executable by: players, console
 	aliases: essentials:fly
 	usage: &cError &6>> &f/fly [player]
 	trigger:
-		if arg 1 is not set:
-			if sender is a player:
+		if sender is a player:
+			if arg 1 is not set:
 				if {fly.%player%} is not set:
 					send "{@Flytome}" to player
 					set player's flight mode to true
@@ -4206,44 +4270,50 @@ command /fly [<offline player>]:
 					set player's flight mode to false
 					delete {fly.%player%}
 					stop
-			if sender is console:
-				if arg 1 is not set:
-					send "&cError &6>> &f/fly [player]" to player
-					stop
-		if arg 1 is online:
-			if sender is a player:
+			if arg 1 is online:
 				if sender has permission "essentials.fly.others" or "essentials.*":
 					if {fly.%arg-1%} is not set:
 						send "{@Flytoplayerisadmin}" to player
-						send "{@Flytoplayer}" to arg-1
-						set arg-1's flight mode to true
+						send "{@Flytoplayer}" to arg 1
+						set arg 1's flight mode to true
 						set {fly.%arg-1%} to true
 						stop
 					if {fly.%arg-1%} is set:
 						send "{@Noflytoplayerisadmin}" to player
-						send "{@Noflytoplayer}" to arg-1
-						set arg-1's flight mode to false
-						delete {fly.%arg-1%}
+						send "{@Noflytoplayer}" to arg 1
+						set arg 1's flight mode to false
+						delete {fly.%arg 1%}
 						stop
 				if sender doesn't have permission "essentials.fly.others" or "essentials.*":
 					send "{@Noperms}" to player
 					stop
-			if sender is console:
+			if arg 1 is offline:
+				if sender has permission "essentials.fly.others" or "essentials.*":
+					send "{@Noplayerconnect}" to player
+					stop
+				if sender doesn't have permission "essentials.fly.others" or "essentials.*":
+					send "{@Noperms}" to player
+					stop
+		if sender is console:
+			if arg 1 is online:
 				if {fly.%arg-1%} is not set:
-					send "{@Flytoplayerisadmin}" to player
+					send "{@Flytoplayerisadmin}" to console
 					send "{@Flytoplayerisconsole}" to arg-1
-					set arg-1's flight mode to true
+					set arg 1's flight mode to true
 					set {fly.%arg-1%} to true
 					stop
 				if {fly.%arg-1%} is set:
-					send "{@Noflytoplayerisadmin}" to player
-					send "{@Noflytoplayerisconsole}" to arg-1
-					set arg-1's flight mode to false
-					delete {fly.%arg-1%}
+					send "{@Noflytoplayerisadmin}" to console
+					send "{@Noflytoplayerisconsole}" to arg 1
+					set arg 1's flight mode to false
+					delete {fly.%arg 1%}
 					stop
-		if arg 1 is offline:
-			send "{@Noplayerconnect}" to player
-			stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/fly [player]" to console
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
 
 on death:
 	if {@Messagedeath} is true:
@@ -4264,13 +4334,17 @@ command /tpall:
 	permission: essentials.tpall
 	permission message: {@Noperms}
 	aliases: essentials:tpall
-	executable by: players
+	executable by: players, console
 	usage: &cError &6>> &f/tpall
 	trigger:
-		loop all players:
-			send "{@Tpallteleporting}" to loop-player
-			teleport all players to player
-			send "{@Tpallteleportingisadmin}" to player
+		if sender is a player:
+			loop all players:
+				send "{@Tpallteleporting}" to loop-player
+				teleport all players to player
+				send "{@Tpallteleportingisadmin}" to player
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
 			stop
 
 command /clearinventory [<offline player>]:
@@ -4302,11 +4376,11 @@ command /clearinventory [<offline player>]:
 				send "{@Cleartoplayerisconsole}" to arg 1
 				send "{@Cleartoplayer}" to console
 				stop
-			if arg 1 is offline:
-				send "{@Noplayerconnect}" to console
-				stop
 			if arg 1 is not set:
 				send "&cError &6>> &f/clear [player]" to console
+				stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
 				stop
 
 
@@ -4349,7 +4423,7 @@ command /broadcast [<text>]:
 				broadcast "{@Broadcastcolor}"
 				stop
 			if arg 1 is not set:
-				send "&cError &6>> &f/broadcast [Text]"
+				send "&cError &6>> &f/broadcast [text]" to console
 				stop
 
 command /tp [<offline player>] [<offline player>]:
@@ -4457,7 +4531,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to player
-				send "&fVersion &6|-> &c1.15Pre3" to player
+				send "&fVersion &6|-> &c1.15Pre4" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -4473,7 +4547,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-14-3-bungeecord-support-new-technical-update.39698/" to console
-				send "&fVersion &6|-> &c1.15Pre2" to console
+				send "&fVersion &6|-> &c1.15Pre4" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
