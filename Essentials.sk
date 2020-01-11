@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.7 [Special 10 000 downloads]
+# Version: 1.8
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -62,7 +62,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.7.
+	Essentialsversionmsg: &7Essentials is 1.8.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -167,11 +167,11 @@ command /motd:
 		send "&cWelcome to the server !" to player
 		send "&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-" to player
 		if {e-mail.%player%} > 0:
-			send "&fYou have &c%{e-mail.%player%}% message ! &fEnter &c/mail read &fto see your mail."
+			send "&fYou have &c%{e-mail.%player%}% message ! &fEnter &c/mail read &fto see your mail." to player
 		else:
 			send "&7You do not have mail." to player
 
-options: # >> Continuation of message configuration!
+options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /helpop -|
 
