@@ -2,7 +2,7 @@
 
 # The skript allows you to have a remake of the Essentials plugin.
 
-# Version: 1.4.1
+# Version: 1.5
 
 # >> %player% : This is a variable that allows you to put your nickname.
 # >> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -53,7 +53,7 @@ options:
 	Noperms: &cYou don't have permission.
 	Noplayerconnect: &cThe player is not connected.
 	Reloadmsg: &cYou have reloaded the plugin.
-	Essentialsversionmsg: &7Essentials is 1.4.1.
+	Essentialsversionmsg: &7Essentials is 1.5.
 
 	Join: &6The player &c%player% &6logged on to the server.
 	Quit: &6The player &c%player% &6disconnected from the server.
@@ -692,6 +692,10 @@ options: # >> Continuation of message configuration!
 	Weathertorain: &7You put the rain.
 	Weathertothunder: &7You put the thunder.
 
+	# >> COMMAND MESSAGE = /clearchat -|
+
+	Clearchat: &cThe broadcast has been deleted.
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -700,6 +704,18 @@ options: # >> Continuation of message configuration!
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /clearchat:
+	permission: essentials.clearchat
+	executable by: players
+	permission message: {@Noperms}
+	usage: &cError &6>> &f/clearchat
+	aliases: essentials:clearchat,  essentials:cc,  cc
+	trigger:
+		loop 300 times:
+			broadcast ""
+		loop 1 times:
+			broadcast "{@Clearchat}"
 
 on chat:
 	if {@Emoticonuse} is true:
@@ -1824,7 +1840,7 @@ on right click on sign:
 		stop
 
 on sign change:
-	if sender has permission "essentials.sign.*" or "essentials.sign.create.gamemode.*" or "essentials.sign.create.*" or "essentials.sign.create.gamemode.creatif" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.create.gamemode.*" or "essentials.sign.create.*" or "essentials.sign.create.gamemode.creative" or "essentials.*":
 		if line 1 is "[Essentials]":
 			if line 2 is "Gamemode":
 				if line 3 is "Creatif" or "1":
@@ -1833,7 +1849,7 @@ on sign change:
 					set line 3 of block to "Creatif"
 					send "{@Signcommands}" to player
 					stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.gamemode.*" or "essentials.sign.create.*" or "essentials.sign.create.gamemode.creatif" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.create.gamemode.*" or "essentials.sign.create.*" or "essentials.sign.create.gamemode.creative" or "essentials.*":
 		stop
 
 on sign change:
@@ -1876,12 +1892,12 @@ on sign change:
 		stop
 
 on right click on sign:
-	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creatif" or "essentials.*":
+	if sender has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Creatif":
 				make player execute command "/gm 1"
 				stop
-	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creatif" or "essentials.*":
+	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		stop
 
 on right click on sign:
@@ -3548,21 +3564,37 @@ command /gm [<text>] [<offline player>]:
 			send "&cError &6>> &f/gamemode [0/1/2/3 or s/c/a/sp] [player]" to player
 		if arg 2 is not set:
 			if sender is a player:
-				if arg 1 is "1" or "c":
-					set the gamemode of the player to creative
-					send "{@Gamemodetometocreative}" to player
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
+					if arg 1 is "1" or "c":
+						set the gamemode of the player to creative
+						send "{@Gamemodetometocreative}" to player
+						stop
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival" or "essentials.*":
+					if arg 1 is "0" or "s":
+						set the gamemode of the player to survival
+						send "{@Gamemodetometosurvival}" to player
+						stop
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure" or "essentials.*":
+					if arg 1 is "2" or "a":
+						set the gamemode of the player to adventure
+						send "{@Gamemodetometoadventure}" to player
+						stop
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
+					if arg 1 is "3" or "sp":
+						set the gamemode of the player to spectator
+						send "{@Gamemodetometospectator}" to player
+						stop
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.creative" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
-				if arg 1 is "0" or "s":
-					set the gamemode of the player to survival
-					send "{@Gamemodetometosurvival}" to player
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.survival" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
-				if arg 1 is "2" or "a":
-					set the gamemode of the player to adventure
-					send "{@Gamemodetometoadventure}" to player
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.adventure" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
-				if arg 1 is "3" or "sp":
-					set the gamemode of the player to spectator
-					send "{@Gamemodetometospectator}" to player
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.spectator" or "essentials.*":
+					send "{@Noperms}" to player
 					stop
 			if sender is console:
 				if arg 2 is not set:
@@ -3570,10 +3602,10 @@ command /gm [<text>] [<offline player>]:
 					stop
 		if arg 1 is set:
 			if arg 2 is online:
-				if sender doesn't have permission "essentials.gamemode.others" or "essentials.*":
+				if sender doesn't have permission "essentials.gamemode.*" or "essentials.gamemode.others" or "essentials.*":
 					send "{@Noperms}" to player
 					stop
-				if sender has permission "essentials.gamemode.others" or "essentials.*":
+				if sender has permission "essentials.gamemode.*" or "essentials.gamemode.others" or "essentials.*":
 					if sender is a player:
 						if arg 1 is "1" or "c":
 							set the gamemode of the arg 2 to creative
