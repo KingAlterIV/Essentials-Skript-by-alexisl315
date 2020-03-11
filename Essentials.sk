@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.15.5
+# |-> Version: 1.15.6
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -363,8 +363,8 @@ options: # >> Continuation of message configuration!
 
 	# >> COMMAND MESSAGE = /money, /eco, /pay -|
 
-	Moneytome: &7You have &c%{money.%UUID of player%}% &c€ &7!
-	Moneytoplayer: &7The player &c%arg 1% &7has &c%{money.%UUID of arg 1%}% &c€ &7!
+	Moneytome: &7You have &c%{money.%player%}% &c€ &7!
+	Moneytoplayer: &7The player &c%arg 1% &7has &c%{money.%arg 1%}% &c€ &7!
 
 	Ecogivetoplayeradmin: &6You have to add &c%arg 3% &c€ &6to player &c%arg 2% &6!
 	Ecogivetome: &c%player% &6you to add &c%arg 3% &c€ &6!
@@ -475,7 +475,7 @@ command /seen [<player>]:
 			send "&7God mode&6: &c%{_god}%" to player
 			send "&7Afk&6: &c%{_afk}%" to player
 			send "&7Vanish&6: &c%{_vanish}%" to player
-			send "&7Money&6: &c%{money.%UUID of player%}% &c€" to player
+			send "&7Money&6: &c%{money.%player%}% &c€" to player
 			send "&7Gamemode&6: &c%player's gamemode%" to player
 			send "&7Freeze: &c%{_freeze}%" to player
 			send "&7Mute&6: &c%{_mute}%" to player
@@ -519,7 +519,7 @@ command /seen [<player>]:
 				send "&7God mode&6: &c%{_god}%" to player
 				send "&7Afk&6: &c%{_afk}%" to player
 				send "&7Vanish&6: &c%{_vanish}%" to player
-				send "&7Money&6: &c%{money.%UUID of arg 1%}% &c€" to player
+				send "&7Money&6: &c%{money.%arg 1%}% &c€" to player
 				send "&7Gamemode&6: &c%arg 1's gamemode%" to player
 				send "&7Freeze: &c%{_freeze}%" to player
 				send "&7Mute&6: &c%{_mute}%" to player
@@ -972,6 +972,10 @@ options: # >> Continuation of message configuration !
 	Deoptoconsole: &7You have removed the &c%arg 1% &7operator !
 	Deoptoalready: &7You already put deoperator the player &c%arg 1% &7!
 
+	# >> COMMAND MESSAGE = /butcher -|
+
+	Butcher: &7You have remove the all mobs !
+
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
@@ -980,6 +984,22 @@ options: # >> Continuation of message configuration !
 # ___  ______  ______  ______  ______  ______  ______  ______  ______  ___ #
 #  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  __)(__  #
 # (______)(______)(______)(______)(______)(______)(______)(______)(______) #
+
+command /butcher:
+	permission: essentials.butcher
+	executable by: players, console
+	permission message: {@Nopermission}
+	usage: &cError &6>> &f/butcher
+	aliases: essentials:butcher
+	trigger:
+		if sender is a player:
+			if loop-entity is not a player:
+				send "{@Butcher}" to player
+            	kill loop-entity
+				stop
+		if sender is console:
+			send "{@Errortoconsoleisnotplayerusecommands}" to console
+			stop
 
 on sign change:
 	if sender has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.fly" or "essentials.*":
@@ -2540,7 +2560,7 @@ on right click on sign:
 			loop {e-mail.%player%} times:
 				add 1 to {_count}
 				send "%{e-mail.message.%{_count}%}%"
-			send "{@Mailread}"
+			send "{@Mailread}" to player
 			stop
 	if sender doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.mail" or "essentials.*":
 		stop
@@ -2568,7 +2588,7 @@ command /mail [<text>] [<offline player>] [<text>]:
 					loop {e-mail.%player%} times:
 						add 1 to {_count}
 						send "%{e-mail.message.%{_count}%}%"
-					send "{@Mailread}"
+					send "{@Mailread}" to player
 					stop
 			if arg 1 is "clear":
 				if sender doesn't have permission "essentials.mail.clear" or "essentials.mail.*" or "essentials.*":
@@ -2888,21 +2908,21 @@ command /togglejail [<offline player>] [<text>]:
 				stop
 			if arg 1 is set:
 				if arg 2 is not set:
-					if {in.jail::%uuid of arg 1%} is set:
-						teleport arg 1 to {beforejail::%uuid of arg 1%}
-						clear {beforejail::%uuid of arg 1%}
-						clear {in.jail::%uuid of arg 1%}
+					if {in.jail::%arg 1%} is set:
+						teleport arg 1 to {beforejail::%arg 1%}
+						clear {beforejail::%arg 1%}
+						clear {in.jail::%arg 1%}
 						send "{@Nojailplayer}" to arg 1
 						send "{@Nojailplayeradmin}" to player
 						stop
-					if {in.jail::%uuid of arg 1%} is not set:
+					if {in.jail::%arg 1%} is not set:
 						send "&cError &6>> &f/jail [player] [jail]" to player
 						stop
 				if arg 2 is set:
 					if {jails::%arg 2%} is set:
-						set {beforejail::%uuid of arg 1%} to location of arg 1
+						set {beforejail::%arg 1%} to location of arg 1
 						teleport arg 1 to {jails::%arg 2%}
-						set {in.jail::%uuid of arg 1%} to 1
+						set {in.jail::%arg 1%} to 1
 						send "{@Jailplayer}" to arg 1
 						send "{@Jailplayeradmin}" to player
 						stop
@@ -2914,36 +2934,36 @@ command /togglejail [<offline player>] [<text>]:
 			stop
 
 on drop:
-	if {in.jail::%uuid of player%} is set:
+	if {in.jail::%player%} is set:
 		cancel the event
 		stop
 		stop	
 
 on click:
-	if {in.jail::%uuid of player%} is set:
+	if {in.jail::%player%} is set:
 		cancel the event
 		stop
 		stop	
 on teleport:
-	if {in.jail::%uuid of player%} is set:
+	if {in.jail::%player%} is set:
 		cancel the event
 		stop
 
 on mine:
-	if {in.jail::%uuid of player%} is set:
+	if {in.jail::%player%} is set:
 		cancel the event
 		stop
 
 on any movement:
-	if {in.jail::%uuid of player%} is set:
+	if {in.jail::%player%} is set:
 		cancel the event
 		stop
 
 on damage:
-	if {in.jail::%uuid of attacker%} is set:
+	if {in.jail::%attacker%} is set:
 		cancel the event
 		stop
-	else if {in.jail::%uuid of victim%} is set:
+	else if {in.jail::%victim%} is set:
 		cancel the event
 		stop
 
@@ -3417,23 +3437,23 @@ command /unlimited [<offline player>]:
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				if {unlimited::%uuid of player%} is not set:
-					set {unlimited::%uuid of player%} to 1
+				if {unlimited::%player%} is not set:
+					set {unlimited::%player%} to 1
 					send "{@Unlimitedenabletome}" to player
 					stop
-				if {unlimited::%uuid of player%} is set:
-					clear {unlimited::%uuid of player%}
+				if {unlimited::%player%} is set:
+					clear {unlimited::%player%}
 					send "{@Unlimiteddisabletome}" to player
 					stop
 			if arg 1 is online:
 				if sender has permission "essentials.unlimited.others" or "essentials.*":
-					if {unlimited::%uuid of arg 1%} is not set:
-						set {unlimited::%uuid of arg 1%} to 1
+					if {unlimited::%player%} is not set:
+						set {unlimited::%player%} to 1
 						send "{@Unlimitedenabletome}" to arg 1
 						send "{@Unlimitedenabletoplayeradmin}" to player
 						stop
-					if {unlimited::%uuid of arg 1%} is set:
-						clear {unlimited::%uuid of arg 1%}
+					if {unlimited::%player%} is set:
+						clear {unlimited::%player%}
 						send "{@Unlimiteddisabletome}" to arg 1
 						send "{@Unlimiteddisabletoplayeradmin}" to player
 						stop
@@ -3448,7 +3468,7 @@ command /unlimited [<offline player>]:
 			stop
 
 on place:
-	if {unlimited::%uuid of player%} is set:
+	if {unlimited::%player%} is set:
 		give 0 of event-block to the player
 		stop
 
@@ -4075,8 +4095,8 @@ command /pay [<offline player>] [<number>]:
 						send "{@Paynomoney}" to player
 						stop
 					else:
-						remove arg 2 from {money.%UUID of player%}
-						add arg 2 to {money.%UUID of arg 1%}
+						remove arg 2 from {money.%player%}
+						add arg 2 to {money.%arg 1%}
 						send "{@Paytome}" to player
 						send "{@Paytoplayer}" to arg 1
 						stop
@@ -4147,7 +4167,7 @@ command /eco [<text>] [<offline player>] [<number>]:
 							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 							stop
 						if arg 3 is set:
-							set {money.%UUID of arg 2%} to arg 3
+							set {money.%arg 2%} to arg 3
 							send "{@Ecosettoplayeradmin}" to player
 							send "{@Ecosettome}" to arg 2
 							stop
@@ -4167,7 +4187,7 @@ command /eco [<text>] [<offline player>] [<number>]:
 							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 							stop
 						if arg 3 is set:
-							add arg 3 to {money.%UUID of arg 2%}
+							add arg 3 to {money.%arg 2%}
 							send "{@Ecogivetoplayeradmin}" to player
 							send "{@Ecogivetome}" to arg 2
 					if arg 2 is offline:
@@ -4186,8 +4206,8 @@ command /eco [<text>] [<offline player>] [<number>]:
 							send "&cError &6>> &f/eco [give/remove/set] [player] [number]" to player
 							stop
 						if arg 3 is set:
-							if {money.%UUID of arg 2%} > arg 3:
-								remove arg 3 from {money.%UUID of arg 2%}
+							if {money.%arg 2%} > arg 3:
+								remove arg 3 from {money.%arg 2%}
 								send "{@Ecoremovetoplayeradmin}" to player
 								send "{@Ecoremovetome}" to arg 2
 							else:
@@ -5422,13 +5442,13 @@ command /fly [<offline player>]:
 					stop
 			if arg 1 is online:
 				if sender has permission "essentials.fly.others" or "essentials.*":
-					if {fly.%arg-1%} is not set:
+					if {fly.%arg 1%} is not set:
 						send "{@Flytoplayerisadmin}" to player
 						send "{@Flytoplayer}" to arg 1
 						set arg 1's flight mode to true
-						set {fly.%arg-1%} to true
+						set {fly.%arg 1%} to true
 						stop
-					if {fly.%arg-1%} is set:
+					if {fly.%arg 1%} is set:
 						send "{@Noflytoplayerisadmin}" to player
 						send "{@Noflytoplayer}" to arg 1
 						set arg 1's flight mode to false
@@ -5446,13 +5466,13 @@ command /fly [<offline player>]:
 					stop
 		if sender is console:
 			if arg 1 is online:
-				if {fly.%arg-1%} is not set:
+				if {fly.%arg 1%} is not set:
 					send "{@Flytoplayerisadmin}" to console
-					send "{@Flytoplayerisconsole}" to arg-1
+					send "{@Flytoplayerisconsole}" to arg 1
 					set arg 1's flight mode to true
-					set {fly.%arg-1%} to true
+					set {fly.%arg 1%} to true
 					stop
-				if {fly.%arg-1%} is set:
+				if {fly.%arg 1%} is set:
 					send "{@Noflytoplayerisadmin}" to console
 					send "{@Noflytoplayerisconsole}" to arg 1
 					set arg 1's flight mode to false
@@ -5680,7 +5700,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.15.5" to player
+				send "&fVersion &6|-> &c1.15.6" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -5696,7 +5716,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-8-1-15-1-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.15.5" to console
+				send "&fVersion &6|-> &c1.15.6" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
