@@ -2,7 +2,7 @@
 
 # |-> The skript allows you to have a remake of the Essentials plugin.
 
-# |-> Version: 1.16Pre1
+# |-> Version: 1.16Pre2
 
 # |-> %player% : This is a variable that allows you to put your nickname.
 # |-> %arg 1% : This is a variable that allows to put the argument indicate, you can change the number to infinity.
@@ -587,9 +587,63 @@ command /seen [<offline player>] [<text>]:
 					if sender doesn't have permission "essentials.seen.others" or "essentials.*":
 						send "{@Nopermission}" to player
 						stop
+			if arg 1 is offline:
+				if sender has permission "essentials.seen.others" or "essentials.*":
+					send "&cError &6>> &f/seen [player]" to player
+					stop
+				if sender doesn't have permission "essentials.seen.others" or "essentials.*":
+					send "{@Nopermission}" to player
+					stop
 		if sender is console:
-			send "{@Errortoconsoleisnotplayerusecommands}" to console
-			stop
+			if arg 1 is offline:
+				send "{@Noplayerconnect}" to console
+				stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/seen [player]" to console
+				stop
+			if arg 1 is online:
+				if {afk.%arg 1%} is set:
+					set {_afk} to "{@Seenyes}"
+				else:
+					set {_afk} to "{@Seenno}"
+				if {essentials.god.%arg 1%} is true:
+					set {_god} to "{@Seenyes}"
+				else:
+					set {_god} to "{@Seenno}"
+				if {mute.%arg 1%} is true:
+					set {_mute} to "{@Seenyes}"
+				else:
+					set {_mute} to "{@Seenno}"
+				if {banplayer.%arg 1%} is true:
+					set {_ban} to "{@Seenyes}"
+				else:
+					set {_ban} to "{@Seenno}"
+				if {freeze.%arg 1%.frozen.gm} is true:
+					set {_freeze} to "{@Seenyes}"
+				else:
+					set {_freeze} to "{@Seenno}"
+				if {vanish.%arg 1%} is set:
+					set {_vanish} to "{@Seenyes}"
+				else:
+					set {_vanish} to "{@Seenno}"
+				send "&7-_-_-_-_-_-_-_ &c%arg 1% &7-_-_-_-_-_-_-_" to console
+				send "&7IP&6: &c%{ip.%arg 1%}%" to console
+				send "&7UUID&6: &c%arg 1's uuid%" to console
+				send "&7God mode&6: &c%{_god}%" to console
+				send "&7Afk&6: &c%{_afk}%" to console
+				send "&7Vanish&6: &c%{_vanish}%" to console
+				send "&7Money&6: &c%{money.%arg 1%}% &c€" to console
+				send "&7Gamemode&6: &c%arg 1's gamemode%" to console
+				send "&7Freeze: &c%{_freeze}%" to console
+				send "&7Mute&6: &c%{_mute}%" to console
+				send "&7Ban&6: &c%{_ban}%" to console
+				send "&7Coords&6: &c%arg 1's location%" to console
+				send "&7World&6: &c%arg 1's world%" to console
+				send "&7Exp&6: &c%arg 1's level%" to console
+				send "&7Health&6: &c%arg 1's health%&c/10" to console
+				send "&7Hunger&6: &c%arg 1's hunger%&c/10" to console
+				send "&7Seed world&6: &c%seed of arg 1's world%" to console
+				stop
 
 options: # >> Continuation of message configuration !
 
@@ -717,7 +771,7 @@ options: # >> Continuation of message configuration !
 
 	# >> COMMAND MESSAGE = /spawnmob -|
 
-	Spawnmob: &7You made spawn &c%arg 2% %arg 1% &7!
+	Spawnmob: &7You made spawn &c%arg 2% &c%arg 1% &7!
 
 	# >> COMMAND MESSAGE = /sudo -|
 
@@ -4121,23 +4175,23 @@ command /back [<offline player>] [<text>]:
 			if arg 1 is online:
 				if arg 1 is not "%player%":
 					if sender doesn't have permission "essentials.back.others" or "essentials.*":
-						if {back::%uuid of arg 1%} is not set:
+						if {back::%arg 1%} is not set:
 							send "{@Nobackpoint}" to player
 							stop
-						if {back::%uuid of arg 1%} is set:
+						if {back::%arg 1%} is set:
 							if {@Backcooldownuse} is true:
 								if sender doesn't have permission "essentials.back.bypass.others" or "essentials.*":
 									send "{@Backcooldown1} {@Backcooldown} {@Backcooldown2}" to arg 1
 									wait {@Backcooldown} seconds
-									teleport arg 1 to {back::%uuid of arg 1%}
+									teleport arg 1 to {back::%arg 1%}
 									send "{@Backteleporting}" to arg 1
 									stop
 								if sender has permission "essentials.back.bypass.others" or "essentials.*":
-									teleport arg 1 to {back::%uuid of arg 1%}
+									teleport arg 1 to {back::%arg 1%}
 									send "{@Backteleporting}" to arg 1
 									stop
 							if {@Backcooldownuse} is false:
-								teleport arg 1 to {back::%uuid of arg 1%}
+								teleport arg 1 to {back::%arg 1%}
 								send "{@Backteleporting}" to arg 1
 								stop
 					if sender has permission "essentials.back.others" or "essentials.*":
@@ -4399,8 +4453,15 @@ command /money [<offline player>] [<text>]:
 						send "{@Nopermission}" to player
 						stop
 		if sender is console:
-			send "{@Errortoconsoleisnotplayerusecommands}" to console
-			stop
+			if arg 1 is not set:
+				send "&cError &6>> &f/money [player]" to console
+				stop
+			if arg 1 is online:
+				send "{@Moneytoplayer}" to console
+				stop
+			if arg 1 is offline:
+				send "{@Moneytoplayer}" to console
+				stop
 
 command /eco [<text>] [<offline player>] [<number>] [<text>]:
 	permission: essentials.eco
@@ -5198,12 +5259,12 @@ command /skull [<offline player>] [<text>]:
 	permission message: {@Nopermission}
 	aliases: essentials:skull, head, playerhead, essentials:head, essentials:playerhead
 	executable by: players, console
-	usage: &cError &6>> &f/skull [name of player]
+	usage: &cError &6>> &f/skull [name of player's skull]
 	description: &fGive the player's skull !
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				send "&cError &6>> &f/skull [name of player]" to player
+				send "&cError &6>> &f/skull [name of player's skull]" to player
 				stop
 			if arg 1 is set:
 				give skull of arg 1 to player
@@ -5479,7 +5540,7 @@ command /tphere [<offline player>] [<text>]:
 				send "&cError &6>> &f/tphere [player]" to player
 				stop
 			if arg 1 is online:
-				set {back::%uuid of arg 1%} to location of arg 1
+				set {back::%arg 1%} to location of arg 1
 				teleport arg 1 to player
 				send "{@Tphereteleporting}" to arg 1
 				stop
@@ -5994,7 +6055,7 @@ command /tp [<offline player>] [<offline player>] [<text>]:
 						stop
 				if arg 2 is set:
 					if sender has permission "essentials.tp.others" or "essentials.*":
-						set {back::%uuid of arg 1%} to location of arg 1
+						set {back::%arg 1%} to location of arg 1
 						teleport arg 1 to arg 2
 						send "{@Tpteleporting}" to arg 1
 						stop
@@ -6089,7 +6150,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-9-1-15-2-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to player
-				send "&fVersion &6|-> &c1.16Pre1" to player
+				send "&fVersion &6|-> &c1.16Pre2" to player
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to player
 				stop
 			if arg 1 is not set:
@@ -6105,7 +6166,7 @@ command /essentials [<text>]:
 				stop
 			if arg 1 is "info":
 				send "&fSpigot link &6|-> &chttps://www.spigotmc.org/resources/essentials-1-9-1-15-2-bungeecord-spigot-paper-support-new-1-15-big-update.39698/" to console
-				send "&fVersion &6|-> &c1.16Pre1" to console
+				send "&fVersion &6|-> &c1.16Pre2" to console
 				send "&fCreator &6|-> &cAlexisl315 (Aliase: ~ Lennord)" to console
 				stop
 			if arg 1 is not set:
@@ -6115,7 +6176,7 @@ command /essentials [<text>]:
 				send "&cError &6>> &f/essentials reload/info" to console
 				stop
 
-command /feed [<offline player>]:
+command /feed [<offline player>] [<text>]:
 	permission: essentials.feed
 	aliases: essentials:feed
 	usage: &cError &6>> &f/feed [player]
@@ -6133,7 +6194,7 @@ command /feed [<offline player>]:
 					if arg 1 is not "%player%":
 						send "{@Feedtoplayerisadmin}" to player
 						send "{@Feedtoplayer}" to arg 1
-						set arg's food bar to 10
+						set arg 1's food bar to 10
 						stop
 					if arg 1 is "%player%":
 						send "{@Feedtoplayerisme}" to player
@@ -6150,18 +6211,18 @@ command /feed [<offline player>]:
 					stop
 		if sender is console:
 			if arg 1 is not set:
-				send "{@Noplayerconnect}" to console
+				send "&cError &6>> &f/feed [player]" to console
 				stop
 			if arg 1 is online:
 				send "{@Feedtoplayerconsole}" to arg 1
 				send "{@Feedtoplayerisadmin}" to console
-				set arg's food bar to 10
+				set arg 1's food bar to 10
 				stop
 			if arg 1 is offline:
 				send "{@Noplayerconnect}" to console
 				stop
 
-command /heal [<offline player>]:
+command /heal [<offline player>] [<text>]:
 	permission: essentials.heal
 	usage: &cError &6>> &f/heal [player]
 	aliases: essentials:heal
@@ -6196,7 +6257,7 @@ command /heal [<offline player>]:
 					stop
 		if sender is console:
 			if arg 1 is not set:
-				send "{@Noplayerconnect}" to console
+				send "&cError &6>> &f/feed [player]" to console
 				stop
 			if arg 1 is online:
 				send "{@Healtoplayerconsole}" to arg 1
@@ -6259,7 +6320,7 @@ command /spawn [<offline player>]:
 					if sender has permission "essentials.spawn.others" or "essentials.*":
 						if arg 1 is not "%player%":
 							send "{@Teleportspawnisplayer}" to arg 1
-							set {back::%uuid of arg 1%} to location of arg 1
+							set {back::%arg 1%} to location of arg 1
 							send "{@Spawnteleporting}" to player
 							teleport arg 1 to {spawn}
 							stop
@@ -6282,12 +6343,11 @@ command /spawn [<offline player>]:
 				stop
 			if {spawn} is set:
 				if arg 1 is not set:
-					if {@Spawncooldownuse} is true:
-						send "{@Errortoconsoleisnotplayerusecommands}" to console
-						stop
+					send "&cError &6>> &f/spawn [player]" to console
+					stop
 				if arg 1 is online:
-					send "{@Teleportspawnisplayer}" to arg 1
-					set {back::%uuid of arg 1%} to location of arg 1
+					send "{@Teleportspawnisconsole}" to arg 1
+					set {back::%arg 1%} to location of arg 1
 					send "{@Spawnteleporting}" to arg 1
 					teleport arg 1 to {spawn}
 					stop
