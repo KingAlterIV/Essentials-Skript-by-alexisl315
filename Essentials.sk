@@ -1,6 +1,6 @@
 ﻿#  |-> Essentials by Alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre3
+#  |-> Essentials Update 1.16Pre4
 
 options:
 	
@@ -61,6 +61,17 @@ options:
 			Essentials-death-to-remove-to-money-use: false
 			Essentials-death-to-remove-to-money: 5
 
+			Essentials-randomteleport-use-cooldown: true
+			Essentials-randomteleport-teleport-cooldown: 10
+
+			Essentials-randomteleport-to-x-coord-min: -1000
+			Essentials-randomteleport-to-x-coord-max: 1000
+
+			Essentials-randomteleport-to-z-coord-min: -1000
+			Essentials-randomteleport-to-z-coord-max: 1000
+
+			Essentials-randomteleport-to-teleport-change-gamemode-to-creative: 30
+
 	# |-> Messages:
 
 		# |-> MESSAGE DEFAULT !
@@ -85,7 +96,7 @@ options:
 			Essentials-ban-reason-banned: &cYou were banned because you did not follow the server policies !
 			Essentials-banip-reason-banned: &cYou were banned because you did not follow the server policies !
 
-			Essentials-maintenance-reason-kick: &cVous avez été expulsé du serveur, car le serveur est désormais en maintenance !
+			Essentials-maintenance-reason-kick: &cYou have been kicked from the server because the server is now under maintenance !
 
 			Essentials-sign-create: &7You have created a panel !
 			Essentials-sign-create-warp-no-warp: &cYou have no warp with this name !
@@ -95,7 +106,7 @@ options:
 
 			Essentials-no-drop: &cYour have not permission for dropped items and more...
 
-			Essentials-world-to-create: &7Un nouveau monde vient de se chargé !
+			Essentials-world-to-create: &7A new world just got loaded !
 
 			Essentials-motd-to-server: &7[&6New Server&7] &6| &7&oWelcome to the server Minigames !
 
@@ -128,7 +139,7 @@ options:
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre3%nl%&7Support version&6: &c1.9-1.15.2%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre4%nl%&7Support version&6: &c1.9-1.16.1%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
 		# |-> MESSAGE OF /TP !
 
@@ -776,7 +787,7 @@ options:
 
 		# |-> MESSAGE OF /MAINTENANCE !
 
-		Essentials-maintenance-none-argument: &cYou must use the right arguments ! ('on', 'off' or 'enable' and 'disable')
+		Essentials-maintenance-none-argument: &cYou must use the right arguments ! ('on' and 'off' or 'enable' and 'disable')
 
 		Essentials-maintenance-to-enable:  &6&oAnnouncement of server&6: &cA maintenance will be activated in %{Essentials-kick-maintenance-cooldown.variable}% &cseconds, suddenly you will be kicked from the server !
 		Essentials-maintenance-to-enable-to-already: &cServer maintenance is already activated !
@@ -822,7 +833,7 @@ options:
 
 		# |-> MESSAGE OF /PVP !
 
-		Essentials-pvp-none-argument: &cYou must use the right arguments ! ('on', 'off' or 'enable' and 'disable')
+		Essentials-pvp-none-argument: &cYou must use the right arguments ! ('on' and 'off' or 'enable' and 'disable')
 
 		Essentials-pvp-to-on: &7You have activated pvp !
 		Essentials-pvp-to-off: &7You have deactivated pvp !
@@ -840,7 +851,218 @@ options:
 
 		Essentials-bedteleport-if-player-of-me: &cYou can't teleport yourself !
 
+		# |-> MESSAGE OF /RANDOMTELEPORT !
+
+		Essentials-randomteleport-cooldown: &7You will be teleported to &c%{Essentials-randomteleport-teleport-cooldown.variable}% &cseconds &7!
+		Essentials-randomteleport-teleport: &7You have been randomly teleported !
+
+		Essentials-randomteleport-if-teleport-is-set: &cYou can't teleport yourself every time !
+
+		# |-> MESSAGE OF /EDITSIGN !
+
+		Essentials-editsign-none-argument-one: &7You must put the line you want to change ! ('1', '2', '3' and '4')
+		Essentials-editsign-none-argument-two: &cYou must put a text to be able to use this command !
+
+		Essentials-editsign-to-block-targeted-is-not-sign: &cYou must target the panel you want to modify !
+
+		Essentials-editsign-to-edit-line: &7You have successfully modified the row of the panel !
+
 #  |->>> THE CODE OF ESSENTIALS SKRIPT <<<-|
+
+command /editsign [<text>] [<text>]:
+	executable by: player and console
+	aliases: essentials:editsign
+	description: &fEssentials command /editsign !
+	trigger:
+		if sender is a player:
+			if targeted block is not a sign:
+				send "{@Essentials-editsign-to-block-targeted-is-not-sign}" to player
+				stop
+			else:
+				if arg 1 is not set:
+					send "{@Essentials-editsign-none-argument-one}" to player
+					stop
+				if arg 1 is not "1" or "2" or "3" or "4":
+					send "{@Essentials-editsign-none-argument-one}" to player
+					stop
+				if arg 1 is "1":
+					if arg 2 is not set:
+						send "{@Essentials-editsign-none-argument-two}" to player
+						stop
+					if arg 2 is set:
+						set line 1 of targeted block to colored arg 2
+						send "{@Essentials-editsign-to-edit-line}" to player
+						stop
+				if arg 1 is "2":
+					if arg 2 is not set:
+						send "{@Essentials-editsign-none-argument-two}" to player
+						stop
+					if arg 2 is set:
+						set line 2 of targeted block to colored arg 2
+						send "{@Essentials-editsign-to-edit-line}" to player
+						stop
+				if arg 1 is "3":
+					if arg 2 is not set:
+						send "{@Essentials-editsign-none-argument-two}" to player
+						stop
+					if arg 2 is set:
+						set line 3 of targeted block to colored arg 2
+						send "{@Essentials-editsign-to-edit-line}" to player
+						stop
+				if arg 1 is "4":
+					if arg 2 is not set:
+						send "{@Essentials-editsign-none-argument-two}" to player
+						stop
+					if arg 2 is set:
+						set line 4 of targeted block to colored arg 2
+						send "{@Essentials-editsign-to-edit-line}" to player
+						stop
+		if sender is console:
+			send "{@Essentials-if-sender-is-console-use-commands}" to console
+			stop
+
+on command "/editsign":
+	if sender is a player:
+		if player has permission "essentials.editsign" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/essentials:editsign":
+	if sender is a player:
+		if player has permission "essentials.editsign" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+command /randomteleport [<text>]:
+	executable by: player and console
+	aliases: essentials:randomteleport, essentials:randomtp, randomtp, rtp, essentials:rtp
+	description: &fEssentials command /randomteleport !
+	trigger:
+		if sender is a player:
+			if player has permission "essentials.randomteleport.bypass" or "essentials.*":
+				if {Essentials.randomteleport.if.teleport.is.set.%player%} is not set:
+					set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
+					teleport player to {Essentials.randomtp.teleport.use}
+					send "{@Essentials-randomteleport-teleport}" to player
+					set gamemode of player to creative
+					set {Essentials.randomteleport.change.gamemode.%player%} to true
+					set {Essentials.randomteleport.if.teleport.is.set.%player%} to true
+					stop
+				else:
+					send "{@Essentials-randomteleport-if-teleport-is-set}" to player
+					stop
+			else:
+				if {Essentials.randomteleport.if.teleport.is.set.%player%} is not set:
+					if {@Essentials-randomteleport-use-cooldown} is true:
+						set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
+						send "{@Essentials-randomteleport-cooldown}" to player
+						wait {@Essentials-randomteleport-teleport-cooldown} seconds
+						teleport player to {Essentials.randomtp.teleport.use}
+						send "{@Essentials-randomteleport-teleport}" to player
+						set gamemode of player to creative
+						set {Essentials.randomteleport.change.gamemode.%player%} to true
+						set {Essentials.randomteleport.if.teleport.is.set.%player%} to true
+						stop
+					else:
+						set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
+						teleport player to {Essentials.randomtp.teleport.use}
+						send "{@Essentials-randomteleport-teleport}" to player
+						set gamemode of player to creative
+						set {Essentials.randomteleport.change.gamemode.%player%} to true
+						set {Essentials.randomteleport.if.teleport.is.set.%player%} to true
+						stop
+				else:
+					send "{@Essentials-randomteleport-if-teleport-is-set}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-if-sender-is-console-use-commands}" to console
+			stop
+
+on command "/rtp":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/essentials:rtp":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/randomtp":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/essentials:randomtp":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/randomteleport":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on command "/essentials:randomteleport":
+	if sender is a player:
+		if player has permission "essentials.randomteleport" or "essentials.*":
+			stop
+		else:
+			cancel event
+			send "{@Essentials-player-has-not-permission-use-commands}" to player
+			stop
+
+on inventory click:
+	if {Essentials.randomteleport.change.gamemode.%player%} is set:
+		cancel event
+		wait {@Essentials-randomteleport-to-teleport-change-gamemode-to-creative} seconds
+		set gamemode of player to survival
+		delete {Essentials.randomteleport.change.gamemode.%player%}
+		delete {Essentials.randomteleport.if.teleport.is.set.%player%}
+		stop
+	else:
+		stop
+
+on any movement:
+	if {Essentials.randomteleport.change.gamemode.%player%} is set:
+		wait {@Essentials-randomteleport-to-teleport-change-gamemode-to-creative} seconds
+		set gamemode of player to survival
+		delete {Essentials.randomteleport.change.gamemode.%player%}
+		delete {Essentials.randomteleport.if.teleport.is.set.%player%}
+		stop
+	else:
+		stop
+
+on join:
+	delete {Essentials.randomteleport.change.gamemode.%player%}
+	delete {Essentials.randomteleport.if.teleport.is.set.%player%}
+	stop	
 
 on sign change:
 	if player has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.bedteleport" or "essentials.*":
@@ -868,7 +1090,7 @@ on right click on sign:
 
 command /bedteleport [<offline player>] [<text>]:
 	executable by: player and console
-	aliases: essentials:pvp, essentials:bt, bt
+	aliases: essentials:bedteleport, essentials:bt, bt
 	description: &fEssentials command /bedteleport !
 	trigger:
 		if sender is a player:
@@ -7889,6 +8111,7 @@ on load:
 	set {Essentials-teleport-tpa-cooldown.variable} to "{@Essentials-teleport-tpa-cooldown}"
 	set {Essentials-give-kit-cooldown.variable} to "{@Essentials-give-kit-cooldown}"
 	set {Essentials-kick-maintenance-cooldown.variable} to "{@Essentials-maintenance-cooldown}"
+	set {Essentials-randomteleport-teleport-cooldown.variable} to "{@Essentials-randomteleport-teleport-cooldown}"
 	stop
 
 command /setspawn [<text>]:
