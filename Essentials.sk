@@ -1,6 +1,6 @@
 ﻿#  |-> Essentials by Alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre4
+#  |-> Essentials Update 1.16Pre5
 
 options:
 	
@@ -139,7 +139,7 @@ options:
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre4%nl%&7Support version&6: &c1.9-1.16.1%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre5%nl%&7Support version&6: &c1.9-1.16.3%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
 		# |-> MESSAGE OF /TP !
 
@@ -563,25 +563,25 @@ options:
 
 		Essentials-unbanip-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-unbanip-to-player-admin: &7You successfully banned the player's ip !
-		Essentials-unbanip-if-ip-of-player-is-unbanned: &7You have already successfully unbanned the player's ip !
+		Essentials-unbanip-if-ip-of-player-is-unbanned: &cYou have already unbanned the player's ip !
 
 		# |-> MESSAGE OF /UNBAN !
 
 		Essentials-unban-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-unban-to-player-admin: &7You successfully unbanned the player !
-		Essentials-unban-if-ip-of-player-is-unbanned: &7You have already successfully banned the player !
+		Essentials-unban-if-player-is-unbanned: &cYou have already unbanned the player !
 
 		# |-> MESSAGE OF /BANIP !
 
 		Essentials-banip-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-banip-to-player-admin: &7You successfully unbanned the player's ip !
-		Essentials-banip-if-ip-of-player-is-unbanned: &7You have already successfully banned the player's ip !
+		Essentials-banip-if-ip-of-player-is-banned: &cYou have already banned the player's ip !
 
 		# |-> MESSAGE OF /BAN !
 
 		Essentials-ban-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-ban-to-player-admin: &7You successfully banned the player !
-		Essentials-ban-if-ip-of-player-is-unbanned: &7You have already successfully banned the player !
+		Essentials-ban-if-player-is-banned: &cYou have already banned the player !
 
 		# |-> MESSAGE OF /WORKBENCH !
 
@@ -4295,30 +4295,44 @@ command /ban [<offline player>] [<text>]:
 				send "{@Essentials-ban-none-arguments}" to player
 				stop
 			if arg 1 is set:
-				if {Essentials-ban-player.%arg 1%} is false:
+				if {Essentials.ban.player.%arg 1%} is not set:
 					ban arg 1
 					kick arg 1 because "{@Essentials-ban-reason-banned}"
 					set {Essentials.banip.player.%arg 1%} to true
 					set {Essentials.ban.player.%arg 1%} to true
 					send "{@Essentials-ban-to-player-admin}" to player
 					stop
-				else:
-					send "{@Essentials-ban-if-ip-of-player-is-unbanned}" to player
+				if {Essentials.ban.player.%arg 1%} is false:
+					ban arg 1
+					kick arg 1 because "{@Essentials-ban-reason-banned}"
+					set {Essentials.banip.player.%arg 1%} to true
+					set {Essentials.ban.player.%arg 1%} to true
+					send "{@Essentials-ban-to-player-admin}" to player
+					stop
+				if {Essentials.ban.player.%arg 1%} is true:
+					send "{@Essentials-ban-if-player-is-banned}" to player
 					stop
 		if sender is console:
 			if arg 1 is not set:
 				send "{@Essentials-ban-none-arguments}" to console
 				stop
 			if arg 1 is set:
-				if {Essentials-ban-player.%arg 1%} is false:
+				if {Essentials.ban.player.%arg 1%} is not set:
 					ban arg 1
 					kick arg 1 because "{@Essentials-ban-reason-banned}"
 					set {Essentials.banip.player.%arg 1%} to true
 					set {Essentials.ban.player.%arg 1%} to true
 					send "{@Essentials-ban-to-player-admin}" to console
 					stop
-				else:
-					send "{@Essentials-ban-if-ip-of-player-is-unbanned}" to console
+				if {Essentials.ban.player.%arg 1%} is false:
+					ban arg 1
+					kick arg 1 because "{@Essentials-ban-reason-banned}"
+					set {Essentials.banip.player.%arg 1%} to true
+					set {Essentials.ban.player.%arg 1%} to true
+					send "{@Essentials-ban-to-player-admin}" to console
+					stop
+				if {Essentials.ban.player.%arg 1%} is true:
+					send "{@Essentials-ban-if-player-is-banned}" to console
 					stop
 
 on command "/ban":
@@ -4349,30 +4363,44 @@ command /banip [<offline player>] [<text>]:
 				send "{@Essentials-banip-none-arguments}" to player
 				stop
 			if arg 1 is set:
-				if {Essentials-banip-player.%arg 1%} is false:
+				if {Essentials.banip.player.%arg 1%} is not set:
 					IP-ban arg 1
 					kick arg 1 because "{@Essentials-banip-reason-banned}"
 					set {Essentials.banip.player.%arg 1%} to true
 					set {Essentials.ban.player.%arg 1%} to true
 					send "{@Essentials-banip-to-player-admin}" to player
 					stop
-				else:
-					send "{@Essentials-banip-if-ip-of-player-is-unbanned}" to player
+				if {Essentials.banip.player.%arg 1%} is false:
+					IP-ban arg 1
+					kick arg 1 because "{@Essentials-banip-reason-banned}"
+					set {Essentials.banip.player.%arg 1%} to true
+					set {Essentials.ban.player.%arg 1%} to true
+					send "{@Essentials-banip-to-player-admin}" to player
+					stop
+				if {Essentials.banip.player.%arg 1%} is true:
+					send "{@Essentials-banip-if-ip-of-player-is-banned}" to player
 					stop
 		if sender is console:
 			if arg 1 is not set:
 				send "{@Essentials-banip-none-arguments}" to console
 				stop
 			if arg 1 is set:
-				if {Essentials-banip-player.%arg 1%} is false:
+				if {Essentials.banip.player.%arg 1%} is not set:
 					IP-ban arg 1
 					kick arg 1 because "{@Essentials-banip-reason-banned}"
 					set {Essentials.banip.player.%arg 1%} to true
 					set {Essentials.ban.player.%arg 1%} to true
 					send "{@Essentials-banip-to-player-admin}" to console
 					stop
-				else:
-					send "{@Essentials-banip-if-ip-of-player-is-unbanned}" to console
+				if {Essentials.banip.player.%arg 1%} is false:
+					IP-ban arg 1
+					kick arg 1 because "{@Essentials-banip-reason-banned}"
+					set {Essentials.banip.player.%arg 1%} to true
+					set {Essentials.ban.player.%arg 1%} to true
+					send "{@Essentials-banip-to-player-admin}" to console
+					stop
+				if {Essentials.banip.player.%arg 1%} is true:
+					send "{@Essentials-banip-if-ip-of-player-is-banned}" to console
 					stop
 
 on command "/ban-ip":
@@ -4411,12 +4439,6 @@ on command "/essentials:banip":
 			send "{@Essentials-player-has-not-permission-use-commands}" to player
 			stop
 
-on join:
-	wait 1 second
-	set {Essentials-banip-player.%player%} to false
-	set {Essentials-ban-player.%player%} to false
-	stop
-
 command /unban [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:unban
@@ -4427,28 +4449,48 @@ command /unban [<offline player>] [<text>]:
 				send "{@Essentials-unban-none-arguments}" to player
 				stop
 			if arg 1 is set:
-				if {Essentials-ban-player.%arg 1%} is true:
+				if {Essentials.ban.player.%arg 1%} is not set:
 					unban arg 1
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
 					set {Essentials.banip.player.%arg 1%} to false
 					set {Essentials.ban.player.%arg 1%} to false
 					send "{@Essentials-unban-to-player-admin}" to player
 					stop
-				if {Essentials-ban-player.%arg 1%} is false:
-					send "{@Essentials-unban-if-ip-of-player-is-unbanned}" to player
+				if {Essentials.ban.player.%arg 1%} is true:
+					unban arg 1
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
+					set {Essentials.banip.player.%arg 1%} to false
+					set {Essentials.ban.player.%arg 1%} to false
+					send "{@Essentials-unban-to-player-admin}" to player
+					stop
+				if {Essentials.ban.player.%arg 1%} is false:
+					send "{@Essentials-unban-if-player-is-unbanned}" to player
 					stop
 		if sender is console:
 			if arg 1 is not set:
 				send "{@Essentials-unban-none-arguments}" to console
 				stop
 			if arg 1 is set:
-				if {Essentials-ban-player.%arg 1%} is true:
+				if {Essentials.ban.player.%arg 1%} is not set:
 					unban arg 1
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
 					set {Essentials.banip.player.%arg 1%} to false
 					set {Essentials.ban.player.%arg 1%} to false
 					send "{@Essentials-unban-to-player-admin}" to console
 					stop
-				if {Essentials-ban-player.%arg 1%} is false:
-					send "{@Essentials-unban-if-ip-of-player-is-unbanned}" to console
+				if {Essentials.ban.player.%arg 1%} is true:
+					unban arg 1
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
+					set {Essentials.banip.player.%arg 1%} to false
+					set {Essentials.ban.player.%arg 1%} to false
+					send "{@Essentials-unban-to-player-admin}" to console
+					stop
+				if {Essentials.ban.player.%arg 1%} is false:
+					send "{@Essentials-unban-if-player-is-unbanned}" to console
 					stop
 
 on command "/unban":
@@ -4479,7 +4521,14 @@ command /unbanip [<offline player>] [<text>]:
 				send "{@Essentials-unbanip-none-arguments}" to player
 				stop
 			if arg 1 is set:
-				if {Essentials-banip-player.%arg 1%} is true:
+				if {Essentials.banip.player.%arg 1%} is not set:
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
+					set {Essentials.banip.player.%arg 1%} to false
+					set {Essentials.ban.player.%arg 1%} to false
+					send "{@Essentials-unbanip-to-player-admin}" to player
+					stop
+				if {Essentials.banip.player.%arg 1%} is true:
 					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
 					IP-unban arg 1
 					set {Essentials.banip.player.%arg 1%} to false
@@ -4494,7 +4543,14 @@ command /unbanip [<offline player>] [<text>]:
 				send "{@Essentials-unbanip-none-arguments}" to console
 				stop
 			if arg 1 is set:
-				if {Essentials-banip-player.%arg 1%} is true:
+				if {Essentials.banip.player.%arg 1%} is not set:
+					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
+					IP-unban arg 1
+					set {Essentials.banip.player.%arg 1%} to false
+					set {Essentials.ban.player.%arg 1%} to false
+					send "{@Essentials-unbanip-to-player-admin}" to console
+					stop
+				if {Essentials.banip.player.%arg 1%} is true:
 					make console execute command "/pardon-ip %{Essentials.ip.%arg 1%}%"
 					IP-unban arg 1
 					set {Essentials.banip.player.%arg 1%} to false
@@ -7838,7 +7894,7 @@ command /essentials [<text>]:
 				send "{@Essentials-essentials-none-arguments}" to player
 				stop
 			if arg 1 is "reload":
-				make console execute command "/sk reload essentials-french"
+				make console execute command "/sk reload essentials"
 				send "{@Essentials-essentials-reload}" to player
 				stop
 			if arg 1 is "info":
@@ -7852,7 +7908,7 @@ command /essentials [<text>]:
 				send "{@Essentials-essentials-none-arguments}" to console
 				stop
 			if arg 1 is "reload":
-				make console execute command "/sk reload essentials-french"
+				make console execute command "/sk reload essentials"
 				send "{@Essentials-essentials-reload}" to console
 				stop
 			if arg 1 is "info":
