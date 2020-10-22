@@ -1,6 +1,6 @@
 ﻿#  |-> Essentials by Alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre5
+#  |-> Essentials Update 1.16Pre6
 
 options:
 	
@@ -125,21 +125,21 @@ options:
 
 		# |-> MESSAGE OF /HEAL, /FEED !
 
-			Essentials-heal-heal-to-me: &7You have been treated !
-			Essentials-heal-heal-to-player: &7You have been treated !
-			Essentials-heal-heal-to-player-admin: &7You treated the player &c%{Essentials.nick.%arg 1%}% &7!
+			Essentials-heal-heal-to-me: &7You have been heal !
+			Essentials-heal-heal-to-player: &7You have been heal !
+			Essentials-heal-heal-to-player-admin: &7You heal the player &c%{Essentials.nick.%arg 1%}% &7!
 			Essentials-heal-heal-of-me: &cYou can't heal yourself !
 
-			Essentials-feed-feed-to-me: &7You were fed !
-			Essentials-feed-feed-to-player: &7You were fed !
-			Essentials-feed-feed-to-player-admin: &7You fed the player &c%{Essentials.nick.%arg 1%}% &7!
+			Essentials-feed-feed-to-me: &7You were feed !
+			Essentials-feed-feed-to-player: &7You were feed !
+			Essentials-feed-feed-to-player-admin: &7You feed the player &c%{Essentials.nick.%arg 1%}% &7!
 			Essentials-feed-feed-of-me: &cYou can't feed yourself !
 
 		# |-> MESSAGE OF /ESSENTIALS ! >> ('%nl%' = Go to the line)
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre5%nl%&7Support version&6: &c1.9-1.16.3%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre6%nl%&7Support version&6: &c1.9-1.16.3%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
 		# |-> MESSAGE OF /TP !
 
@@ -193,20 +193,20 @@ options:
 			Essentials-gamemode-none-arguments: &cYou must put the name of a gamemode to be able to use this command ! (0, 1, 2 and 3 = survival, creative, adventure and spectator)
 			Essentials-gamemode-player-of-me: &cYou cannot change your own game mode !
 
-			Essentials-gamemode-survival-to-me: &7Your game mode has been successfully changed !
-			Essentials-gamemode-creative-to-me: &7Your game mode has been successfully changed !
-			Essentials-gamemode-adventure-to-me: &7Your game mode has been successfully changed !
-			Essentials-gamemode-spectator-to-me: &7Your game mode has been successfully changed !
+			Essentials-gamemode-survival-to-me: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-creative-to-me: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-adventure-to-me: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-spectator-to-me: &7Your gamemode has been successfully changed !
 
-			Essentials-gamemode-survival-to-player: &7Your game mode has been successfully changed !
-			Essentials-gamemode-creative-to-player: &7Your game mode has been successfully changed !
-			Essentials-gamemode-adventure-to-player: &7Your game mode has been successfully changed !
-			Essentials-gamemode-spectator-to-player: &7Your game mode has been successfully changed !
+			Essentials-gamemode-survival-to-player: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-creative-to-player: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-adventure-to-player: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-spectator-to-player: &7Your gamemode has been successfully changed !
 
-			Essentials-gamemode-survival-to-player-admin: &7Player's game mode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-creative-to-player-admin: &7Player's game mode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-adventure-to-player-admin: &7Player's game mode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-spectator-to-player-admin: &7Player's game mode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
+			Essentials-gamemode-survival-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
+			Essentials-gamemode-creative-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
+			Essentials-gamemode-adventure-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
+			Essentials-gamemode-spectator-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
 
 		# |-> MESSAGE OF /HELPOP !
 
@@ -262,21 +262,21 @@ options:
 		# |-> MESSAGE OF /SETWARP, /DELWARP, /WARP, /WARPS !
 
 			Essentials-setwarp-none-arguments: &cYou must put the name of a warp to be able to use this command !
-			Essentials-setwarp-create: &7Vous avez crée le warp &c%arg 1% &7avec succès !
-			Essentials-setwarp-is-create: &cLe warp %arg 1% &ca déjà été crée !
+			Essentials-setwarp-create: &7You created the warp &c%arg 1% &7with success !
+			Essentials-setwarp-is-create: &cThe warp %arg 1% &chas already been created !
 
 			Essentials-delwarp-none-arguments: &cYou must put the name of a warp to be able to use this command
-			Essentials-delwarp-delete: &7Vous avez supprimé le warp &c%arg 1% &7avec succès !
-			Essentials-delwarp-is-delete: &cLe warp %arg 1% &ca déjà été supprimé !
+			Essentials-delwarp-delete: &7You have removed the warp &c%arg 1% &7with success !
+			Essentials-delwarp-is-delete: &cThe warp %arg 1% &chas already been deleted !
 
 			Essentials-warp-none-arguments-one: &cYou must put the name of a warp to be able to use this command !
 
 			Essentials-warp-teleport-player-coodown: &cYou must wait %{Essentials-teleport-warp-cooldown.variable}% &cseconds to teleport to warp point !
-			Essentials.warp.no.warps: &cThis warp does not exist !
-			Essentials.warp.teleport-to-me: &7You have been successfully teleported to warp !
-			Essentials.warp.teleport-to-player: &7You have been successfully teleported to warp !
-			Essentials.warp.teleport-to-player-admin: &7You teleported the player &c%{Essentials.nick.%arg 2%}% &7to warp successfully !
-			Essentials.warp.teleport-for-me: &cYou cannot teleport yourself !
+			Essentials-warp-no-warps: &cThis warp does not exist !
+			Essentials-warp-teleport-to-me: &7You have been successfully teleported to warp !
+			Essentials-warp-teleport-to-player: &7You have been successfully teleported to warp !
+			Essentials-warp-teleport-to-player-admin: &7You teleported the player &c%{Essentials.nick.%arg 2%}% &7to warp successfully !
+			Essentials-warp-teleport-for-me: &cYou cannot teleport yourself !
 
 			Essentials-warps-list: &7Warps&6: &c%{Essentials.warp.list::*}% &c!
 			Essentials-warps-no-warp-list: &7Warps&6: &cNo warp !
@@ -288,9 +288,9 @@ options:
 
 		# |-> MESSAGE OF /ENDERCHEST !
 
-			Essentials-enderchest-open-to-me: &7You opened your sender's chest !
-			Essentials-enderchest-open-to-player: &7You have the player's send chest &c%{Essentials.nick.%arg 1%}% &7!
-			Essentials-enderchest-enderchest-open-for-me: &cYou cannot open your sender's chest !
+			Essentials-enderchest-open-to-me: &7You opened your enderchest !
+			Essentials-enderchest-open-to-player: &7You have the player's enderchest &c%{Essentials.nick.%arg 1%}% &7!
+			Essentials-enderchest-enderchest-open-for-me: &cYou cannot open your enderchest !
 
 		# |-> MESSAGE OF /AFK !
 
@@ -422,6 +422,8 @@ options:
 		Essentials-adminhome-none-arguments: &cYou must use the right arguments ! ('delhome', 'reset', 'homes', 'home' and 'sethome')
 
 		Essentials-adminhome-reset-none-arguments: &cYou must put a player's name to be able to use this command !
+		Essentials-adminhome-reset-home-is-not-set: &cThis player does not have a home !
+
 		Essentials-adminhome-homes-none-arguments: &cYou must put a player's name to be able to use this command !
 
 		Essentials-adminhome-home-none-arguments-one: &cYou must put a player's name to be able to use this command !
@@ -438,12 +440,12 @@ options:
 		Essentials-adminhome-no-home-list: &7Homes&6: &cNo home !
 
 		Essentials-adminhome-teleport-home: &7You had been teleported to the player's home &c%{Essentials.nick.%arg 2%}% &7!
-		Essentials-adminhome-teleport-home-is-not-set: &7This home does not exist !
+		Essentials-adminhome-teleport-home-is-not-set: &cThis home does not exist !
 
-		Essentials-adminhome-delhome-home-is-not-set: &7This home does not exist !
+		Essentials-adminhome-delhome-home-is-not-set: &cThis home does not exist !
 		Essentials-adminhome-delhome: &7You deleted this home for the player &c%{Essentials.nick.%arg 2%}% &7!
 
-		Essentials-adminhome-sethome-home-is-set: &7This home already exists !
+		Essentials-adminhome-sethome-home-is-set: &cThis home already exists !
 		Essentials-adminhome-sethome: &7You have created this home for the player &c%{Essentials.nick.%arg 2%}% &7!
 
 		# |-> MESSAGE OF /ECO !
@@ -663,14 +665,14 @@ options:
 		Essentials-jail-none-argument-two: &cYou must put the name of a prison to be able to use this command !
 		Essentials-jail-no-jail: &7Jails: &cYou have no prison with this name !
 
-		Essentials-jail-jail-to-player-admin: &7You removed the player from a prison &c%{Essentials.nick.%arg 1%}% &7!
+		Essentials-jail-jail-to-player-admin: &7You removed the player from a prison &c%arg 1% &7!
 		Essentials-jail-jail-to-player: &cYou have been put in prison &7!
 
-		Essentials-jail-unjail-to-player-admin: &7You removed the player from a prison &c%{Essentials.nick.%arg 1%}% &7!
+		Essentials-jail-unjail-to-player-admin: &7You removed the player from a prison &c%arg 1% &7!
 		Essentials-jail-unjail-to-player: &cYou were kidnapped in prison &7!
 
 		Essentials-jail-jail-if-player-is-set-of-jail: &7You have already imprisoned the player &c%{Essentials.nick.%arg 1%}% &7!
-		Essentials-jail-jail-if-player-is-set-of-unjail: &7You have already removed the player from a prison &c%{Essentials.nick.%arg 1%}% &7!
+		Essentials-jail-jail-if-player-is-set-of-unjail: &7You have already removed the player from a prison &c%arg 1% &7!
 
 		Essentials-setjail-create-none-argument: &cYou must put the name of a prison to be able to use this command !
 		Essentials-setjail-create-if-jail-is-set: &7You have already created the prison &c%arg 1% &7!
@@ -947,6 +949,8 @@ command /randomteleport [<text>]:
 		if sender is a player:
 			if player has permission "essentials.randomteleport.bypass" or "essentials.*":
 				if {Essentials.randomteleport.if.teleport.is.set.%player%} is not set:
+					set {Essentials.back.use.%player%} to player's location
+					wait 1 tick
 					set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
 					teleport player to {Essentials.randomtp.teleport.use}
 					send "{@Essentials-randomteleport-teleport}" to player
@@ -960,6 +964,8 @@ command /randomteleport [<text>]:
 			else:
 				if {Essentials.randomteleport.if.teleport.is.set.%player%} is not set:
 					if {@Essentials-randomteleport-use-cooldown} is true:
+						set {Essentials.back.use.%player%} to player's location
+						wait 1 tick
 						set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
 						send "{@Essentials-randomteleport-cooldown}" to player
 						wait {@Essentials-randomteleport-teleport-cooldown} seconds
@@ -970,6 +976,8 @@ command /randomteleport [<text>]:
 						set {Essentials.randomteleport.if.teleport.is.set.%player%} to true
 						stop
 					else:
+						set {Essentials.back.use.%player%} to player's location
+						wait 1 tick
 						set {Essentials.randomtp.teleport.use} to location at random number between {@Essentials-randomteleport-to-x-coord-min} and {@Essentials-randomteleport-to-x-coord-max}, 100, random number between {@Essentials-randomteleport-to-z-coord-min} and {@Essentials-randomteleport-to-z-coord-max}
 						teleport player to {Essentials.randomtp.teleport.use}
 						send "{@Essentials-randomteleport-teleport}" to player
@@ -2278,11 +2286,13 @@ command /hat [<text>] [<offline player>] [<text>]:
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				send "{@Essentials-hat-none-argument}" to player
-				stop
-			if tool is air:
-				send "{@Essentials-hat-to-me-to-hat-is-air}" to player
-				stop
+				if tool is air:
+					send "{@Essentials-hat-to-me-to-hat-is-air}" to player
+					stop
+				if tool is not air:
+					set player's helmet to player's tool
+					send "{@Essentials-hat-to-me}" to player
+					stop
 			if arg 1 is "off":
 				if arg 2 is not set:
 					set player's helmet to air
@@ -3683,7 +3693,7 @@ on right click on sign:
 			if {Essentials.warp.name.%line 3%} is set:
 				set {Essentials.back.use.%player%} to location of player
 				teleport player to {Essentials.warp.name.%line 3%}
-				send "{@Essentials.warp.teleport-to-me}" to player
+				send "{@Essentials-warp-teleport-to-me}" to player
 				stop
 			else:
 				send "{@Essentials-sign-create-warp-no-warp}" to player
@@ -3885,9 +3895,13 @@ command /invsee [<offline player>] [<text>]:
 				send "{@Essentials-invsee-none-arguments}" to player
 				stop
 			if arg 1 is set:
-				send "{@Essentials-invsee-to-me}" to player
-				open arg 1's inventory to player
-				stop
+				if arg 1 is online:
+					send "{@Essentials-invsee-to-me}" to player
+					open arg 1's inventory to player
+					stop
+				if arg 1 is offline:
+					send "{@Essentials-if-player-is-not-set-to-argument}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-if-sender-is-console-use-commands}" to console
 			stop
@@ -5225,12 +5239,20 @@ command /god [<offline player>] [<text>]:
 			stop
 
 on first join:
-	set {Essentials.god.%player%} to false
-	stop
+	if player's gamemode is survival or adventure:
+		set {Essentials.god.%player%} to false
+		stop
+	if player's gamemode is creative or spectator:
+		set {Essentials.god.%player%} to true
+		stop
 
 on join:
-	set {Essentials.god.%player%} to false
-	stop
+	if player's gamemode is survival or adventure:
+		set {Essentials.god.%player%} to false
+		stop
+	if player's gamemode is creative or spectator:
+		set {Essentials.god.%player%} to true
+		stop
 
 on damage:
 	if {Essentials.god.%victim%} is true:
@@ -5573,11 +5595,15 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 					send "{@Essentials-adminhome-reset-none-arguments}" to player
 					stop
 				if arg 2 is online:
-					delete {Essentials.homes.%arg 2%.list::*}
-					delete {Essentials.home.%arg 2%::*}
-					set {Essentials.home.numbers.%arg 2%} to 0
-					send "{@Essentials-adminhome-reset}" to player
-					stop
+					if {Essentials.home.%arg 2%::*} is set:
+						delete {Essentials.homes.%arg 2%.list::*}
+						delete {Essentials.home.%arg 2%::*}
+						set {Essentials.home.numbers.%arg 2%} to 0
+						send "{@Essentials-adminhome-reset}" to player
+						stop
+					else:
+						send "{@Essentials-adminhome-reset-home-is-not-set}" to player
+						stop
 				if arg 2 is offline:
 					send "{@Essentials-if-player-is-not-set-to-argument}" to player
 					stop
@@ -5620,9 +5646,11 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 					send "{@Essentials-adminhome-sethome-none-arguments-one}" to player
 					stop
 				if arg 2 is online:
+					if arg 3 is not set:
+						send "{@Essentials-adminhome-sethome-none-arguments-two}" to player
+						stop
 					if arg 3 is set:
 						if {Essentials.home.%arg 2%::%arg 3%} is not set:
-							add arg 3 to {Essentials.homes.%arg 2%.list::*}
 							set {Essentials.home.%arg 2%::%arg 3%} to arg 3
 							set {Essentials.homes.%arg 2%.list::%arg 3%} to arg 3
 							add 1 to {Essentials.home.numbers.%arg 2%}
@@ -6700,61 +6728,61 @@ command /warp [<text>] [<offline player>] [<text>]:
 						if arg 2 is not set:
 							if player doesn't have permission "essentials.warp.bypass" or "essentials.warp.*" or "essentials.*":
 								if {Essentials.warp.name.%arg 1%} is not set:
-									send "{@Essentials.warp.no.warps}" to player
+									send "{@Essentials-warp-no-warps}" to player
 									stop
 								else:
 									set {Essentials.back.use.%player%} to location of player
 									send "{@Essentials-warp-teleport-player-coodown}" to player
 									wait {@Essentials-teleport-warp-cooldown} seconds
 									teleport player to {Essentials.warp.name.%arg 1%}
-									send "{@Essentials.warp.teleport-to-me}" to player
+									send "{@Essentials-warp-teleport-to-me}" to player
 									stop
 							else:
 								if {Essentials.warp.name.%arg 1%} is not set:
-									send "{@Essentials.warp.no.warps}" to player
+									send "{@Essentials-warp-no-warps}" to player
 									stop
 								else:
 									set {Essentials.back.use.%player%} to location of player
 									teleport player to {Essentials.warp.name.%arg 1%}
-									send "{@Essentials.warp.teleport-to-me}" to player
+									send "{@Essentials-warp-teleport-to-me}" to player
 									stop
 						if arg 2 is online:
 							if arg 2 is not "%player%":
 								if {Essentials.warp.name.%arg 1%} is not set:
-									send "{@Essentials.warp.no.warps}" to player
+									send "{@Essentials-warp-no-warps}" to player
 									stop
 								else:
 									set {Essentials.back.use.%arg 2%} to location of arg 2
 									teleport arg 2 to {Essentials.warp.name.%arg 1%}
-									send "{@Essentials.warp.teleport-to-player}" to arg 2
-									send "{@Essentials.warp.teleport-to-player-admin}" to player
+									send "{@Essentials-warp-teleport-to-player}" to arg 2
+									send "{@Essentials-warp-teleport-to-player-admin}" to player
 									stop
 							if arg 2 is "%player%":
-								send "{@Essentials.warp.teleport-for-me}" to player
+								send "{@Essentials-warp-teleport-for-me}" to player
 								stop
 					else:
 						if arg 2 is not set:
 							if {Essentials.warp.name.%arg 1%} is not set:
-								send "{@Essentials.warp.no.warps}" to player
+								send "{@Essentials-warp-no-warps}" to player
 								stop
 							else:
 								set {Essentials.back.use.%player%} to location of player
 								teleport player to {Essentials.warp.name.%arg 1%}
-								send "{@Essentials.warp.teleport-to-me}" to player
+								send "{@Essentials-warp-teleport-to-me}" to player
 								stop
 						if arg 2 is online:
 							if arg 2 is not "%player%":
 								if {Essentials.warp.name.%arg 1%} is not set:
-									send "{@Essentials.warp.no.warps}" to player
+									send "{@Essentials-warp-no-warps}" to player
 									stop
 								else:
 									set {Essentials.back.use.%arg 2%} to location of arg 2
 									teleport arg 2 to {Essentials.warp.name.%arg 1%}
-									send "{@Essentials.warp.teleport-to-player}" to arg 2
-									send "{@Essentials.warp.teleport-to-player-admin}" to player
+									send "{@Essentials-warp-teleport-to-player}" to arg 2
+									send "{@Essentials-warp-teleport-to-player-admin}" to player
 									stop
 							if arg 2 is "%player%":
-								send "{@Essentials.warp.teleport-for-me}" to player
+								send "{@Essentials-warp-teleport-for-me}" to player
 								stop
 		if sender is console:
 			send "{@Essentials-if-sender-is-console-use-commands}" to console
