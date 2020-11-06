@@ -1,6 +1,6 @@
 ﻿#  |-> Essentials by Alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre6
+#  |-> Essentials Update 1.16Pre7
 
 options:
 	
@@ -93,6 +93,8 @@ options:
 
 			Essentials-chat-mute-message: &cSorry, but you cannot speak because you have been reduced to silent mode !
 
+			Essentials-chat-disable-message-use: &cSorry, but the Chat has been disabled by a staff member !
+
 			Essentials-ban-reason-banned: &cYou were banned because you did not follow the server policies !
 			Essentials-banip-reason-banned: &cYou were banned because you did not follow the server policies !
 
@@ -139,7 +141,7 @@ options:
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre6%nl%&7Support version&6: &c1.9-1.16.3%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre7%nl%&7Support version&6: &c1.9-1.16.4%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
 		# |-> MESSAGE OF /TP !
 
@@ -191,22 +193,37 @@ options:
 		# |-> MESSAGE OF /GAMEMODE !
 
 			Essentials-gamemode-none-arguments: &cYou must put the name of a gamemode to be able to use this command ! (0, 1, 2 and 3 = survival, creative, adventure and spectator)
-			Essentials-gamemode-player-of-me: &cYou cannot change your own game mode !
+			Essentials-gamemode-player-of-me: &cYou cannot change your own gamemode !
 
-			Essentials-gamemode-survival-to-me: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-creative-to-me: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-adventure-to-me: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-spectator-to-me: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-survival-to-me: &7Your gamemode has been successfully changed &c(Survival) &7!
+			Essentials-gamemode-creative-to-me: &7Your gamemode has been successfully changed &c(Creative) &7!
+			Essentials-gamemode-adventure-to-me: &7Your gamemode has been successfully changed &c(Adventure) &7!
+			Essentials-gamemode-spectator-to-me: &7Your gamemode has been successfully changed &c(Spectator) &7!
 
-			Essentials-gamemode-survival-to-player: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-creative-to-player: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-adventure-to-player: &7Your gamemode has been successfully changed !
-			Essentials-gamemode-spectator-to-player: &7Your gamemode has been successfully changed !
+			Essentials-gamemode-survival-to-player: &7Your gamemode has been successfully changed &c(Survival) &7!
+			Essentials-gamemode-creative-to-player: &7Your gamemode has been successfully changed &c(Creative) &7!
+			Essentials-gamemode-adventure-to-player: &7Your gamemode has been successfully changed &c(Adventure) &7!
+			Essentials-gamemode-spectator-to-player: &7Your gamemode has been successfully changed &c(Spectator) &7!
 
-			Essentials-gamemode-survival-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-creative-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-adventure-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
-			Essentials-gamemode-spectator-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed !
+			Essentials-gamemode-survival-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Survival) &7!
+			Essentials-gamemode-creative-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Creative) &7!
+			Essentials-gamemode-adventure-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Adventure) &7!
+			Essentials-gamemode-spectator-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Spectator) &7!
+
+			Essentials-gamemode-survival-to-me-gamemode-is-set: &cYou already have this gamemode &c(Survival) &c!
+			Essentials-gamemode-creative-to-me-gamemode-is-set: &cYou already have this gamemode &c(Creative) &c!
+			Essentials-gamemode-adventure-to-me-gamemode-is-set: &cYou already have this gamemode &c(Adventure) &c!
+			Essentials-gamemode-spectator-to-me-gamemode-is-set: &cYou already have this gamemode &c(Spectator) &c!
+
+			Essentials-gamemode-survival-to-player-gamemode-is-set: &cYou already have this gamemode &c(Survival) &c!
+			Essentials-gamemode-creative-to-player-gamemode-is-set: &cYou already have this gamemode &c(Creative) &c!
+			Essentials-gamemode-adventure-to-player-gamemode-is-set: &cYou already have this gamemode &c(Adventure) &c!
+			Essentials-gamemode-spectator-to-player-gamemode-is-set: &cYou already have this gamemode &c(Spectator) &c!
+
+			Essentials-gamemode-survival-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Survival) !
+			Essentials-gamemode-creative-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Creative) !
+			Essentials-gamemode-adventure-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Adventure) !
+			Essentials-gamemode-spectator-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Spectator) !
 
 		# |-> MESSAGE OF /HELPOP !
 
@@ -831,7 +848,13 @@ options:
 
 		Essentials-chat-none-argument: &cYou must use the right arguments ! ('clear')
 
-		Essentials-chat-to-clear: &7You deleted the chat room !
+		Essentials-chat-to-clear: &6You deleted the chat room !
+
+		Essentials-chat-to-enable: &6You have &cactivated &6the Chat !
+		Essentials-chat-to-disable: &6You have &cdeactivated &6the Chat !
+
+		Essentials-chat-to-enable-to-already: &cYou have already activated the Chat !
+		Essentials-chat-to-disable-to-already: &cYou have already deactivated the Chat !
 
 		# |-> MESSAGE OF /PVP !
 
@@ -840,8 +863,8 @@ options:
 		Essentials-pvp-to-on: &7You have activated pvp !
 		Essentials-pvp-to-off: &7You have deactivated pvp !
 
-		Essentials-pvp-to-on-to-already: &7You have already activated pvp !
-		Essentials-pvp-to-off-to-already: &7You have already deactivated pvp !
+		Essentials-pvp-to-on-to-already: &cYou have already activated pvp !
+		Essentials-pvp-to-off-to-already: &cYou have already deactivated pvp !
 
 		# |-> MESSAGE OF /BEDTELEPORT !
 
@@ -1277,7 +1300,7 @@ command /chat [<text>]:
 			if arg 1 is not set:
 				send "{@Essentials-chat-none-argument}" to player
 				stop
-			if arg 1 is not "clear":
+			if arg 1 is not "clear" or "on" or "off" or "enable" or "disable":
 				send "{@Essentials-chat-none-argument}" to player
 				stop
 			if arg 1 is "clear":
@@ -1289,9 +1312,58 @@ command /chat [<text>]:
 				else:
 					send "{@Essentials-player-has-not-permission-use-commands}" to player
 					stop
+			if arg 1 is "off" or "disable":
+				if player has permission "essentials.chat.*" or "essentials.chat.disable" or "essentials.*":
+					if {Essentials.chat.use} is not set:
+						set {Essentials.chat.use} to true
+						broadcast "{@Essentials-chat-to-disable}"
+						stop
+					else:
+						send "{@Essentials-chat-to-disable-to-already}" to player
+						stop
+				else:
+					send "{@Essentials-player-has-not-permission-use-commands}" to player
+					stop
+			if arg 1 is "on" or "enable":
+				if player has permission "essentials.chat.*" or "essentials.chat.enable" or "essentials.*":
+					if {Essentials.chat.use} is set:
+						delete {Essentials.chat.use}
+						broadcast "{@Essentials-chat-to-enable}"
+						stop
+					else:
+						send "{@Essentials-chat-to-enable-to-already}" to player
+						stop
+				else:
+					send "{@Essentials-player-has-not-permission-use-commands}" to player
+					stop
 		if sender is console:
-			send "{@Essentials-if-sender-is-console-use-commands}" to console
-			stop
+			if arg 1 is not set:
+				send "{@Essentials-chat-none-argument}" to console
+				stop
+			if arg 1 is not "clear" or "on" or "off" or "enable" or "disable":
+				send "{@Essentials-chat-none-argument}" to console
+				stop
+			if arg 1 is "clear":
+				loop 300 times:
+					broadcast ""
+				broadcast "{@Essentials-chat-to-clear}"
+				stop
+			if arg 1 is "off" or "disable":
+				if {Essentials.chat.use} is not set:
+					set {Essentials.chat.use} to true
+					broadcast "{@Essentials-chat-to-disable}"
+					stop
+				else:
+					send "{@Essentials-chat-to-disable-to-already}" to console
+					stop
+			if arg 1 is "on" or "enable":
+				if {Essentials.chat.use} is set:
+					delete {Essentials.chat.use}
+					broadcast "{@Essentials-chat-to-enable}"
+					stop
+				else:
+					send "{@Essentials-chat-to-enable-to-already}" to console
+					stop
 
 on command "/chat":
 	if sender is a player:
@@ -3757,9 +3829,13 @@ on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.creative" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Creative":
-				set the gamemode of the player to creative
-				send "{@Essentials-gamemode-creative-to-me}" to player
-				stop
+				if player's gamemode is not creative:
+					set the gamemode of the player to creative
+					send "{@Essentials-gamemode-creative-to-me}" to player
+					stop
+				if player's gamemode is creative:
+					send "{@Essentials-gamemode-creative-to-me-gamemode-is-set}" to player
+					stop
 	else:
 		stop
 
@@ -3767,10 +3843,13 @@ on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.survival" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Survival":
-				set the gamemode of the player to survival
-				send "{@Essentials-gamemode-survival-to-me}" to player
-				stop
-				stop
+				if player's gamemode is not survival:
+					set the gamemode of the player to survival
+					send "{@Essentials-gamemode-survival-to-me}" to player
+					stop
+				if player's gamemode is survival:
+					send "{@Essentials-gamemode-survival-to-me-gamemode-is-set}" to player
+					stop
 	else:
 		stop
 
@@ -3778,9 +3857,13 @@ on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.adventure" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Adventure":
-				set the gamemode of the player to adventure
-				send "{@Essentials-gamemode-adventure-to-me}" to player
-				stop
+				if player's gamemode is not adventure:
+					set the gamemode of the player to adventure
+					send "{@Essentials-gamemode-adventure-to-me}" to player
+					stop
+				if player's gamemode is adventure:
+					send "{@Essentials-gamemode-adventure-to-me-gamemode-is-set}" to player
+					stop
 	else:
 		stop
 
@@ -3788,9 +3871,13 @@ on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.gamemode.*" or "essentials.sign.use.gamemode.spectator" or "essentials.*":
 		if line 2 of block is "&1[Gamemode]":
 			if line 3 of block is "Spectator":
-				set the gamemode of the player to spectator
-				send "{@Essentials-gamemode-spectator-to-me}" to player
-				stop
+				if player's gamemode is not spectator:
+					set the gamemode of the player to spectator
+					send "{@Essentials-gamemode-spectator-to-me}" to player
+					stop
+				if player's gamemode is spectator:
+					send "{@Essentials-gamemode-spectator-to-me-gamemode-is-set}" to player
+					stop
 	else:
 		stop
 
@@ -6061,40 +6148,122 @@ command /mute [<offline player>] [<number>] [<text>]:
 				stop
 
 on chat:
-	if sender doesn't have permission "essentials.chat.color" or "essentials.*":
-		if {@Essentials-chat-format-use} is true:
-			if {Essentials.mute.seconds.%player%} is more than 0:
+	if sender doesn't have permission "essentials.chat.bypass" or "essentials.*" or "essentials.chat.*":
+		if {Essentials.chat.use} is not set:
+			if sender doesn't have permission "essentials.chat.color" or "essentials.*" or "essentials.chat.*":
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-no-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
+			else:
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
+		if {Essentials.chat.use} is set:
+			if sender doesn't have permission "essentials.chat.color" or "essentials.*" or "essentials.chat.*":
 				cancel event
-				send "{@Essentials-chat-mute-message}" to player
+				send "{@Essentials-chat-disable-message-use}" to player
 				stop
 			else:
 				cancel event
-				broadcast "{@Essentials-chat-format-msg-no-color}"
-				stop
-		else:
-			if {Essentials.mute.seconds.%player%} is more than 0:
-				cancel event
-				send "{@Essentials-chat-mute-message}" to player
-				stop
-			else:
+				send "{@Essentials-chat-disable-message-use}" to player
 				stop
 	else:
-		if {@Essentials-chat-format-use} is true:
-			if {Essentials.mute.seconds.%player%} is more than 0:
-				cancel event
-				send "{@Essentials-chat-mute-message}" to player
-				stop
+		if {Essentials.chat.use} is not set:
+			if sender doesn't have permission "essentials.chat.color" or "essentials.*" or "essentials.chat.*":
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-no-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
 			else:
-				cancel event
-				broadcast "{@Essentials-chat-format-msg-color}"
-				stop
-		else:
-			if {Essentials.mute.seconds.%player%} is more than 0:
-				cancel event
-				send "{@Essentials-chat-mute-message}" to player
-				stop
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
+		if {Essentials.chat.use} is set:
+			if sender doesn't have permission "essentials.chat.color" or "essentials.*" or "essentials.chat.*":
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-no-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
 			else:
-				stop
+				if {@Essentials-chat-format-use} is true:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						cancel event
+						broadcast "{@Essentials-chat-format-msg-color}"
+						stop
+				else:
+					if {Essentials.mute.seconds.%player%} is more than 0:
+						cancel event
+						send "{@Essentials-chat-mute-message}" to player
+						stop
+					else:
+						stop
 
 every 1 second:
 	loop all players:
@@ -7229,21 +7398,29 @@ command /gm [<text>] [<offline player>] [<text>]:
 							send "{Essentials-player-has-not-permission-use-commands}" to player
 							stop
 						else:
-							send "{@Essentials-gamemode-survival-to-me}" to player
-							set gamemode of player to survival
-							delete {Essentials.fly.%player%}
-							stop
+							if player's gamemode is not survival:
+								send "{@Essentials-gamemode-survival-to-me}" to player
+								set gamemode of player to survival
+								delete {Essentials.fly.%player%}
+								stop
+							if player's gamemode is survival:
+								send "{@Essentials-gamemode-survival-to-me-gamemode-is-set}" to player
+								stop
 					if arg 2 is online:
 						if arg 2 is not "%player%":
 							if player doesn't have permission "essentials.gamemode.survival.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
 								stop
 							else:
-								send "{@Essentials-gamemode-survival-to-player-admin}" to player
-								send "{@Essentials-gamemode-survival-to-player}" to arg 2
-								set gamemode of arg 2 to survival
-								delete {Essentials.fly.%arg 2%}
-								stop
+								if arg 2's gamemode is not survival:
+									send "{@Essentials-gamemode-survival-to-player-admin}" to player
+									send "{@Essentials-gamemode-survival-to-player}" to arg 2
+									set gamemode of arg 2 to survival
+									delete {Essentials.fly.%arg 2%}
+									stop
+								if arg 2's gamemode is survival:
+									send "{@Essentials-gamemode-survival-to-player-admin-gamemode-is-set}" to player
+									stop
 						else:
 							if player doesn't have permission "essentials.gamemode.survival.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
@@ -7260,21 +7437,29 @@ command /gm [<text>] [<offline player>] [<text>]:
 							send "{Essentials-player-has-not-permission-use-commands}" to player
 							stop
 						else:
-							send "{@Essentials-gamemode-creative-to-me}" to player
-							set gamemode of player to creative
-							set {Essentials.fly.%player%} to true
-							stop
+							if player's gamemode is not creative:
+								send "{@Essentials-gamemode-creative-to-me}" to player
+								set gamemode of player to creative
+								set {Essentials.fly.%player%} to true
+								stop
+							if player's gamemode is creative:
+								send "{@Essentials-gamemode-creative-to-me-gamemode-is-set}" to player
+								stop
 					if arg 2 is online:
 						if arg 2 is not "%player%":
 							if player doesn't have permission "essentials.gamemode.creative.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
 								stop
 							else:
-								send "{@Essentials-gamemode-creative-to-player-admin}" to player
-								send "{@Essentials-gamemode-creative-to-player}" to arg 2
-								set gamemode of arg 2 to creative
-								set {Essentials.fly.%arg 2%} to true
-								stop
+								if arg 2's gamemode is creative:
+									send "{@Essentials-gamemode-creative-to-player-admin}" to player
+									send "{@Essentials-gamemode-creative-to-player}" to arg 2
+									set gamemode of arg 2 to creative
+									set {Essentials.fly.%arg 2%} to true
+									stop
+								if arg 2's gamemode is creative:
+									send "{@Essentials-gamemode-creative-to-player-admin-gamemode-is-set}" to player
+									stop
 						else:
 							if player doesn't have permission "essentials.gamemode.creative.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
@@ -7291,21 +7476,29 @@ command /gm [<text>] [<offline player>] [<text>]:
 							send "{Essentials-player-has-not-permission-use-commands}" to player
 							stop
 						else:
-							send "{@Essentials-gamemode-adventure-to-me}" to player
-							set gamemode of player to adventure
-							delete {Essentials.fly.%player%}
-							stop
+							if player's gamemode is not adventure:
+								send "{@Essentials-gamemode-adventure-to-me}" to player
+								set gamemode of player to adventure
+								delete {Essentials.fly.%player%}
+								stop
+							if player's gamemode is adventure:
+								send "{@Essentials-gamemode-adventure-to-me-gamemode-is-set}" to player
+								stop
 					if arg 2 is online:
 						if arg 2 is not "%player%":
 							if player doesn't have permission "essentials.gamemode.adventure.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
 								stop
 							else:
-								send "{@Essentials-gamemode-adventure-to-player-admin}" to player
-								send "{@Essentials-gamemode-adventure-to-player}" to arg 2
-								set gamemode of arg 2 to adventure
-								delete {Essentials.fly.%arg 2%}
-								stop
+								if arg 2's gamemode is not adventure:
+									send "{@Essentials-gamemode-adventure-to-player-admin}" to player
+									send "{@Essentials-gamemode-adventure-to-player}" to arg 2
+									set gamemode of arg 2 to adventure
+									delete {Essentials.fly.%arg 2%}
+									stop
+								if arg 2's gamemode is adventure:
+									send "{@Essentials-gamemode-adventure-to-player-admin-gamemode-is-set}" to player
+									stop
 						else:
 							if player doesn't have permission "essentials.gamemode.adventure.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
@@ -7322,21 +7515,29 @@ command /gm [<text>] [<offline player>] [<text>]:
 							send "{Essentials-player-has-not-permission-use-commands}" to player
 							stop
 						else:
-							send "{@Essentials-gamemode-spectator-to-me}" to player
-							set gamemode of player to spectator
-							set {Essentials.fly.%player%} to true
-							stop
+							if player's gamemode is not spectator:
+								send "{@Essentials-gamemode-spectator-to-me}" to player
+								set gamemode of player to spectator
+								set {Essentials.fly.%player%} to true
+								stop
+							if player's gamemode is spectator:
+								send "{@Essentials-gamemode-spectator-to-me-gamemode-is-set}" to player
+								stop
 					if arg 2 is online:
 						if arg 2 is not "%player%":
 							if player doesn't have permission "essentials.gamemode.spectator.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
 								stop
 							else:
-								send "{@Essentials-gamemode-spectator-to-player-admin}" to player
-								send "{@Essentials-gamemode-spectator-to-player}" to arg 2
-								set {Essentials.fly.%arg 2%} to true
-								set gamemode of arg 2 to spectator
-								stop
+								if arg 2's gamemode is not spectator:
+									send "{@Essentials-gamemode-spectator-to-player-admin}" to player
+									send "{@Essentials-gamemode-spectator-to-player}" to arg 2
+									set {Essentials.fly.%arg 2%} to true
+									set gamemode of arg 2 to spectator
+									stop
+								if arg 2's gamemode is spectator:
+									send "{@Essentials-gamemode-spectator-to-player-admin-gamemode-is-set}" to player
+									stop
 						else:
 							if player doesn't have permission "essentials.gamemode.spectator.others" or "essentials.gamemode.*" or "essentials.*":
 								send "{Essentials-player-has-not-permission-use-commands}" to player
@@ -7349,61 +7550,77 @@ command /gm [<text>] [<offline player>] [<text>]:
 						stop
 		if sender is console:
 			if arg 1 is not set:
-				send "{@Essentials-if-sender-is-console-use-commands}" to console
+				send "{@Essentials-gamemode-none-arguments}" to console
 				stop
 			if arg 1 is not "0" or "1" or "2" or "3" or "survival" or "creative" or "adventure" or "spectator":
-				send "{@Essentials-if-sender-is-console-use-commands}" to console
+				send "{@Essentials-gamemode-none-arguments}" to console
 				stop
 			if arg 1 is set:
 				if arg 1 is "0" or "survival":
 					if arg 2 is not set:
-						send "{@Essentials-if-sender-is-console-use-commands}" to console
+						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 					if arg 2 is online:
-						send "{@Essentials-gamemode-survival-to-player-admin}" to console
-						send "{@Essentials-gamemode-survival-to-player}" to arg 2
-						set gamemode of arg 2 to survival
-						delete {Essentials.fly.%arg 2%}
-						stop
+						if arg 2's gamemode is not survival:
+							send "{@Essentials-gamemode-survival-to-player-admin}" to console
+							send "{@Essentials-gamemode-survival-to-player}" to arg 2
+							set gamemode of arg 2 to survival
+							delete {Essentials.fly.%arg 2%}
+							stop
+						if arg 2's gamemode is survival:
+							send "{@Essentials-gamemode-survival-to-player-admin-gamemode-is-set}" to console
+							stop
 					if arg 2 is offline:
 						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 				if arg 1 is "1" or "creative":
 					if arg 2 is not set:
-						send "{@Essentials-if-sender-is-console-use-commands}" to console
+						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 					if arg 2 is online:
-						send "{@Essentials-gamemode-creative-to-player-admin}" to console
-						send "{@Essentials-gamemode-creative-to-player}" to arg 2
-						set gamemode of arg 2 to creative
-						delete {Essentials.fly.%arg 2%}
-						stop
+						if arg 2's gamemode is not creative:
+							send "{@Essentials-gamemode-creative-to-player-admin}" to console
+							send "{@Essentials-gamemode-creative-to-player}" to arg 2
+							set gamemode of arg 2 to creative
+							delete {Essentials.fly.%arg 2%}
+							stop
+						if arg 2's gamemode is creative:
+							send "{@Essentials-gamemode-creative-to-player-admin-gamemode-is-set}" to console
+							stop
 					if arg 2 is offline:
 						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 				if arg 1 is "2" or "adventure":
 					if arg 2 is not set:
-						send "{@Essentials-if-sender-is-console-use-commands}" to console
+						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 					if arg 2 is online:
-						send "{@Essentials-gamemode-adventure-to-player-admin}" to console
-						send "{@Essentials-gamemode-adventure-to-player}" to arg 2
-						set gamemode of arg 2 to adventure
-						delete {Essentials.fly.%arg 2%}
-						stop
+						if arg 2's gamemode is not adventure:
+							send "{@Essentials-gamemode-adventure-to-player-admin}" to console
+							send "{@Essentials-gamemode-adventure-to-player}" to arg 2
+							set gamemode of arg 2 to adventure
+							delete {Essentials.fly.%arg 2%}
+							stop
+						if arg 2's gamemode is adventure:
+							send "{@Essentials-gamemode-adventure-to-player-admin-gamemode-is-set}" to console
+							stop
 					if arg 2 is offline:
 						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 				if arg 1 is "3" or "spectator":
 					if arg 2 is not set:
-						send "{@Essentials-if-sender-is-console-use-commands}" to console
+						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
 					if arg 2 is online:
-						send "{@Essentials-gamemode-spectator-to-player-admin}" to console
-						send "{@Essentials-gamemode-spectator-to-player}" to arg 2
-						set gamemode of arg 2 to spectator
-						delete {Essentials.fly.%arg 2%}
-						stop
+						if arg 2's gamemode is not spectator:
+							send "{@Essentials-gamemode-spectator-to-player-admin}" to console
+							send "{@Essentials-gamemode-spectator-to-player}" to arg 2
+							set gamemode of arg 2 to spectator
+							delete {Essentials.fly.%arg 2%}
+							stop
+						if arg 2's gamemode is spectator:
+							send "{@Essentials-gamemode-spectator-to-player-admin-gamemode-is-set}" to console
+							stop
 					if arg 2 is offline:
 						send "{@Essentials-if-player-is-not-set-to-argument}" to console
 						stop
