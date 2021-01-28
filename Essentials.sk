@@ -1,6 +1,6 @@
 ﻿#  |-> Essentials by Alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre7
+#  |-> Essentials Update 1.16Pre8
 
 options:
 	
@@ -141,7 +141,7 @@ options:
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre7%nl%&7Support version&6: &c1.9-1.16.4%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre8%nl%&7Support version&6: &c1.9-1.16.5%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
 		# |-> MESSAGE OF /TP !
 
@@ -210,6 +210,11 @@ options:
 			Essentials-gamemode-adventure-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Adventure) &7!
 			Essentials-gamemode-spectator-to-player-admin: &7Player's gamemode &c%{Essentials.nick.%arg 2%}% &7has been successfully changed &c(Spectator) &7!
 
+			Essentials-gamemode-survival-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Survival) !
+			Essentials-gamemode-creative-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Creative) !
+			Essentials-gamemode-adventure-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Adventure) !
+			Essentials-gamemode-spectator-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Spectator) !
+
 			Essentials-gamemode-survival-to-me-gamemode-is-set: &cYou already have this gamemode &c(Survival) &c!
 			Essentials-gamemode-creative-to-me-gamemode-is-set: &cYou already have this gamemode &c(Creative) &c!
 			Essentials-gamemode-adventure-to-me-gamemode-is-set: &cYou already have this gamemode &c(Adventure) &c!
@@ -219,11 +224,6 @@ options:
 			Essentials-gamemode-creative-to-player-gamemode-is-set: &cYou already have this gamemode &c(Creative) &c!
 			Essentials-gamemode-adventure-to-player-gamemode-is-set: &cYou already have this gamemode &c(Adventure) &c!
 			Essentials-gamemode-spectator-to-player-gamemode-is-set: &cYou already have this gamemode &c(Spectator) &c!
-
-			Essentials-gamemode-survival-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Survival) !
-			Essentials-gamemode-creative-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Creative) !
-			Essentials-gamemode-adventure-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Adventure) !
-			Essentials-gamemode-spectator-to-player-admin-gamemode-is-set: &cPlayer's gamemode &c%{Essentials.nick.%arg 2%}% &chas already have this gamemode (Spectator) !
 
 		# |-> MESSAGE OF /HELPOP !
 
@@ -531,7 +531,7 @@ options:
 
 		# |-> MESSAGE OF /LIST !
 
-		Essentials-list: &7List of players connected to the server&6: &c%{Essentials.list::*}% &c!
+		Essentials-list: &7List of players connected to the server&6: &c%all players% &c!
 
 		# |-> MESSAGE OF /BACK !
 
@@ -893,6 +893,10 @@ options:
 		Essentials-editsign-to-edit-line: &7You have successfully modified the row of the panel !
 
 #  |->>> THE CODE OF ESSENTIALS SKRIPT <<<-|
+
+on first join:
+	set {Essentials.nick.%player%} to player
+	stop
 
 command /editsign [<text>] [<text>]:
 	executable by: player and console
@@ -5036,7 +5040,6 @@ command /list [<text>]:
 	trigger:
 		if sender is a player:
 			loop all players:
-				set {Essentials.list::*} to "%{Essentials.nick.%loop-player%}%"
 				send "{@Essentials-list}" to player
 				stop
 		if sender is console:
@@ -7139,11 +7142,13 @@ command /ignore [<offline player>] [<text>]:
 				if arg 1 is not "%player%":
 					if {Essentials.ignore.%player%.%arg 1%} is false:
 						set {Essentials.ignore.%player%.%arg 1%} to true
+						set {Essentials.ignore.%arg 1%.%player%} to true
 						send "{@Essentials-ignore-to-player-to-on}" to player
 						stop
 					else:
-						set {Essentials.ignore.%player%.%arg 1%} to false
 						send "{@Essentials-ignore-to-player-to-off}" to player
+						set {Essentials.ignore.%player%.%arg 1%} to false
+						set {Essentials.ignore.%arg 1%.%player%} to false
 						stop
 				if arg 1 is "%player%":
 					send "{@Essentials-ignore-ignore-for-me}" to player
@@ -7451,7 +7456,7 @@ command /gm [<text>] [<offline player>] [<text>]:
 								send "{Essentials-player-has-not-permission-use-commands}" to player
 								stop
 							else:
-								if arg 2's gamemode is creative:
+								if arg 2's gamemode is not creative:
 									send "{@Essentials-gamemode-creative-to-player-admin}" to player
 									send "{@Essentials-gamemode-creative-to-player}" to arg 2
 									set gamemode of arg 2 to creative
