@@ -1,68 +1,119 @@
-﻿#  |-> Essentials by Alexisl315 (Lennord)
+﻿# |-> Essentials (Skript) << # |->> Skript developed by alexisl315 (Lennord)
 
-#  |-> Essentials Update 1.16Pre8
+# |-> This skript plugin allows you to redo all systems (commands, permissions ...) then improved them but in skript !
+
+#  |-> Essentials Update 1.16
 
 options:
 	
-	# |-> Configurations:
+	# |-> CONFIG
+
+		# |-> SPAWN COOLDOWN USE !
 
 			Essentials-use-spawn-cooldown: true
 			Essentials-teleport-spawn-cooldown: 10
 
+		# |-> WARP COOLDOWN USE !
+
 			Essentials-use-warp-cooldown: true
 			Essentials-teleport-warp-cooldown: 10
+
+		# |-> HOME COOLDOWN USE !
 
 			Essentials-use-home-cooldown: true
 			Essentials-teleport-home-cooldown: 10
 
+		# |-> BACK COOLDOWN USE !
+
 			Essentials-use-back-cooldown: true
 			Essentials-teleport-back-cooldown: 10
+
+		# |-> TPA COOLDOWN USE !
 
 			Essentials-use-tpa-cooldown: true
 			Essentials-teleport-tpa-cooldown: 10
 
+		# |-> KIT COOLDOWN USE !
+
 			Essentials-use-kit-cooldown: true
 			Essentials-give-kit-cooldown: 10
+
+		# |-> AFK COOLDOWN USE !
 
 			Essentials-use-afk-cooldown: true
 			Essentials-kick-afk-cooldown: 300
 
+		# |-> MAINTENANCE COOLDOWN USE !
+
 			Essentials-maintenance-cooldown: 60
+
+		# |-> FIRST JOIN MONEY USE !
 
 			Essentials-money-to-firstjoin-use: true
 			Essentials-money-to-firstjoin-numbers: 300
 
+		# |-> FIRST JOIN MESSAGE USE !
+
 			Essentials-firstjoin-message: true
+
+		# |-> JOIN AND QUIT MESSAGE USE !
+
 			Essentials-join-message: true
-			Essentials-join-teleport-to-spawn: true
 			Essentials-quit-message: true
 
+		# |-> JOIN TELEPORTATION SPAWN USE !
+
+			Essentials-join-teleport-to-spawn: true
+
+		# |-> DEATH MESSAGE USE !
+
 			Essentials-death-message: true
+
+		# |-> DEATH TELEPORTATION SPAWN USE !
+
 			Essentials-death-teleport-to-spawn: true
 
-			Essentials-fly-join-use: true
+		# |-> CHAT FORMAT USE !
 
 			Essentials-chat-format-use: true
 
+		# |-> NEAR RADIUS NUMBER TYPE !
+
 			Essentials-near-player-radius: 200
+
+		# |-> DAMAGE ALL USE !
 
 			Essentials-damage-all: true
 
+		# |-> PORTALS CREATE USE !
+
 			Essentials-portals-create: true
+
+		# |-> TRASH SLOT MENU AND TRASH NAME !
 
 			Essentials-trash-numbers-slot: 3
 			Essentials-trash-named: &6| &0Trash &6|
 
+		# |-> WEATHER THUNDER AND RAIN USE !
+
 			Essentials-weather-thunder: true
 			Essentials-weather-rain: true
 
+		# |-> EMOTICONS TYPES USE !
+
 			Essentials-emoticon-use: true
+
+		# |-> DEATH REMOVE MONEY USE !
 
 			Essentials-death-to-remove-to-money-use: false
 			Essentials-death-to-remove-to-money: 5
 
+		# |-> RANDOM TELEPORTATION USE ! - PART.01
+
 			Essentials-randomteleport-use-cooldown: true
 			Essentials-randomteleport-teleport-cooldown: 10
+
+		# |-> RANDOM TELEPORTATION USE ! - PART.02
 
 			Essentials-randomteleport-to-x-coord-min: -1000
 			Essentials-randomteleport-to-x-coord-max: 1000
@@ -70,49 +121,90 @@ options:
 			Essentials-randomteleport-to-z-coord-min: -1000
 			Essentials-randomteleport-to-z-coord-max: 1000
 
+		# |-> RANDOM TELEPORTATION USE ! - PART.03
+
 			Essentials-randomteleport-to-teleport-change-gamemode-to-creative: 30
 
-	# |-> Messages:
+	# |-> MESSAGES
+		# [!] >> '%nl%' = Go to the line...
 
-		# |-> MESSAGE DEFAULT !
+		# |-> CONSOLE EXECUTE COMMAND MESSAGE !
 
-			Essentials-if-sender-is-console-use-commands: &cYou cannot use this command through the Console !
+			Essentials-if-sender-is-console-use-commands: &cYou cannot use this command through the &6Console &c!
+
+		# |-> COMMAND ARGUMENT MESSAGE !
+
 			Essentials-if-player-is-not-set-to-argument: &cThis player is not connected to the server !
+
+		# |-> PLAYER PERMISSION MESSAGE !
+
 			Essentials-player-has-not-permission-use-commands: &cYou do not have permission to use this command !
+
+		# |-> ANTI-BUILD MESSAGE !
 
 			Essentials-antibuild-use: &cYou cannot build or destroy on the server !
 
+		# |-> FIRST JOIN CONNECT MESSAGE !
+
 			Essentials-firstjoin-message-use: &c%{Essentials.nick.%player%}% &6joined the game for the first time !
+
+		# |-> JOIN AND QUIT MESSAGE !
+
 			Essentials-join-message-use: &c%{Essentials.nick.%player%}% &6joined the game !
 			Essentials-quit-message-use: &c%{Essentials.nick.%player%}% &6left the game !
 
+		# |-> DEATH MESSAGE !
+
 			Essentials-death-message-use: &c%{Essentials.nick.%player%}% &6is dead !
+
+		# |-> CHAT FORMAT MESSAGE !
 
 			Essentials-chat-format-msg-no-color: &7%{Essentials.nick.%player%}%&6: &f%message%
 			Essentials-chat-format-msg-color: &7%{Essentials.nick.%player%}%&6: &f%colored message%
 
+		# |-> CHAT MUTE MESSAGE !
+
 			Essentials-chat-mute-message: &cSorry, but you cannot speak because you have been reduced to silent mode !
 
+		# |-> CHAT DISABLE MESSAGE !
+
 			Essentials-chat-disable-message-use: &cSorry, but the Chat has been disabled by a staff member !
+
+		# |-> BAN AND BANIP REASON MESSAGE !
 
 			Essentials-ban-reason-banned: &cYou were banned because you did not follow the server policies !
 			Essentials-banip-reason-banned: &cYou were banned because you did not follow the server policies !
 
+		# |-> MAINTENANCE KICK REASON MESSAGE !
+
 			Essentials-maintenance-reason-kick: &cYou have been kicked from the server because the server is now under maintenance !
 
+		# |-> SIGN CREATE MESSAGE ! - P.01
+
 			Essentials-sign-create: &7You have created a panel !
+
+		# |-> SIGN CREATE MESSAGE ! - P.02
+
 			Essentials-sign-create-warp-no-warp: &cYou have no warp with this name !
+
+		# |-> LOADING AND UNLOADING MESSAGE !
 
 			Essentials-loading-msg-console: &7[Essentials] &6| &7Activation
 			Essentials-unloading-msg-console: &7[Essentials] &6| &7Deactivation
 
+		# |-> NO-DROP MESSAGE !
+
 			Essentials-no-drop: &cYour have not permission for dropped items and more...
+
+		# |-> WORLD CREATE MESSAGE !
 
 			Essentials-world-to-create: &7A new world just got loaded !
 
+		# |-> MOTD MESSAGE !
+
 			Essentials-motd-to-server: &7[&6New Server&7] &6| &7&oWelcome to the server Minigames !
 
-		# |-> MESSAGE OF /SETSPAWN, /DELSPAWN, /SPAWN !
+		# |-> MESSAGE COMMAND (SETSPAWN, DELSPAWN AND SPAWN) !
 
 			Essentials-setspawn-set-spawn-point: &7You have created the new spawn point !
 
@@ -125,7 +217,7 @@ options:
 			Essentials-spawn-teleport-player-of-me: &cYou cannot teleport yourself !
 			Essentials-spawn-teleport-player-admin: &7You teleported the player &c%{Essentials.nick.%arg 1%}% &7to the point of spawn !
 
-		# |-> MESSAGE OF /HEAL, /FEED !
+		# |-> MESSAGE COMMAND (HEAL AND FEED) !
 
 			Essentials-heal-heal-to-me: &7You have been heal !
 			Essentials-heal-heal-to-player: &7You have been heal !
@@ -137,41 +229,41 @@ options:
 			Essentials-feed-feed-to-player-admin: &7You feed the player &c%{Essentials.nick.%arg 1%}% &7!
 			Essentials-feed-feed-of-me: &cYou can't feed yourself !
 
-		# |-> MESSAGE OF /ESSENTIALS ! >> ('%nl%' = Go to the line)
+		# |-> MESSAGE COMMAND (ESSENTIALS) !
 
 			Essentials-essentials-none-arguments: &cYou must use the right arguments ! ('reload' and 'info')
 			Essentials-essentials-reload: &cThe plugin has been successfully restarted !
-			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16Pre8%nl%&7Support version&6: &c1.9-1.16.5%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
+			Essentials-essentials-infos: &7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16%nl%&7Support version&6: &c1.9-1.16.5%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)
 
-		# |-> MESSAGE OF /TP !
+		# |-> MESSAGE COMMAND (TP) !
 
 			Essentials-tp-none-arguments: &cYou must put the name of a player to use this command !
 			Essentials-tp-teleport-player: &7You have been successfully teleported !
 			Essentials-tp-teleport-player-of-me: &cYou cannot teleport yourself !
 			Essentials-tp-teleport-player-admin: &c&7You teleported the player &c%{Essentials.nick.%arg 1%}% &7to the player &c%{Essentials.nick.%arg 2%}% &7!
 
-		# |-> MESSAGE OF /BROADCAST !
+		# |-> MESSAGE COMMAND (BROADCAST) !
 
 			Essentials-broadcast-none-arguments: &cYou must put a text to be able to use this command !
 			Essentials-broadcast-message-no-color: &c&oAnnouncement of server&6: &f%arg 1%
 			Essentials-broadcast-message-color: &6&oAnnouncement of server&6: &f%colored arg 1%
 
-		# |-> MESSAGE OF /SUICIDE !
+		# |-> MESSAGE COMMAND (SUICIDE) !
 
 			Essentials-suicide-suicide: &7The player &c%{Essentials.nick.%player%}% &7committed suicide !
 
-		# |-> MESSAGE OF /CLEARINVENTORY !
+		# |-> MESSAGE COMMAND (CLEARINVENTORY) !
 
 			Essentials-clearinventory-clear-to-me: &7You have deleted your inventory !
 			Essentials-clearinventory-clear-player-of-me: &cYou cannot delete your inventory yourself !
 			Essentials-clearinventory-clear-to-player: &7Your inventory has been deleted !
 			Essentials-clearinventory-clear-to-player-admin: &7Player's inventory &c%{Essentials.nick.%arg 1%}% &7has been successfully deleted !
 
-		# |-> MESSAGE OF /TPALL !
+		# |-> MESSAGE COMMAND (TPALL) !
 
 			Essentials-tpall-teleport-to-player-admin: &7You have teleported all players to your location !
 
-		# |-> MESSAGE OF /FLY !
+		# |-> MESSAGE COMMAND (FLY) !
 
 			Essentials-fly-fly-to-me-is-on: &7Your flight mode has been activated !
 			Essentials-fly-fly-to-me-is-off: &7Your flight mode has been deactivated !
@@ -184,13 +276,13 @@ options:
 
 			Essentials-fly-fly-player-of-me: &cYou cannot activate or deactivate your own flight mode !
 
-		# |-> MESSAGE OF /ME !
+		# |-> MESSAGE COMMAND (ME) !
 
 			Essentials-me-none-arguments: &cYou must put a text to be able to use this command !
 			Essentials-me-message-no-color: &f* %{Essentials.nick.%player%}% &6>> &f%arg 1%
 			Essentials-me-message-color: &f* %{Essentials.nick.%player%}% &6>> &f%colored arg 1%
-
-		# |-> MESSAGE OF /GAMEMODE !
+ 
+		# |-> MESSAGE COMMAND (GAMEMODE) !
 
 			Essentials-gamemode-none-arguments: &cYou must put the name of a gamemode to be able to use this command ! (0, 1, 2 and 3 = survival, creative, adventure and spectator)
 			Essentials-gamemode-player-of-me: &cYou cannot change your own gamemode !
@@ -225,19 +317,19 @@ options:
 			Essentials-gamemode-adventure-to-player-gamemode-is-set: &cYou already have this gamemode &c(Adventure) &c!
 			Essentials-gamemode-spectator-to-player-gamemode-is-set: &cYou already have this gamemode &c(Spectator) &c!
 
-		# |-> MESSAGE OF /HELPOP !
+		# |-> MESSAGE COMMAND (HELPOP) !
 
 			Essentials-helpop-none-arguments: &cYou must put a text to be able to use this command !
 			Essentials-helpop-message: &c&l[&cHelpop&c&l] &f%{Essentials.nick.%player%}%&6: &f%arg 1%
 
-		# |-> MESSAGE OF /KICK !
+		# |-> MESSAGE COMMAND (KICK) !
 
 			Essentials-kick-none-arguments-one: &cYou must put the name of a player to use this command !
 			Essentials-kick-none-arguments-two: &cYou must put a text to be able to use this command !
 			Essentials-kick-broadcast: &6The player &c%{Essentials.nick.%arg 1%}% &6has been excluded from the server !
 			Essentials-kick-to-player: &cYou have been excluded from the server !%nl%&6Reason: &c%arg 2%
 
-		# |-> MESSAGE OF /FREEZE !
+		# |-> MESSAGE COMMAND (FREEZE) !
 
 			Essentials-freeze-none-arguments: &cYou must put the name of a player to use this command !
 
@@ -247,21 +339,21 @@ options:
 			Essentials-freeze-to-player-admin-to-on: &7You have frozen the player &c%{Essentials.nick.%arg 1%}% &c!
 			Essentials-freeze-to-player-admin-to-off: &7You have unfrozen the player &c%{Essentials.nick.%arg 1%}% &c!
 
-		# |-> MESSAGE OF /TPHERE !
+		# |-> MESSAGE COMMAND (TPHERE) !
 
 			Essentials-tphere-none-arguments: &cYou must put the name of a player to use this command !
 
 			Essentials-tphere-to-player: &7You have been teleported to a player !
 			Essentials-tphere-to-player-admin: &7You teleported the player &c%{Essentials.nick.%arg 1%}% &7to your location !
 
-		# |-> MESSAGE OF /IGNORE !
+		# |-> MESSAGE COMMAND (IGNORE) !
 
 			Essentials-ignore-none-arguments: &cYou must put the name of a player to use this command !
 			Essentials-ignore-ignore-for-me: &cYou can't ignore yourself !
 			Essentials-ignore-to-player-to-on: &7You ignored the player &c%{Essentials.nick.%arg 1%}% &7!
 			Essentials-ignore-to-player-to-off: &7You have removed ignorance of the player &c%{Essentials.nick.%arg 1%}% &7!
 
-		# |-> MESSAGE OF /MSG !
+		# |-> MESSAGE COMMAND (MSG) !
 
 			Essentials-msg-none-arguments-one: &cYou must put the name of a player to use this command !
 			Essentials-msg-none-arguments-two: &cYou must put a text to be able to use this command !
@@ -276,7 +368,7 @@ options:
 			Essentials-msg-msg-to-player-to-no-color: &7[%{Essentials.nick.%player%}% > &c%{Essentials.nick.%arg 1%}%&7] &6: &7%arg 2%
 			Essentials-msg-msg-to-player-to-color: &7[%{Essentials.nick.%player%}% > &c%{Essentials.nick.%arg 1%}%&7] &6: &7%colored arg 2%
 
-		# |-> MESSAGE OF /SETWARP, /DELWARP, /WARP, /WARPS !
+		# |-> MESSAGE COMMAND (SETWARP, DELWARP, WARPS AND WARP) !
 
 			Essentials-setwarp-none-arguments: &cYou must put the name of a warp to be able to use this command !
 			Essentials-setwarp-create: &7You created the warp &c%arg 1% &7with success !
@@ -298,18 +390,18 @@ options:
 			Essentials-warps-list: &7Warps&6: &c%{Essentials.warp.list::*}% &c!
 			Essentials-warps-no-warp-list: &7Warps&6: &cNo warp !
 
-		# |-> MESSAGE OF /SKULL !
+		# |-> MESSAGE COMMAND (SKULL) !
 
 			Essentials-skull-none-arguments: &cYou have to put the name of the head !
 			Essentials-skull-give: &7You gave yourself a player's head... !
 
-		# |-> MESSAGE OF /ENDERCHEST !
+		# |-> MESSAGE COMMAND (ENDERCHEST) !
 
 			Essentials-enderchest-open-to-me: &7You opened your enderchest !
 			Essentials-enderchest-open-to-player: &7You have the player's enderchest &c%{Essentials.nick.%arg 1%}% &7!
 			Essentials-enderchest-enderchest-open-for-me: &cYou cannot open your enderchest !
 
-		# |-> MESSAGE OF /AFK !
+		# |-> MESSAGE COMMAND (AFK) !
 
 			Essentials.afk-for-me: &cYou can't put yourself in afk mode !
 			Essentials.afk.kick.to-broadcast: &cYou were kicked from the server because you were in AFK mode !
@@ -320,7 +412,7 @@ options:
 			Essentials-afk-to-player-to-broadcast-to-on: &c%{Essentials.nick.%arg 1%}% &6is now in AFK mode !
 			Essentials-afk-to-player-to-broadcast-to-off: &c%{Essentials.nick.%arg 1%}% &6is no longer in AFK mode !
 
-		# |-> MESSAGE OF /TIME, /DAY, /NIGHT !
+		# |-> MESSAGE COMMAND (TIME) !
 
 			Essentials-time-none-arguments-one: &cYou must use the right arguments ! ('set')
 			Essentials-time-none-arguments-two: &cYou must use the right arguments ! ('day' and 'night')
@@ -328,17 +420,19 @@ options:
 			Essentials-time-day: &7You successfully put the day down!
 			Essentials-time-night: &7You successfully put the night down !
 
+		# |-> MESSAGE COMMAND (DAY AND NIGHT) !
+
 			Essentials-day: &7You successfully put the day down!
 			Essentials-night: &7You successfully put the night down !
 
-		# |-> MESSAGE OF /SLAP !
+		# |-> MESSAGE COMMAND (SLAP) !
 
 			Essentials-slap-none-arguments: &cYou must put the name of a player to use this command !
 
 			Essentials-slap-to-player: &7You were slapped !
 			Essentials-slap-to-player-admin: &7You slapped the player &c%{Essentials.nick.%arg 1%}% &7!
 
-		# |-> MESSAGE OF /SPEED !
+		# |-> MESSAGE COMMAND (SPEED) !
 
 			Essentials-speed-none-arguments-one: &cYou have to put the right arguments ! ('fly', 'walk' and 'reset')
 			Essentials-speed-none-arguments-two: &cYou must put a number ! (of 0 at 1 | Ex: 0.5)
@@ -347,7 +441,7 @@ options:
 			Essentials-speed-walk-modify: &7You have changed your speed mode from the walking mode !
 			Essentials-speed-reset-modify: &7You have reset the flight and walking modes by default !
 
-		# |-> MESSAGE OF /MUTE, /UNMUTE !
+		# |-> MESSAGE COMMAND (MUTE AND UNMUTE) !
 
 			Essentials-mute-none-arguments-one: &cYou must put the name of a player to use this command !
 			Essentials-mute-none-arguments-two: &cYou must put a number ! (in seconds | Ex: 60)
@@ -356,19 +450,17 @@ options:
 			Essentials-mute-broadcast: &7The player &c%{Essentials.nick.%arg 1%}% &7has been reduced to silent mode !
 			Essentials-mute-mute-already: &cThe player &c%{Essentials.nick.%arg 1%}% &cis already in silent mode !
 
-
 			Essentials-unmute-none-arguments: &cYou must put the name of a player to use this command !
-
 			Essentials-unmute-broadcast: &7The player &c%{Essentials.nick.%arg 1%}% &7can talk again !
 			Essentials-unmute-unmute-already: &cThe player &c%{Essentials.nick.%arg 1%}% &cis already in no-silent mode !
 
-		# |-> MESSAGE OF /KICKALL !
+		# |-> MESSAGE COMMAND (KICKALL) !
 
 			Essentials-kickall-none-arguments: &cYou must put the name of a player to use this command !
 
 			Essentials-kickall-kick-broadcast: &cYou have been excluded from the server !%nl%&6Reason: &c%arg 1%
 
-		# |-> MESSAGE OF /NICK !
+		# |-> MESSAGE COMMAND (NICK) !
 
 			Essentials-nick-none-arguments: &cYou need a name to be able to use this command !
 
@@ -380,7 +472,7 @@ options:
 			Essentials-nick-nick-reset-to-player: &7You changed your name, so you call yourself now &c%{Essentials.nick.%arg 2%}% &7!
 			Essentials-nick-nick-reset-to-player-admin: &7The player's name &c%arg 2% &7have been changed, so it's now called &c%{Essentials.nick.%arg 2%}% &7!
 
-		# |-> MESSAGE OF /HOME, /SETHOME, /DELHOME, /HOMES !
+		# |-> MESSAGE COMMAND (HOME, SETHOME, DELHOME AND HOMES) !
 
 			Essentials-home-none-arguments: &cYou need a name of your home to be able to use this command !
 
@@ -432,9 +524,10 @@ command /sethome [<text>]:
 			stop
 
 options:
-	# |-> Messages:
+	# |-> MESSAGES
+		# [!] >> '%nl%' = Go to the line...
 
-		# |-> MESSAGE OF /ADMINHOME !
+		# |-> MESSAGE COMMAND (ADMINHOME) !
 
 		Essentials-adminhome-none-arguments: &cYou must use the right arguments ! ('delhome', 'reset', 'homes', 'home' and 'sethome')
 
@@ -465,7 +558,7 @@ options:
 		Essentials-adminhome-sethome-home-is-set: &cThis home already exists !
 		Essentials-adminhome-sethome: &7You have created this home for the player &c%{Essentials.nick.%arg 2%}% &7!
 
-		# |-> MESSAGE OF /ECO !
+		# |-> MESSAGE COMMAND (ECO) !
 
 		Essentials-eco-none-arguments: &cYou must use the right arguments ! ('remove', 'give' and 'set')
 
@@ -488,7 +581,7 @@ options:
 		Essentials-eco-remove-player-to-player-admin: &7The player's money &c%{Essentials.nick.%arg 2%}% &7has been changed &7!
 		Essentials-eco-remove-no-money-max-player-to-player-admin: &cThe player's money %{Essentials.nick.%arg 2%}% &ccannot be changed because the amount of money is too small compared to the amount you have put !
 
-		# |-> MESSAGE OF /MONEY !
+		# |-> MESSAGE COMMAND (MONEY) !
 
 		Essentials-money-set-none-arguments: &cYou must put a sum of money to be able to use this command !
 
@@ -497,7 +590,7 @@ options:
 		Essentials-money-to-player-admin: &7The player's money &c%{Essentials.nick.%arg 1%}%&6: &c%{Essentials.money.%arg 1%}%
 		Essentials-money-if-money-is-not-set: &7Money&6: &c0
 
-		# |-> MESSAGE OF /PAY !
+		# |-> MESSAGE COMMAND (PAY) !
 
 		Essentials-pay-set-none-arguments-one: &cYou must put the name of a player to be able to use this command !
 		Essentials-pay-set-none-arguments-two: &cYou must put a sum of money to be able to use this command !
@@ -509,7 +602,7 @@ options:
 		Essentials-pay-to-player-admin: &7You paid &c%arg 3% &7to the player &c%{Essentials.nick.%arg 2%}% &7!
 		Essentials-pay-to-player: &7You got paid &c%arg 3% &7by the player &c%{Essentials.nick.%player%}% &7!
 
-		# |-> MESSAGE OF /GOD !
+		# |-> MESSAGE COMMAND (GOD) !
 
 		Essentials-god-if-player-of-me: &cYou cannot put the god mode yourself !
 
@@ -522,18 +615,18 @@ options:
 		Essentials-god-to-player-admin-to-on: &7The player god mode &c%arg 1% &7has been successfully activated !
 		Essentials-god-to-player-admin-to-off: &The player god mode &c%arg 1% &7has been successfully activated !
 
-		# |-> MESSAGE OF /GETPOS !
+		# |-> MESSAGE COMMAND (GETPOS) !
 
 		Essentials-getpos-if-player-of-me: &cYou cannot see your location yourself !
 
 		Essentials-getpos-for-to-me: &7%{Essentials.nick.%player%}%&6: &c%player's location% &c!
 		Essentials-getpos-for-to-player-admin: &7%{Essentials.nick.%arg 1%}%&6: &c%arg 1's location% &c!
 
-		# |-> MESSAGE OF /LIST !
+		# |-> MESSAGE COMMAND (LIST) !
 
 		Essentials-list: &7List of players connected to the server&6: &c%all players% &c!
 
-		# |-> MESSAGE OF /BACK !
+		# |-> MESSAGE COMMAND (BACK) !
 
 		Essentials-back-no-back-point-to-me: &cYou have no return point !
 		Essentials-back-no-back-point-to-player-admin: &cThis player has no return point !
@@ -545,7 +638,7 @@ options:
 
 		Essentials-back-if-player-of-me: &cYou cannot teleport yourself !
 
-		# |-> MESSAGE OF /XP !
+		# |-> MESSAGE COMMAND (XP) !
 
 		Essentials-xp-none-arguments: &cYou must use the right arguments ! ('show', 'set', 'give' and 'remove')
 
@@ -570,43 +663,43 @@ options:
 		Essentials-xp-remove-to-player: &7Your XP levels have been changed !
 		Essentials-xp-remove-to-player-admin: &7The player levels &c%{Essentials.nick.%arg 2%}% &7we were successfully changed !
 
-		# |-> MESSAGE OF /BREAK !
+		# |-> MESSAGE COMMAND (BREAK) !
 
 		Essentials-break: &7You broke the target block !
-
-		# |-> MESSAGE OF /ANTIOCH !
+	
+		# |-> MESSAGE COMMAND (ANTIOCH) !
 
 		Essentials-antioch: &7You have created an explosive tnt !
 
-		# |-> MESSAGE OF /UNBANIP !
+		# |-> MESSAGE COMMAND (UNBANIP) !
 
 		Essentials-unbanip-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-unbanip-to-player-admin: &7You successfully banned the player's ip !
 		Essentials-unbanip-if-ip-of-player-is-unbanned: &cYou have already unbanned the player's ip !
 
-		# |-> MESSAGE OF /UNBAN !
+		# |-> MESSAGE COMMAND (UNBAN) !
 
 		Essentials-unban-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-unban-to-player-admin: &7You successfully unbanned the player !
 		Essentials-unban-if-player-is-unbanned: &cYou have already unbanned the player !
 
-		# |-> MESSAGE OF /BANIP !
+		# |-> MESSAGE COMMAND (BANIP) !
 
 		Essentials-banip-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-banip-to-player-admin: &7You successfully unbanned the player's ip !
 		Essentials-banip-if-ip-of-player-is-banned: &cYou have already banned the player's ip !
 
-		# |-> MESSAGE OF /BAN !
+		# |-> MESSAGE COMMAND (BAN) !
 
 		Essentials-ban-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-ban-to-player-admin: &7You successfully banned the player !
 		Essentials-ban-if-player-is-banned: &cYou have already banned the player !
 
-		# |-> MESSAGE OF /WORKBENCH !
+		# |-> MESSAGE COMMAND (WORKBENCH) !
 
 		Essentials-workbench: &7You opened a craft table !
 
-		# |-> MESSAGE OF /UNLIMITED !
+		# |-> MESSAGE COMMAND (UNLIMITED) !
 
 		Essentials-unlimited-if-player-of-me: &cYou cannot have unlimited blocks yourself !
 
@@ -619,14 +712,14 @@ options:
 		Essentials-unlimited-to-player-off: &7You have disabled unlimited block mode !
 		Essentials-unlimited-to-player-admin-off: &7You have disabled player’s unlimited block mode &c%{Essentials.nick.%arg 1%}% &7!
 
-		# |-> MESSAGE OF /DEPTH !
+		# |-> MESSAGE COMMAND (DEPTH) !
 
 		Essentials-depth-if-player-of-me: &cYou cannot have unlimited blocks yourself !
 
 		Essentials-depth-to-me: &7You are &c%altitude of the player% &7above the bedrock !
 		Essentials-depth-to-player-admin: &7This player is &c%altitude of the arg 1% &7above the bedrock !
 
-		# |-> MESSAGE OF /EXT !
+		# |-> MESSAGE COMMAND (EXT) !
 
 		Essentials-ext-if-player-of-me: &cYou can't put out the fire yourself !
 
@@ -635,24 +728,24 @@ options:
 		Essentials-ext-to-player: &7The fire on you was put out &7!
 		Essentials-ext-to-player-admin: &7You put out the fire on the player &c%{Essentials.nick.%arg 1%}% &7!
 
-		# |-> MESSAGE OF /FIREBALL !
+		# |-> MESSAGE COMMAND (FIREBALL) !
 
 		Essentials-fireball: &7You threw a fireball !
 
-		# |-> MESSAGE OF /INVSEE !
+		# |-> MESSAGE COMMAND (INVSEE) !
 
 		Essentials-invsee-none-arguments: &cYou must put the name of a player to be able to use this command !
 
 		Essentials-invsee-to-me: &7You have opened the player inventory &c%{Essentials.nick.%arg 1%}% &7!
 
-		# |-> MESSAGE OF /ENCHANT !
+		# |-> MESSAGE COMMAND (ENCHANT) !
 
 		Essentials-enchant-none-arguments: &cYou must put the name of an enchantment to be able to use this command !
 
 		Essentials-enchant-if-item-is-air: &cYou can't enchant air !
 		Essentials-enchant: &7You have enchanted your object !
 
-		# |-> MESSAGE OF /TPA, /TPACCEPT, /TPDENY !
+		# |-> MESSAGE COMMAND (TPA, TPACCEPT AND TPDENY) !
 
 		Essentials-tpa-none-arguments: &cYou must put the name of a player to be able to use this command !
 		Essentials-tpa-if-player-of-me: &cYou may not have asked yourself for a teleportation request yourself !
@@ -666,16 +759,16 @@ options:
 		Essentials-tpaccept-to-teleport-accept: &7Teleport to player successfully !
 
 		Essentials-tpdeny-send-to-player: &7Your request has been refused !
-		Essentials-tpdeny-send-to-player-admin: &7You refused the request &7!
+		Essentials-tpdeny-send-to-player-admin: &7You refused the request !
 		Essentials-tpdeny-no-player-to-tpa: &cYou have no teleportation request !
 
-		# |-> MESSAGE OF /TREE !
+		# |-> MESSAGE COMMAND (TREE) !
 
 		Essentials-tree-none-argument: &cYou must use the right arguments ! ('jungle', 'oak', 'spruce', 'birch' and 'darkwood')
 
 		Essentials-tree: &7You have created a new tree !
 
-		# |-> MESSAGE OF /JAIL, /SETJAIL, /DELJAIL, /JAILS !
+		# |-> MESSAGE COMMAND (JAIL, SETJAIL, DELJAIL AND JAILS) !
 
 		Essentials-jail-if-player-of-me: &cYou can't put yourself in a prison yourself !
 		Essentials-jail-none-argument-one: &cYou must put the name of a player to be able to use this command !
@@ -702,32 +795,32 @@ options:
 		Essentials-jails: &7Jails: &c%{Essentials.list.jails::*}% &c!
 		Essentials-jails-no-jail: &7Jails: &cNo prison !
 
-		# |-> MESSAGE OF /COMPASS !
+		# |-> MESSAGE COMMAND (COMPASS) !
 
 		Essentials-compass-to-me: &7Orientation: &c%player's facing% &7(&c%player's yaw% &cdegrees&7) !
 		Essentials-compass-to-player-admin: &7Orientation: &c%player's facing% &7(&c%player's yaw% &cdegrees&7) !
 
 		Essentials-compass-if-player-of-me: &cYou cannot use the compass yourself !
 
-		# |-> MESSAGE OF /SPAWNMOB !
+		# |-> MESSAGE COMMAND (SPAWNMOB) !
 
 		Essentials-spawnmob-none-argument-one: &cYou must put the name of a mob to be able to use this command !
 		Essentials-spawnmob-none-argument-two: &cYou must put a number to be able to use this command !
 
 		Essentials-spawnmob: &7You created a mob !
 
-		# |-> MESSAGE OF /REPAIR !
+		# |-> MESSAGE COMMAND (REPAIR) !
 
 		Essentials-repair: &7You have repaired your object !
 		Essentials-repair-all: &7You have repaired all your items !
 		Essentials-repair-if-tool-is-air: &cYou can't fix the air !
 
-		# |-> MESSAGE OF /POWERTOOL !
+		# |-> MESSAGE COMMAND (POWERTOOL) !
 
 		Essentials-powertool-create: &7You have created an order in your object system !
 		Essentials-powertool-remove: &7You have deleted all orders from your item !
 
-		# |-> MESSAGE OF /KIT, /SETKIT, /DELKIT, /KITS !
+		# |-> MESSAGE COMMAND (KIT, SETKIT, DELKIT AND KITS) !
 
 		Essentials-kit-give-player-coodown: &7Your request has been accepted or you will be teleported to &c%{Essentials-give-kit-cooldown.variable}% &cseconds &7!
 
@@ -747,11 +840,11 @@ options:
 		Essentials-kits-no-kit: &7Kits: &cNo kit !
 		Essentials-kits: &7Kits: &c%{Essentials.kit::*}% !
 
-		# |-> MESSAGE OF /TRASH !
+		# |-> MESSAGE COMMAND (TRASH) !
 
 		Essentials-trash: &7You opened a trash can !
 
-		# |-> MESSAGE OF /VANISH !
+		# |-> MESSAGE COMMAND (VANISH) !
 
 		Essentials-vanish-to-me-to-on: &7You have activated your vanish mode !
 		Essentials-vanish-to-me-to-off: &7You have disabled your vanish mode !
@@ -764,7 +857,7 @@ options:
 
 		Essentials-vanish-if-player-of-me: &cYou cannot go into vanish mode yourself !
 
-		# |-> MESSAGE OF /HAT !
+		# |-> MESSAGE COMMAND (HAT) !
 
 		Essentials-hat-none-argument: &cYou must use the right arguments ! ('off')
 
@@ -781,7 +874,7 @@ options:
 
 		Essentials-hat-if-player-of-me: &cYou cannot modify your hat yourself !
 
-		# |-> MESSAGE OF /OP, /DEOP !
+		# |-> MESSAGE COMMAND (OP AND DEOP) !
 
 		Essentials-op-none-argument: &cYou must put the name of a player to be able to use this command !
 
@@ -795,7 +888,7 @@ options:
 		Essentials-deop-to-player-admin: &7The player &c%{Essentials.nick.%arg 1%}% &7has been removed operator from the server successfully !
 		Essentials-deop-if-player-is-already-deop: &cYou have already removed the player %{Essentials.nick.%arg 1%}% &cserver deoperator !
 
-		# |-> MESSAGE OF /WEATHER !
+		# |-> MESSAGE COMMAND (WEATHER) !
 
 		Essentials-weather-none-argument: &cYou must use the right arguments ! ('sun', 'rain', 'thunder' and 'clear')
 
@@ -804,7 +897,7 @@ options:
 		Essentials-weather-rain-to-world: &7You changed the weather, now it's raining !
 		Essentials-weather-thunder-to-world: &7You changed the weather, now it's raining and storming !
 
-		# |-> MESSAGE OF /MAINTENANCE !
+		# |-> MESSAGE COMMAND (MAINTENANCE) !
 
 		Essentials-maintenance-none-argument: &cYou must use the right arguments ! ('on' and 'off' or 'enable' and 'disable')
 
@@ -814,15 +907,19 @@ options:
 		Essentials-maintenance-to-disable: &6&oAnnouncement of server&6: &cServer maintenance is complete !
 		Essentials-maintenance-to-disable-to-already: &cServer maintenance is already disabled !
 
-		# |-> MESSAGE OF /MOTD, /THOR, /SEED !
+		# |-> MESSAGE COMMAND (MOTD) !
 
 		Essentials-motd: &c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-%nl%&cWelcome to the server !%nl%&c_-_-_-_-_-_-_- &c&lMotd &c_-_-_-_-_-_-_-
 
+		# |-> MESSAGE COMMAND (THOR) !
+
 		Essentials-thor: &7Thunderstorms are coming over this world !
+
+		# |-> MESSAGE COMMAND (SEED) !
 
 		Essentials-seed: &7Seed of world&6: &c%world's seed% &c!
 
-		# |-> MESSAGE OF /CHUNKSLIME !
+		# |-> MESSAGE COMMAND (CHUNKSLIME) !
 
 		Essentials-chunkslime-to-me-to-chunk-slime: &7This chunk is beautiful and a slime chunk !
 		Essentials-chunkslime-to-me-to-no-chunk-slime: &7This chunk is not a slime chunk !
@@ -832,7 +929,7 @@ options:
 
 		Essentials-chunkslime-if-player-of-me: &cYou can't parse this chunk !
 
-		# |-> MESSAGE OF /FAKEBROADCASTMESSAGE !
+		# |-> MESSAGE COMMAND (FAKEBROADCASTMESSAGE) !
 
 		Essentials-fbm-none-argument-one: &cYou must use the right arguments ! ('fake message' and 'list')
 		Essentials-fbm-none-argument-two: &cYou must put the name of a player to be able to use this command !
@@ -844,7 +941,7 @@ options:
 		Essentials-fbm-to-first-join: &c%{Essentials.nick.%player%}% &6joined the game for the first time !
 		Essentials-fbm-to-join: &c%{Essentials.nick.%player%}% &6joined the game !
 
-		# |-> MESSAGE OF /CHAT !
+		# |-> MESSAGE COMMAND (CHAT) !
 
 		Essentials-chat-none-argument: &cYou must use the right arguments ! ('clear')
 
@@ -856,7 +953,7 @@ options:
 		Essentials-chat-to-enable-to-already: &cYou have already activated the Chat !
 		Essentials-chat-to-disable-to-already: &cYou have already deactivated the Chat !
 
-		# |-> MESSAGE OF /PVP !
+		# |-> MESSAGE COMMAND (PVP) !
 
 		Essentials-pvp-none-argument: &cYou must use the right arguments ! ('on' and 'off' or 'enable' and 'disable')
 
@@ -866,7 +963,7 @@ options:
 		Essentials-pvp-to-on-to-already: &cYou have already activated pvp !
 		Essentials-pvp-to-off-to-already: &cYou have already deactivated pvp !
 
-		# |-> MESSAGE OF /BEDTELEPORT !
+		# |-> MESSAGE COMMAND (BEDTELEPORT) !
 
 		Essentials-bedteleport-to-me-if-bed-is-set: &7You have teleported to the your bed !
 		Essentials-bedteleport-to-me-if-bed-is-not-set: &cYou don't have a bed !
@@ -876,14 +973,14 @@ options:
 
 		Essentials-bedteleport-if-player-of-me: &cYou can't teleport yourself !
 
-		# |-> MESSAGE OF /RANDOMTELEPORT !
+		# |-> MESSAGE COMMAND (RANDOMTELEPORT) !
 
 		Essentials-randomteleport-cooldown: &7You will be teleported to &c%{Essentials-randomteleport-teleport-cooldown.variable}% &cseconds &7!
 		Essentials-randomteleport-teleport: &7You have been randomly teleported !
 
 		Essentials-randomteleport-if-teleport-is-set: &cYou can't teleport yourself every time !
 
-		# |-> MESSAGE OF /EDITSIGN !
+		# |-> MESSAGE COMMAND (EDITSIGN) !
 
 		Essentials-editsign-none-argument-one: &7You must put the line you want to change ! ('1', '2', '3' and '4')
 		Essentials-editsign-none-argument-two: &cYou must put a text to be able to use this command !
@@ -7775,12 +7872,9 @@ command /fly [<offline player>] [<text>]:
 				stop
 
 on join:
-	if {@Essentials-fly-join-use} is true:
-		if gamemode of player is survival or adventure:
-			delete {Essentials.fly.%player%}
-			set player's flight mode to false
-			stop
-	else:
+	if gamemode of player is survival and adventure:
+		delete {Essentials.fly.%player%}
+		set player's flight mode to false
 		stop
 
 on command "/fly":
