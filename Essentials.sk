@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.16.1
+#  |-> Essentials Update 1.16.2
 
 options:
 	# |-> CONFIG
@@ -145,6 +145,18 @@ options:
 
 			Essentials-use-world-use-create-use-config-use: true
 
+		# [!] >> HEAL COOLDOWN USE - CONFIG
+
+			Essentials-use-heal-use-cooldown-use: true
+
+			Essentials-use-heal-use-healing-use-cooldown-use: 5
+
+		# [!] >> FEED COOLDOWN USE - CONFIG
+
+			Essentials-use-feed-use-cooldown-use: true
+
+			Essentials-use-feed-use-feeding-use-cooldown-use: 5
+
 options:
 	# |-> MESSAGES
 		# [!] >> '%nl%' = Go to the line...
@@ -167,7 +179,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)%nl%&7Version of plugin&6: &c1.16.1%nl%&7Support version&6: &c1.16.5%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.2&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -229,9 +241,15 @@ options:
 
 				Essentials-use-broadcast-use-nocolor-use: &7[&cAnnouncement&7] &6|-> &f%arg 1%
 
+				Essentials-use-broadcast-use-playerme-use: &cYou cannot send your broadcast yourself !
+
+				Essentials-use-broadcast-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
 			# [!] >> COMMAND USE (/SUICIDE) - MESSAGE
 
 				Essentials-use-suicide-use: &cYou committed suicide !
+
+				Essentials-use-nosuicide-use: &cYou cannot to suicide because you have god mode enabled !
 
 			# [!] >> DEATH MESSAGE USE - MESSAGE
 
@@ -345,6 +363,12 @@ options:
 
 				Essentials-use-list-use-message-use: &6List of players connected to the server&6: &c%all players% &c!
 
+				Essentials-use-list-use-playerworld-use-message-use: &6List of players connected to the server to world &c%{Essentials.use.nickname.use.%arg 1%.use}%&6: &c%all players in player's world% &c!
+
+				Essentials-use-list-use-playerme-use: &cYou cannot see all players in your world yourself !
+
+				Essentials-use-list-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
 			# [!] >> COMMAND USE (/BREAK) - MESSAGE
 
 				Essentials-use-break-use-message-use: &7You broke the target block !
@@ -353,13 +377,33 @@ options:
 
 				Essentials-use-antioch-use-message-use: &7You have spawn 1 primed tnt to the target block !
 
+				Essentials-use-antioch-use-playeronline-use-message-use: &7You have spawn 1 primed tnt to the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &7!
+
+				Essentials-use-antioch-use-playerme-use: &cYou cannot spawn 1 primed tnt to your location yourself !
+
+				Essentials-use-antioch-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
 			# [!] >> COMMAND USE (/WORKBENCH) - MESSAGE
 
 				Essentials-use-workbench-use-message-use: &7You have opened workbench !
 
+				Essentials-use-workbench-use-playeronline-use-message-use-byplayer-use: &6You have opened workbench by &c%{Essentials.use.nickname.use.%player%.use}% &6!
+
+				Essentials-use-workbench-use-playeronline-use-message-use: &6You have opened workbench to the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
+
+				Essentials-use-workbench-use-playerme-use: &cYou cannot your opened workbench yourself !
+
+				Essentials-use-workbench-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
 			# [!] >> COMMAND USE (/FIREBALL) - MESSAGE
 
 				Essentials-use-fireball-use-message-use: &7You threw a fireball !
+
+				Essentials-use-fireball-use-playeronline-use-message-use: &6You have threw a fireball to the player target block &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
+
+				Essentials-use-fireball-use-playerme-use: &cYou cannot your opened workbench yourself !
+
+				Essentials-use-fireball-use-playeroffline-use: &cYou must put the name of a player connected to the server !
 
 			# [!] >> COMMAND USE (/INVSEE) - MESSAGE
 
@@ -374,6 +418,14 @@ options:
 			# [!] >> COMMAND USE (/JUMP) - MESSAGE
 
 				Essentials-use-jump-use-message-use: &7You have been teleported to target block !
+
+				Essentials-use-jump-use-playerme-use: &cYou cannot your teleport target block yourself !
+
+				Essentials-use-jump-use-playeronline-use: &6You have teleported your target block of the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
+
+				Essentials-use-jump-use-playeronline-use-byplayer-use: &6You have been teleported to target block to the player &c%{Essentials.use.nickname.use.%player%.use}% &6by &c%{Essentials.use.nickname.use.%player%.use}% &6!
+
+				Essentials-use-jump-use-playeroffline-use: &cYou must put the name of a player connected to the server !
 
 			# [!] >> COMMAND USE (/TPA) - MESSAGE
 
@@ -447,6 +499,10 @@ options:
 
 				Essentials-use-heal-use-playeroffline-use: &cYou must put the name of a player connected to the server !
 
+				Essentials-use-heal-use-healingplayer-use-cooldown-use: &7You must wait &c%{Essentials-use-back-use-teleport-use-cooldown-use-speedconfig-use}% &7seconds to be able to heal !
+
+				Essentials-use-heal-use-healingplayer-use-already-use: &cYou already have a healing in progress !
+
 			# [!] >> COMMAND USE (/FEED) - MESSAGE
 
 				Essentials-use-feed-use-noneargument1-use-byconsole-use: &cFailed: &f/feed &f[&cname of player&f]
@@ -462,6 +518,10 @@ options:
 				Essentials-use-feed-use-playeronline-use: &6You have feeding the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
 
 				Essentials-use-feed-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+				Essentials-use-feed-use-feedingplayer-use-cooldown-use: &7You must wait &c%{Essentials-use-back-use-teleport-use-cooldown-use-speedconfig-use}% &7seconds to be able to feed !
+
+				Essentials-use-feed-use-feedingplayer-use-already-use: &cYou already have a feeding in progress !
 
 			# [!] >> COMMAND USE (/FLY) - MESSAGE
 
@@ -638,6 +698,12 @@ options:
 			# [!] >> COMMAND USE (/SEED) - MESSAGE
 
 				Essentials-use-seed-use: &6Seed: &c%seed of world% &c!
+
+				Essentials-use-seed-use-playeronline-use: &6Seed of &c%{Essentials.use.nickname.use.%arg 1%.use}%&6: &c%seed of arg 1's world% &c!
+
+				Essentials-use-seed-use-playerme-use: &cYou cannot see your seed of world yourself !
+
+				Essentials-use-seed-use-playeroffline-use: &cYou must put the name of a player connected to the server !
 
 			# [!] >> COMMAND USE (/MOTD) - MESSAGE
 
@@ -1094,11 +1160,11 @@ options:
 
 				Essentials-use-speed-use-noneargument1-use: &cFailed: &f/speed &f[&cfly &for &cwalk &for &creset&f]
 
-				Essentials-use-speed-use-noneargument2-use: &cFailed: &f/speed &f[&cfly &for &cwalk &for &creset&f] &f[&cnumber&f]
+				Essentials-use-speed-use-noneargument2-use: &cFailed: &f/speed &f[&cfly &for &cwalk &for &creset&f] &f[&cnumber = 0 to 10&f]
 
 				Essentials-use-speed-use-fly-use: &7You have changed speed of fly to &6%arg 2% &7!
 
-				Essentials-use-speed-use-walk-use: &7You have changed speed of walk to ni&6%arg 2% &7!
+				Essentials-use-speed-use-walk-use: &7You have changed speed of walk to &6%arg 2% &7!
 
 				Essentials-use-speed-use-reset-use: &7You have changed speed of reset !
 
@@ -1292,7 +1358,7 @@ options:
 
 				Essentials-use-back-use-teleport-use-backpoint-use-noneargument1-use-byconsole-use: &cFailed: &f/spawn &f[&cname of player&f]
 
-				Essentials-use-back-use-teleport-use-backpoint-use-cooldown-use: &7You must wait &c%{Essentials-use-spawn-use-teleport-use-cooldown-use-speedconfig-use}% &7seconds to be able to teleport to the back point !
+				Essentials-use-back-use-teleport-use-backpoint-use-cooldown-use: &7You must wait &c%{Essentials-use-back-use-teleport-use-cooldown-use-speedconfig-use}% &7seconds to be able to teleport to the back point !
 
 				Essentials-use-back-use-teleport-use-backpoint-use-already-use: &cYou already have a teleportation in progress !
 
@@ -1338,10 +1404,162 @@ options:
 
 				Essentials-use-tree-use: &7You have created tree !
 
+			# [!] >> COMMAND USE (/KILL) - MESSAGE
+
+				Essentials-use-kill-use-noneargument1-use: &cFailed: &f/kill &f[&cname of player&f]
+
+				Essentials-use-kill-use-playerme-use: &cYou cannot your kill yourself !
+
+				Essentials-use-kill-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+				Essentials-use-kill-use-playeronline-use: &6You have killed the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
+
+				Essentials-use-kill-use-playeronline-use-byplayer-use: &6You have been killed by &c%{Essentials.use.nickname.use.%player%.use}% &6!
+
+				Essentials-use-kill-use-playeronline-use-byconsole-use: &6You have been killed by &cConsole &6!
+
+				Essentials-use-nokill-use-playeronline-use: &cYou cannot to killed the player &6%{Essentials.use.nickname.use.%arg 1%.use}% &cbecause you have god mode enabled !
+
+			# [!] >> COMMAND USE (/KILLALL) - MESSAGE
+
+				Essentials-use-killall-use-noneargument1-use: &cFailed: &f/killall &f[&callplayers &for &callmobs&f]
+
+				Essentials-use-killall-use-allplayers-use-playeronline-use: &6You have killed all players !
+
+				Essentials-use-killall-use-allplayers-use-playeronline-use-byplayer-use: &6You have been killed by &c%{Essentials.use.nickname.use.%player%.use}% &6!
+
+				Essentials-use-killall-use-allmobs-use-playeronline-use: &6You have killed all mobs !
 
 #  |-> PLUGIN CODE:
 
-command /essentials [<text>]:
+command /killall [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:killall
+	description: &fEssentials command /killall !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-killall-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if arg 1 is not "allplayers" or "allmobs":
+					send "{@Essentials-use-killall-use-noneargument1-use}" to player
+					stop
+				if arg 1 is "allplayers":
+					if player has permission "essentials.*" or "essentials.killall.allplayers" or "essentials.killall.*":
+						loop all players:
+							set {Essentials.use.backpoint.use.%loop-player%.use} to location of loop-player
+							wait 1 tick
+							kill all players
+							send "{@Essentials-use-killall-use-allplayers-use-playeronline-use}" to player
+							send "{@Essentials-use-killall-use-allplayers-use-playeronline-use-byplayer-use}" to loop-player
+							stop
+					if player doesn't have permission "essentials.*" or "essentials.killall.allplayers" or "essentials.killall.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+				if arg 1 is "allmobs":
+					if player has permission "essentials.*" or "essentials.killall.allmobs" or "essentials.killall.*":
+						kill all mobs
+						kill all enderdragons
+						kill all withers
+						send "{@Essentials-use-killall-use-allmobs-use-playeronline-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.killall.allmobs" or "essentials.killall.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "killall":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.killall":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.killall":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+on command "essentials:killall":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.killall":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.killall":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /kill [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:kill
+	description: &fEssentials command /kill !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-kill-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.kill.%arg 1%" or "essentials.kill.*":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-kill-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							if {Essentials.use.god.use.%arg 1%.use} is not set:
+								set {Essentials.use.backpoint.use.%arg 1%.use} to location of arg 1
+								wait 1 tick
+								kill arg 1
+								send "{@Essentials-use-kill-use-playeronline-use}" to player
+								send "{@Essentials-use-kill-use-playeronline-use-byplayer-use}" to arg 1
+								stop
+							if {Essentials.use.god.use.%arg 1%.use} is set:
+								send "{@Essentials-use-nokill-use-playeronline-use}" to player
+								stop
+					if arg 1 is offline:
+						send "{@Essentials-use-kill-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.kill.%arg 1%" or "essentials.kill.*":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			if arg 1 is not set:
+				send "{@Essentials-use-kill-use-noneargument1-use}" to console
+				stop
+			if arg 1 is set:
+				if arg 1 is online:
+					if {Essentials.use.god.use.%arg 1%.use} is not set:
+						set {Essentials.use.backpoint.use.%arg 1%.use} to location of arg 1
+						wait 1 tick
+						kill arg 1
+						send "{@Essentials-use-kill-use-playeronline-use}" to player
+						send "{@Essentials-use-kill-use-playeronline-use-byplayer-use}" to arg 1
+						stop
+					if {Essentials.use.god.use.%arg 1%.use} is set:
+						send "{@Essentials-use-nokill-use-playeronline-use}" to console
+						stop
+				if arg 1 is offline:
+					send "{@Essentials-use-kill-use-playeroffline-use}" to console
+					stop
+
+on command "kill":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.kill":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.kill":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+on command "essentials:kill":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.kill":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.kill":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /essentials [<text>] [<text>]:
 	executable by: player and console
 	aliases: essentials:essentials, ess, essentials:ess
 	description: &fEssentials command /essentials !
@@ -1779,6 +1997,31 @@ on right click on sign:
 		stop
 
 on sign change:
+	if player has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.suicide" or "essentials.*":
+		if line 1 is "[suicide]":
+			set line 1 of block to ""
+			set line 2 of block to "&1[suicide]"
+			send "{@Essentials-use-sign-use-create-use}" to player
+			stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.suicide" or "essentials.*":
+		stop
+
+on right click on sign:
+	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.suicide" or "essentials.*":
+		if line 2 of block is "&1[suicide]":
+			if {Essentials.use.god.use.%player%.use} is not set:
+				set {Essentials.use.backpoint.use.%player%.use} to location of player
+				wait 1 tick
+				kill player
+				send "{@Essentials-use-suicide-use}" to player
+				stop
+			if {Essentials.use.god.use.%player%.use} is set:
+				send "{@Essentials-use-nosuicide-use}" to player
+				stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.suicide" or "essentials.*":
+		stop
+
+on sign change:
 	if player has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.list" or "essentials.*":
 		if line 1 is "[list]":
 			set line 1 of block to ""
@@ -1809,9 +2052,29 @@ on sign change:
 on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		if line 2 of block is "&1[heal]":
-			heal player
-			send "{@Essentials-use-heal-use}" to player
-			stop
+			if {@Essentials-use-heal-use-cooldown-use} is true:
+				if player has permission "essentials.*" or "essentials.heal.bypass" or "essentials.heal.*":
+					heal player
+					send "{@Essentials-use-heal-use}" to player
+					stop
+				if player doesn't have permission "essentials.*" or "essentials.heal.bypass" or "essentials.heal.*":
+					if {Essentials.use.heal.use.healing.use.already.use.%player%.use} is not set:
+						set {Essentials.use.heal.use.healing.use.already.use.%player%.use} to true
+						send "{@Essentials-use-heal-use-healingplayer-use-cooldown-use}" to player
+						wait {@Essentials-use-heal-use-healing-use-cooldown-use} seconds
+						wait 1 tick
+						heal player
+						wait 1 tick
+						delete {Essentials.use.heal.use.healing.use.already.use.%player%.use}
+						send "{@Essentials-use-heal-use}" to player
+						stop
+					if {Essentials.use.heal.use.healing.use.already.use.%player%.use} is set:
+						send "{@Essentials-use-heal-use-healingplayer-use-already-use}" to player
+						stop
+			if {@Essentials-use-heal-use-cooldown-use} is false:
+				heal player
+				send "{@Essentials-use-heal-use}" to player
+				stop
 	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.heal" or "essentials.*":
 		stop
 
@@ -1828,9 +2091,29 @@ on sign change:
 on right click on sign:
 	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		if line 2 of block is "&1[feed]":
-			feed player
-			send "{@Essentials-use-feed-use}" to player
-			stop
+			if {@Essentials-use-feed-use-cooldown-use} is true:
+				if player has permission "essentials.*" or "essentials.feed.bypass" or "essentials.feed.*":
+					feed player
+					send "{@Essentials-use-feed-use}" to player
+					stop
+				if player doesn't have permission "essentials.*" or "essentials.feed.bypass" or "essentials.feed.*":
+					if {Essentials.use.feed.use.feeding.use.already.use.%player%.use} is not set:
+						set {Essentials.use.feed.use.feeding.use.already.use.%player%.use} to true
+						send "{@Essentials-use-feed-use-feedingplayer-use-cooldown-use}" to player
+						wait {@Essentials-use-feed-use-feeding-use-cooldown-use} seconds
+						wait 1 tick
+						feed player
+						wait 1 tick
+						delete {Essentials.use.feed.use.feeding.use.already.use.%player%.use}
+						send "{@Essentials-use-feed-use}" to player
+						stop
+					if {Essentials.use.feed.use.feeding.use.already.use.%player%.use} is set:
+						send "{@Essentials-use-feed-use-feedingplayer-use-already-use}" to player
+						stop
+			if {@Essentials-use-feed-use-cooldown-use} is false:
+				feed player
+				send "{@Essentials-use-feed-use}" to player
+				stop
 	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.feed" or "essentials.*":
 		stop
 
@@ -2985,9 +3268,13 @@ command /speed [<text>] [<number>] [<text>]:
 						send "{@Essentials-use-speed-use-noneargument2-use}" to player
 						stop
 					if arg 2 is set:
-						set the player's fly speed to arg 2
-						send "{@Essentials-use-speed-use-fly-use}" to player
-						stop
+						if arg 2 is 0 or 1 or 2 or 3 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10:
+							set the player's fly speed to arg 2/10
+							send "{@Essentials-use-speed-use-fly-use}" to player
+							stop
+						if arg 2 is not 0 or 1 or 2 or 3 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10:
+							send "{@Essentials-use-speed-use-noneargument2-use}" to player
+							stop
 				if player doesn't have permission "essentials.*" or "essentials.speed.fly" or "essentials.speed.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
@@ -2997,9 +3284,13 @@ command /speed [<text>] [<number>] [<text>]:
 						send "{@Essentials-use-speed-use-noneargument2-use}" to player
 						stop
 					if arg 2 is set:
-						set the player's walk speed to arg 2
-						send "{@Essentials-use-speed-use-walk-use}" to player
-						stop
+						if arg 2 is 0 or 1 or 2 or 3 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10:
+							set the player's walk speed to arg 2/10
+							send "{@Essentials-use-speed-use-walk-use}" to player
+							stop
+						if arg 2 is not 0 or 1 or 2 or 3 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10:
+							send "{@Essentials-use-speed-use-noneargument2-use}" to player
+							stop
 				if player doesn't have permission "essentials.*" or "essentials.speed.walk" or "essentials.speed.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
@@ -5505,14 +5796,30 @@ on command "essentials:thor":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /seed [<text>]:
+command /seed [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:seed
 	description: &fEssentials command /seed !
 	trigger:
 		if sender is a player:
-			send "{@Essentials-use-seed-use}" to player
-			stop
+			if arg 1 is not set:
+				send "{@Essentials-use-seed-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.seed.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-seed-use-playeronline-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							send "{@Essentials-use-seed-use-playerme-use}" to player
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-seed-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.seed.others":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -5976,10 +6283,10 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							stop
 					if arg 2 is online:
 						if player has permission "essentials.*" or "essentials.gamemode.survival.others" or "essentials.gamemode.*":
-							if arg 1 is "%player%":
+							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
-							if arg 1 is not "%player%":
+							if arg 2 is not "%player%":
 								if gamemode of arg 2 is survival:
 									send "{@Essentials-use-gamemode-use-survival-use-already-use-playeronline-use-byplayer-use}" to player
 									stop
@@ -6019,10 +6326,10 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							stop
 					if arg 2 is online:
 						if player has permission "essentials.*" or "essentials.gamemode.creative.others" or "essentials.gamemode.*":
-							if arg 1 is "%player%":
+							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
-							if arg 1 is not "%player%":
+							if arg 2 is not "%player%":
 								if gamemode of arg 2 is creative:
 									send "{@Essentials-use-gamemode-use-creative-use-already-use-playeronline-use-byplayer-use}" to player
 									stop
@@ -6062,10 +6369,10 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							stop
 					if arg 2 is online:
 						if player has permission "essentials.*" or "essentials.gamemode.adventure.others" or "essentials.gamemode.*":
-							if arg 1 is "%player%":
+							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
-							if arg 1 is not "%player%":
+							if arg 2 is not "%player%":
 								if gamemode of arg 2 is adventure:
 									send "{@Essentials-use-gamemode-use-adventure-use-already-use-playeronline-use-byplayer-use}" to player
 									stop
@@ -6105,10 +6412,10 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							stop
 					if arg 2 is online:
 						if player has permission "essentials.*" or "essentials.gamemode.spectator.others" or "essentials.gamemode.*":
-							if arg 1 is "%player%":
+							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
-							if arg 1 is not "%player%":
+							if arg 2 is not "%player%":
 								if gamemode of arg 2 is spectator:
 									send "{@Essentials-use-gamemode-use-spectator-use-already-use-playeronline-use-byplayer-use}" to player
 									stop
@@ -6342,11 +6649,31 @@ command /feed [<offline player>] [<text>]:
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				feed player
-				send "{@Essentials-use-feed-use}" to player
-				stop
+				if {@Essentials-use-feed-use-cooldown-use} is true:
+					if player has permission "essentials.*" or "essentials.feed.bypass" or "essentials.feed.*":
+						feed player
+						send "{@Essentials-use-feed-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.feed.bypass" or "essentials.feed.*":
+						if {Essentials.use.feed.use.feeding.use.already.use.%player%.use} is not set:
+							set {Essentials.use.feed.use.feeding.use.already.use.%player%.use} to true
+							send "{@Essentials-use-feed-use-feedingplayer-use-cooldown-use}" to player
+							wait {@Essentials-use-feed-use-feeding-use-cooldown-use} seconds
+							wait 1 tick
+							feed player
+							wait 1 tick
+							delete {Essentials.use.feed.use.feeding.use.already.use.%player%.use}
+							send "{@Essentials-use-feed-use}" to player
+							stop
+						if {Essentials.use.feed.use.feeding.use.already.use.%player%.use} is set:
+							send "{@Essentials-use-feed-use-feedingplayer-use-already-use}" to player
+							stop
+				if {@Essentials-use-feed-use-cooldown-use} is false:
+					feed player
+					send "{@Essentials-use-feed-use}" to player
+					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.feed.others":
+				if player has permission "essentials.*" or "essentials.feed.others" or "essentials.feed.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-feed-use-playerme-use}" to player
@@ -6359,7 +6686,7 @@ command /feed [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-feed-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.feed.others":
+				if player doesn't have permission "essentials.*" or "essentials.feed.others" or "essentials.feed.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6400,11 +6727,31 @@ command /heal [<offline player>] [<text>]:
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				heal player
-				send "{@Essentials-use-heal-use}" to player
-				stop
+				if {@Essentials-use-heal-use-cooldown-use} is true:
+					if player has permission "essentials.*" or "essentials.heal.bypass" or "essentials.heal.*":
+						heal player
+						send "{@Essentials-use-heal-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.heal.bypass" or "essentials.heal.*":
+						if {Essentials.use.heal.use.healing.use.already.use.%player%.use} is not set:
+							set {Essentials.use.heal.use.healing.use.already.use.%player%.use} to true
+							send "{@Essentials-use-heal-use-healingplayer-use-cooldown-use}" to player
+							wait {@Essentials-use-heal-use-healing-use-cooldown-use} seconds
+							wait 1 tick
+							heal player
+							wait 1 tick
+							delete {Essentials.use.heal.use.healing.use.already.use.%player%.use}
+							send "{@Essentials-use-heal-use}" to player
+							stop
+						if {Essentials.use.heal.use.healing.use.already.use.%player%.use} is set:
+							send "{@Essentials-use-heal-use-healingplayer-use-already-use}" to player
+							stop
+				if {@Essentials-use-heal-use-cooldown-use} is false:
+					heal player
+					send "{@Essentials-use-heal-use}" to player
+					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.heal.others":
+				if player has permission "essentials.*" or "essentials.heal.others" or "essentials.heal.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-heal-use-playerme-use}" to player
@@ -6417,7 +6764,7 @@ command /heal [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-heal-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.heal.others":
+				if player doesn't have permission "essentials.*" or "essentials.heal.others" or "essentials.heal.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6805,15 +7152,33 @@ on command "essentials:tpa":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /jump [<text>]:
+command /jump [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:jump
 	description: &fEssentials command /jump !
 	trigger:
 		if sender is a player:
-			teleport player to target block
-			send "{@Essentials-use-jump-use-message-use}" to player
-			stop
+			if arg 1 is not set:
+				teleport player to target block
+				send "{@Essentials-use-jump-use-message-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.jump.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-jump-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							teleport arg 1 to target block
+							send "{@Essentials-use-jump-use-playeronline-use}" to player
+							send "{@Essentials-use-jump-use-playeronline-use-byplayer-use}" to arg 1
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-jump-use-playeroffline-use}" to player
+						stop
+			if player doesn't have permission "essentials.*" or "essentials.jump.others":
+				send "{@Essentials-use-player-use-nopermission-use}" to player
+				stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -6845,17 +7210,18 @@ command /invsee [<offline player>] [<text>]:
 			if arg 1 is not set:
 				send "{@Essentials-use-invsee-use-noneargument1-use}" to player
 				stop
-			if arg 1 is online:
-				if arg 1 is "%player%":
-					send "{@Essentials-use-invsee-use-playerme-use}" to player
+			if arg 1 is set:
+				if arg 1 is online:
+					if arg 1 is "%player%":
+						send "{@Essentials-use-invsee-use-playerme-use}" to player
+						stop
+					if arg 1 is not "%player%":
+						open arg 1's inventory to player
+						send "{@Essentials-use-invsee-use-playeronline-use}" to player
+						stop
+				if arg 1 is offline:
+					send "{@Essentials-use-invsee-use-playeroffline-use}" to player
 					stop
-				if arg 1 is not "%player%":
-					open arg 1's inventory to player
-					send "{@Essentials-use-invsee-use-playeronline-use}" to player
-					stop
-			if arg 1 is offline:
-				send "{@Essentials-use-invsee-use-playeroffline-use}" to player
-				stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -6878,15 +7244,32 @@ on command "essentials:invsee":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /fireball [<text>]:
+command /fireball [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:fireball
 	description: &fEssentials command /fireball !
 	trigger:
 		if sender is a player:
-			shoot a fireball from the player
-			send "{@Essentials-use-fireball-use-message-use}" to player
-			stop
+			if arg 1 is not set:
+				shoot a fireball from the player
+				send "{@Essentials-use-fireball-use-message-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.fireball.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-fireball-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							shoot a fireball from the arg 1
+							send "{@Essentials-use-fireball-use-playeronline-use-message-use}" to player
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-fireball-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.fireball.others":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -6909,15 +7292,33 @@ on command "essentials:fireball":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /workbench [<text>]:
+command /workbench [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:workbench, craft, essentials:craft, wb, essentials:wb
 	description: &fEssentials command /workbench !
 	trigger:
 		if sender is a player:
-			open workbench inventory to the player
-			send "{@Essentials-use-workbench-use-message-use}" to player
-			stop
+			if arg 1 is not set:
+				open workbench inventory to the player
+				send "{@Essentials-use-workbench-use-message-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.workbench.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-workbench-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							open workbench inventory to the arg 1
+							send "{@Essentials-use-workbench-use-playeronline-use-message-use}" to player
+							send "{@Essentials-use-workbench-use-playeronline-use-message-use-byplayer-use}" to arg 1
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-workbench-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.workbench.others":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -6976,15 +7377,32 @@ on command "essentials:workbench":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /antioch [<text>]:
+command /antioch [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:antioch, granade, essentials:grenade, tnt, essentials:tnt
 	description: &fEssentials command /antioch !
 	trigger:
 		if sender is a player:
-			spawn 1 primed tnt at the targeted block
-			send "{@Essentials-use-antioch-use-message-use}" to player
-			stop
+			if arg 1 is not set:
+				spawn 1 primed tnt at the targeted block
+				send "{@Essentials-use-antioch-use-message-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.antioch.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-antioch-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							spawn 1 primed tnt at arg 1
+							send "{@Essentials-use-antioch-use-playeronline-use-message-use}" to player
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-antioch-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.antioch.others":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -7074,14 +7492,30 @@ on command "essentials:break":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /list [<text>]:
+command /list [<offline player>] [<text>]:
 	executable by: player and console
 	aliases: essentials:list, playerlist, essentials:playerlist, who, essentials:who, plist, essentials:plist, online, essentials:online
 	description: &fEssentials command /list !
 	trigger:
 		if sender is a player:
-			send "{@Essentials-use-list-use-message-use}" to player
-			stop
+			if arg 1 is not set:
+				send "{@Essentials-use-list-use-message-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.list.others":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-list-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							send "{@Essentials-use-list-use-playerworld-use-message-use}" to player
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-list-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.list.others":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-list-use-message-use}" to console
 			stop
@@ -7340,9 +7774,13 @@ command /skull [<offline player>] [<text>]:
 				send "{@Essentials-use-skull-use-noneargument1-use}" to player
 				stop
 			if arg 1 is set:
-				give skull of arg 1 to player
-				send "{@Essentials-use-skull-use}" to player
-				stop
+				if player has permission "essentials.*" or "essentials.skull.%arg 1%" or "essentials.skull.*":
+					give skull of arg 1 to player
+					send "{@Essentials-use-skull-use}" to player
+					stop
+				if player doesn't have permission "essentials.*" or "essentials.skull.%arg 1%" or "essentials.skull.*":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -7758,11 +8196,15 @@ command /suicide [<text>]:
 	description: &fEssentials command /suicide !
 	trigger:
 		if sender is a player:
-			set {Essentials.use.backpoint.use.%player%.use} to location of player
-			wait 1 tick
-			kill player
-			send "{@Essentials-use-suicide-use}" to player
-			stop
+			if {Essentials.use.god.use.%player%.use} is not set:
+				set {Essentials.use.backpoint.use.%player%.use} to location of player
+				wait 1 tick
+				kill player
+				send "{@Essentials-use-suicide-use}" to player
+				stop
+			if {Essentials.use.god.use.%player%.use} is set:
+				send "{@Essentials-use-nosuicide-use}" to player
+				stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -7787,7 +8229,7 @@ on command "essentials:suicide":
 
 command /broadcast [<text>]:
 	executable by: player and console
-	aliases: essentials:broadcast
+	aliases: essentials:broadcast, bc, essentials:bc
 	description: &fEssentials command /broadcast !
 	trigger:
 		if sender is a player:
@@ -8122,6 +8564,8 @@ on load:
 	set {Essentials-use-randomteleport-use-teleport-use-cooldown-use-speedconfig-use} to "{@Essentials-use-randomteleport-use-teleport-use-cooldown-use}"
 	set {Essentials-use-back-use-teleport-use-cooldown-use-speedconfig-use} to "{@Essentials-use-back-use-teleport-use-cooldown-use}"
 	set {Essentials-use-home-use-teleport-use-cooldown-use-speedconfig-use} to "{@Essentials-use-home-use-teleport-use-cooldown-use}"
+	set {Essentials-use-heal-use-healing-use-cooldown-use-speedconfig-use} to "{@Essentials-use-heal-use-healing-use-cooldown-use}"
+	set {Essentials-use-feed-use-feeding-use-cooldown-use-speedconfig-use} to "{@Essentials-use-feed-use-feeding-use-cooldown-use}"
 	stop
 
 on damage:
