@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.16.3
+#  |-> Essentials Update 1.16.4
 
 options:
 	# |-> CONFIG
@@ -157,6 +157,10 @@ options:
 
 			Essentials-use-feed-use-feeding-use-cooldown-use: 5
 
+		# [!] >> BANIP WORLD NAME CHECK IP USE - CONFIG
+
+			Essentials-use-banip-use-checkip-use-worldname-use: "world", "world_nether" and "world_the_end"
+
 options:
 	# |-> MESSAGES
 		# [!] >> '%nl%' = Go to the line...
@@ -179,7 +183,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.3&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.4&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1073,6 +1077,8 @@ options:
 
 				Essentials-use-banip-use-kick-use-playerconnect-use-message-use: &c-_-_-_-_- &fServer Infos &c-_-_-_-_-%nl%%nl%&cYou have been ban life from the server !%nl%%nl%&7Reason: &c%{Essentials.use.banip.use.%player%.use.reason.use}%%nl%%nl%&c-_-_-_-_- &fServer Infos &c-_-_-_-_-
 
+				Essentials-use-banip-use-kick-use-checkip-use-playerconnect-use-message-use: &c-_-_-_-_- &fServer Infos &c-_-_-_-_-%nl%%nl%&cYou have been ban life from the server !%nl%%nl%&c-_-_-_-_- &fServer Infos &c-_-_-_-_-
+
 			# [!] >> COMMAND USE (/UNBANIP) - MESSAGE
 
 				Essentials-use-unbanip-use-noneargument1-use: &cFailed: &f/banip &f[&cname of player&f]
@@ -1148,9 +1154,9 @@ options:
 
 			# [!] >> COMMAND USE (/TIME) - MESSAGE
 
-				Essentials-use-time-use-noneargument1-use: &cFailed: &f/tempban &f[&cset&f]
+				Essentials-use-time-use-noneargument1-use: &cFailed: &f/time &f[&cset&f]
 
-				Essentials-use-time-use-noneargument2-use: &cFailed: &f/tempban &f[&cset&f] &f[&cday &for &cnight&f]
+				Essentials-use-time-use-noneargument2-use: &cFailed: &f/time &f[&cset&f] &f[&cday &for &cnight&f]
 
 				Essentials-use-time-use-day-use: &7You have changed time to day !
 
@@ -1430,7 +1436,52 @@ options:
 
 				Essentials-use-killall-use-allmobs-use-playeronline-use: &6You have killed all mobs !
 
+			# [!] >> COMMAND USE (/SEEN) - MESSAGE
+
+				Essentials-use-seen-use-noneargument1-use: &cFailed: &f/seen &f[&cname of player&f]
+
+				Essentials-use-seen-use: &6|-> &fPlayer Infos &6<-|&f%nl%%nl%&7Name of player&6: &c%{Essentials.use.nickname.use.%arg 1%.use}%&f%nl%&7UUID of player&6: &c%uuid of arg 1%&f%nl%&7Gamemode of player&6: &c%gamemode of arg 1%&f%nl%&7IP of player&6: &c%{Essentials.use.ip.use.%arg 1%.use}%&f%nl%&7Location of player&6: &c%location of arg 1% &c(%arg 1's world%)&f%nl%&7Health of player&6: &c%health of arg 1%&f%nl%&7Feed of player&6: &c%food level of arg 1%&f%nl%%nl%&6|-> &fPlayer Infos &6<-|
+
+				Essentials-use-seen-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
 #  |-> PLUGIN CODE:
+
+command /seen [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:seen
+	description: &fEssentials command /seen !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-seen-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if arg 1 is online:
+					send "{@Essentials-use-seen-use}" to player
+					stop
+				if arg 1 is offline:
+					send "{@Essentials-use-seen-use-playeroffline-use}" to player
+					stop
+		if sender is console:
+			if arg 1 is not set:
+				send "{@Essentials-use-seen-use-noneargument1-use}" to console
+				stop
+			if arg 1 is set:
+				if arg 1 is online:
+					send "{@Essentials-use-seen-use}" to console
+					stop
+				if arg 1 is offline:
+					send "{@Essentials-use-seen-use-playeroffline-use}" to console
+					stop
+
+on command "seen" or "essentials:seen":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.seen":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.seen":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
 
 command /killall [<offline player>] [<text>]:
 	executable by: player and console
@@ -1573,16 +1624,17 @@ command /essentials [<text>] [<text>]:
 			if arg 1 is not set:
 				send "{@Essentials-use-essentials-use-noneargument1-use}" to console
 				stop
-			if arg 1 is not "reload" or "info":
-				send "{@Essentials-use-essentials-use-noneargument1-use}" to console
-				stop
-			if arg 1 is "reload":
-				make console execute command "/sk reload essentials"
-				send "{@Essentials-use-essentials-use-reload-use}" to console
-				stop
-			if arg 1 is "info":
-				send "{@Essentials-use-essentials-use-info-use}" to console
-				stop
+			if arg 1 is set:
+				if arg 1 is not "reload" or "info":
+					send "{@Essentials-use-essentials-use-noneargument1-use}" to console
+					stop
+				if arg 1 is "reload":
+					make console execute command "/sk reload essentials"
+					send "{@Essentials-use-essentials-use-reload-use}" to console
+					stop
+				if arg 1 is "info":
+					send "{@Essentials-use-essentials-use-info-use}" to console
+					stop
 
 on command "ess" or "essentials:ess" or "essentials" or "essentials:essentials":
 	if sender is a player:
@@ -3172,6 +3224,7 @@ command /tempban [<offline player>] [<text>] [<timespan>]:
 							delete {Essentials.use.banip.use.%arg 1%.use}
 							delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 							delete {Essentials.use.banip.use.list.use::%arg 1%}
+							delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 							delete {Essentials.use.ban.use.%arg 1%.use}
 							delete {Essentials.use.ban.use.%arg 1%.use.reason.use}
 							delete {Essentials.use.ban.use.list.use::%arg 1%}
@@ -3206,6 +3259,7 @@ command /tempban [<offline player>] [<text>] [<timespan>]:
 							delete {Essentials.use.banip.use.%arg 1%.use}
 							delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 							delete {Essentials.use.banip.use.list.use::%arg 1%}
+							delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 							delete {Essentials.use.ban.use.%arg 1%.use}
 							delete {Essentials.use.ban.use.%arg 1%.use.reason.use}
 							delete {Essentials.use.ban.use.list.use::%arg 1%}
@@ -3254,6 +3308,7 @@ command /ban [<offline player>] [<text>]:
 						delete {Essentials.use.banip.use.%arg 1%.use}
 						delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 						delete {Essentials.use.banip.use.list.use::%arg 1%}
+						delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 						kick arg 1 due to "{@Essentials-use-ban-use-kick-use-noplayerconnect-use-message-use}"
 						wait 1 tick
 						send "{@Essentials-use-ban-use-playerme-use-noalready-use}" to player
@@ -3283,6 +3338,7 @@ command /ban [<offline player>] [<text>]:
 						delete {Essentials.use.banip.use.%arg 1%.use}
 						delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 						delete {Essentials.use.banip.use.list.use::%arg 1%}
+						delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 						kick arg 1 due to "{@Essentials-use-ban-use-kick-use-noplayerconnect-use-message-use}"
 						wait 1 tick
 						send "{@Essentials-use-ban-use-playerme-use-noalready-use}" to console
@@ -3317,6 +3373,7 @@ command /unban [<offline player>] [<text>]:
 					delete {Essentials.use.banip.use.%arg 1%.use}
 					delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.banip.use.list.use::%arg 1%}
+					delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.times.use}
@@ -3340,6 +3397,7 @@ command /unban [<offline player>] [<text>]:
 					delete {Essentials.use.banip.use.%arg 1%.use}
 					delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.banip.use.list.use::%arg 1%}
+					delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.times.use}
@@ -3378,6 +3436,7 @@ command /unbanip [<offline player>] [<text>]:
 					delete {Essentials.use.banip.use.%arg 1%.use}
 					delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.banip.use.list.use::%arg 1%}
+					delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.times.use}
@@ -3401,6 +3460,7 @@ command /unbanip [<offline player>] [<text>]:
 					delete {Essentials.use.banip.use.%arg 1%.use}
 					delete {Essentials.use.banip.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.banip.use.list.use::%arg 1%}
+					delete {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
 					delete {Essentials.use.tempban.use.%arg 1%.use.times.use}
@@ -3440,6 +3500,7 @@ command /banip [<offline player>] [<text>]:
 						set {Essentials.use.banip.use.%arg 1%.use} to true
 						set {Essentials.use.banip.use.%arg 1%.use.reason.use} to arg 2
 						set {Essentials.use.banip.use.list.use::%arg 1%} to arg 1
+						set {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use} to true
 						wait 1 tick
 						delete {Essentials.use.tempban.use.%arg 1%.use}
 						delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
@@ -3469,6 +3530,7 @@ command /banip [<offline player>] [<text>]:
 						set {Essentials.use.banip.use.%arg 1%.use} to true
 						set {Essentials.use.banip.use.%arg 1%.use.reason.use} to arg 2
 						set {Essentials.use.banip.use.list.use::%arg 1%} to arg 1
+						set {Essentials.use.banip.use.%{Essentials.use.ip.use.%arg 1%.use}%.use.ip.use} to true
 						wait 1 tick
 						delete {Essentials.use.tempban.use.%arg 1%.use}
 						delete {Essentials.use.tempban.use.%arg 1%.use.reason.use}
@@ -5589,6 +5651,7 @@ command /feed [<offline player>] [<text>]:
 				stop
 			if arg 1 is set:
 				if arg 1 is online:
+					feed arg 1
 					send "{@Essentials-use-feed-use-playerme-use-byconsole-use}" to arg 1
 					send "{@Essentials-use-feed-use-playeronline-use}" to console
 					stop
@@ -5658,6 +5721,7 @@ command /heal [<offline player>] [<text>]:
 				stop
 			if arg 1 is set:
 				if arg 1 is online:
+					heal arg 1
 					send "{@Essentials-use-heal-use-playerme-use-byconsole-use}" to arg 1
 					send "{@Essentials-use-heal-use-playeronline-use}" to console
 					stop
@@ -7324,3 +7388,15 @@ on world init:
 		stop
 	if {@Essentials-use-world-use-create-use-config-use} is false:
 		stop
+
+on connect:
+	set {Essentials.use.ip.use.%player%.use} to ip of player
+	stop
+
+on every 1 tick in {@Essentials-use-banip-use-checkip-use-worldname-use}:
+	loop all players:
+		if {Essentials.use.banip.use.%{Essentials.use.ip.use.%loop-player%.use}%.use.ip.use} is set:
+			kick loop-player due to "{@Essentials-use-banip-use-kick-use-checkip-use-playerconnect-use-message-use}"
+			stop
+		if {Essentials.use.banip.use.%{Essentials.use.ip.use.%loop-player%.use}%.use.ip.use} is not set:
+			stop
