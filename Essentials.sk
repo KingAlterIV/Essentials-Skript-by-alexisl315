@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.16.2
+#  |-> Essentials Update 1.16.3
 
 options:
 	# |-> CONFIG
@@ -179,7 +179,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.2&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.3&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -193,11 +193,11 @@ options:
 
 				Essentials-use-setspawn-use-spawnpoint-use-noset-use: &6You have created the server spawn point !
 
-				Essentials-use-setspawn-use-spawnpoint-use-set-use: &cThe server spawn point already exist !
+				Essentials-use-setspawn-use-spawnpoint-use-set-use: &cThe server spawn point already created !
 
 			# [!] >> COMMAND USE (/SPAWN) - MESSAGE
 
-				Essentials-use-spawn-use-spawnpoint-use-noset-use: &cThe server spawn point does not exist !
+				Essentials-use-spawn-use-spawnpoint-use-noset-use: &cThe server spawn point does not created !
 
 				Essentials-use-spawn-use-teleport-use-spawnpoint-use: &7You have been teleported to server spawn point !
 
@@ -1471,16 +1471,7 @@ command /killall [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "killall":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.killall":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.killall":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:killall":
+on command "killall" or "essentials:killall":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.killall":
 			stop
@@ -1541,16 +1532,7 @@ command /kill [<offline player>] [<text>]:
 					send "{@Essentials-use-kill-use-playeroffline-use}" to console
 					stop
 
-on command "kill":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.kill":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.kill":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:kill":
+on command "kill" or "essentials:kill":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.kill":
 			stop
@@ -1568,16 +1550,25 @@ command /essentials [<text>] [<text>]:
 			if arg 1 is not set:
 				send "{@Essentials-use-essentials-use-noneargument1-use}" to player
 				stop
-			if arg 1 is not "reload" or "info":
-				send "{@Essentials-use-essentials-use-noneargument1-use}" to player
-				stop
-			if arg 1 is "reload":
-				make console execute command "/sk reload essentials"
-				send "{@Essentials-use-essentials-use-reload-use}" to player
-				stop
-			if arg 1 is "info":
-				send "{@Essentials-use-essentials-use-info-use}" to player
-				stop
+			if arg 1 is set:
+				if arg 1 is not "reload" or "info":
+					send "{@Essentials-use-essentials-use-noneargument1-use}" to player
+					stop
+				if arg 1 is "reload":
+					if player has permission "essentials.*" or "essentials.essentials.reload" or "essentials.essentials.*":
+						make console execute command "/sk reload essentials"
+						send "{@Essentials-use-essentials-use-reload-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.essentials.reload" or "essentials.essentials.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+				if arg 1 is "info":
+					if player has permission "essentials.*" or "essentials.essentials.info" or "essentials.essentials.*":
+						send "{@Essentials-use-essentials-use-info-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.essentials.info" or "essentials.essentials.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
 		if sender is console:
 			if arg 1 is not set:
 				send "{@Essentials-use-essentials-use-noneargument1-use}" to console
@@ -1593,34 +1584,7 @@ command /essentials [<text>] [<text>]:
 				send "{@Essentials-use-essentials-use-info-use}" to console
 				stop
 
-on command "ess":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.essentials":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.essentials":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:ess":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.essentials":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.essentials":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.essentials":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.essentials":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:essentials":
+on command "ess" or "essentials:ess" or "essentials" or "essentials:essentials":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.essentials":
 			stop
@@ -1669,16 +1633,7 @@ command /tree [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tree":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tree":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tree":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tree":
+on command "tree" or "essentials:tree":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tree":
 			stop
@@ -2309,34 +2264,7 @@ command /back [<offline player>] [<text>]:
 				send "{@Essentials-use-back-use-teleport-use-backpoint-use-playeroffline-use}" to console
 				stop
 
-on command "return":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.back":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.back":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:return":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.back":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.back":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "back":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.back":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.back":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:back":
+on command "return" or "essentials:return" or "back" or "essentials:back":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.back":
 			stop
@@ -2381,70 +2309,7 @@ command /getpos [<offline player>] [<text>]:
 					send "{@Essentials-use-getpos-use-playeroffline-use}" to console
 					stop
 
-on command "getloc":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:getloc":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "getlocation":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:getlocation":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "coords":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:coords":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "getpos":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.getpos":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.getpos":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:getpos":
+on command "getloc" or "essentials:getloc" or "getlocation" or "essentials:getlocation" or "coords" or "essentials:coords" or "getpos" or "essentials:getpos":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.getpos":
 			stop
@@ -2510,16 +2375,8 @@ command /god [<offline player>] [<text>]:
 				if arg 1 is offline:
 					send "{@Essentials-use-god-use-playeroffline-use}" to console
 					stop
-on command "god":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.god":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.god":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
 
-on command "essentials:god":
+on command "god" or "essentials:god":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.god":
 			stop
@@ -2631,16 +2488,7 @@ command /adminhome [<text>] [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "adminhome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.adminhome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.adminhome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:adminhome":
+on command "adminhome" or "essentials:adminhome":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.adminhome":
 			stop
@@ -2703,16 +2551,7 @@ command /home [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "home":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.home":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.home":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:home":
+on command "home" or "essentials:home":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.home":
 			stop
@@ -2744,34 +2583,7 @@ command /delhome [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "deletehome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delhome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delhome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deletehome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delhome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delhome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "delhome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delhome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delhome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:delhome":
+on command "deletehome" or "essentials:deletehome" or "delhome" or "essentials:delhome":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.delhome":
 			stop
@@ -2803,38 +2615,11 @@ command /sethome [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "createhome":
+on command "createhome" or "essentials:createhome" or "sethome" or "essentials:sethome":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.sethome":
 			stop
 		if player doesn't have permission "essentials.*" or "essentials.sethome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:createhome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.sethome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.sethomes":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "sethome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.sethome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.sethome":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:sethome":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.sethome":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.sethomes":
 			cancel event
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
@@ -2855,16 +2640,7 @@ command /homes [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "homes":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.homes":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.homes":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:homes":
+on command "homes" or "essentials:homes":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.homes":
 			stop
@@ -2934,34 +2710,7 @@ command /nick [<text>] [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "nickname":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.nick":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.nick":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:nickname":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.nick":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.nick":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "nick":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.nick":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.nick":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:nick":
+on command "nickname" or "essentials:nickname" or "nick" or "essentials:nick":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.nick":
 			stop
@@ -2990,16 +2739,7 @@ command /mutelist [<text>]:
 				send "{@Essentials-use-mutelist-use-nomutelist-use}" to console
 				stop
 
-on command "mutelist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.mutelist":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.mutelist":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:mutelist":
+on command "mutelist" or "essentials:mutelist":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.mutelist":
 			stop
@@ -3042,16 +2782,7 @@ command /unmute [<offline player>] [<text>]:
 					delete {Essentials.use.mute.use.list.use::%arg 1%}
 					stop
 
-on command "unmute":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.unmute":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.unmute":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:unmute":
+on command "unmute" or "essentials:unmute":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.unmute":
 			stop
@@ -3071,10 +2802,10 @@ command /mute [<offline player>] [<number>] [<text>]:
 				stop
 			if arg 1 is set:
 				if arg 1 is online:
-					if arg 1 is not "%player%":
-						send "{@Essentials-use-mute-use-noneargument2-use}" to player
-						stop
 					if arg 1 is "%player%":
+						send "{@Essentials-use-mute-use-playerme-use}" to player
+						stop
+					if arg 1 is not "%player%":
 						if arg 2 is not set:
 							send "{@Essentials-use-mute-use-noneargument2-use}" to player
 							stop
@@ -3114,16 +2845,7 @@ command /mute [<offline player>] [<number>] [<text>]:
 					send "{@Essentials-use-mute-use-playeroffline-use}" to console
 					stop
 
-on command "mute":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.mute":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.mute":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:mute":
+on command "mute" or "essentials:mute":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.mute":
 			stop
@@ -3307,16 +3029,7 @@ command /speed [<text>] [<number>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "speed":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.speed":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.speed":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:speed":
+on command "speed" or "essentials:speed":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.speed":
 			stop
@@ -3364,16 +3077,7 @@ command /time [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "time":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.time":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.time":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:time":
+on command "time" or "essentials:time":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.time":
 			stop
@@ -3402,16 +3106,7 @@ command /baniplist [<text>]:
 				send "{@Essentials-use-baniplist-use-nobaniplist-use}" to console
 				stop
 
-on command "baniplist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.baniplist":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.baniplist":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:baniplist":
+on command "baniplist" or "essentials:baniplist":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.baniplist":
 			stop
@@ -3440,16 +3135,7 @@ command /banlist [<text>]:
 				send "{@Essentials-use-banlist-use-nobanlist-use}" to console
 				stop
 
-on command "banlist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.banlist":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.banlist":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:banlist":
+on command "banlist" or "essentials:banlist":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.banlist":
 			stop
@@ -3532,16 +3218,7 @@ command /tempban [<offline player>] [<text>] [<timespan>]:
 							send "{@Essentials-use-tempban-use-playerme-use-already-use}" to console
 							stop
 
-on command "tempban":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tempban":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tempban":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tempban":
+on command "tempban" or "essentials:tempban":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tempban":
 			stop
@@ -3614,16 +3291,7 @@ command /ban [<offline player>] [<text>]:
 						send "{@Essentials-use-ban-use-playerme-use-already-use}" to console
 						stop
 
-on command "ban":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.ban":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.ban":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:ban":
+on command "ban" or "essentials:ban":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.ban":
 			stop
@@ -3684,16 +3352,7 @@ command /unban [<offline player>] [<text>]:
 					send "{@Essentials-use-unban-use-playerme-use-noalready-use}" to console
 					stop
 
-on command "unban":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.unban":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.unban":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:unban":
+on command "unban" or "essentials:unban":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.unban":
 			stop
@@ -3754,16 +3413,7 @@ command /unbanip [<offline player>] [<text>]:
 					send "{@Essentials-use-unbanip-use-playerme-use-noalready-use}" to console
 					stop
 
-on command "unbanip":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.unbanip":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.unbanip":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:unbanip":
+on command "unbanip" or "essentials:unbanip" or "banip" or "essentials:banip":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.unbanip":
 			stop
@@ -3836,16 +3486,7 @@ command /banip [<offline player>] [<text>]:
 						send "{@Essentials-use-banip-use-playerme-use-already-use}" to console
 						stop
 
-on command "banip":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.banip":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.banip":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:banip":
+on command "banip" or "essentials:banip":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.banip":
 			stop
@@ -3896,16 +3537,7 @@ command /unlimited [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "unlimited":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.unlimited":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.unlimited":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:unlimited":
+on command "unlimited" or "essentials:unlimited":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.unlimited":
 			stop
@@ -3954,34 +3586,7 @@ command /depth [<offline player>] [<text>]:
 					send "{@Essentials-use-depth-use-playeroffline-use}" to console
 					stop
 
-on command "height":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.depth":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.depth":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:height":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.depth":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.depth":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "depth":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.depth":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.depth":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:depth":
+on command "height" or "essentials:height" or "depth" or "essentials:depth":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.depth":
 			stop
@@ -4070,16 +3675,7 @@ command /chat [<text>] [<text>]:
 					broadcast "{@Essentials-use-chat-use-disable-use-broadcast-use-byconsole-use}"
 					stop
 
-on command "chat":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.chat":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.chat":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:chat":
+on command "chat" or "essentials:chat":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.chat":
 			stop
@@ -4166,52 +3762,7 @@ command /randomteleport [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "rtp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.randomteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.randomteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:rtp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.randomteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.randomteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "randomtp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.randomteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.randomteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:randomtp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.randomteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.randomteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "randomteleport":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.randomteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.randomteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:randomteleport":
+on command "rtp" or "essentials:rtp" or "randomtp" or "essentials:randomtp" or "randomteleport" or "essentials:randomteleport":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.randomteleport":
 			stop
@@ -4266,7 +3817,7 @@ command /afk [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "afk":
+on command "afk" or "essentials:afk":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.afk":
 			stop
@@ -4274,15 +3825,6 @@ on command "afk":
 			cancel event
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
-
-on command "essentials:afk":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.afk":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.afk":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop 
 
 command /enderchest [<offline player>] [<text>]:
 	executable by: player and console
@@ -4313,34 +3855,7 @@ command /enderchest [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "ec":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.enderchest":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.enderchest":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:ec":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.enderchest":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.enderchest":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "enderchest":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.enderchest":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.enderchest":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:enderchest":
+on command "ec" or "essentials:ec" or "enderchest" or "essentials:enderchest":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.enderchest":
 			stop
@@ -4439,16 +3954,7 @@ command /warp [<text>] [<offline player>] [<text>]:
 							send "{@Essentials-use-warp-use-teleport-use-warppoint-use-playeroffline-use}" to console
 							stop
 
-on command "warp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.warp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.warp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:warp":
+on command "warp" or "essentials:warp":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.warp":
 			stop
@@ -4479,34 +3985,7 @@ command /delwarp [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "deletewarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deletewarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "delwarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:delwarp":
+on command "deletewarp" or "essentials:deletewarp" or "delwarp" or "essentials:delwarp":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.delwarp":
 			stop
@@ -4535,16 +4014,7 @@ command /warps [<text>]:
 				send "{@Essentials-use-warps-use-nowarps-use}" to console
 				stop
 
-on command "warps":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.warps":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.warps":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:warps":
+on command "warps" or "essentials:warps":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.warps":
 			stop
@@ -4575,34 +4045,7 @@ command /setwarp [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "createwarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:createwarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "setwarp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setwarp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setwarp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:setwarp":
+on command "createwarp" or "essentials:createwarp" or "setwarp" or "essentials:setwarp":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.setwarp":
 			stop
@@ -4644,70 +4087,7 @@ command /msg [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "whisper":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:whisper":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "t":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:t":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "m":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:m":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "msg":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.msg":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.msg":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:msg":
+on command "whisper" or "essentials:whisper" or "t" or "essentials:t" or "m" or "essentials:m" or "msg" or "essentials:msg":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.msg":
 			stop
@@ -4757,34 +4137,7 @@ command /ext [<offline player>] [<text>]:
 					send "{@Essentials-use-ext-use-playeroffline-use}" to console
 					stop
 
-on command "extinguish":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.ext":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.ext":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:extinguish":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.ext":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.ext":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "ext":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.ext":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.ext":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:ext":
+on command "extinguish" or "essentials:extinguish" or "ext" or "essentials:ext":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.ext":
 			stop
@@ -4815,70 +4168,7 @@ command /deljail [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "rmjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:rmjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "remjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:remjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "deletejail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deletejail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "deljail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deljail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deljail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deljail":
+on command "rmjail" or "essentials:rmjail" or "remjail" or "essentials:remjail" or "deletejail" or "essentials:deletejail" or "deljail" or "essentials:deljail":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.deljail":
 			stop
@@ -4903,16 +4193,7 @@ command /jails [<text>]:
 			send "{@Essentials-use-jails-use}" to console
 			stop
 
-on command "jails":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.jails":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.jails":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:jails":
+on command "jails" or "essentials:jails":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.jails":
 			stop
@@ -4943,34 +4224,7 @@ command /setjail [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "setjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setjail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setjail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:setjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setjail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setjail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "createjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setjail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setjail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:createjail":
+on command "setjail" or "essentials:setjail" or "createjail" or "essentials:createjail":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.setjail":
 			stop
@@ -5025,70 +4279,7 @@ command /togglejail [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "jail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:jail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "unjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:unjail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "togglejail":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.togglejail":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.togglejail":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:togglejail":
+on command "tjail" or "essentials:tjail" or "jail" or "essentials:jail" or "unjail" or "essentials:unjail" or "togglejail" or "essentials:togglejail":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.togglejail":
 			stop
@@ -5126,16 +4317,7 @@ command /powertool [<text>]:
 			send "{@Essentials-use-kits-use}" to console
 			stop
 
-on command "powertool":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.powertool":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.powertool":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:powertool":
+on command "powertool" or "essentials:powertool":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.powertool":
 			stop
@@ -5160,16 +4342,7 @@ command /kits [<text>]:
 			send "{@Essentials-use-kits-use}" to console
 			stop
 
-on command "kits":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.kits":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.kits":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:kits":
+on command "kits" or "essentials:kits":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.kits":
 			stop
@@ -5207,34 +4380,7 @@ command /createkit [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "setkit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:setkit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "createkit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:createkit":
+on command "setkit" or "essentials:setkit" or "createkit" or "essentials:createkit":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.setkit":
 			stop
@@ -5269,34 +4415,7 @@ command /deletekit [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "delkit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:delkit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "deletekit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delkit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delkit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deletekit":
+on command "delkit" or "essentials:delkit" or "deletekit" or "essentials:deletekit":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.delkit":
 			stop
@@ -5371,16 +4490,7 @@ command /kit [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "kit":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.kit":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.kit":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:kit":
+on command "kit" or "essentials:kit":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.kit":
 			stop
@@ -5435,16 +4545,7 @@ command /vanish [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "vanish":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.vanish":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.vanish":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:vanish":
+on command "vanish" or "essentials:vanish":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.vanish":
 			stop
@@ -5485,34 +4586,7 @@ command /deop [<offline player>] [<text>]:
 					send "{@Essentials-use-deop-use-playerme-use-byplayer-use-already-use}" to console
 					stop
 
-on command "deoperator":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deop":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deop":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deoperator":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deop":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deop":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "deop":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.deop":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.deop":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:deop":
+on command "deoperator" or "essentials:deoperator" or "deop" or "essentials:deop":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.deop":
 			stop
@@ -5553,34 +4627,7 @@ command /op [<offline player>] [<text>]:
 					op arg 1
 					stop
 
-on command "operator":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.op":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.op":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:operator":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.op":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.op":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "op":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.op":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.op":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:op":
+on command "operator" or "essentials:operator" or "op" or "essentials:op":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.op":
 			stop
@@ -5637,16 +4684,7 @@ command /weather [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "weather":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.weather":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.weather":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:weather":
+on command "weather" or "essentials:weather":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.weather":
 			stop
@@ -5717,16 +4755,7 @@ command /maintenance [<text>] [<text>]:
 					delete {Essentials.use.maintenance.use}
 					stop
 
-on command "maintenance":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.maintenance":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.maintenance":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:maintenance":
+on command "maintenance" or "essentials:maintenance":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.maintenance":
 			stop
@@ -5747,16 +4776,7 @@ command /motd [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "motd":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.motd":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.motd":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:motd":
+on command "motd" or "essentials:motd":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.motd":
 			stop
@@ -5778,16 +4798,7 @@ command /thor [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "thor":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.thor":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.thor":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:thor":
+on command "thor" or "essentials:thor":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.thor":
 			stop
@@ -5824,16 +4835,7 @@ command /seed [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "seed":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.seed":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.seed":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:seed":
+on command "seed" or "essentials:seed":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.seed":
 			stop
@@ -5878,16 +4880,7 @@ command /chunkslime [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "chunkslime":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.chunkslime":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.chunkslime":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:chunkslime":
+on command "chunkslime" or "essentials:chunkslime":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.chunkslime":
 			stop
@@ -5938,16 +4931,7 @@ command /pvp [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "pvp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.pvp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.pvp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:pvp":
+on command "pvp" or "essentials:pvp":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.pvp":
 			stop
@@ -5994,34 +4978,7 @@ command /bedteleport [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "bt":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.bedteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.bedteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:bt":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.bedteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.bedteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "bedteleport":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.bedteleport":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.bedteleport":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:bedteleport":
+on command "bt" or "essentials:bt" or "bedteleport" or "essentials:bedteleport":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.bedteleport":
 			stop
@@ -6102,16 +5059,7 @@ command /editsign [<text>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "editsign":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.editsign":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.editsign":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:editsign":
+on command "editsign" or "essentials:editsign":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.editsign":
 			stop
@@ -6174,16 +5122,7 @@ command /freeze [<offline player>] [<text>]:
 				send "{@Essentials-use-freeze-use-playeroffline-use}" to console
 				stop
 
-on command "freeze":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.freeze":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.freeze":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:freeze":
+on command "freeze" or "essentials:freeze":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.freeze":
 			stop
@@ -6234,16 +5173,7 @@ command /kick [<offline player>] [<text>]:
 				send "{@Essentials-use-kick-use-playeroffline-use}" to console
 				stop
 
-on command "kick":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.kick":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.kick":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:kick":
+on command "kick" or "essentials:kick":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.kick":
 			stop
@@ -6518,34 +5448,7 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 						send "{@Essentials-use-gamemode-use-playeroffline-use}" to console
 						stop
 
-on command "gm":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.gamemode":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.gamemode":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:gm":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.gamemode":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.gamemode":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "gamemode":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.gamemode":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.gamemode":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:gamemode":
+on command "gm" or "essentials:gm" or "gamemode" or "essentials:gamemode":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.gamemode":
 			stop
@@ -6624,16 +5527,7 @@ command /fly [<offline player>] [<text>]:
 					send "{@Essentials-use-fly-use-playeroffline-use}" to console
 					stop
 
-on command "fly":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.fly":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.fly":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:fly":
+on command "fly" or "essentials:fly":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.fly":
 			stop
@@ -6702,16 +5596,7 @@ command /feed [<offline player>] [<text>]:
 					send "{@Essentials-use-feed-use-playeroffline-use}" to console
 					stop
 
-on command "feed":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.feed":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.feed":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:feed":
+on command "feed" or "essentials:feed":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.feed":
 			stop
@@ -6780,16 +5665,7 @@ command /heal [<offline player>] [<text>]:
 					send "{@Essentials-use-heal-use-playeroffline-use}" to console
 					stop
 
-on command "heal":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.heal":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.heal":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:heal":
+on command "heal" or "essentials:heal":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.heal":
 			stop
@@ -6812,34 +5688,7 @@ command /trash [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "bin":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.trash":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.trash":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:bin":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.trash":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.trash":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "trash":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.trash":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.trash":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:trash":
+on command "bin" or "essentials:bin" or "trash" or "essentials:trash":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.trash":
 			stop
@@ -6880,16 +5729,7 @@ command /repair [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "repair":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.repair":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.repair":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:repair":
+on command "repair" or "essentials:repair":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.repair":
 			stop
@@ -6928,34 +5768,7 @@ command /compass [<offline player>] [<text>]:
 				send "{@Essentials-use-compass-use-playeroffline-use}" to console
 				stop
 
-on command "direction":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.compass":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.compass":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:direction":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.compass":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.compass":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "compass":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.compass":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.compass":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:compass":
+on command "direction" or "essentials:direction" or "compass" or "essentials:compass":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.compass":
 			stop
@@ -6983,34 +5796,7 @@ command /tpdeny [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tpno":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpdeny":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpdeny":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpno":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpdeny":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpdeny":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "tpdeny":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpdeny":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpdeny":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpdeny":
+on command "tpno" or "essentials:tpno" or "tpdeny" or "essentials:tpdeny":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tpdeny":
 			stop
@@ -7072,34 +5858,7 @@ command /tpaccept [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tpyes":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpaccept":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpaccept":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpyes":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpaccept":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpaccept":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "tpaccept":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpaccept":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpaccept":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpaccept":
+on command "tpyes" or "essentials:tpyes" or "tpaccept" or "essentials:tpaccept":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tpaccept":
 			stop
@@ -7134,16 +5893,7 @@ command /tpa [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tpa":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpa":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpa":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpa":
+on command "tpa" or "essentials:tpa":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tpa":
 			stop
@@ -7183,16 +5933,7 @@ command /jump [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "jump":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.jump":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.jump":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:jump":
+on command "jump" or "essentials:jump":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.jump":
 			stop
@@ -7226,16 +5967,7 @@ command /invsee [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "invsee":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.invsee":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.invsee":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:invsee":
+on command "invsee" or "essentials:invsee":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.invsee":
 			stop
@@ -7274,16 +6006,7 @@ command /fireball [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "fireball":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.fireball":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.fireball":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:fireball":
+on command "fireball" or "essentials:fireball":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.fireball":
 			stop
@@ -7323,52 +6046,7 @@ command /workbench [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "craft":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.workbench":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.workbench":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:craft":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.workbench":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.workbench":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "wb":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.workbench":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.workbench":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:wb":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.workbench":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.workbench":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "workbench":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.workbench":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.workbench":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:workbench":
+on command "craft" or "essentials:craft" or "wb" or "essentials:wb" or "workbench" or "essentials:workbench":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.workbench":
 			stop
@@ -7407,52 +6085,7 @@ command /antioch [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tnt":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.antioch":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.antioch":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tnt":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.antioch":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.antioch":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "grenade":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.antioch":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.antioch":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:grenade":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.antioch":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.antioch":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "antioch":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.antioch":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.antioch":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:antioch":
+on command "tnt" or "essentials:tnt" or "grenade" or "essentials:grenade" or "antioch" or "essentials:antioch":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.antioch":
 			stop
@@ -7474,16 +6107,7 @@ command /break [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "break":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.break":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.break":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:break":
+on command "break" or "essentials:break":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.break":
 			stop
@@ -7520,88 +6144,7 @@ command /list [<offline player>] [<text>]:
 			send "{@Essentials-use-list-use-message-use}" to console
 			stop
 
-on command "online":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:online":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "plist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:plist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "who":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:who":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "playerlist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:playerlist":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "list":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.list":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.list":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:list":
+on command "online" or "essentials:online" or "plist" or "essentials:plist" or "who" or "essentials:who" or "playerlist" or "essentials:playerlist" or "list" or "essentials:list":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.list":
 			stop
@@ -7630,16 +6173,7 @@ command /kickall [<text>]:
 				kick all players because "{@Essentials-use-kickall-use-message-use}"
 				stop
 
-on command "kickall":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.kickall":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.kickall":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:kickall":
+on command "kickall" or "essentials:kickall":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.kickall":
 			stop
@@ -7684,16 +6218,7 @@ command /slap [<offline player>] [<text>]:
 				send "{@Essentials-use-slap-use-playeroffline-use}" to console
 				stop
 
-on command "slap":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.slap":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.slap":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:slap":
+on command "slap" or "essentials:slap":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.slap":
 			stop
@@ -7715,16 +6240,7 @@ command /night [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "night":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.night":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.night":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:night":
+on command "night" or "essentials:night":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.night":
 			stop
@@ -7746,16 +6262,7 @@ command /day [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "day":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.day":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.day":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:day":
+on command "day" or "essentials:day":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.day":
 			stop
@@ -7785,52 +6292,7 @@ command /skull [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "head":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.skull":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.skull":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:head":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.skull":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.skull":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "playerhead":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.skull":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.skull":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:playerhead":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.skull":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.skull":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "skull":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.skull":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.skull":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:skull":
+on command "head" or "essentials:head" or "playerhead" or "essentials:playerhead" or "skull" or "essentials:skull":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.skull":
 			stop
@@ -7866,16 +6328,7 @@ command /tphere [<offline player>] [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tphere":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tphere":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tphere":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tphere":
+on command "tphere" or "essentials:tphere":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tphere":
 			stop
@@ -7908,16 +6361,7 @@ command /helpop [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "helpop":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.helpop":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.helpop":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:helpop":
+on command "helpop" or "essentials:helpop":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.helpop":
 			stop
@@ -7946,16 +6390,7 @@ command /me [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "me":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.me":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.me":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:me":
+on command "me" or "essentials:me":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.me":
 			stop
@@ -8040,16 +6475,7 @@ command /tp [<offline player>] [<offline player>] [<text>]:
 					send "{@Essentials-use-tp-use-playeroffline-use}" to console
 					stop
 
-on command "tp":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tp":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tp":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tp":
+on command "tp" or "essentials:tp":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tp":
 			stop
@@ -8076,16 +6502,7 @@ command /tpall [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "tpall":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tpall":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tpall":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:tpall":
+on command "tpall" or "essentials:tpall":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.tpall":
 			stop
@@ -8136,52 +6553,7 @@ command /clearinventory [<offline player>] [<text>]:
 				send "{@Essentials-use-clearinventory-use-playeroffline-use}" to console
 				stop
 
-on command "clear":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.clearinventory":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.clearinventory":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:clear":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.clearinventory":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.clearinventory":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "clearinv":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.clearinventory":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.clearinventory":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:clearinv":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.clearinventory":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.clearinventory":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "clearinventory":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.clearinventory":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.clearinventory":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:clearinventory":
+on command "clear" or "essentials:clear" or "clearinv" or "essentials:clearinv" or "clearinventory" or "essentials:clearinventory":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.clearinventory":
 			stop
@@ -8209,16 +6581,7 @@ command /suicide [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "suicide":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.suicide":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.suicide":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:suicide":
+on command "suicide" or "essentials:suicide":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.suicide":
 			stop
@@ -8247,16 +6610,7 @@ command /broadcast [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "broadcast":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.broadcast":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.broadcast":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:broadcast":
+on command "broadcast" or "essentials:broadcast":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.broadcast":
 			stop
@@ -8348,16 +6702,7 @@ command /spawn [<offline player>] [<text>]:
 				send "{@Essentials-use-spawn-use-teleport-use-spawnpoint-use-playeroffline-use}" to console
 				stop
 
-on command "spawn":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.spawn":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.spawn":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:spawn":
+on command "spawn" or "essentials:spawn":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.spawn":
 			stop
@@ -8384,16 +6729,7 @@ command /setspawn [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "setspawn":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.setspawn":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.setspawn":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:setspawn":
+on command "setspawn" or "essentials:setspawn":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.setspawn":
 			stop
@@ -8420,16 +6756,7 @@ command /delspawn [<text>]:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
-on command "delspawn":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.delspawn":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.delspawn":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-on command "essentials:delspawn":
+on command "delspawn" or "essentials:delspawn":
 	if sender is a player:
 		if player has permission "essentials.*" or "essentials.delspawn":
 			stop
