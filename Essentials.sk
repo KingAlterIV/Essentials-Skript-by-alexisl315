@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.17-Snapshot 2021.3a
+#  |-> Essentials Update 1.17-Snapshot 2021.3b
 
 options:
 	# |-> CONFIG
@@ -197,7 +197,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3a&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3b&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1518,9 +1518,264 @@ options:
 
 				Essentials-use-log-use-command-use: [Command] - (Name of player: %player%) (Command: %command%) (Location of player: %location of player%) (World of player: %player's world%)
 
+			# [!] >> COMMAND USE (/SERVER) - MESSAGE
+
+				Essentials-use-server-use-noneargument1-use: &cFailed: &f/server &f[&cname of server&f] &f[&7Option: &cname of player&f]
+
+				Essentials-use-server-use-noneargument1-use-byconsole-use: &f/server &f[&cname of server&f] &f[&cname of player&f]
+
+				Essentials-use-server-use-noneargument2-use-byconsole-use: &f/server &f[&cname of server&f] &f[&cname of player&f]
+
+				Essentials-use-server-use-noserver-use: &cThe server &6%arg 1% &cdoes not exist !
+
+				Essentials-use-server-use-connectme-use: &7Connection to the server &c%arg 1% &7in progress...
+
+				Essentials-use-server-use-playerme-use: &cYou cannot your teleport to server yourself !
+
+				Essentials-use-server-use-connectplayer-use-playeronline-use: &6You have teleported the player &c%arg 2% &6for the server &c%arg 1% &6!
+
+				Essentials-use-server-use-connectplayer-use-playeronline-use-byplayer-use: &6Connection to the server &c%arg 1% &6in progress by &c%{Essentials.use.nickname.use.%player%.use}% &6!
+
+				Essentials-use-server-use-connectplayer-use-playeronline-use-byconsole-use: &6Connection to the server &c%arg 1% &6in progress by &cConsole &6!
+
+				Essentials-use-server-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+			# [!] >> COMMAND USE (/SETSERVER) - MESSAGE
+
+				Essentials-use-setserver-use-noneargument1-use: &cFailed: &f/setserver &f[&cname of server&f]
+
+				Essentials-use-setserver-use: &7You have created to server name &6%arg 1% &7!
+
+				Essentials-use-setserver-use-existserver-use: &cThe server name &6%arg 1% &cis exist !
+
+			# [!] >> COMMAND USE (/DELSERVER) - MESSAGE
+
+				Essentials-use-delserver-use-noneargument1-use: &cFailed: &f/delserver &f[&cname of server&f]
+
+				Essentials-use-delserver-use: &7You have deleted to server name &6%arg 1% &7!
+
+				Essentials-use-delserver-use-existserver-use: &cThe server name &6%arg 1% &cdoes not exist !
+
+			# [!] >> COMMAND USE (/SERVERINFO) - MESSAGE
+
+				Essentials-use-serverinfo-use-noneargument1-use: &cFailed: &f/serverinfo &f[&cname of server&f]
+
+				Essentials-use-serverinfo-use: &6|-> &fServer Infos &6<-|&f%nl%%nl%&7Name of server: &c%{Essentials.use.server.use::%arg 1%}%&f%nl%&7Name of creator: &c%{Essentials.use.server.use.creator.use.%arg 1%.use}%&f%nl%%nl%&6|-> &fServer Infos &6<-|
+
+				Essentials-use-serverinfo-use-noserver-use: &cThe server name &6%arg 1% &cdoes not exist !
+
+			# [!] >> COMMAND USE (/SERVERS) - MESSAGE
+
+				Essentials-use-servers-use: &6List of servers: &c%{Essentials.use.server.use::*}% &c!
+
+				Essentials-use-servers-use-noserver-use: &6List of servers: &cNone !
+
+
 #  |-> PLUGIN CODE:
 
-command /jailinfo [<text>] [<text>]:
+command /servers [<text>]:
+	executable by: player and console
+	aliases: essentials:servers
+	description: &fEssentials command /servers !
+	trigger:
+		if sender is a player:
+			if {Essentials.use.server.use::*} is set:
+				send "{@Essentials-use-servers-use}" to player
+				stop
+			if {Essentials.use.server.use::*} is not set:
+				send "{@Essentials-use-servers-use-noserver-use}" to player
+				stop
+		if sender is console:
+			if {Essentials.use.server.use::*} is set:
+				send "{@Essentials-use-servers-use}" to console
+				stop
+			if {Essentials.use.server.use::*} is not set:
+				send "{@Essentials-use-servers-use-noserver-use}" to console
+				stop
+
+on command "servers" or "essentials:servers":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.servers":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.servers":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /serverinfo [<text>]:
+	executable by: player and console
+	aliases: essentials:kitinfo
+	description: &fEssentials command /serverinfo !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-serverinfo-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.serverinfo.*" or "essentials.serverinfo.%arg 1%":
+					if {Essentials.use.server.use::%arg 1%} is not set:
+						send "{@Essentials-use-serverinfo-use-noserver-use}" to player
+						stop
+					if {Essentials.use.server.use::%arg 1%} is set:
+						send "{@Essentials-use-serverinfo-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.serverinfo.*" or "essentials.serverinfo.%arg 1%":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "serverinfo" or "essentials:serverinfo":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.serverinfo":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.serverinfo":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /delserver [<text>]:
+	executable by: player and console
+	aliases: essentials:delserver, deleteserver, essentials:deleteserver
+	description: &fEssentials command /delserver !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-delserver-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if {Essentials.use.server.use::%arg 1%} is not set:
+					send "{@Essentials-use-delserver-use-existserver-use}" to player
+					stop
+				if {Essentials.use.server.use::%arg 1%} is set:
+					delete {Essentials.use.server.use.creator.use.%arg 1%.use}
+					delete {Essentials.use.server.use::%arg 1%}
+					send "{@Essentials-use-delserver-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "delserver" or "essentials:delserver":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.delserver":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.delserver":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /setserver [<text>]:
+	executable by: player and console
+	aliases: essentials:setserver, createserver, essentials:createserver
+	description: &fEssentials command /setserver !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-setserver-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if {Essentials.use.server.use::%arg 1%} is not set:
+					set {Essentials.use.server.use.creator.use.%arg 1%.use} to player
+					set {Essentials.use.server.use::%arg 1%} to arg 1
+					send "{@Essentials-use-setserver-use}" to player
+					stop
+				if {Essentials.use.server.use::%arg 1%} is set:
+					send "{@Essentials-use-setserver-use-existserver-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "setserver" or "essentials:setserver":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.setserver":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.setserver":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /server [<text>] [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:server
+	description: &fEssentials command /server !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-server-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if arg 2 is not set:
+					if player has permission "essentials.*" or "essentials.server.*" or "essentials.server.%arg 1%":
+						if {Essentials.use.server.use::%arg 1%} is not set:
+							send "{@Essentials-use-server-use-noserver-use}" to player
+							stop
+						if {Essentials.use.server.use::%arg 1%} is set:
+							send "{@Essentials-use-server-use-connectme-use}" to player
+							wait 1 tick
+							connect player to arg 1
+							stop
+				if arg 2 is set:
+					if player has permission "essentials.*" or "essentials.server.*" or "essentials.server.others.%arg 2%" or "essentials.server.others.*":
+						if {Essentials.use.server.use::%arg 1%} is not set:
+							send "{@Essentials-use-server-use-noserver-use}" to player
+							stop
+						if {Essentials.use.server.use::%arg 1%} is set:
+							if arg 2 is not "%player%":
+								if arg 2 is online:
+									send "{@Essentials-use-server-use-connectplayer-use-playeronline-use-byplayer-use}" to arg 2
+									send "{@Essentials-use-server-use-connectplayer-use-playeronline-use}" to player
+									wait 1 tick
+									connect arg 2 to arg 1
+									stop
+								if arg 2 is offline:
+									send "{@Essentials-use-server-use-playeroffline-use}" to player
+									stop
+							if arg 2 is "%player%":
+								send "{@Essentials-use-server-use-playerme-use}" to player
+								stop
+					if player doesn't have permission "essentials.*" or "essentials.server.*" or "essentials.server.others.%arg 2%" or "essentials.server.others.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+		if sender is console:
+			if arg 1 is not set:
+				send "{@Essentials-use-server-use-noneargument1-use-byconsole-use}" to console
+				stop
+			if arg 1 is set:
+				if arg 2 is not set:
+					send "{@Essentials-use-server-use-noneargument2-use-byconsole-use}" to console
+					stop
+				if arg 2 is set:
+					if {Essentials.use.server.use::%arg 1%} is not set:
+						send "{@Essentials-use-server-use-noserver-use}" to console
+						stop
+					if {Essentials.use.server.use::%arg 1%} is set:
+						if arg 2 is not "%player%":
+							if arg 2 is online:
+								send "{@Essentials-use-server-use-connectplayer-use-playeronline-use-byconsole-use}" to arg 2
+								send "{@Essentials-use-server-use-connectplayer-use-playeronline-use}" to console
+								wait 1 tick
+								connect arg 2 to arg 1
+								stop
+							if arg 2 is offline:
+								send "{@Essentials-use-server-use-playeroffline-use}" to console
+								stop
+						if arg 2 is "%player%":
+							send "{@Essentials-use-server-use-playerme-use}" to console
+							stop
+
+on command "server" or "essentials:server":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.server":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.server":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /jailinfo [<text>]:
 	executable by: player and console
 	aliases: essentials:jailinfo
 	description: &fEssentials command /jailinfo !
@@ -1553,7 +1808,7 @@ on command "jailinfo" or "essentials:jailinfo":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /kitinfo [<text>] [<text>]:
+command /kitinfo [<text>]:
 	executable by: player and console
 	aliases: essentials:kitinfo
 	description: &fEssentials command /kitinfo !
@@ -1586,7 +1841,7 @@ on command "kitinfo" or "essentials:kitinfo":
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
 
-command /warpinfo [<text>] [<text>]:
+command /warpinfo [<text>]:
 	executable by: player and console
 	aliases: essentials:warpinfo
 	description: &fEssentials command /warpinfo !
@@ -2305,6 +2560,49 @@ on right click on sign:
 			send "{@Essentials-use-list-use-message-use}" to player
 			stop
 	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.list" or "essentials.*":
+		stop
+
+on sign change:
+	if player has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.server" or "essentials.*":
+		if line 1 is "[server]":
+			if line 2 is line 2:
+				set line 3 of block to "&1%line 2%"
+				set line 1 of block to ""
+				set line 2 of block to "&1[server]"
+				send "{@Essentials-use-sign-use-create-use}" to player
+				stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.server" or "essentials.*":
+		stop
+
+on right click on sign:
+	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.server" or "essentials.*":
+		if line 2 of block is "&1[server]":
+			if line 3 of block is line 3:
+				connect player to line 3
+				stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.server" or "essentials.*":
+		stop
+
+on sign change:
+	if player has permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.servers" or "essentials.*":
+		if line 1 is "[servers]":
+			set line 1 of block to ""
+			set line 2 of block to "&1[servers]"
+			send "{@Essentials-use-sign-use-create-use}" to player
+			stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.create.*" or "essentials.sign.create.servers" or "essentials.*":
+		stop
+
+on right click on sign:
+	if player has permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.servers" or "essentials.*":
+		if line 2 of block is "&1[servers]":
+			if {Essentials.use.server.use::*} is set:
+				send "{@Essentials-use-servers-use}" to player
+				stop
+			if {Essentials.use.server.use::*} is not set:
+				send "{@Essentials-use-servers-use-noserver-use}" to player
+				stop
+	if player doesn't have permission "essentials.sign.*" or "essentials.sign.use.*" or "essentials.sign.use.servers" or "essentials.*":
 		stop
 
 on sign change:
@@ -4514,8 +4812,12 @@ command /jails [<text>]:
 				send "{@Essentials-use-jails-use-nojails-use}" to player
 				stop
 		if sender is console:
-			send "{@Essentials-use-jails-use}" to console
-			stop
+			if {Essentials.use.jails.use::*} is set:
+				send "{@Essentials-use-jails-use}" to console
+				stop
+			if {Essentials.use.jails.use::*} is not set:
+				send "{@Essentials-use-jails-use-nojails-use}" to console
+				stop
 
 on command "jails" or "essentials:jails":
 	if sender is a player:
@@ -4639,7 +4941,7 @@ command /powertool [<text>]:
 					send "{@Essentials-use-powertool-use-tool-use-air-use}" to player
 					stop
 		if sender is console:
-			send "{@Essentials-use-kits-use}" to console
+			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
 
 on command "powertool" or "essentials:powertool":
@@ -4664,8 +4966,12 @@ command /kits [<text>]:
 				send "{@Essentials-use-kits-use-nokit-use}" to player
 				stop
 		if sender is console:
-			send "{@Essentials-use-kits-use}" to console
-			stop
+			if {Essentials.use.kit.use::*} is set:
+				send "{@Essentials-use-kits-use}" to console
+				stop
+			if {Essentials.use.kit.use::*} is not set:
+				send "{@Essentials-use-kits-use-nokit-use}" to console
+				stop
 
 on command "kits" or "essentials:kits":
 	if sender is a player:
@@ -7684,43 +7990,44 @@ on every 1 tick in {@Essentials-use-banip-use-checkip-use-worldname-use}:
 
 on chat:
 	if {@Essentials-use-log-use-chat-use-config-use} is true:
-		log "{@Essentials-use-log-use-chat-use}" to "Essentials/Chat.log"
+		log "{@Essentials-use-log-use-chat-use}" to "Essentials/%player%/Chat.log"
 		stop
 	if {@Essentials-use-log-use-chat-use-config-use} is false:
 		stop
 
 on build:
 	if {@Essentials-use-log-use-blockbuild-use-config-use} is true:
-		log "{@Essentials-use-log-use-blockbuild-use}" to "Essentials/Block-Build.log"
+		log "{@Essentials-use-log-use-blockbuild-use}" to "Essentials/%player%/Block-Build.log"
 		stop
 	if {@Essentials-use-log-use-blockbuild-use-config-use} is false:
 		stop
 
 on break:
 	if {@Essentials-use-log-use-blockbreak-use-config-use} is true:
-		log "{@Essentials-use-log-use-blockbreak-use}" to "Essentials/Block-Break.log"
+		log "{@Essentials-use-log-use-blockbreak-use}" to "Essentials/%player%/Block-Break.log"
 		stop
 	if {@Essentials-use-log-use-blockbreak-use-config-use} is false:
 		stop
 
 on drop:
 	if {@Essentials-use-log-use-drop-use-config-use} is true:
-		log "{@Essentials-use-log-use-drop-use}" to "Essentials/Drop.log"
+		log "{@Essentials-use-log-use-drop-use}" to "Essentials/%player%/Drop.log"
 		stop
 	if {@Essentials-use-log-use-drop-use-config-use} is false:
 		stop
 
 on death:
-	if {@Essentials-use-log-use-deathentity-use-config-use} is true:
-		log "{@Essentials-use-log-use-deathentity-use}" to "Essentials/Death.log"
-		stop
-	if {@Essentials-use-log-use-deathentity-use-config-use} is false:
-		stop
+	if victim is a player:
+		if {@Essentials-use-log-use-deathentity-use-config-use} is true:
+			log "{@Essentials-use-log-use-deathentity-use}" to "Essentials/%player%/Death.log"
+			stop
+		if {@Essentials-use-log-use-deathentity-use-config-use} is false:
+			stop
 
 on command:
 	if sender is a player:
 		if {@Essentials-use-log-use-command-use-config-use} is true:
-			log "{@Essentials-use-log-use-command-use}" to "Essentials/Command.log"
+			log "{@Essentials-use-log-use-command-use}" to "Essentials/%player%/Command.log"
 			stop
 		if {@Essentials-use-log-use-command-use-config-use} is false:
 			stop
