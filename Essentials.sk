@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.17-Snapshot 2021.4b
+#  |-> Essentials Update 1.17 PRE-RELEASE 1
 
 options:
 	# |-> CONFIG
@@ -60,6 +60,10 @@ options:
 			Essentials-use-antidamage-use-player-use: false
 
 			Essentials-use-antidamage-use-all-use: false
+
+		# [!] > ANTI HUNGER CHANGE USE - CONFIG
+
+			Essentials-use-antihungerchange-use: false
 
 		# [!] >> CREATE PORTALS USE (NETHER AND END) - CONFIG
 
@@ -207,7 +211,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.4b&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17 PRE-RELEASE 1&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1392,34 +1396,6 @@ options:
 
 				Essentials-use-back-use-teleport-use-backpoint-use-already-use: &cYou already have a teleportation in progress !
 
-			# [!] >> COMMAND USE (/XP) - MESSAGE
-
-				Essentials-use-xp-use-playeroffline-use: &cYou must put the name of a player connected to the server !
-
-				Essentials-use-xp-use-noneargument1-use: &cFailed: &f/xp &f[&cremove &for &cset &for &cshow &for &cgive&f]
-
-				Essentials-use-xp-use-remove-use-noneargument-use: &cFailed: &f/xp &fremove &f[&cname of player&f] &f[&cnumbers&f]
-
-				Essentials-use-xp-use-remove-use-playerme-use-xp-use: &6You have deleted xp of &c%arg 3% &6to the player &c%{Essentials.use.nickname.use.%arg 2%.use}% &6!
-
-				Essentials-use-xp-use-remove-use-playeronline-use-xp-use-byplayer-use: &6You have been remove xp of &c%arg 3% &6by &c%{Essentials.use.nickname.use.%player%.use}% &6!
-
-				Essentials-use-xp-use-set-use-noneargument-use: &cFailed: &f/xp &fset &f[&cname of player&f] &f[&cnumbers&f]
-
-				Essentials-use-xp-use-set-use-playerme-use-xp-use: &6You have set xp of &c%arg 3% &6to the player &c%{Essentials.use.nickname.use.%arg 2%.use}% &6!
-
-				Essentials-use-xp-use-set-use-playeronline-use-xp-use-byplayer-use: &6You have been set xp of &c%arg 3% &6by &c%{Essentials.use.nickname.use.%player%.use}% &6!
-
-				Essentials-use-xp-use-show-use-noneargument-use: &cFailed: &f/xp &fshow &f[&cname of player&f]
-
-				Essentials-use-xp-use-show-use-playerme-use-xp-use: &6Level of &c%{Essentials.use.nickname.use.%arg 2%.use}%&6: &c%level of arg 2% &clevels !
-
-				Essentials-use-xp-use-give-use-playerme-use-xp-use: &6You have give xp of &c%arg 3% &6to the player &c%{Essentials.use.nickname.use.%arg 2%.use}% &6!
-
-				Essentials-use-xp-use-give-use-noneargument-use: &cFailed: &f/xp &fgive &f[&cname of player&f] &f[&cnumbers&f]
-
-				Essentials-use-xp-use-give-use-playeronline-use-xp-use-byplayer-use: &6You have been give xp of &c%arg 3% &6by &c%{Essentials.use.nickname.use.%player%.use}% &6!
-
 			# [!] >> SIGN USE - MESSAGE
 
 				Essentials-use-sign-use-create-use: &7You have created sign !
@@ -1427,12 +1403,6 @@ options:
 			# [!] >> WORLD CREATE USE - MESSAGE
 
 				Essentials-use-world-use-create-use-message-use: &6You have created new world !
-
-			# [!] >> COMMAND USE (/TREE) - MESSAGE
-
-				Essentials-use-tree-use-noneargument1-use: &cFailed: &f/tree &f[&coak &for &cjungle &for &cspruce &for &cacacia &for &cbirch &for &cdarkwood&f]
-
-				Essentials-use-tree-use: &7You have created tree !
 
 			# [!] >> COMMAND USE (/KILL) - MESSAGE
 
@@ -1526,7 +1496,7 @@ options:
 
 				Essentials-use-log-use-deathentity-use: [Death] - (Name of entity: %event-entity%) (Location of death: %location of event-entity%) (World of entity: %entity's world%)
 
-				Essentials-use-log-use-command-use: [Command] - (Name of player: %player%) (Command: %command%) (Location of player: %location of player%) (World of player: %player's world%)
+				Essentials-use-log-use-command-use: [Command] - (Name of player: %player%) (Command: %full command%) (Location of player: %location of player%) (World of player: %player's world%)
 
 			# [!] >> COMMAND USE (/SERVER) - MESSAGE
 
@@ -8251,4 +8221,12 @@ on swap hand item:
 		stop
 	if {@Essentials-use-secondhand-use-switch-use-config-use} is false:
 		cancel event
+		stop
+
+on hunger meter change:
+	if {@Essentials-use-antihungerchange-use} is true:
+		cancel event
+		feed player
+		stop
+	if {@Essentials-use-antihungerchange-use} is false:
 		stop
