@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.16.4
+#  |-> Essentials Update 1.17-Snapshot 2021.3a
 
 options:
 	# |-> CONFIG
@@ -161,6 +161,20 @@ options:
 
 			Essentials-use-banip-use-checkip-use-worldname-use: "world", "world_nether" and "world_the_end"
 
+		# [!] >> LOG USE - CONFIG
+
+			Essentials-use-log-use-chat-use-config-use: true
+
+			Essentials-use-log-use-blockbuild-use-config-use: true
+
+			Essentials-use-log-use-blockbreak-use-config-use: true
+
+			Essentials-use-log-use-drop-use-config-use: true
+
+			Essentials-use-log-use-deathentity-use-config-use: true
+
+			Essentials-use-log-use-command-use-config-use: true
+
 options:
 	# |-> MESSAGES
 		# [!] >> '%nl%' = Go to the line...
@@ -183,7 +197,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.16.4&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3a&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -667,11 +681,11 @@ options:
 
 				Essentials-use-bedteleport-use-bedexist-use: &7You have been teleported to your bed &6!
 
-				Essentials-use-bedteleport-use-bednoexist-use: &cYou bed is not exist !
+				Essentials-use-bedteleport-use-bednoexist-use: &cYou bed does not exist !
 
 				Essentials-use-bedteleport-use-bedexist-use-playeronline-use: &6You have been teleported to the bed of the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
 
-				Essentials-use-bedteleport-use-bednoexist-use-playeronline-use: &cThe bed of the player &6%{Essentials.use.nickname.use.%arg 1%.use}% &cis not exist !
+				Essentials-use-bedteleport-use-bednoexist-use-playeronline-use: &cThe bed of the player &6%{Essentials.use.nickname.use.%arg 1%.use}% &cdoes not exist !
 
 			# [!] >> COMMAND USE (/PVP) - MESSAGE
 
@@ -801,7 +815,7 @@ options:
 
 				Essentials-use-kit-use-give-use: &7You have give to kit &c%arg 1% &7!
 
-				Essentials-use-kit-use-nokit-use: &cThe kit &6%arg 1% &cis not exist !
+				Essentials-use-kit-use-nokit-use: &cThe kit &6%arg 1% &cdoes not exist !
 
 				Essentials-use-kit-use-give-use-cooldown-use-message-use: &7You must wait &c%{Essentials-use-kit-use-give-use-cooldown-use-speedconfig-use}% &7seconds to give the kit &c%arg 1% &7!
 
@@ -811,7 +825,7 @@ options:
 
 				Essentials-use-deletekit-use: &7You have deleted to kit &6%arg 1% &7!
 
-				Essentials-use-deletekit-use-nokit-use: &cThe kit &6%arg 1% &cis not exist !
+				Essentials-use-deletekit-use-nokit-use: &cThe kit &6%arg 1% &cdoes not exist !
 
 			# [!] >> COMMAND USE (/CREATEKIT) - MESSAGE
 
@@ -855,7 +869,7 @@ options:
 
 				Essentials-use-togglejail-use-playerme-use-playernojailput-use-already-use: &6You have already unjail to the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &6!
 
-				Essentials-use-togglejail-use-noexistjail-use: &cThe jail &6%arg 2% &cis not exist !
+				Essentials-use-togglejail-use-noexistjail-use: &cThe jail &6%arg 2% &cdoes not exist !
 
 			# [!] >> COMMAND USE (/SETJAIL) - MESSAGE
 
@@ -877,7 +891,7 @@ options:
 
 				Essentials-use-deljail-use: &7You have deleted to jail &6%arg 1% &7!
 
-				Essentials-use-deljail-use-existjail-use: &cThe jail &6%arg 1% &cis not exist !
+				Essentials-use-deljail-use-existjail-use: &cThe jail &6%arg 1% &cdoes not exist !
 
 			# [!] >> COMMAND USE (/EXT) - MESSAGE
 
@@ -935,13 +949,13 @@ options:
 
 				Essentials-use-delwarp-use: &7You have deleted to warp &6%arg 1% &7!
 
-				Essentials-use-delwarp-use-existwarp-use: &cThe warp &6%arg 1% &cis not exist !
+				Essentials-use-delwarp-use-existwarp-use: &cThe warp &6%arg 1% &cdoes not exist !
 
 			# [!] >> COMMAND USE (/WARP) - MESSAGE
 
 				Essentials-use-warp-use-noneargument1-use: &cFailed: &f/warp &f[&cname of warp&f]
 
-				Essentials-use-warp-use-existwarp-use: &cThe warp &6%arg 1% &cis not exist !
+				Essentials-use-warp-use-existwarp-use: &cThe warp &6%arg 1% &cdoes not exist !
 
 				Essentials-use-warp-use-teleport-use-warppoint-use: &7You have been teleported to warp &6%arg 1% &7!
 
@@ -1440,11 +1454,254 @@ options:
 
 				Essentials-use-seen-use-noneargument1-use: &cFailed: &f/seen &f[&cname of player&f]
 
-				Essentials-use-seen-use: &6|-> &fPlayer Infos &6<-|&f%nl%%nl%&7Name of player&6: &c%{Essentials.use.nickname.use.%arg 1%.use}%&f%nl%&7UUID of player&6: &c%uuid of arg 1%&f%nl%&7Gamemode of player&6: &c%gamemode of arg 1%&f%nl%&7IP of player&6: &c%{Essentials.use.ip.use.%arg 1%.use}%&f%nl%&7Location of player&6: &c%location of arg 1% &c(%arg 1's world%)&f%nl%&7Health of player&6: &c%health of arg 1%&f%nl%&7Feed of player&6: &c%food level of arg 1%&f%nl%%nl%&6|-> &fPlayer Infos &6<-|
+				Essentials-use-seen-use: &6|-> &fPlayer Infos &6<-|&f%nl%%nl%&7Name of player&6: &c%{Essentials.use.nickname.use.%arg 1%.use}%&f%nl%&7UUID of player&6: &c%uuid of arg 1%&f%nl%&7Gamemode of player&6: &c%gamemode of arg 1%&f%nl%&7IP of player&6: &c%{Essentials.use.ip.use.%arg 1%.use}%&f%nl%&7Location of player&6: &c%location of arg 1% &c(%arg 1's world%)&f%nl%&7Health of player&6: &c%health of arg 1%&f%nl%&7Feed of player&6: &c%food of arg 1%&f%nl%%nl%&6|-> &fPlayer Infos &6<-|
 
 				Essentials-use-seen-use-playeroffline-use: &cYou must put the name of a player connected to the server !
 
+			# [!] >> COMMAND USE (/ITEMDB) - MESSAGE
+
+				Essentials-use-itemdb-use: &6|-> &fItem Infos &6<-|&f%nl%%nl%&7Name of item: &c%player's tool%&f%nl%&7Durability of item: &c%durability of player's tool%&7/&c%max durability of player's tool%&f%nl%%nl%&6|-> &fItem Infos &6<-|
+
+				Essentials-use-itemdb-use-air-use: &cYou have nothing in your hand !
+
+				Essentials-use-itemdb-use-playeronline-use: &6|-> &fItem Infos &6<-|&f%nl%%nl%&7Name of item: &c%arg 1's tool%&f%nl%&7Durability of item: &c%durability of arg 1's tool%&7/&c%max durability of arg 1's tool%&f%nl%%nl%&6|-> &fItem Infos &6<-|
+
+				Essentials-use-itemdb-use-air-use-playeronline-use: &cThe player has nothing in hand !
+
+				Essentials-use-itemdb-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+				Essentials-use-itemdb-use-playerme-use: &cYou cannot your see itemdb yourself !
+
+			# [!] >> COMMAND USE (/HAT) - MESSAGE
+
+				Essentials-use-hat-use-playerme-use-enable-use: &7You have enabled your hat mode !
+
+				Essentials-use-hat-use-playerme-use-disable-use: &7You have disabled your hat mode !
+
+				Essentials-use-hat-use-air-use: &cYou have nothing in your hand !
+
+			# [!] >> COMMAND USE (/WARPINFO) - MESSAGE
+
+				Essentials-use-warpinfo-use-noneargument1-use: &cFailed: &f/warpinfo &f[&cname of warp&f]
+
+				Essentials-use-warpinfo-use: &6|-> &fWarp Infos &6<-|&f%nl%%nl%&7Name of warp: &c%{Essentials.use.warp.use.list.use::%arg 1%}%&f%nl%&7Name of creator: &c%{Essentials.use.warp.use.creator.use.%arg 1%.use}%&f%nl%&7Location of warp: &c%{Essentials.use.warp.use.location.use.%arg 1%.use}%&f%nl%%nl%&6|-> &fWarp Infos &6<-|
+
+				Essentials-use-warpinfo-use-nowarp-use: &cThe warp &6%arg 1% &cdoes not exist !
+
+			# [!] >> COMMAND USE (/KITINFO) - MESSAGE
+
+				Essentials-use-kitinfo-use-noneargument1-use: &cFailed: &f/kitinfo &f[&cname of kit&f]
+
+				Essentials-use-kitinfo-use: &6|-> &fKit Infos &6<-|&f%nl%%nl%&7Name of kit: &c%{Essentials.use.kit.use::%arg 1%}%&f%nl%&7Name of creator: &c%{Essentials.use.kit.use.creator.use.%arg 1%.use}%&f%nl%%nl%&6|-> &fKit Infos &6<-|
+
+				Essentials-use-kitinfo-use-nokit-use: &cThe kit &6%arg 1% &cdoes not exist !
+
+			# [!] >> COMMAND USE (/JAILINFO) - MESSAGE
+
+				Essentials-use-jailinfo-use-noneargument1-use: &cFailed: &f/jailinfo &f[&cname of jail&f]
+
+				Essentials-use-jailinfo-use: &6|-> &fJail Infos &6<-|&f%nl%%nl%&7Name of jail: &c%{Essentials.use.jails.use::%arg 1%}%&f%nl%&7Name of creator: &c%{Essentials.use.jail.use.creator.use.%arg 1%.use}%&f%nl%&7Location of warp: &c%{Essentials.use.jail.use.location.use.%arg 1%.use}%%nl%%nl%&6|-> &fJail Infos &6<-|
+
+				Essentials-use-jailinfo-use-nojail-use: &cThe jail &6%arg 1% &cdoes not exist !
+
+			# [!] >> LOG USE - MESSAGE
+
+				Essentials-use-log-use-chat-use: [Chat] - (Name of player: %player%) (Message: %message%)
+
+				Essentials-use-log-use-blockbuild-use: [Block-Build] - (Name of player: %player%) (Name of block: %event-block%) (Location of block: %location of event-block%) (World of player: %player's world%)
+
+				Essentials-use-log-use-blockbreak-use: [Block-Break] - (Name of player: %player%) (Name of block: %event-block%) (Location of block: %location of event-block%) (World of player: %player's world%)
+
+				Essentials-use-log-use-drop-use: [Drop] - (Name of player: %player%) (Name of item: %event-item%) (Location of player: %location of player%) (World of player: %player's world%)
+
+				Essentials-use-log-use-deathentity-use: [Death] - (Name of entity: %event-entity%) (Location of death: %location of event-entity%) (World of entity: %entity's world%)
+
+				Essentials-use-log-use-command-use: [Command] - (Name of player: %player%) (Command: %command%) (Location of player: %location of player%) (World of player: %player's world%)
+
 #  |-> PLUGIN CODE:
+
+command /jailinfo [<text>] [<text>]:
+	executable by: player and console
+	aliases: essentials:jailinfo
+	description: &fEssentials command /jailinfo !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-jailinfo-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.jailinfo.*" or "essentials.jailinfo.%arg 1%":
+					if {Essentials.use.jails.use::%arg 1%} is not set:
+						send "{@Essentials-use-jailinfo-use-nojail-use}" to player
+						stop
+					if {Essentials.use.jails.use::%arg 1%} is set:
+						send "{@Essentials-use-jailinfo-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.jailinfo.*" or "essentials.jailinfo.%arg 1%":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "jailinfo" or "essentials:jailinfo":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.jailinfo":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.jailinfo":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /kitinfo [<text>] [<text>]:
+	executable by: player and console
+	aliases: essentials:kitinfo
+	description: &fEssentials command /kitinfo !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-kitinfo-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.kitinfo.*" or "essentials.kitinfo.%arg 1%":
+					if {Essentials.use.kit.use::%arg 1%} is not set:
+						send "{@Essentials-use-kitinfo-use-nokit-use}" to player
+						stop
+					if {Essentials.use.kit.use::%arg 1%} is set:
+						send "{@Essentials-use-kitinfo-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.kitinfo.*" or "essentials.kitinfo.%arg 1%":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "kitinfo" or "essentials:kitinfo":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.kitinfo":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.kitinfo":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /warpinfo [<text>] [<text>]:
+	executable by: player and console
+	aliases: essentials:warpinfo
+	description: &fEssentials command /warpinfo !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-warpinfo-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.warpinfo.*" or "essentials.warpinfo.%arg 1%":
+					if {Essentials.use.warp.use.list.use::%arg 1%} is not set:
+						send "{@Essentials-use-warpinfo-use-nowarp-use}" to player
+						stop
+					if {Essentials.use.warp.use.list.use::%arg 1%} is set:
+						send "{@Essentials-use-warpinfo-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.warpinfo.*" or "essentials.warpinfo.%arg 1%":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "warpinfo" or "essentials:warpinfo":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.warpinfo":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.warpinfo":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /hat [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:hat
+	description: &fEssentials command /hat !
+	trigger:
+		if sender is a player:
+			if {Essentials.use.hat.use.%player%.use} is not set:
+				if player's tool is not air:
+					set the player's helmet to player's tool
+					wait 1 tick
+					remove player's tool from player's inventory
+					set {Essentials.use.hat.use.%player%.use} to true
+					wait 1 tick
+					send "{@Essentials-use-hat-use-playerme-use-enable-use}" to player
+					stop
+				if player's tool is air:
+					send "{@Essentials-use-hat-use-air-use}" to player
+					stop
+			if {Essentials.use.hat.use.%player%.use} is set:
+				give player's helmet to player
+				wait 1 tick
+				set the player's helmet to air
+				delete {Essentials.use.hat.use.%player%.use}
+				wait 1 tick
+				send "{@Essentials-use-hat-use-playerme-use-disable-use}" to player
+				stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "hat" or "essentials:hat":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.hat":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.hat":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /itemdb [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:itemdb
+	description: &fEssentials command /itemdb !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				if player's tool is not air:
+					send "{@Essentials-use-itemdb-use}" to player
+					stop
+				if player's tool is air:
+					send "{@Essentials-use-itemdb-use-air-use}" to player
+					stop
+			if arg 1 is set:
+				if player has permission "essentials.*" or "essentials.itemdb.%arg 1%" or "essentials.itemdb.*":
+					if arg 1 is online:
+						if arg 1 is "%player%":
+							send "{@Essentials-use-itemdb-use-playerme-use}" to player
+							stop
+						if arg 1 is not "%player%":
+							if player's tool is not air:
+								send "{@Essentials-use-itemdb-use-air-use-playeronline-use}" to player
+								stop
+							if player's tool is air:
+								send "{@Essentials-use-itemdb-use-air-use}" to player
+								stop
+					if arg 1 is offline:
+						send "{@Essentials-use-itemdb-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.itemdb.%arg 1%" or "essentials.itemdb.*":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "itemdb" or "essentials:itemdb":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.itemdb":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.itemdb":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
 
 command /seen [<offline player>] [<text>]:
 	executable by: player and console
@@ -1456,11 +1713,15 @@ command /seen [<offline player>] [<text>]:
 				send "{@Essentials-use-seen-use-noneargument1-use}" to player
 				stop
 			if arg 1 is set:
-				if arg 1 is online:
-					send "{@Essentials-use-seen-use}" to player
-					stop
-				if arg 1 is offline:
-					send "{@Essentials-use-seen-use-playeroffline-use}" to player
+				if player has permission "essentials.*" or "essentials.seen.%arg 1%" or "essentials.seen.*":
+					if arg 1 is online:
+						send "{@Essentials-use-seen-use}" to player
+						stop
+					if arg 1 is offline:
+						send "{@Essentials-use-seen-use-playeroffline-use}" to player
+						stop
+				if player doesn't have permission "essentials.*" or "essentials.seen.%arg 1%" or "essentials.seen.*":
+					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
 			if arg 1 is not set:
@@ -4096,6 +4357,7 @@ command /setwarp [<text>]:
 				stop
 			if arg 1 is set:
 				if {Essentials.use.warp.use.list.use::%arg 1%} is not set:
+					set {Essentials.use.warp.use.creator.use.%arg 1%.use} to player
 					set {Essentials.use.warp.use.location.use.%arg 1%.use} to location of player
 					send "{@Essentials-use-setwarp-use}" to player
 					set {Essentials.use.warp.use.list.use::%arg 1%} to arg 1
@@ -4223,7 +4485,7 @@ command /deljail [<text>]:
 					stop
 				if {Essentials.use.jails.use::%arg 1%} is set:
 					delete {Essentials.use.jails.use::%arg 1%}
-					delete {Essentials.use.jails.use.location.use::%arg 1%}
+					delete {Essentials.use.jail.use.location.use.%arg 1%.use}
 					send "{@Essentials-use-deljail-use}" to player
 					stop
 		if sender is console:
@@ -4275,7 +4537,8 @@ command /setjail [<text>]:
 				stop
 			if arg 1 is set:
 				if {Essentials.use.jails.use::%arg 1%} is not set:
-					set {Essentials.use.jails.use.location.use::%arg 1%} to location of player
+					set {Essentials.use.jail.use.creator.use.%arg 1%.use} to player
+					set {Essentials.use.jail.use.location.use.%arg 1%.use} to location of player
 					set {Essentials.use.jails.use::%arg 1%} to arg 1
 					send "{@Essentials-use-setjail-use}" to player
 					stop
@@ -4324,7 +4587,7 @@ command /togglejail [<offline player>] [<text>]:
 							if {Essentials.use.jail.use.playerjail.use.%arg 1%.use} is not set:
 								set {Essentials.use.jail.use.playerjail.use.%arg 1%.use} to true
 								set {Essentials.use.jail.use.%arg 1%.use} to arg 1
-								teleport arg 1 to {Essentials.use.jails.use.location.use::%arg 2%}
+								teleport arg 1 to {Essentials.use.jail.use.location.use.%arg 2%.use}
 								send "{@Essentials-use-togglejail-use-playerme-use-playerjailput-use}" to player
 								send "{@Essentials-use-togglejail-use-playeronline-use-playerjailput-use}" to arg 1
 								stop
@@ -4433,6 +4696,7 @@ command /createkit [<text>]:
 						set {Essentials.use.kit.use.legs.use.%arg 1%.use} to the player's legs
 						set {Essentials.use.kit.use.boot.use.%arg 1%.use} to the player's boot
 					send "{@Essentials-use-createkit-use}" to player
+					set {Essentials.use.kit.use.creator.use.%arg 1%.use} to player
 					set {Essentials.use.kit.use::%arg 1%} to arg 1
 					stop
 				if {Essentials.use.kit.use::%arg 1%} is set:
@@ -4965,12 +5229,12 @@ command /pvp [<text>] [<text>]:
 				stop
 			if arg 1 is "enable" or "on":
 				if player has permission "essentials.*" or "essentials.pvp.*" or "essentials.pvp.enable":
-					if {Essentials.use.pvp.use} is not set:
+					if {Essentials.use.pvp.use.%player's world%.use} is not set:
 						send "{@Essentials-use-pvp-use-enable-use}" to player
 						enable pvp in the event-world
-						set {Essentials.use.pvp.use} to true
+						set {Essentials.use.pvp.use.%player's world%.use} to true
 						stop
-					if {Essentials.use.pvp.use} is set:
+					if {Essentials.use.pvp.use.%player's world%.use} is set:
 						send "{@Essentials-use-pvp-use-enable-use-already-use}" to player
 						stop
 				if player doesn't have permission "essentials.*" or "essentials.pvp.*" or "essentials.pvp.enable":
@@ -4978,13 +5242,13 @@ command /pvp [<text>] [<text>]:
 					stop
 			if arg 1 is "disable" or "off":
 				if player has permission "essentials.*" or "essentials.pvp.*" or "essentials.pvp.disable":
-					if {Essentials.use.pvp.use} is not set:
+					if {Essentials.use.pvp.use.%player's world%.use} is not set:
 						send "{@Essentials-use-pvp-use-disable-use-already-use}" to player
 						stop
-					if {Essentials.use.pvp.use} is set:
+					if {Essentials.use.pvp.use.%player's world%.use} is set:
 						send "{@Essentials-use-pvp-use-disable-use}" to player
 						disable pvp in the event-world
-						delete {Essentials.use.pvp.use}
+						delete {Essentials.use.pvp.use.%player's world%.use}
 						stop
 				if player doesn't have permission "essentials.*" or "essentials.pvp.*" or "essentials.pvp.disable":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
@@ -5062,60 +5326,77 @@ command /editsign [<text>] [<text>]:
 				if arg 1 is not set:
 					send "{@Essentials-use-editsign-use-noneargument1-use}" to player
 					stop
-				if arg 1 is not "1" or "2" or "3" or "4":
-					send "{@Essentials-use-editsign-use-noneargument1-use}" to player
-					stop
-				if arg 1 is "1":
-					if arg 2 is not set:
-						send "{@Essentials-use-editsign-use-noneargument2-use}" to player
+				if arg 1 is set:
+					if arg 1 is not "1" or "2" or "3" or "4":
+						send "{@Essentials-use-editsign-use-noneargument1-use}" to player
 						stop
-					if arg 2 is set:
-						if player has permission "essentials.*" or "essentials.editsign.color":
-							set line 1 of targeted block to colored arg 2
-							send "{@Essentials-use-editsign-use-line1-use}" to player
+					if arg 1 is "1":
+						if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.1" or "essentials.editsign.line.*":
+							if arg 2 is not set:
+								send "{@Essentials-use-editsign-use-noneargument2-use}" to player
+								stop
+							if arg 2 is set:
+								if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.1.color" or "essentials.editsign.line.*":
+									set line 1 of targeted block to colored arg 2
+									send "{@Essentials-use-editsign-use-line1-use}" to player
+									stop
+								if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.1.color" or "essentials.editsign.line.*":
+									set line 1 of targeted block to arg 2
+									send "{@Essentials-use-editsign-use-line1-use}" to player
+									stop
+						if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.1" or "essentials.editsign.line.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.editsign.color":
-							set line 1 of targeted block to arg 2
-							send "{@Essentials-use-editsign-use-line1-use}" to player
+					if arg 1 is "2":
+						if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.2" or "essentials.editsign.line.*":
+							if arg 2 is not set:
+								send "{@Essentials-use-editsign-use-noneargument2-use}" to player
+								stop
+							if arg 2 is set:
+								if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.2.color" or "essentials.editsign.line.*":
+									set line 2 of targeted block to colored arg 2
+									send "{@Essentials-use-editsign-use-line2-use}" to player
+									stop
+								if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.2.color" or "essentials.editsign.line.*":
+									set line 2 of targeted block to arg 2
+									send "{@Essentials-use-editsign-use-line2-use}" to player
+									stop
+						if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.2" or "essentials.editsign.line.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
-				if arg 1 is "2":
-					if arg 2 is not set:
-						send "{@Essentials-use-editsign-use-noneargument2-use}" to player
-						stop
-					if arg 2 is set:
-						if player has permission "essentials.*" or "essentials.editsign.color":
-							set line 2 of targeted block to colored arg 2
-							send "{@Essentials-use-editsign-use-line2-use}" to player
+					if arg 1 is "3":
+						if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.3" or "essentials.editsign.line.*":
+							if arg 2 is not set:
+								send "{@Essentials-use-editsign-use-noneargument2-use}" to player
+								stop
+							if arg 2 is set:
+								if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.3.color" or "essentials.editsign.line.*":
+									set line 3 of targeted block to colored arg 2
+									send "{@Essentials-use-editsign-use-line3-use}" to player
+									stop
+								if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.3.color" or "essentials.editsign.line.*":
+									set line 3 of targeted block to arg 2
+									send "{@Essentials-use-editsign-use-line3-use}" to player
+									stop
+						if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.3" or "essentials.editsign.line.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.editsign.color":
-							set line 2 of targeted block to arg 2
-							send "{@Essentials-use-editsign-use-line2-use}" to player
-							stop
-				if arg 1 is "3":
-					if arg 2 is not set:
-						send "{@Essentials-use-editsign-use-noneargument2-use}" to player
-						stop
-					if arg 2 is set:
-						if player has permission "essentials.*" or "essentials.editsign.color":
-							set line 3 of targeted block to colored arg 2
-							send "{@Essentials-use-editsign-use-line3-use}" to player
-							stop
-						if player doesn't have permission "essentials.*" or "essentials.editsign.color":
-							set line 3 of targeted block to arg 2
-							send "{@Essentials-use-editsign-use-line3-use}" to player
-							stop
-				if arg 1 is "4":
-					if arg 2 is not set:
-						send "{@Essentials-use-editsign-use-noneargument2-use}" to player
-						stop
-					if arg 2 is set:
-						if player has permission "essentials.*" or "essentials.editsign.color":
-							set line 4 of targeted block to colored arg 2
-							send "{@Essentials-use-editsign-use-line4-use}" to player
-							stop
-						if player doesn't have permission "essentials.*" or "essentials.editsign.color":
-							set line 4 of targeted block to arg 2
-							send "{@Essentials-use-editsign-use-line4-use}" to player
+					if arg 1 is "4":
+						if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.4" or "essentials.editsign.line.*":
+							if arg 2 is not set:
+								send "{@Essentials-use-editsign-use-noneargument2-use}" to player
+								stop
+							if arg 2 is set:
+								if player has permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.4.color" or "essentials.editsign.line.*":
+									set line 4 of targeted block to colored arg 2
+									send "{@Essentials-use-editsign-use-line4-use}" to player
+									stop
+								if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.4.color" or "essentials.editsign.line.*":
+									set line 4 of targeted block to arg 2
+									send "{@Essentials-use-editsign-use-line4-use}" to player
+									stop
+						if player doesn't have permission "essentials.*" or "essentials.editsign.*" or "essentials.editsign.line.4" or "essentials.editsign.line.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
@@ -7399,4 +7680,47 @@ on every 1 tick in {@Essentials-use-banip-use-checkip-use-worldname-use}:
 			kick loop-player due to "{@Essentials-use-banip-use-kick-use-checkip-use-playerconnect-use-message-use}"
 			stop
 		if {Essentials.use.banip.use.%{Essentials.use.ip.use.%loop-player%.use}%.use.ip.use} is not set:
+			stop
+
+on chat:
+	if {@Essentials-use-log-use-chat-use-config-use} is true:
+		log "{@Essentials-use-log-use-chat-use}" to "Essentials/Chat.log"
+		stop
+	if {@Essentials-use-log-use-chat-use-config-use} is false:
+		stop
+
+on build:
+	if {@Essentials-use-log-use-blockbuild-use-config-use} is true:
+		log "{@Essentials-use-log-use-blockbuild-use}" to "Essentials/Block-Build.log"
+		stop
+	if {@Essentials-use-log-use-blockbuild-use-config-use} is false:
+		stop
+
+on break:
+	if {@Essentials-use-log-use-blockbreak-use-config-use} is true:
+		log "{@Essentials-use-log-use-blockbreak-use}" to "Essentials/Block-Break.log"
+		stop
+	if {@Essentials-use-log-use-blockbreak-use-config-use} is false:
+		stop
+
+on drop:
+	if {@Essentials-use-log-use-drop-use-config-use} is true:
+		log "{@Essentials-use-log-use-drop-use}" to "Essentials/Drop.log"
+		stop
+	if {@Essentials-use-log-use-drop-use-config-use} is false:
+		stop
+
+on death:
+	if {@Essentials-use-log-use-deathentity-use-config-use} is true:
+		log "{@Essentials-use-log-use-deathentity-use}" to "Essentials/Death.log"
+		stop
+	if {@Essentials-use-log-use-deathentity-use-config-use} is false:
+		stop
+
+on command:
+	if sender is a player:
+		if {@Essentials-use-log-use-command-use-config-use} is true:
+			log "{@Essentials-use-log-use-command-use}" to "Essentials/Command.log"
+			stop
+		if {@Essentials-use-log-use-command-use-config-use} is false:
 			stop
