@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.17-Snapshot 2021.4a
+#  |-> Essentials Update 1.17-Snapshot 2021.4b
 
 options:
 	# |-> CONFIG
@@ -179,6 +179,12 @@ options:
 
 			Essentials-use-secondhand-use-switch-use-config-use: true
 
+		# [!] > STOP SERVER COOLDOWN USE - CONFIG
+
+			Essentials-use-stopserver-use-cooldown-use: true
+
+			Essentials-use-stopserver-use-cooldown-use-secondswait-use: 15
+
 options:
 	# |-> MESSAGES
 		# [!] >> '%nl%' = Go to the line...
@@ -201,7 +207,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.4a&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.4b&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1614,8 +1620,60 @@ options:
 
 				Essentials-use-reports-use-reset-use-noreport-use: &cThe player &6%arg 2% &chas never been reported !
 
+			# [!] >> COMMAND USE (/STOP) - MESSAGE
+
+				Essentials-use-stop-use: &6You have stopped the server !
+
+				Essentials-use-stop-use-broadcast-use: &cThe server will close soon !
+
+				Essentials-use-stop-use-kickall-use: &c-_-_-_-_- &fServer Infos &c-_-_-_-_-%nl%%nl%&cYou have been kicked from the server !%nl%%nl%&7Reason: &cClose the server%nl%%nl%&c-_-_-_-_- &fServer Infos &c-_-_-_-_-
 
 #  |-> PLUGIN CODE:
+
+command /stop [<text>]:
+	executable by: player and console
+	aliases: essentials:stop
+	description: &fEssentials command /stop !
+	trigger:
+		if sender is a player:
+			if {@Essentials-use-stopserver-use-cooldown-use} is true:
+				broadcast "{@Essentials-use-stop-use-broadcast-use}"
+				wait {@Essentials-use-stopserver-use-cooldown-use-secondswait-use} seconds
+				send "{@Essentials-use-stop-use}" to player
+				kick all players because "{@Essentials-use-stop-use-kickall-use}"
+				wait 2 tick
+				stop server
+				stop
+			if {@Essentials-use-stopserver-use-cooldown-use} is false:
+				send "{@Essentials-use-stop-use}" to player
+				kick all players because "{@Essentials-use-stop-use-kickall-use}"
+				wait 2 tick
+				stop server
+				stop
+		if sender is console:
+			if {@Essentials-use-stopserver-use-cooldown-use} is true:
+				broadcast "{@Essentials-use-stop-use-broadcast-use}"
+				wait {@Essentials-use-stopserver-use-cooldown-use-secondswait-use} seconds
+				send "{@Essentials-use-stop-use}" to console
+				kick all players because "{@Essentials-use-stop-use-kickall-use}"
+				wait 2 tick
+				stop server
+				stop
+			if {@Essentials-use-stopserver-use-cooldown-use} is false:
+				send "{@Essentials-use-stop-use}" to console
+				kick all players because "{@Essentials-use-stop-use-kickall-use}"
+				wait 2 tick
+				stop server
+				stop
+
+on command "stop" or "essentials:stop":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.stop":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.stop":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
 
 command /reports [<text>] [<offline player>] [<text>]:
 	executable by: player and console
@@ -2349,55 +2407,6 @@ on command "ess" or "essentials:ess" or "essentials" or "essentials:essentials":
 		if player has permission "essentials.*" or "essentials.essentials":
 			stop
 		if player doesn't have permission "essentials.*" or "essentials.essentials":
-			cancel event
-			send "{@Essentials-use-player-use-nopermission-use}" to player
-			stop
-
-command /tree [<text>] [<text>]:
-	executable by: player and console
-	aliases: essentials:tree
-	description: &fEssentials command /tree !
-	trigger:
-		if sender is a player:
-			if arg 1 is not set:
-				send "{@Essentials-use-tree-use-noneargument1-use}" to player
-				stop
-			if arg 1 is not "oak" or "jungle" or "spruce" or "acacia" or "birch" or "darkwood":
-				send "{@Essentials-use-tree-use-noneargument1-use}" to player
-				stop
-			if arg 1 is "jungle":
-				grow jungle tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-			if arg 1 is "oak":
-				grow oak tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-			if arg 1 is "spruce":
-				grow spruce tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-			if arg 1 is "acacia":
-				grow acacia tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-			if arg 1 is "birch":
-				grow birch tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-			if arg 1 is "darkwood":
-				grow dark oak tree above the targeted block
-				send "{@Essentials-use-tree-use}" to player
-				stop
-		if sender is console:
-			send "{@Essentials-use-console-use-nocommand-use}" to console
-			stop
-
-on command "tree" or "essentials:tree":
-	if sender is a player:
-		if player has permission "essentials.*" or "essentials.tree":
-			stop
-		if player doesn't have permission "essentials.*" or "essentials.tree":
 			cancel event
 			send "{@Essentials-use-player-use-nopermission-use}" to player
 			stop
