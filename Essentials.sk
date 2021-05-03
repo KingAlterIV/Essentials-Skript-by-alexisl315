@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.17-Snapshot 2021.3b
+#  |-> Essentials Update 1.17-Snapshot 2021.3c
 
 options:
 	# |-> CONFIG
@@ -175,6 +175,10 @@ options:
 
 			Essentials-use-log-use-command-use-config-use: true
 
+		# [!] >> SECOND HAND SWITCH USE - CONFIG
+
+			Essentials-use-secondhand-use-switch-use-config-use: false
+
 options:
 	# |-> MESSAGES
 		# [!] >> '%nl%' = Go to the line...
@@ -197,7 +201,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3b&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3c&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1444,11 +1448,11 @@ options:
 
 				Essentials-use-killall-use-noneargument1-use: &cFailed: &f/killall &f[&callplayers &for &callmobs&f]
 
-				Essentials-use-killall-use-allplayers-use-playeronline-use: &6You have killed all players !
+				Essentials-use-killall-use-allplayers-use-playeronline-use: &7You have killed all players !
 
 				Essentials-use-killall-use-allplayers-use-playeronline-use-byplayer-use: &6You have been killed by &c%{Essentials.use.nickname.use.%player%.use}% &6!
 
-				Essentials-use-killall-use-allmobs-use-playeronline-use: &6You have killed all mobs !
+				Essentials-use-killall-use-allmobs-use-playeronline-use: &7You have killed all mobs !
 
 			# [!] >> COMMAND USE (/SEEN) - MESSAGE
 
@@ -1571,7 +1575,54 @@ options:
 				Essentials-use-servers-use-noserver-use: &6List of servers: &cNone !
 
 
+			# [!] >> COMMAND USE (/SERVERINFO) - MESSAGE
+
+				Essentials-use-give-use-noneargument1-use: &cFailed: &f/give &f[&cname of item&f] &f[&7Option: &cname of player&f]
+
+				Essentials-use-give-use-playerme-use: &cYou cannot your teleport to server yourself !
+
+				Essentials-use-give-use: &7You have gived the item &c%arg 1% &7!
+
+				Essentials-use-give-use-noitemtype-use: &cThe item &6%arg 1% &ccannot exist or cannot be given ! 
+
+				Essentials-use-give-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+
 #  |-> PLUGIN CODE:
+
+command /give [<text>] [<number>]:
+	executable by: player and console
+	aliases: essentials:give
+	description: &fEssentials command /give !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-give-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				set {Essentials.use.give.use.itemtype.use.%player%.use} to arg 1
+				replace all "_" with " " in {Essentials.use.give.use.itemtype.use.%player%.use}
+				set {Essentials.use.give.use.itemtype.use.%player%.use} to "%{Essentials.use.give.use.itemtype.use.%player%.use}%" parsed as item
+				wait 1 tick
+				if {Essentials.use.give.use.itemtype.use.%player%.use} is an item:
+					give {Essentials.use.give.use.itemtype.use.%player%.use} to player
+					send "{@Essentials-use-give-use}" to player
+					stop
+				else:
+					send "{@Essentials-use-give-use-noitemtype-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "give" or "essentials:give":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.give":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.give":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
 
 command /servers [<text>]:
 	executable by: player and console
@@ -1604,7 +1655,7 @@ on command "servers" or "essentials:servers":
 
 command /serverinfo [<text>]:
 	executable by: player and console
-	aliases: essentials:kitinfo
+	aliases: essentials:serverinfo
 	description: &fEssentials command /serverinfo !
 	trigger:
 		if sender is a player:
@@ -2894,7 +2945,7 @@ command /getpos [<offline player>] [<text>]:
 				send "{@Essentials-use-getpos-use-playerme-use-command-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.getpos.others":
+				if player has permission "essentials.*" or "essentials.getpos.%arg 1%" or "essentials.getpos.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-getpos-use-playerme-use}" to player
@@ -2905,7 +2956,7 @@ command /getpos [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-getpos-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.getpos.others":
+				if player doesn't have permission "essentials.*" or "essentials.getpos.%arg 1%" or "essentials.getpos.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -2945,7 +2996,7 @@ command /god [<offline player>] [<text>]:
 					send "{@Essentials-use-god-use-disable-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.god.others":
+				if player has permission "essentials.*" or "essentials.god.%arg 1%" or "essentials.god.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-god-use-playerme-use}" to player
@@ -2964,7 +3015,7 @@ command /god [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-god-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.god.others":
+				if player doesn't have permission "essentials.*" or "essentials.god.%arg 1%" or "essentials.god.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -3269,54 +3320,55 @@ command /nick [<text>] [<offline player>] [<text>]:
 			if arg 1 is not set:
 				send "{@Essentials-use-nick-use-noneargument1-use}" to player
 				stop
-			if arg 1 is "off":
-				if arg 2 is not set:
-					set {Essentials.use.nickname.use.%player%.use} to player
-					wait 1 tick
-					send "{@Essentials-use-nick-use-reset-use}" to player
-					stop
-				if arg 2 is set:
-					if player has permission "essentials.*" or "essentials.nick.others":
-						if arg 2 is online:
-							if arg 2 is "%player%":
-								send "{@Essentials-use-nick-use-playerme-use}" to player
-								stop
-							if arg 2 is not "%player%":
-								set {Essentials.use.nickname.use.%arg 2%.use} to arg 2
-								wait 1 tick
-								send "{@Essentials-use-nick-use-reset-use-playerme-use}" to player
-								send "{@Essentials-use-nick-use-playeronline-use-reset-use-byplayer-use}" to arg 2
-								stop
-						if arg 2 is offline:
-							send "{@Essentials-use-nick-use-playeroffline-use}" to player
-							stop
-					if player doesn't have permission "essentials.*" or "essentials.nick.others":
-						send "{@Essentials-use-player-use-nopermission-use}" to player
+			if arg 1 is set:
+				if arg 1 is "off":
+					if arg 2 is not set:
+						set {Essentials.use.nickname.use.%player%.use} to player
+						wait 1 tick
+						send "{@Essentials-use-nick-use-reset-use}" to player
 						stop
-			if arg 1 is not "off":
-				if arg 2 is not set:
-					set {Essentials.use.nickname.use.%player%.use} to arg 1
-					wait 1 tick
-					send "{@Essentials-use-nick-use-changednick-use}" to player
-					stop
-				if arg 2 is set:
-					if player has permission "essentials.*" or "essentials.nick.others":
-						if arg 2 is online:
-							if arg 2 is not "%player%":
-								send "{@Essentials-use-nick-use-playerme-use}" to player
+					if arg 2 is set:
+						if player has permission "essentials.*" or "essentials.nick.%arg 1%" or "essentials.nick.*":
+							if arg 2 is online:
+								if arg 2 is "%player%":
+									send "{@Essentials-use-nick-use-playerme-use}" to player
+									stop
+								if arg 2 is not "%player%":
+									set {Essentials.use.nickname.use.%arg 2%.use} to arg 2
+									wait 1 tick
+									send "{@Essentials-use-nick-use-reset-use-playerme-use}" to player
+									send "{@Essentials-use-nick-use-playeronline-use-reset-use-byplayer-use}" to arg 2
+									stop
+							if arg 2 is offline:
+								send "{@Essentials-use-nick-use-playeroffline-use}" to player
 								stop
-							if arg 2 is "%player%":
-								set {Essentials.use.nickname.use.%arg 2%.use} to arg 1
-								wait 1 tick
-								send "{@Essentials-use-nick-use-changenick-use-playerme-use}" to player
-								send "{@Essentials-use-nick-use-playeronline-use-reset-use-byplayer-use}" to arg 2
-								stop
-						if arg 2 is offline:
-							send "{@Essentials-use-nick-use-playeroffline-use}" to player
+						if player doesn't have permission "essentials.*" or "essentials.nick.%arg 1%" or "essentials.nick.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
-					if player doesn't have permission "essentials.*" or "essentials.nick.others":
-						send "{@Essentials-use-player-use-nopermission-use}" to player
+				if arg 1 is not "off":
+					if arg 2 is not set:
+						set {Essentials.use.nickname.use.%player%.use} to arg 1
+						wait 1 tick
+						send "{@Essentials-use-nick-use-changednick-use}" to player
 						stop
+					if arg 2 is set:
+						if player has permission "essentials.*" or "essentials.nick.%arg 1%" or "essentials.nick.*":
+							if arg 2 is online:
+								if arg 2 is not "%player%":
+									send "{@Essentials-use-nick-use-playerme-use}" to player
+									stop
+								if arg 2 is "%player%":
+									set {Essentials.use.nickname.use.%arg 2%.use} to arg 1
+									wait 1 tick
+									send "{@Essentials-use-nick-use-changenick-use-playerme-use}" to player
+									send "{@Essentials-use-nick-use-playeronline-use-reset-use-byplayer-use}" to arg 2
+									stop
+							if arg 2 is offline:
+								send "{@Essentials-use-nick-use-playeroffline-use}" to player
+								stop
+						if player doesn't have permission "essentials.*" or "essentials.nick.%arg 1%" or "essentials.nick.*":
+							send "{@Essentials-use-player-use-nopermission-use}" to player
+							stop
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -4132,7 +4184,7 @@ command /unlimited [<offline player>] [<text>]:
 					delete {Essentials.use.unlimited.use.%player%.use}
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.unlimited.others":
+				if player has permission "essentials.*" or "essentials.unlimited.%arg 1%" or "essentials.unlimited.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-unlimited-use-playerme-use}" to player
@@ -4151,7 +4203,7 @@ command /unlimited [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-unlimited-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.unlimited.others":
+				if player doesn't have permission "essentials.*" or "essentials.unlimited.%arg 1%" or "essentials.unlimited.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -4177,7 +4229,7 @@ command /depth [<offline player>] [<text>]:
 				send "{@Essentials-use-depth-use-playerme-use-command-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.depth.others":
+				if player has permission "essentials.*" or "essentials.depth.%arg 1%" or "essentials.depth.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-depth-use-playerme-use}" to player
@@ -4188,7 +4240,7 @@ command /depth [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-depth-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.depth.others":
+				if player doesn't have permission "essentials.*" or "essentials.depth.%arg 1%" or "essentials.depth.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -4410,7 +4462,7 @@ command /afk [<offline player>] [<text>]:
 					broadcast "{@Essentials-use-afk-use-broadcast-use-disable-use}"
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.afk.others":
+				if player has permission "essentials.*" or "essentials.afk.%arg 1%" or "essentials.afk.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-afk-use-playerme-use}" to player
@@ -4431,7 +4483,7 @@ command /afk [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-afk-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.afk.others":
+				if player doesn't have permission "essentials.*" or "essentials.afk.%arg 1%" or "essentials.afk.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -4458,7 +4510,7 @@ command /enderchest [<offline player>] [<text>]:
 				open the player's ender chest for player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.enderchest.others":
+				if player has permission "essentials.*" or "essentials.enderchest.%arg 1%" or "essentials.enderchest.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-enderchest-use-playerme-use}" to player
@@ -4469,7 +4521,7 @@ command /enderchest [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-enderchest-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.enderchest.others":
+				if player doesn't have permission "essentials.*" or "essentials.enderchest.%arg 1%" or "essentials.enderchest.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -4496,42 +4548,46 @@ command /warp [<text>] [<offline player>] [<text>]:
 				stop
 			if arg 1 is set:
 				if arg 2 is not set:
-					if {Essentials.use.warp.use.list.use::%arg 1%} is not set:
-						send "{@Essentials-use-warp-use-existwarp-use}" to player
-						stop
-					if {Essentials.use.warp.use.list.use::%arg 1%} is set:
-						if {@Essentials-use-warp-use-cooldown-use} is true:
-							if player has permission "essentials.*" or "essentials.warp.bypass" or "essentials.warp.*":
+					if player has permission "essentials.*" or "essentials.warp.%arg 1%" or "essentials.warp.*":
+						if {Essentials.use.warp.use.list.use::%arg 1%} is not set:
+							send "{@Essentials-use-warp-use-existwarp-use}" to player
+							stop
+						if {Essentials.use.warp.use.list.use::%arg 1%} is set:
+							if {@Essentials-use-warp-use-cooldown-use} is true:
+								if player has permission "essentials.*" or "essentials.warp.bypass" or "essentials.warp.*":
+									set {Essentials.use.backpoint.use.%player%.use} to location of player
+									wait 1 tick
+									teleport player to {Essentials.use.warp.use.location.use.%arg 1%.use}
+									wait 1 tick
+									send "{@Essentials-use-warp-use-teleport-use-warppoint-use}" to player
+									stop
+								if player doesn't have permission "essentials.*" or "essentials.warp.bypass" or "essentials.warp.*":
+									if {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} is not set:
+										set {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} to true
+										send "{@Essentials-use-warp-use-teleport-use-warppoint-use-cooldown-use}" to player
+										wait {@Essentials-use-warp-use-teleport-use-cooldown-use} seconds
+										set {Essentials.use.backpoint.use.%player%.use} to location of player
+										wait 1 tick
+										teleport player to {Essentials.use.warp.use.location.use.%arg 1%.use} 
+										wait 1 tick
+										delete {Essentials.use.warp.use.teleportation.use.already.use.%player%.use}
+										send "{@Essentials-use-warp-use-teleport-use-warppoint-use}" to player
+										stop
+									if {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} is set:
+										send "{@Essentials-use-warp-use-teleport-use-warppoint-use-already-use}" to player
+										stop
+							if {@Essentials-use-warp-use-cooldown-use} is false:
 								set {Essentials.use.backpoint.use.%player%.use} to location of player
 								wait 1 tick
 								teleport player to {Essentials.use.warp.use.location.use.%arg 1%.use}
 								wait 1 tick
 								send "{@Essentials-use-warp-use-teleport-use-warppoint-use}" to player
 								stop
-							if player doesn't have permission "essentials.*" or "essentials.warp.bypass" or "essentials.warp.*":
-								if {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} is not set:
-									set {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} to true
-									send "{@Essentials-use-warp-use-teleport-use-warppoint-use-cooldown-use}" to player
-									wait {@Essentials-use-warp-use-teleport-use-cooldown-use} seconds
-									set {Essentials.use.backpoint.use.%player%.use} to location of player
-									wait 1 tick
-									teleport player to {Essentials.use.warp.use.location.use.%arg 1%.use} 
-									wait 1 tick
-									delete {Essentials.use.warp.use.teleportation.use.already.use.%player%.use}
-									send "{@Essentials-use-warp-use-teleport-use-warppoint-use}" to player
-									stop
-								if {Essentials.use.warp.use.teleportation.use.already.use.%player%.use} is set:
-									send "{@Essentials-use-warp-use-teleport-use-warppoint-use-already-use}" to player
-									stop
-						if {@Essentials-use-warp-use-cooldown-use} is false:
-							set {Essentials.use.backpoint.use.%player%.use} to location of player
-							wait 1 tick
-							teleport player to {Essentials.use.warp.use.location.use.%arg 1%.use}
-							wait 1 tick
-							send "{@Essentials-use-warp-use-teleport-use-warppoint-use}" to player
-							stop
+					if player doesn't have permission "essentials.*" or "essentials.warp.%arg 1%" or "essentials.warp.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
 				if arg 2 is set:
-					if player has permission "essentials.*" or "essentials.warp.*" or "ssentials.warp.others":
+					if player has permission "essentials.*" or "essentials.warp.%arg 1%" or "essentials.warp.*":
 						if arg 2 is online:
 							if arg 2 is "%player%":
 								send "{@Essentials-use-warp-use-teleport-use-warppoint-use-playerme-use}" to player
@@ -4547,7 +4603,7 @@ command /warp [<text>] [<offline player>] [<text>]:
 						if arg 2 is offline:
 							send "{@Essentials-use-warp-use-teleport-use-warppoint-use-playeroffline-use}" to player
 							stop
-					if player doesn't have permission "essentials.*" or "essentials.warp.*" or "ssentials.warp.others":
+					if player doesn't have permission "essentials.*" or "essentials.warp.%arg 1%" or "essentials.warp.*":
 						send "{@Essentials-use-player-use-nopermission-use}" to player
 						stop
 		if sender is console:
@@ -4729,7 +4785,7 @@ command /ext [<offline player>] [<text>]:
 				send "{@Essentials-use-ext-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.ext.others":
+				if player has permission "essentials.*" or "essentials.ext.%arg 1%" or "essentials.ext.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-ext-use-playerme-use}" to player
@@ -4742,7 +4798,7 @@ command /ext [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-ext-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.ext.others":
+				if player doesn't have permission "essentials.*" or "essentials.ext.%arg 1%" or "essentials.ext.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -5133,7 +5189,7 @@ on command "kit" or "essentials:kit":
 
 command /vanish [<offline player>] [<text>]:
 	executable by: player and console
-	aliases: essentials:vanish
+	aliases: essentials:vanish, v, essentials:v
 	description: &fEssentials command /vanish !
 	trigger:
 		if sender is a player:
@@ -5149,7 +5205,7 @@ command /vanish [<offline player>] [<text>]:
 					send "{@Essentials-use-vanish-use-playerme-use-disable-use}" to player
 					stop 
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.vanish.others":
+				if player has permission "essentials.*" or "essentials.vanish.%arg 1%" or "essentials.vanish.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-vanish-use-playerme-use}" to player
@@ -5170,7 +5226,7 @@ command /vanish [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-vanish-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.vanish.others":
+				if player doesn't have permission "essentials.*" or "essentials.vanish.%arg 1%" or "essentials.vanish.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -5449,7 +5505,7 @@ command /seed [<offline player>] [<text>]:
 				send "{@Essentials-use-seed-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.seed.others":
+				if player has permission "essentials.*" or "essentials.seed.%arg 1%" or "essentials.seed.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-seed-use-playeronline-use}" to player
@@ -5460,7 +5516,7 @@ command /seed [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-seed-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.seed.others":
+				if player doesn't have permission "essentials.*" or "essentials.seed.%arg 1%" or "essentials.seed.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -5490,7 +5546,7 @@ command /chunkslime [<offline player>] [<text>]:
 					send "{@Essentials-use-chunkslime-use-chunkslimenoexist-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.chunkslime.others":
+				if player has permission "essentials.*" or "essentials.chunkslime.%arg 1%" or "essentials.chunkslime.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-chunkslime-use-playerme-use}" to player
@@ -5505,7 +5561,7 @@ command /chunkslime [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-chunkslime-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.chunkslime.others":
+				if player doesn't have permission "essentials.*" or "essentials.chunkslime.%arg 1%" or "essentials.chunkslime.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -5587,7 +5643,7 @@ command /bedteleport [<offline player>] [<text>]:
 					send "{@Essentials-use-bedteleport-use-bednoexist-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.bedteleport.others":
+				if player has permission "essentials.*" or "essentials.bedteleport.%arg 1%" or "essentials.bedteleport.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-bedteleport-use-playerme-use}" to player
@@ -5603,7 +5659,7 @@ command /bedteleport [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-bedteleport-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.bedteleport.others":
+				if player doesn't have permission "essentials.*" or "essentials.bedteleport.%arg 1%" or "essentials.bedteleport.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -5861,7 +5917,7 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is online:
-						if player has permission "essentials.*" or "essentials.gamemode.survival.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.survival.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.survival.*":
 							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
@@ -5877,14 +5933,14 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 									send "{@Essentials-use-gamemode-use-survival-use-playeronline-use-byplayer-use}" to player
 									send "{@Essentials-use-gamemode-use-survival-use-playeronline-use}" to arg 2
 									stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.survival.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.survival.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.survival.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is offline:
-						if player has permission "essentials.*" or "essentials.gamemode.survival.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.survival.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.survival.*":
 							send "{@Essentials-use-gamemode-use-playeroffline-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.survival.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.survival.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.survival.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 				if arg 1 is "1" or "creative":
@@ -5904,7 +5960,8 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is online:
-						if player has permission "essentials.*" or "essentials.gamemode.creative.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.creative.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.creative.*":
+
 							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
@@ -5920,14 +5977,17 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 									send "{@Essentials-use-gamemode-use-creative-use-playeronline-use-byplayer-use}" to player
 									send "{@Essentials-use-gamemode-use-creative-use-playeronline-use}" to arg 2
 									stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.creative.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.creative.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.creative.*":
+
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is offline:
-						if player has permission "essentials.*" or "essentials.gamemode.creative.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.creative.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.creative.*":
+
 							send "{@Essentials-use-gamemode-use-playeroffline-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.creative.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.creative.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.creative.*":
+
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 				if arg 1 is "2" or "adventure":
@@ -5947,7 +6007,7 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is online:
-						if player has permission "essentials.*" or "essentials.gamemode.adventure.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.adventure.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.adventure.*":
 							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
@@ -5963,14 +6023,14 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 									send "{@Essentials-use-gamemode-use-adventure-use-playeronline-use-byplayer-use}" to player
 									send "{@Essentials-use-gamemode-use-adventure-use-playeronline-use}" to arg 2
 									stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.adventure.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.adventure.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.adventure.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is offline:
-						if player has permission "essentials.*" or "essentials.gamemode.adventure.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.adventure.%arg 2%" or "essentials.gamemode.*"  or "essentials.gamemode.adventure.*":
 							send "{@Essentials-use-gamemode-use-playeroffline-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.adventure.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.adventure.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.adventure.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 				if arg 1 is "3" or "spectator":
@@ -5990,7 +6050,7 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is online:
-						if player has permission "essentials.*" or "essentials.gamemode.spectator.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.spectator.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.spectator.*":
 							if arg 2 is "%player%":
 								send "{@Essentials-use-gamemode-use-playerme-use}" to player
 								stop
@@ -6006,14 +6066,14 @@ command /gamemode [<text>] [<offline player>] [<text>]:
 									send "{@Essentials-use-gamemode-use-spectator-use-playeronline-use-byplayer-use}" to player
 									send "{@Essentials-use-gamemode-use-spectator-use-playeronline-use}" to arg 2
 									stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.spectator.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.spectator.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.spectator.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 					if arg 2 is offline:
-						if player has permission "essentials.*" or "essentials.gamemode.spectator.others" or "essentials.gamemode.*":
+						if player has permission "essentials.*" or "essentials.gamemode.spectator.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.spectator.*":
 							send "{@Essentials-use-gamemode-use-playeroffline-use}" to player
 							stop
-						if player doesn't have permission "essentials.*" or "essentials.gamemode.spectator.others" or "essentials.gamemode.*":
+						if player doesn't have permission "essentials.*" or "essentials.gamemode.spectator.%arg 2%" or "essentials.gamemode.*" or "essentials.gamemode.spectator.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 		if sender is console:
@@ -6126,7 +6186,7 @@ command /fly [<offline player>] [<text>]:
 					send "{@Essentials-use-fly-use-disable-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.fly.others":
+				if player has permission "essentials.*" or "essentials.fly.%arg 1%" or "essentials.fly.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-fly-use-playerme-use}" to player
@@ -6149,7 +6209,7 @@ command /fly [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-fly-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.fly.others":
+				if player doesn't have permission "essentials.*" or "essentials.fly.%arg 1%" or "essentials.fly.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6216,7 +6276,7 @@ command /feed [<offline player>] [<text>]:
 					send "{@Essentials-use-feed-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.feed.others" or "essentials.feed.*":
+				if player has permission "essentials.*" or "essentials.feed.%arg 1%" or "essentials.feed.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-feed-use-playerme-use}" to player
@@ -6229,7 +6289,7 @@ command /feed [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-feed-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.feed.others" or "essentials.feed.*":
+				if player doesn't have permission "essentials.*" or "essentials.feed.%arg 1%" or "essentials.feed.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6286,7 +6346,7 @@ command /heal [<offline player>] [<text>]:
 					send "{@Essentials-use-heal-use}" to player
 					stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.heal.others" or "essentials.heal.*":
+				if player has permission "essentials.*" or "essentials.heal.%arg 1%" or "essentials.heal.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-heal-use-playerme-use}" to player
@@ -6299,7 +6359,7 @@ command /heal [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-heal-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.heal.others" or "essentials.heal.*":
+				if player doesn't have permission "essentials.*" or "essentials.heal.%arg 1%" or "essentials.heal.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6564,7 +6624,7 @@ command /jump [<offline player>] [<text>]:
 				send "{@Essentials-use-jump-use-message-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.jump.others":
+				if player has permission "essentials.*" or "essentials.jump.%arg 1%" or "essentials.jump.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-jump-use-playerme-use}" to player
@@ -6577,7 +6637,7 @@ command /jump [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-jump-use-playeroffline-use}" to player
 						stop
-			if player doesn't have permission "essentials.*" or "essentials.jump.others":
+			if player doesn't have permission "essentials.*" or "essentials.jump.%arg 1%" or "essentials.jump.*":
 				send "{@Essentials-use-player-use-nopermission-use}" to player
 				stop
 		if sender is console:
@@ -6638,7 +6698,7 @@ command /fireball [<offline player>] [<text>]:
 				send "{@Essentials-use-fireball-use-message-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.fireball.others":
+				if player has permission "essentials.*" or "essentials.fireball.%arg 1%" or "essentials.fireball.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-fireball-use-playerme-use}" to player
@@ -6650,7 +6710,7 @@ command /fireball [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-fireball-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.fireball.others":
+				if player doesn't have permission "essentials.*" or "essentials.fireball.%arg 1%" or "essentials.fireball.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6677,7 +6737,7 @@ command /workbench [<offline player>] [<text>]:
 				send "{@Essentials-use-workbench-use-message-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.workbench.others":
+				if player has permission "essentials.*" or "essentials.workbench.%arg 1%" or "essentials.workbench.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-workbench-use-playerme-use}" to player
@@ -6690,7 +6750,7 @@ command /workbench [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-workbench-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.workbench.others":
+				if player doesn't have permission "essentials.*" or "essentials.workbench.%arg 1%" or "essentials.workbench.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6717,7 +6777,7 @@ command /antioch [<offline player>] [<text>]:
 				send "{@Essentials-use-antioch-use-message-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.antioch.others":
+				if player has permission "essentials.*" or "essentials.antioch.%arg 1%" or "essentials.antioch.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-antioch-use-playerme-use}" to player
@@ -6729,7 +6789,7 @@ command /antioch [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-antioch-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.antioch.others":
+				if player doesn't have permission "essentials.*" or "essentials.antioch.%arg 1%" or "essentials.antioch.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6777,7 +6837,7 @@ command /list [<offline player>] [<text>]:
 				send "{@Essentials-use-list-use-message-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.list.others":
+				if player has permission "essentials.*" or "essentials.list.%arg 1%" or "essentials.list.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-list-use-playerme-use}" to player
@@ -6788,7 +6848,7 @@ command /list [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-list-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.list.others":
+				if player doesn't have permission "essentials.*" or "essentials.list.%arg 1%" or "essentials.list.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -6998,16 +7058,20 @@ command /helpop [<text>]:
 				send "{@Essentials-use-helpop-use-noneargument1-use}" to player
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.me.color":
+				if player has permission "essentials.*" or "essentials.helpop.color":
 					loop all players:
 						if loop-players has permission "essentials.helpop.receive" or "essentials.*":
 							send "{@Essentials-use-helpop-use-color-use}" to loop-player
 							stop
 						if loop-players doesn't have permission "essentials.helpop.receive" or "essentials.*":
 							stop
-				if player doesn't have permission "essentials.*" or "essentials.me.color":
-					send "{@Essentials-use-helpop-use-nocolor-use}" to player
-					stop	
+				if player doesn't have permission "essentials.*" or "essentials.helpop.color":
+					loop all players:
+						if loop-players has permission "essentials.helpop.receive" or "essentials.*":
+							send "{@Essentials-use-helpop-use-nocolor-use}" to loop-player
+							stop
+						if loop-players doesn't have permission "essentials.helpop.receive" or "essentials.*":
+							stop	
 		if sender is console:
 			send "{@Essentials-use-console-use-nocommand-use}" to console
 			stop
@@ -7057,10 +7121,10 @@ command /tp [<offline player>] [<offline player>] [<text>]:
 	trigger:
 		if sender is a player:
 			if arg 1 is not set:
-				if player has permission "essentials.*" or "essentials.tp.others":
+				if player has permission "essentials.*" or "essentials.tp.%arg 1%" or "essentials.tp.*":
 					send "{@Essentials-use-tp-use-noneargument1-use-byplayer-use-others-use}" to player
 					stop
-				if player doesn't have permission "essentials.*" or "essentials.tp.others":
+				if player doesn't have permission "essentials.*" or "essentials.tp.%arg 1%" or "essentials.tp.*":
 					send "{@Essentials-use-tp-use-noneargument1-use-byplayer-use-noothers-use}" to player
 					stop
 			if arg 1 is set:
@@ -7077,7 +7141,7 @@ command /tp [<offline player>] [<offline player>] [<text>]:
 							send "{@Essentials-use-tp-use}" to player
 							stop
 					if arg 2 is set:
-						if player has permission "essentials.*" or "essentials.tp.others":
+						if player has permission "essentials.*" or "essentials.tp.%arg 1%" or "essentials.tp.*":
 							if arg 2 is online:
 								if arg 2 is "%arg 1%":
 									send "{@Essentials-use-tp-use-playerme-use-argument2-use}" to player
@@ -7092,7 +7156,7 @@ command /tp [<offline player>] [<offline player>] [<text>]:
 							if arg 2 is offline:
 								send "{@Essentials-use-tp-use-playeroffline-use-argument2-use}" to player
 								stop
-						if player doesn't have permission "essentials.*" or "essentials.tp.others":
+						if player doesn't have permission "essentials.*" or "essentials.tp.%arg 1%" or "essentials.tp.*":
 							send "{@Essentials-use-player-use-nopermission-use}" to player
 							stop
 				if arg 1 is offline:
@@ -7173,7 +7237,7 @@ command /clearinventory [<offline player>] [<text>]:
 				clear player's inventory
 				stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.clearinventory.others":
+				if player has permission "essentials.*" or "essentials.clearinventory.%arg 1%" or "essentials.clearinventory.*":
 					if arg 1 is online:
 						if arg 1 is "%player%":
 							send "{@Essentials-use-clearinventory-use-playerme-use}" to player
@@ -7187,7 +7251,7 @@ command /clearinventory [<offline player>] [<text>]:
 					if arg 1 is offline:
 						send "{@Essentials-use-clearinventory-use-playeroffline-use}" to player
 						stop
-				if player doesn't have permission "essentials.*" or "essentials.clearinventory.others":
+				if player doesn't have permission "essentials.*" or "essentials.clearinventory.%arg 1%" or "essentials.clearinventory.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -7312,7 +7376,7 @@ command /spawn [<offline player>] [<text>]:
 						send "{@Essentials-use-spawn-use-teleport-use-spawnpoint-use}" to player
 						stop
 			if arg 1 is set:
-				if player has permission "essentials.*" or "essentials.spawn.others":
+				if player has permission "essentials.*" or "essentials.spawn.%arg 1%" or "essentials.spawn.*":
 					if {Essentials.use.spawnpoint.use} is not set:
 						send "{@Essentials-use-spawn-use-spawnpoint-use-noset-use}" to player
 						stop
@@ -7330,7 +7394,7 @@ command /spawn [<offline player>] [<text>]:
 						if arg 1 is offline:
 							send "{@Essentials-use-spawn-use-teleport-use-spawnpoint-use-playeroffline-use}" to player
 							stop
-				if player doesn't have permission "essentials.*" or "essentials.spawn.others":
+				if player doesn't have permission "essentials.*" or "essentials.spawn.%arg 1%" or "essentials.spawn.*":
 					send "{@Essentials-use-player-use-nopermission-use}" to player
 					stop
 		if sender is console:
@@ -8031,3 +8095,10 @@ on command:
 			stop
 		if {@Essentials-use-log-use-command-use-config-use} is false:
 			stop
+
+on swap hand item:
+	if {@Essentials-use-secondhand-use-switch-use-config-use} is true:
+		stop
+	if {@Essentials-use-secondhand-use-switch-use-config-use} is false:
+		cancel event
+		stop
