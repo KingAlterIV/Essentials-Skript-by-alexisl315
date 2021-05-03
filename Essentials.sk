@@ -2,7 +2,7 @@
 
 # |-> This skript plugin allows you to redo and improve the Essentials plugin (Java) but in skript !
 
-#  |-> Essentials Update 1.17-Snapshot 2021.3c
+#  |-> Essentials Update 1.17-Snapshot 2021.4a
 
 options:
 	# |-> CONFIG
@@ -177,7 +177,7 @@ options:
 
 		# [!] >> SECOND HAND SWITCH USE - CONFIG
 
-			Essentials-use-secondhand-use-switch-use-config-use: false
+			Essentials-use-secondhand-use-switch-use-config-use: true
 
 options:
 	# |-> MESSAGES
@@ -201,7 +201,7 @@ options:
 
 				Essentials-use-essentials-use-noneargument1-use: &cFailed: &f/essentials &f[&creload &for &cinfo&f]
 
-				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.3c&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
+				Essentials-use-essentials-use-info-use: &6|-> &fEssentials Infos &6<-|&f%nl%%nl%&7Name of plugin&6: &cEssentials &7(&cSkript&7)&f%nl%&7Creator of plugin&6: &cAlexisl315 &7(Aliases: &cLennord&7)&f%nl%&7Version of plugin&6: &c1.17-Snapshot 2021.4a&f%nl%&7Support version&6: &c1.16.5&f%nl%&7Plugins required&6: &cSkript&7/&cSkQuery &7and &cSkungee &7(for &cBungeecord&7)&f%nl%%nl%&6|-> &fEssentials Infos &6<-|
 
 				Essentials-use-essentials-use-reload-use: &6You have restarted the plugin !
 
@@ -1575,22 +1575,159 @@ options:
 				Essentials-use-servers-use-noserver-use: &6List of servers: &cNone !
 
 
-			# [!] >> COMMAND USE (/SERVERINFO) - MESSAGE
+			# [!] >> COMMAND USE (/GIVE) - MESSAGE
 
-				Essentials-use-give-use-noneargument1-use: &cFailed: &f/give &f[&cname of item&f] &f[&7Option: &cname of player&f]
-
-				Essentials-use-give-use-playerme-use: &cYou cannot your teleport to server yourself !
+				Essentials-use-give-use-noneargument1-use: &cFailed: &f/give &f[&cname of item&f]
 
 				Essentials-use-give-use: &7You have gived the item &c%arg 1% &7!
 
 				Essentials-use-give-use-noitemtype-use: &cThe item &6%arg 1% &ccannot exist or cannot be given ! 
 
-				Essentials-use-give-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+			# [!] >> COMMAND USE (/REPORT) - MESSAGE
+
+				Essentials-use-report-use-noneargument1-use: &cFailed: &f/report &f[&cname of player&f] &f[&creason&f]
+
+				Essentials-use-report-use-playerme-use: &cYou cannot your report yourself !
+
+				Essentials-use-report-use: &7You have reported the player &c%{Essentials.use.nickname.use.%arg 1%.use}% &7for next reason ! &7Reason: &c%arg 2%
+
+				Essentials-use-report-use-noitemtype-use: &cThe item &6%arg 1% &ccannot exist or cannot be given ! 
+
+				Essentials-use-report-use-playeroffline-use: &cYou must put the name of a player connected to the server !
+
+			# [!] >> COMMAND USE (/REPORTS) - MESSAGE
+
+				Essentials-use-reports-use-noneargument1-use: &cFailed: &f/reports &f[&clist &for &cshow &for &creset&f]
+
+				Essentials-use-reports-use-noneargument2-use: &cFailed: &f/reports &f[&cshow &for &creset&f] &f[&cname of player&f]
+
+				Essentials-use-reports-use-list-use: &6List of reports: &c%{Essentials.use.report.use.list.use::*}% &c!
+
+				Essentials-use-reports-use-list-use-noreport-use: &6List of reports: &cNone !
+
+
+				Essentials-use-reports-use-show-use: &6List of reasons for reporting the player &c%arg 2%&6: &c%{Essentials.use.report.use.reason.use.%arg 2%.use::*}% &c(%{Essentials.use.report.use.reason.use.%arg 2%.use.times.use::*}%&c) &c!
+
+				Essentials-use-reports-use-show-use-noreport-use: &cThe player &6%arg 2% &chas never been reported !
+
+				Essentials-use-reports-use-reset-use: &6You have reset all reports of the player &c%arg 2% &6!
+
+				Essentials-use-reports-use-reset-use-noreport-use: &cThe player &6%arg 2% &chas never been reported !
 
 
 #  |-> PLUGIN CODE:
 
-command /give [<text>] [<number>]:
+command /reports [<text>] [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:reports
+	description: &fEssentials command /reports !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-reports-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if arg 1 is not "list" or "show" or "reset":
+					send "{@Essentials-use-reports-use-noneargument1-use}" to player
+					stop
+				if arg 1 is "list":
+					if player has permission "essentials.*" or "essentials.reports.list" or "essentials.reports.*":
+						if {Essentials.use.report.use.list.use::*} is set:
+							send "{@Essentials-use-reports-use-list-use}" to player
+							stop
+						if {Essentials.use.report.use.list.use::*} is not set:
+							send "{@Essentials-use-reports-use-list-use-noreport-use}" to player
+							stop
+					if player doesn't have permission "essentials.*" or "essentials.reports.list" or "essentials.reports.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+				if arg 1 is "show":
+					if player has permission "essentials.*" or "essentials.reports.show" or "essentials.reports.*":
+						if arg 2 is not set:
+							send "{@Essentials-use-reports-use-noneargument2-use}" to player
+							stop
+						if arg 2 is set:
+							if {Essentials.use.report.use.list.use::%arg 2%} is set:
+								send "{@Essentials-use-reports-use-show-use}" to player
+								stop
+							if {Essentials.use.report.use.list.use::%arg 2%} is not set:
+								send "{@Essentials-use-reports-use-show-use-noreport-use}" to player
+								stop
+					if player doesn't have permission "essentials.*" or "essentials.reports.show" or "essentials.reports.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+				if arg 1 is "reset":
+					if player has permission "essentials.*" or "essentials.reports.reset" or "essentials.reports.*":
+						if arg 2 is not set:
+							send "{@Essentials-use-reports-use-noneargument2-use}" to player
+							stop
+						if arg 2 is set:
+							if {Essentials.use.report.use.list.use::%arg 2%} is set:
+								delete {Essentials.use.report.use.list.use::%arg 2%}
+								delete {Essentials.use.report.use.reason.use.%arg 2%.use::*}
+								delete {Essentials.use.report.use.reason.use.%arg 2%.use.times.use::*}
+								send "{@Essentials-use-reports-use-reset-use}" to player
+								stop
+							if {Essentials.use.report.use.list.use::%arg 2%} is not set:
+								send "{@Essentials-use-reports-use-reset-use-noreport-use}" to player
+								stop
+					if player doesn't have permission "essentials.*" or "essentials.reports.reset" or "essentials.reports.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "reports" or "essentials:reports":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.reports":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.reports":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /report [<offline player>] [<text>]:
+	executable by: player and console
+	aliases: essentials:report
+	description: &fEssentials command /report !
+	trigger:
+		if sender is a player:
+			if arg 1 is not set:
+				send "{@Essentials-use-report-use-noneargument1-use}" to player
+				stop
+			if arg 1 is set:
+				if arg 1 is not "%player%":
+					if arg 1 is online:
+						if arg 2 is not set:
+							send "{@Essentials-use-report-use-noneargument1-use}" to player
+							stop
+						if arg 2 is set:
+							send "{@Essentials-use-report-use}" to player
+							set {Essentials.use.report.use.list.use::%arg 1%} to arg 1
+							set {Essentials.use.report.use.reason.use.%arg 1%.use::%arg 2%} to arg 2
+							set {Essentials.use.report.use.reason.use.%arg 1%.use.times.use::%arg 2%} to now
+							stop
+					if arg 1 is offline:
+						send "{@Essentials-use-report-use-playeroffline-use}" to player
+						stop
+				if arg 1 is "%player%":
+					send "{@Essentials-use-report-use-playerme-use}" to player
+					stop
+		if sender is console:
+			send "{@Essentials-use-console-use-nocommand-use}" to console
+			stop
+
+on command "report" or "essentials:report":
+	if sender is a player:
+		if player has permission "essentials.*" or "essentials.report":
+			stop
+		if player doesn't have permission "essentials.*" or "essentials.report":
+			cancel event
+			send "{@Essentials-use-player-use-nopermission-use}" to player
+			stop
+
+command /give [<text>]:
 	executable by: player and console
 	aliases: essentials:give
 	description: &fEssentials command /give !
@@ -1605,9 +1742,13 @@ command /give [<text>] [<number>]:
 				set {Essentials.use.give.use.itemtype.use.%player%.use} to "%{Essentials.use.give.use.itemtype.use.%player%.use}%" parsed as item
 				wait 1 tick
 				if {Essentials.use.give.use.itemtype.use.%player%.use} is an item:
-					give {Essentials.use.give.use.itemtype.use.%player%.use} to player
-					send "{@Essentials-use-give-use}" to player
-					stop
+					if player has permission "essentials.*" or "essentials.give.%arg 1%" or "essentials.give.*":
+						give {Essentials.use.give.use.itemtype.use.%player%.use} to player
+						send "{@Essentials-use-give-use}" to player
+						stop
+					if player doesn't have permission "essentials.*" or "essentials.give.%arg 1%" or "essentials.give.*":
+						send "{@Essentials-use-player-use-nopermission-use}" to player
+						stop
 				else:
 					send "{@Essentials-use-give-use-noitemtype-use}" to player
 					stop
